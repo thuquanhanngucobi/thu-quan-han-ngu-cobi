@@ -7,8 +7,199 @@ document.getElementById('center-address').textContent=CENTER.address;document.ge
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 const norm=v=>String(v??'').trim().toUpperCase().replace(/\s+/g,'');
 function toast(m){toastEl.textContent=m;toastEl.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>toastEl.classList.remove('show'),3000)}
-function route(){let h=location.hash.slice(1)||'home';if(['practice','hsk4'].includes(h))renderPracticeHome();else if(h==='knowledge')placeholder('Kiến Thức','Từ vựng, ngữ pháp và kiến thức Hán Ngữ.');else if(h==='review')placeholder('Ôn tập','Ôn tập theo trình độ và chủ đề.');else renderHome();document.querySelectorAll('.main-nav a').forEach(a=>a.classList.toggle('active',a.dataset.route===h))}
-function placeholder(t,d){app.innerHTML=`<section class="page"><div class="section-title"><span class="cn">${esc(t)}</span><span class="vi">${esc(d)}</span></div><div class="card"><div class="notice">Khu vực này đã được giữ sẵn trong hệ thống Thư Quán.</div></div></section>`}
+function route(){
+  let h=location.hash.slice(1)||'home';
+
+  if(['practice','hsk4'].includes(h)){
+    renderPracticeHome();
+  }else if(h==='knowledge'){
+    placeholder('Kiến Thức','Từ vựng, ngữ pháp và kiến thức Hán Ngữ.');
+  }else if(h==='review'){
+    renderReviewHome();
+  }else{
+    renderHome();
+  }
+
+  document.querySelectorAll('.main-nav a').forEach(a=>{
+    a.classList.toggle('active',a.dataset.route===h);
+  });
+}
+function placeholder(t,d){app.innerHTML=`<section class="page"><div class="section-title"><span class="cn">${esc(t)}</span><span class="vi">${esc(d)}</span></div><div class="card"><div class="notice">Khu vực này đã được giữ sẵn trong hệ thống Thư Quán.</div></div></section>`}function renderReviewHome(){
+
+  app.innerHTML=`
+  <section class="page review-page">
+
+    <div class="section-title">
+      <span class="cn">温故知新</span>
+      <span class="vi">Ôn tập · Củng cố kiến thức Hán Ngữ</span>
+    </div>
+
+    <div class="review-intro">
+      <div class="review-intro-cn">学而时习之</div>
+      <p>
+        Học lại điều đã học, luyện tập điều đã biết,
+        để kiến thức trở thành năng lực sử dụng tiếng Trung.
+      </p>
+    </div>
+
+    <div class="review-category-grid">
+
+      <!-- TỪ VỰNG -->
+      <section class="review-category">
+
+        <div class="review-category-head">
+          <span class="review-icon">词</span>
+          <div>
+            <h2>Từ vựng</h2>
+            <p>Mở rộng và củng cố vốn từ</p>
+          </div>
+        </div>
+
+        <div class="review-subtitle">HSK</div>
+
+        <div class="level-grid">
+          ${['HSK1','HSK2','HSK3','HSK4','HSK5','HSK6'].map(level=>`
+            <a class="level-card" href="#review-vocab-${level.toLowerCase()}">
+              <span class="level-cn">${level.replace('HSK','汉语')}</span>
+              <strong>${level}</strong>
+              <small>词汇复习</small>
+            </a>
+          `).join('')}
+        </div>
+
+        <div class="review-subtitle">Chuyên ngành</div>
+
+        <div class="topic-grid">
+          <a class="topic-card" href="#review-vocab-tourism">
+            <span>旅</span>
+            <strong>Du lịch</strong>
+          </a>
+
+          <a class="topic-card" href="#review-vocab-education">
+            <span>教</span>
+            <strong>Giáo dục</strong>
+          </a>
+
+          <a class="topic-card" href="#review-vocab-business">
+            <span>商</span>
+            <strong>Kinh doanh</strong>
+          </a>
+
+          <a class="topic-card" href="#review-vocab-custom">
+            <span>+</span>
+            <strong>Đang phát triển</strong>
+          </a>
+        </div>
+
+      </section>
+
+
+      <!-- LUYỆN DỊCH -->
+      <section class="review-category">
+
+        <div class="review-category-head">
+          <span class="review-icon">译</span>
+          <div>
+            <h2>Luyện dịch</h2>
+            <p>Biến kiến thức thành khả năng sử dụng</p>
+          </div>
+        </div>
+
+        <div class="practice-choice-grid">
+
+          <a class="practice-choice" href="#review-translation-sentence">
+            <div class="choice-symbol">句</div>
+            <div>
+              <strong>Dịch mẫu câu</strong>
+              <span>Trung → Việt · Việt → Trung</span>
+            </div>
+          </a>
+
+          <a class="practice-choice" href="#review-translation-homework">
+            <div class="choice-symbol">作</div>
+            <div>
+              <strong>Bài tập được giao</strong>
+              <span>Bài tập online dành cho học viên</span>
+            </div>
+          </a>
+
+        </div>
+
+      </section>
+
+
+      <!-- LUYỆN ĐỌC -->
+      <section class="review-category">
+
+        <div class="review-category-head">
+          <span class="review-icon">读</span>
+          <div>
+            <h2>Luyện đọc</h2>
+            <p>Đọc hiểu · Đọc thành tiếng · Bỏ dần Pinyin</p>
+          </div>
+        </div>
+
+        <div class="reading-choice-grid">
+
+          <a class="reading-card" href="#review-reading-hsk2-3">
+            <div class="reading-number">01</div>
+            <div>
+              <strong>HSK2 → HSK3</strong>
+              <span>Đoạn đọc không Pinyin</span>
+            </div>
+          </a>
+
+          <a class="reading-card" href="#review-reading-special">
+            <div class="reading-number">02</div>
+            <div>
+              <strong>Đoạn đọc hay</strong>
+              <span>Những bài đọc chọn lọc từ CoBi</span>
+            </div>
+          </a>
+
+        </div>
+
+      </section>
+
+
+      <!-- BÀI TẬP -->
+      <section class="review-category">
+
+        <div class="review-category-head">
+          <span class="review-icon">练</span>
+          <div>
+            <h2>Bài tập</h2>
+            <p>Luyện tập theo từng mục tiêu</p>
+          </div>
+        </div>
+
+        <div class="practice-choice-grid">
+
+          <a class="practice-choice" href="#review-exercise-grammar">
+            <div class="choice-symbol">法</div>
+            <div>
+              <strong>Bài tập ngữ pháp</strong>
+              <span>Luyện từng cấu trúc và điểm ngữ pháp</span>
+            </div>
+          </a>
+
+          <a class="practice-choice" href="#review-exercise-exam">
+            <div class="choice-symbol">试</div>
+            <div>
+              <strong>Luyện đề</strong>
+              <span>Ôn tập và luyện đề HSK các cấp</span>
+            </div>
+          </a>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </section>
+  `;
+}
 function renderHome(){app.innerHTML=`<section class="page hero"><div><div class="hero-kicker">漢 · 書 · 語 · 學</div><h1><span class="hero-vn">Thư Quán Hán Ngữ</span> <span class="hero-cobi">CoBi</span></h1><h2>一朝入书馆，一生伴汉语</h2><p>Một ngày nhập Thư Quán, trọn đời hành Hán Ngữ.</p><div class="hero-ornament">— ❖ —</div></div></section><section class="page" style="padding-top:0"><div class="section-title"><span class="cn">入馆三卷</span><span class="vi">Ba không gian học tập của Thư Quán</span></div><div class="card-grid"><a class="card menu-card" href="#knowledge"><div class="symbol">知</div><h3>Kiến Thức</h3><p>Từ vựng, ngữ pháp, cấu trúc câu.</p></a><a class="card menu-card" href="#review"><div class="symbol">习</div><h3>Ôn tập</h3><p>Ôn lại kiến thức theo trình độ.</p></a><a class="card menu-card" href="#practice"><div class="symbol">试</div><h3>Luyện đề</h3><p>Luyện đề HSK1–HSK6.</p></a></div></section>`}
 function renderPracticeHome(){app.innerHTML=`<section class="page"><div class="section-title"><span class="cn">HSK4 模拟考试</span><span class="vi">Luyện đề HSK4 · 第01套</span></div><div class="notice"><strong>听力:</strong> thời gian đúng bằng độ dài audio. <strong>阅读:</strong> 40 phút. <strong>书写:</strong> 25 phút. <strong>检查:</strong> 5 phút.</div><div class="card-grid"><div class="card"><h3>听力 · 45题</h3><p>判断正误 + ABCD.</p></div><div class="card"><h3>阅读 · 40题</h3><p>选词填空 + 排列顺序 + 阅读理解.</p></div><div class="card"><h3>书写 · 15题</h3><p>86–95 tự chấm; 96–100 giáo viên chấm.</p></div></div><div class="card start-card"><label><strong>姓名 · Họ tên học viên</strong></label><input id="student-name" placeholder="Nhập họ tên"><button class="btn red" id="start-exam">开始考试 · Bắt đầu</button></div></section>`;document.getElementById('start-exam').onclick=startExam}
 function allQuestions(){return [...EXAM.data.listening,...EXAM.data.reading,...EXAM.data.writingOrder,...EXAM.data.writingPicture]}
