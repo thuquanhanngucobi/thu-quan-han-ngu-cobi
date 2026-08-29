@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thư Quán Hán Ngữ CoBi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ink-wash wash-left" aria-hidden="true"></div>
+  <div class="ink-wash wash-right" aria-hidden="true"></div>
+
+  <div class="floating-ornaments" aria-hidden="true">
+    <div class="lantern lantern-left"><span></span></div>
+    <div class="lantern lantern-right"><span></span></div>
+    <div class="silk-ribbon ribbon-left"></div>
+    <div class="silk-ribbon ribbon-right"></div>
+    <div class="red-umbrella umbrella-left"><i></i></div>
+  </div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#home" data-route="home">
+        <span class="brand-seal">CoBi</span>
+        <span>
+          <strong><span class="brand-vn">Thư Quán Hán Ngữ</span> <span class="brand-cobi">CoBi</span></strong>
+          <small>一朝入书馆，一生伴汉语</small>
+        </span>
+      </a>
+      <nav class="main-nav" aria-label="Điều hướng chính">
+        <a href="#knowledge" data-route="knowledge">Kiến Thức</a>
+        <a href="#review" data-route="review">Ôn tập</a>
+        <a href="#practice" data-route="practice">Luyện đề</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="app"></main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-title">书馆 · CoBi</div>
+        <p>Một ngày nhập Thư Quán, trọn đời hành Hán Ngữ.</p>
+      </div>
+      <div>
+        <h3>Thông tin</h3>
+        <p>Địa chỉ: <span id="center-address"></span></p>
+        <p>Liên hệ: <span id="center-contact"></span></p>
+      </div>
+      <div>
+        <h3>Khóa học</h3>
+        <p>Muốn tìm hiểu chương trình học tại CoBi?</p>
+        <a href="https://hanngucobi.wordpress.com/" target="_blank" rel="noopener">Xem thông tin khóa học →</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Hán Ngữ CoBi · Thư Quán</div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="data/hsk4/test01.js"></script>
+  <script src="script.js?v=5"></script>
+</body>
+</html>
