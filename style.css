@@ -333,3 +333,310 @@ button { cursor: pointer; }
 html{scroll-behavior:auto;}
 .practice-shell{min-height:100vh;}
 .review-timer{font-variant-numeric:tabular-nums;min-width:120px;}
+/* =========================================================
+   ÔN TẬP · THƯ QUÁN HÁN NGỮ COBI
+   ========================================================= */
+
+.review-page{
+  padding-top:55px;
+}
+
+.review-intro{
+  max-width:760px;
+  margin:0 auto 42px;
+  padding:28px 34px;
+  text-align:center;
+  background:rgba(255,250,240,.75);
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  position:relative;
+}
+
+.review-intro::before,
+.review-intro::after{
+  content:"";
+  position:absolute;
+  width:35px;
+  height:35px;
+  border-color:var(--gold);
+  opacity:.55;
+}
+
+.review-intro::before{
+  left:12px;
+  top:12px;
+  border-left:1px solid;
+  border-top:1px solid;
+}
+
+.review-intro::after{
+  right:12px;
+  bottom:12px;
+  border-right:1px solid;
+  border-bottom:1px solid;
+}
+
+.review-intro-cn{
+  font-family:"Ma Shan Zheng","Noto Serif SC",serif;
+  font-size:38px;
+  color:var(--red);
+  margin-bottom:8px;
+}
+
+.review-intro p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.9;
+}
+
+.review-category{
+  background:rgba(255,250,240,.82);
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  padding:30px;
+  margin-bottom:24px;
+}
+
+.review-category-head{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding-bottom:18px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:22px;
+}
+
+.review-icon{
+  width:55px;
+  height:55px;
+  display:grid;
+  place-items:center;
+  flex:none;
+  background:var(--red);
+  color:#fffaf0;
+  font-family:"Ma Shan Zheng","Noto Serif SC",serif;
+  font-size:31px;
+  border-radius:4px;
+}
+
+.review-category-head h2{
+  margin:0 0 3px;
+  font-size:24px;
+  color:var(--brown-dark);
+}
+
+.review-category-head p{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.review-subtitle{
+  color:var(--red);
+  font-weight:700;
+  margin:18px 0 12px;
+  padding-left:10px;
+  border-left:3px solid var(--gold);
+}
+
+.level-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:12px;
+}
+
+.level-card{
+  text-decoration:none;
+  color:inherit;
+  text-align:center;
+  padding:18px 10px;
+  border:1px solid var(--line);
+  background:#fffdf7;
+  transition:.2s;
+}
+
+.level-card:hover{
+  transform:translateY(-3px);
+  border-color:var(--gold);
+  box-shadow:0 8px 20px rgba(63,45,28,.10);
+}
+
+.level-cn{
+  display:block;
+  font-family:"Ma Shan Zheng","Noto Serif SC",serif;
+  color:var(--red);
+  font-size:20px;
+  margin-bottom:3px;
+}
+
+.level-card strong{
+  display:block;
+  color:var(--brown-dark);
+  font-size:18px;
+}
+
+.level-card small{
+  display:block;
+  color:var(--muted);
+  margin-top:5px;
+  font-size:12px;
+}
+
+.topic-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.topic-card{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+  color:inherit;
+  padding:14px 16px;
+  background:#fffdf7;
+  border:1px solid var(--line);
+  transition:.2s;
+}
+
+.topic-card:hover{
+  border-color:var(--gold);
+  transform:translateY(-2px);
+}
+
+.topic-card span{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  background:#f1e4cf;
+  color:var(--red);
+  font-family:"Ma Shan Zheng","Noto Serif SC",serif;
+  font-size:23px;
+}
+
+.topic-card strong{
+  color:var(--brown-dark);
+}
+
+.practice-choice-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.practice-choice{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:20px;
+  text-decoration:none;
+  color:inherit;
+  background:#fffdf7;
+  border:1px solid var(--line);
+  transition:.2s;
+}
+
+.practice-choice:hover{
+  transform:translateY(-3px);
+  border-color:var(--gold);
+  box-shadow:0 8px 20px rgba(63,45,28,.10);
+}
+
+.choice-symbol{
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  flex:none;
+  color:var(--red);
+  background:#f1e4cf;
+  font-family:"Ma Shan Zheng","Noto Serif SC",serif;
+  font-size:29px;
+}
+
+.practice-choice strong{
+  display:block;
+  color:var(--brown-dark);
+  font-size:17px;
+  margin-bottom:4px;
+}
+
+.practice-choice span{
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+}
+
+.reading-choice-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.reading-card{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:20px;
+  text-decoration:none;
+  color:inherit;
+  border:1px solid var(--line);
+  background:#fffdf7;
+  transition:.2s;
+}
+
+.reading-card:hover{
+  transform:translateY(-3px);
+  border-color:var(--gold);
+}
+
+.reading-number{
+  font-family:"Cormorant Garamond","Noto Serif",serif;
+  font-size:30px;
+  color:var(--gold);
+  min-width:42px;
+}
+
+.reading-card strong{
+  display:block;
+  color:var(--brown-dark);
+  margin-bottom:4px;
+}
+
+.reading-card span{
+  color:var(--muted);
+  font-size:13px;
+}
+
+@media(max-width:900px){
+
+  .level-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .topic-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+@media(max-width:600px){
+
+  .review-category{
+    padding:20px;
+  }
+
+  .level-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .topic-grid,
+  .practice-choice-grid,
+  .reading-choice-grid{
+    grid-template-columns:1fr;
+  }
+
+}
