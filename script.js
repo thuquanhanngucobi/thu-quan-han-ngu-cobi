@@ -1416,17 +1416,15 @@ function renderHome(){
 
   app.innerHTML=`
 
-    <section class="page hero">
+    <section class="page home-page">
 
-      <div>
+      <div class="hero">
 
         <div class="hero-kicker">
           漢 · 書 · 語 · 學
         </div>
 
-
         <h1>
-
           <span class="hero-vn">
             Thư Quán Hán Ngữ
           </span>
@@ -1434,24 +1432,130 @@ function renderHome(){
           <span class="hero-cobi">
             CoBi
           </span>
-
         </h1>
-
 
         <h2>
           一朝入书馆，一生伴汉语
         </h2>
-
 
         <p>
           Một ngày nhập Thư Quán,
           trọn đời hành Hán Ngữ.
         </p>
 
-
         <div class="hero-ornament">
           — ❖ —
         </div>
+
+      </div>
+
+
+      <!-- ================= 3 MỤC CHÍNH ================= -->
+
+      <div class="home-main-grid">
+
+
+        <!-- TÀNG THƯ CÁC -->
+
+        <a
+          class="home-main-card"
+          href="#knowledge"
+        >
+
+          <div class="home-card-symbol">
+            藏
+          </div>
+
+          <div class="home-card-content">
+
+            <h3>
+              Tàng Thư Các
+            </h3>
+
+            <p>
+              Kho tàng kiến thức – Nền tảng vững bền.
+            </p>
+
+            <div class="home-card-cn">
+              知识宝库，坚实基础
+            </div>
+
+          </div>
+
+          <span class="home-card-arrow">
+            进入 →
+          </span>
+
+        </a>
+
+
+        <!-- DU LẠC HIÊN -->
+
+        <a
+          class="home-main-card"
+          href="https://thuquanhanngucobi.github.io/cobi-du-lac-hien/"
+        >
+
+          <div class="home-card-symbol">
+            游
+          </div>
+
+          <div class="home-card-content">
+
+            <h3>
+              Du Lạc Hiên
+            </h3>
+
+            <p>
+              Ôn tập – Luyện tập – Học mà vui.
+            </p>
+
+            <div class="home-card-cn">
+              温故练习，学而有乐
+            </div>
+
+          </div>
+
+          <span class="home-card-arrow">
+            进入 →
+          </span>
+
+        </a>
+
+
+        <!-- KHẢO THÍ ĐƯỜNG -->
+
+        <a
+          class="home-main-card"
+          href="https://thuquanhanngucobi.github.io/cobi-khao-thi-duong/"
+        >
+
+          <div class="home-card-symbol">
+            考
+          </div>
+
+          <div class="home-card-content">
+
+            <h3>
+              Khảo Thí Đường
+            </h3>
+
+            <p>
+              Luyện đề – Kiểm tra – Chinh phục HSK.
+            </p>
+
+            <div class="home-card-cn">
+              模拟考试，检验实力
+            </div>
+
+          </div>
+
+          <span class="home-card-arrow">
+            进入 →
+          </span>
+
+        </a>
+
 
       </div>
 
