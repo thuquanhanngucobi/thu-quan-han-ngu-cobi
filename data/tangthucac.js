@@ -1,5 +1,5 @@
 window.CoBiTangThu = {
-  apiUrl: 'DÁN_APPS_SCRIPT_URL_VÀO_ĐÂY',
+  apiUrl: 'https://script.google.com/macros/s/AKfycbzzHWX5KbhanlXDKIDpY3YLmQlhagNpx8MJ8sF-LiVCv1jIsZun1svZaqzRBuCu47KHYA/exec',
 
   deviceId: null,
   accessCode: null,
