@@ -1581,41 +1581,32 @@ function renderHome(){
 /* ===================== ĐIỀU HƯỚNG ===================== */
 
 function route(){
+  let h=location.hash.slice(1)||'home';
 
-  const h=
-    location.hash.slice(1)||
-    'home';
-
-
-  if(h==='knowledge'){
-
-    CoBiTangThu.render();
-
-  }else{
-
+  if(['practice','hsk4'].includes(h)){
+    renderPracticeHome();
+  }
+  else if(h==='knowledge'){
+    CoBiTangThu.render(document.getElementById('app'));
+  }
+  else if(h==='review'){
+    renderReviewHome();
+  }
+  else if(h==='review-hsk'){
+    renderReviewHsk();
+  }
+  else if(h==='review-hsk2'){
+    renderHsk2Vocab();
+  }
+  else{
     renderHome();
-
   }
 
-
-  document
-    .querySelectorAll('.main-nav a')
-    .forEach(a=>
-
-      a.classList.toggle(
-        'active',
-        a.dataset.route===h
-      )
-
+  document.querySelectorAll('.main-nav a').forEach(a=>{
+    a.classList.toggle(
+      'active',
+      a.dataset.route===h ||
+      (a.dataset.route==='review' && h.startsWith('review'))
     );
-
+  });
 }
-
-
-window.addEventListener(
-  'hashchange',
-  route
-);
-
-
-route();
