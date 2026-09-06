@@ -117,29 +117,41 @@ const CoBiTangThu=(()=>{
 
 
   /* ===================== ĐỌC SHEET ===================== */
+async function sheetRows(sheet){
+  const id=TANGTHU_CONFIG.spreadsheetId;
 
-  async function sheetRows(sheet){
+  if(!id || id.includes('DÁN_')){
+    throw new Error('Chưa cấu hình Spreadsheet ID.');
+  }
 
-    if(
-      !TANGTHU_CONFIG.spreadsheetId||
-      TANGTHU_CONFIG.spreadsheetId.includes('DÁN_')
-    ){
-      throw Error('Chưa nhập Spreadsheet ID trong script.js.');
+  const url=
+    `https://docs.google.com/spreadsheets/d/${id}/gviz/tq`+
+    `?tqx=out:csv&sheet=${encodeURIComponent(sheet)}`;
+
+  try{
+    const response=await fetch(url,{cache:'no-store'});
+
+    if(!response.ok){
+      throw new Error(`Google Sheet trả về lỗi ${response.status}.`);
     }
 
-    const url=
-      `https://docs.google.com/spreadsheets/d/`+
-      `${encodeURIComponent(TANGTHU_CONFIG.spreadsheetId)}`+
-      `/gviz/tq?tqx=out:csv&sheet=`+
-      `${encodeURIComponent(sheet)}`;
+    const text=await response.text();
 
-    const r=await fetch(url);
+    if(!text.trim()){
+      return [];
+    }
 
-    if(!r.ok)
-      throw Error(`Không đọc được sheet ${sheet}.`);
+    return parseCsv(text);
 
-    return parseCsv(await r.text());
+  }catch(error){
+    console.error(`Lỗi tải sheet ${sheet}:`,error);
+
+    throw new Error(
+      `Không thể tải dữ liệu từ tab "${sheet}". `+
+      `Kiểm tra tên tab và quyền truy cập Google Sheet.`
+    );
   }
+}
 
 
   /* ===================== CSV → OBJECT ===================== */
