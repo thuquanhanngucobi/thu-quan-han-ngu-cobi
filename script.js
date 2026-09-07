@@ -1,265 +1,425 @@
-const app=document.getElementById('app');
-const toastEl=document.getElementById('toast');
+const app = document.getElementById('app');
+const toastEl = document.getElementById('toast');
 
-/* ===================== CẤU HÌNH TÀNG THƯ CÁC ===================== */
-const TANGTHU_CONFIG={
-  spreadsheetId:'18gAWVFIUoHNjr9xYbuqNWXgTXkzsiDjug8r0yxgSCx8',
-  apiUrl:'https://script.google.com/macros/s/AKfycbzzHWX5KbhanlXDKIDpY3YLmQlhagNpx8MJ8sF-LiVCv1jIsZun1svZaqzRBuCu47KHYA/exec'
+/* =========================================================
+   CẤU HÌNH TÀNG THƯ CÁC
+========================================================= */
+
+const TANGTHU_CONFIG = {
+  spreadsheetId: '18gAWVFIUoHNjr9xYbuqNWXgTXkzsiDjug8r0yxgSCx8',
+
+  apiUrl:
+    'https://script.google.com/macros/s/AKfycbzzHWX5KbhanlXDKIDpY3YLmQlhagNpx8MJ8sF-LiVCv1jIsZun1svZaqzRBuCu47KHYA/exec',
+
+  duLacHien:
+    'https://thuquanhanngucobi.github.io/cobi-du-lac-hien/',
+
+  khaoThiDuong:
+    'https://thuquanhanngucobi.github.io/cobi-khao-thi-duong/'
 };
 
-const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({
-  '&':'&amp;',
-  '<':'&lt;',
-  '>':'&gt;',
-  '"':'&quot;',
-  "'":'&#039;'
-}[c]));
 
-function toast(m){
-  if(!toastEl)return alert(m);
-  toastEl.textContent=m;
+/* =========================================================
+   TIỆN ÍCH
+========================================================= */
+
+const esc = value =>
+  String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  }[char]));
+
+
+function toast(message) {
+
+  if (!toastEl) {
+    alert(message);
+    return;
+  }
+
+  toastEl.textContent = message;
   toastEl.classList.add('show');
+
   clearTimeout(toast.t);
-  toast.t=setTimeout(()=>toastEl.classList.remove('show'),3000)
+
+  toast.t = setTimeout(() => {
+    toastEl.classList.remove('show');
+  }, 3000);
 }
 
-function speak(text){
-  if(!('speechSynthesis' in window))
-    return toast('Trình duyệt không hỗ trợ đọc tiếng Trung.');
+
+function speak(text) {
+
+  if (!('speechSynthesis' in window)) {
+    toast('Trình duyệt không hỗ trợ đọc tiếng Trung.');
+    return;
+  }
 
   speechSynthesis.cancel();
 
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang='zh-CN';
-  u.rate=.82;
+  const utterance =
+    new SpeechSynthesisUtterance(String(text || ''));
 
-  speechSynthesis.speak(u);
+  utterance.lang = 'zh-CN';
+  utterance.rate = 0.82;
+
+  speechSynthesis.speak(utterance);
 }
 
 
-/* ===================== TÀNG THƯ CÁC ===================== */
+/* =========================================================
+   DEVICE ID
+   KHÔNG THAY ĐỔI CƠ CHẾ BẢO MẬT
+========================================================= */
 
-const CoBiTangThu=(()=>{
+function getDeviceId() {
 
-  const S={
-    tab:'vocab',
-    groups:[],
-    groupId:'',
-    words:[],
-    filtered:[],
-    visible:50,
-    current:0,
-    study:false,
-    learned:{},
-    grammar:null,
-    reading:null,
-    token:''
-  };
+  let id =
+    localStorage.getItem('cobi_device_id');
 
-  const itemKey=(group,index)=>`cobi_${group}_${index}`;
+  if (!id) {
 
+    const cryptoObj = window.crypto;
 
-  /* ===================== ĐỌC CSV GOOGLE SHEETS ===================== */
+    id =
+      cryptoObj?.randomUUID
+        ? cryptoObj.randomUUID()
+        : `cobi-${Date.now()}-${Math.random()
+            .toString(36)
+            .slice(2)}`;
 
-  function parseCsv(text){
-
-    const rows=[];
-    let row=[];
-    let cell='';
-    let quote=false;
-
-    for(let i=0;i<text.length;i++){
-
-      const ch=text[i];
-      const next=text[i+1];
-
-      if(ch==='"'&&quote&&next==='"'){
-        cell+='"';
-        i++;
-        continue;
-      }
-
-      if(ch==='"'){
-        quote=!quote;
-        continue;
-      }
-
-      if(ch===','&&!quote){
-        row.push(cell);
-        cell='';
-        continue;
-      }
-
-      if((ch==='\n'||ch==='\r')&&!quote){
-
-        if(ch==='\r'&&next==='\n')i++;
-
-        row.push(cell);
-        cell='';
-
-        if(row.some(x=>String(x).trim()))
-          rows.push(row);
-
-        row=[];
-        continue;
-      }
-
-      cell+=ch;
-    }
-
-    row.push(cell);
-
-    if(row.some(x=>String(x).trim()))
-      rows.push(row);
-
-    return rows;
+    localStorage.setItem(
+      'cobi_device_id',
+      id
+    );
   }
 
+  return id;
+}
 
-  /* ===================== ĐỌC SHEET ===================== */
-async function sheetRows(sheet){
-  const id=TANGTHU_CONFIG.spreadsheetId;
 
-  if(!id || id.includes('DÁN_')){
-    throw new Error('Chưa cấu hình Spreadsheet ID.');
+/* =========================================================
+   GỌI GOOGLE APPS SCRIPT
+========================================================= */
+
+async function api(action, code = '') {
+
+  if (
+    !TANGTHU_CONFIG.apiUrl ||
+    TANGTHU_CONFIG.apiUrl.includes('DÁN_')
+  ) {
+    throw new Error(
+      'Chưa cấu hình Web App URL.'
+    );
   }
 
-const url=
-    `https://docs.google.com/spreadsheets/d/${id}/gviz/tq`+
-    `?tqx=out:csv&sheet=${encodeURIComponent(sheet)}`;
+  let response;
 
-  try{
-    const response=await fetch(url,{cache:'no-store'});
+  try {
 
-    if(!response.ok){
-      throw new Error(`Google Sheet trả về lỗi ${response.status}.`);
-    }
+    response = await fetch(
+      TANGTHU_CONFIG.apiUrl,
+      {
+        method: 'POST',
 
-    const text=await response.text();
+        headers: {
+          'Content-Type':
+            'text/plain;charset=utf-8'
+        },
 
-    if(!text.trim()){
-      return [];
-    }
+        body: JSON.stringify({
+          action: action,
+          code: code,
+          deviceId: getDeviceId()
+        })
+      }
+    );
 
-    return parseCsv(text);
+  } catch (error) {
 
-  }catch(error){
-    console.error(`Lỗi tải sheet ${sheet}:`,error);
+    console.error(
+      'Lỗi kết nối Apps Script:',
+      error
+    );
 
     throw new Error(
-      `Không thể tải dữ liệu từ tab "${sheet}". `+
-      `Kiểm tra tên tab và quyền truy cập Google Sheet.`
+      'Không thể kết nối máy chủ Tàng Thư Các.'
     );
   }
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      `Máy chủ trả về lỗi ${response.status}.`
+    );
+  }
+
+
+  let result;
+
+  try {
+
+    result = await response.json();
+
+  } catch (error) {
+
+    throw new Error(
+      'Máy chủ trả về dữ liệu không hợp lệ.'
+    );
+  }
+
+
+  /*
+     Apps Script của bạn trả:
+     {
+       success: true,
+       data: [...]
+     }
+
+     hoặc:
+     {
+       success: false,
+       message: '...'
+     }
+  */
+
+  if (!result.success) {
+
+    throw new Error(
+      result.message ||
+      'Không có quyền truy cập.'
+    );
+  }
+
+  return result;
 }
 
 
-  /* ===================== CSV → OBJECT ===================== */
+/* =========================================================
+   ĐỌC TUVUNG QUA APPS SCRIPT
+========================================================= */
 
-  function objects(rows){
+async function loadVocabFromAPI() {
 
-    if(!rows.length)return[];
-
-    const h=rows[0].map(x=>
-      String(x).trim().toUpperCase()
+  const result =
+    await fetch(
+      TANGTHU_CONFIG.apiUrl +
+      '?action=getVocab',
+      {
+        method: 'GET',
+        cache: 'no-store'
+      }
     );
 
-    return rows.slice(1)
-      .map(r=>{
-        const o={};
 
-        h.forEach((k,i)=>{
-          o[k]=String(r[i]??'').trim();
-        });
+  if (!result.ok) {
 
-        return o;
-      })
-      .filter(o=>Object.values(o).some(Boolean));
+    throw new Error(
+      `Không thể kết nối Tàng Thư Các API (${result.status}).`
+    );
   }
 
 
-  /* ===================== LOAD TỪ VỰNG ===================== */
+  let json;
 
-  async function loadVocab(){
+  try {
 
-    const rows=objects(
-      await sheetRows('TUVUNG')
+    json = await result.json();
+
+  } catch (error) {
+
+    throw new Error(
+      'Tàng Thư Các API không trả về dữ liệu JSON hợp lệ.'
     );
+  }
 
-    const map=new Map();
 
-    rows.forEach((r,i)=>{
+  if (!json.success) {
 
-      const id=r.ID;
+    throw new Error(
+      json.message ||
+      'Không thể tải dữ liệu TUVUNG.'
+    );
+  }
 
-      if(!id)return;
 
-      if(!map.has(id)){
-        map.set(id,{
+  return json.data || [];
+}
+
+
+/* =========================================================
+   TÀNG THƯ CÁC
+========================================================= */
+
+const CoBiTangThu = (() => {
+
+  const S = {
+
+    tab: 'vocab',
+
+    groups: [],
+
+    groupId: '',
+
+    words: [],
+
+    filtered: [],
+
+    visible: 50,
+
+    current: 0,
+
+    study: false,
+
+    learned: {},
+
+    grammar: null,
+
+    reading: null
+
+  };
+
+
+  function itemKey(group, index) {
+
+    return `cobi_${group}_${index}`;
+  }
+
+
+  /* =======================================================
+     LOAD TỪ VỰNG
+  ======================================================= */
+
+  async function loadVocab() {
+
+    const rows =
+      await loadVocabFromAPI();
+
+    const map =
+      new Map();
+
+
+    rows.forEach((row, index) => {
+
+      const id =
+        String(row.ID || '').trim();
+
+      if (!id) return;
+
+
+      if (!map.has(id)) {
+
+        map.set(
           id,
-          title:id,
-          items:[]
-        });
+          {
+            id: id,
+            title: id,
+            items: []
+          }
+        );
+
       }
+
 
       map.get(id).items.push({
 
-        id:itemKey(id,i),
+        id: itemKey(id, index),
 
-        hanzi:r['TU VUNG'],
+        hanzi:
+          String(row['TU VUNG'] || '').trim(),
 
-        pinyin:r.PINYIN,
+        pinyin:
+          String(row.PINYIN || '').trim(),
 
-        meaning:r.NGHIA,
+        meaning:
+          String(row.NGHIA || '').trim(),
 
-        example:r.VIDU
+        example:
+          String(row.VIDU || '').trim()
+
       });
 
     });
 
-    S.groups=[...map.values()];
 
-    if(!S.groupId)
-      S.groupId=S.groups[0]?.id||'';
+    S.groups =
+      Array.from(map.values());
 
-    setGroup(S.groupId,false);
+
+    if (
+      !S.groupId ||
+      !S.groups.some(
+        group => group.id === S.groupId
+      )
+    ) {
+
+      S.groupId =
+        S.groups[0]?.id || '';
+
+    }
+
+
+    setGroup(
+      S.groupId,
+      false
+    );
   }
 
 
-  /* ===================== CHỌN BỘ TỪ ===================== */
+  /* =======================================================
+     CHỌN NHÓM TỪ
+  ======================================================= */
 
-  function setGroup(id,rerender=true){
+  function setGroup(id, rerender = true) {
 
-    S.groupId=id;
+    S.groupId = id;
 
-    const g=S.groups.find(x=>x.id===id);
+    const group =
+      S.groups.find(
+        item => item.id === id
+      );
 
-    S.words=g?.items||[];
 
-    S.filtered=[...S.words];
+    S.words =
+      group?.items || [];
 
-    S.visible=50;
 
-    S.current=0;
+    S.filtered =
+      [...S.words];
 
-    S.study=false;
 
-    if(rerender)
+    S.visible = 50;
+
+    S.current = 0;
+
+    S.study = false;
+
+
+    if (rerender) {
       renderContent();
+    }
   }
 
 
-  /* ===================== GIAO DIỆN TÀNG THƯ ===================== */
+  /* =======================================================
+     GIAO DIỆN CHÍNH
+  ======================================================= */
 
-  function render(){
+  function render() {
 
-    app.innerHTML=`
+    app.innerHTML = `
 
       <section class="page tangthu-page">
 
         <div class="section-title">
 
-          <span class="cn">藏书阁</span>
+          <span class="cn">
+            藏书阁
+          </span>
 
           <span class="vi">
             Tàng Thư Các
@@ -271,7 +431,11 @@ const url=
         <div class="tangthu-tabs">
 
           <button
-            class="tangthu-tab ${S.tab==='vocab'?'active':''}"
+            class="tangthu-tab ${
+              S.tab === 'vocab'
+                ? 'active'
+                : ''
+            }"
             data-tab="vocab"
           >
             Từ vựng
@@ -279,7 +443,11 @@ const url=
 
 
           <button
-            class="tangthu-tab ${S.tab==='grammar'?'active':''}"
+            class="tangthu-tab ${
+              S.tab === 'grammar'
+                ? 'active'
+                : ''
+            }"
             data-tab="grammar"
           >
             Ngữ pháp
@@ -287,28 +455,47 @@ const url=
 
 
           <button
-            class="tangthu-tab ${S.tab==='reading'?'active':''}"
+            class="tangthu-tab ${
+              S.tab === 'reading'
+                ? 'active'
+                : ''
+            }"
             data-tab="reading"
           >
-            Bài khóa
+            Bài đọc
           </button>
 
         </div>
 
 
-        <div id="tangthu-content"></div>
+        <div id="tangthu-content">
+
+          <div class="card">
+
+            <div class="notice">
+              Đang tải Tàng Thư Các...
+            </div>
+
+          </div>
+
+        </div>
 
       </section>
+
     `;
 
 
     document
       .querySelectorAll('.tangthu-tab')
-      .forEach(b=>{
+      .forEach(button => {
 
-        b.onclick=()=>switchTab(
-          b.dataset.tab
-        );
+        button.onclick = () => {
+
+          switchTab(
+            button.dataset.tab
+          );
+
+        };
 
       });
 
@@ -317,75 +504,105 @@ const url=
   }
 
 
-  /* ===================== CHUYỂN TAB ===================== */
+  /* =======================================================
+     CHUYỂN TAB
+  ======================================================= */
 
-  function switchTab(tab){
+  function switchTab(tab) {
 
-    S.tab=tab;
+    S.tab = tab;
 
     render();
 
-    if(tab==='vocab'){
 
-      if(!S.groups.length){
+    if (tab === 'vocab') {
+
+      if (!S.groups.length) {
 
         loadVocab()
           .then(renderContent)
-          .catch(e=>
+          .catch(errorObject => {
+
             error(
               document.getElementById(
                 'tangthu-content'
               ),
-              e.message
-            )
-          );
+              errorObject.message
+            );
+
+          });
 
       }
 
-    }else{
-
-      unlock(tab);
-
+      return;
     }
 
+
+    unlock(tab);
   }
 
 
-  /* ===================== RENDER NỘI DUNG ===================== */
+  /* =======================================================
+     RENDER CONTENT
+  ======================================================= */
 
-  function renderContent(){
+  function renderContent() {
 
-    const box=
+    const box =
       document.getElementById(
         'tangthu-content'
       );
 
-    if(!box)return;
+
+    if (!box) return;
 
 
-    if(S.tab==='vocab')
-      return renderVocab(box);
+    if (S.tab === 'vocab') {
+
+      renderVocab(box);
+
+      return;
+    }
 
 
-    if(S.tab==='grammar')
-      return S.grammar
-        ?renderGrammar(box)
-        :unlock('grammar');
+    if (S.tab === 'grammar') {
+
+      if (S.grammar) {
+
+        renderGrammar(box);
+
+      } else {
+
+        unlock('grammar');
+
+      }
+
+      return;
+    }
 
 
-    return S.reading
-      ?renderReading(box)
-      :unlock('reading');
+    if (S.reading) {
+
+      renderReading(box);
+
+    } else {
+
+      unlock('reading');
+
+    }
   }
 
 
-  /* ===================== TỪ VỰNG ===================== */
+  /* =======================================================
+     TỪ VỰNG
+  ======================================================= */
 
-  function renderVocab(box){
+  function renderVocab(box) {
 
-    if(!S.groups.length){
+    if (!S.groups.length) {
 
-      box.innerHTML=`
+      box.innerHTML = `
+
         <div class="card">
 
           <div class="notice">
@@ -393,50 +610,68 @@ const url=
           </div>
 
         </div>
+
       `;
 
       loadVocab()
         .then(renderContent)
-        .catch(e=>error(box,e.message));
+        .catch(errorObject => {
+
+          error(
+            box,
+            errorObject.message
+          );
+
+        });
 
       return;
     }
 
 
-    if(S.study)
-      return renderStudy(box);
+    if (S.study) {
+
+      renderStudy(box);
+
+      return;
+    }
 
 
-    const g=
-      S.groups.find(x=>x.id===S.groupId)||
+    const group =
+      S.groups.find(
+        item => item.id === S.groupId
+      ) ||
       S.groups[0];
 
 
-    box.innerHTML=`
+    box.innerHTML = `
 
       <div class="card">
 
         <div class="group-list">
 
           ${
-            S.groups.map(x=>`
+            S.groups
+              .map(item => `
 
-              <button
-                class="group-chip ${
-                  x.id===g.id?'active':''
-                }"
-                data-group="${esc(x.id)}"
-              >
+                <button
+                  class="group-chip ${
+                    item.id === group.id
+                      ? 'active'
+                      : ''
+                  }"
+                  data-group="${esc(item.id)}"
+                >
 
-                ${esc(x.title)}
+                  ${esc(item.title)}
 
-                <small>
-                  ${x.items.length}
-                </small>
+                  <small>
+                    ${item.items.length}
+                  </small>
 
-              </button>
+                </button>
 
-            `).join('')
+              `)
+              .join('')
           }
 
         </div>
@@ -468,15 +703,10 @@ const url=
             <tr>
 
               <th>#</th>
-
               <th>汉字</th>
-
               <th>Pinyin</th>
-
               <th>Nghĩa</th>
-
               <th>Ví dụ</th>
-
               <th></th>
 
             </tr>
@@ -501,111 +731,149 @@ const url=
         </button>
 
       </div>
+
     `;
 
 
     document
       .querySelectorAll('[data-group]')
-      .forEach(b=>{
+      .forEach(button => {
 
-        b.onclick=()=>setGroup(
-          b.dataset.group
-        );
+        button.onclick = () => {
+
+          setGroup(
+            button.dataset.group
+          );
+
+        };
 
       });
 
 
-    document.getElementById(
-      'tt-search'
-    ).oninput=e=>{
-
-      const q=
-        e.target.value
-          .trim()
-          .toLowerCase();
+    const search =
+      document.getElementById(
+        'tt-search'
+      );
 
 
-      S.filtered=
-        S.words.filter(w=>
-          `${w.hanzi} ${w.pinyin} ${w.meaning} ${w.example}`
-            .toLowerCase()
-            .includes(q)
-        );
+    if (search) {
+
+      search.oninput = event => {
+
+        const query =
+          event.target.value
+            .trim()
+            .toLowerCase();
 
 
-      S.visible=50;
+        S.filtered =
+          S.words.filter(word => {
 
-      fillVocab();
-    };
+            const text = [
+
+              word.hanzi,
+              word.pinyin,
+              word.meaning,
+              word.example
+
+            ]
+              .join(' ')
+              .toLowerCase();
 
 
-    document.getElementById(
-      'tt-more'
-    ).onclick=()=>{
+            return text.includes(query);
 
-      S.visible+=50;
+          });
 
-      fillVocab();
-    };
+
+        S.visible = 50;
+
+        fillVocab();
+
+      };
+
+    }
+
+
+    const more =
+      document.getElementById(
+        'tt-more'
+      );
+
+
+    if (more) {
+
+      more.onclick = () => {
+
+        S.visible += 50;
+
+        fillVocab();
+
+      };
+
+    }
 
 
     fillVocab();
   }
 
 
-  /* ===================== HIỂN THỊ TỪ VỰNG ===================== */
+  /* =======================================================
+     HIỂN THỊ DANH SÁCH TỪ
+  ======================================================= */
 
-  function fillVocab(){
+  function fillVocab() {
 
-    const body=
+    const body =
       document.getElementById(
         'tt-body'
       );
 
-    const more=
+
+    const more =
       document.getElementById(
         'tt-more'
       );
 
 
-    if(!body)return;
+    if (!body) return;
 
 
-    body.innerHTML=
+    body.innerHTML =
       S.filtered
-        .slice(0,S.visible)
-        .map((w,i)=>`
+        .slice(0, S.visible)
+        .map((word, index) => `
 
           <tr
             class="${
-              S.learned[w.id]
-                ?'learned'
-                :''
+              S.learned[word.id]
+                ? 'learned'
+                : ''
             }"
           >
 
             <td>
-              ${i+1}
+              ${index + 1}
             </td>
 
 
             <td class="hanzi-cell">
-              ${esc(w.hanzi)}
+              ${esc(word.hanzi)}
             </td>
 
 
             <td>
-              ${esc(w.pinyin)}
+              ${esc(word.pinyin)}
             </td>
 
 
             <td>
-              ${esc(w.meaning)}
+              ${esc(word.meaning)}
             </td>
 
 
             <td>
-              ${esc(w.example)}
+              ${esc(word.example)}
             </td>
 
 
@@ -613,7 +881,7 @@ const url=
 
               <button
                 class="icon-btn"
-                data-speak="${esc(w.hanzi)}"
+                data-speak="${esc(word.hanzi)}"
                 title="Nghe"
               >
                 🔊
@@ -622,7 +890,7 @@ const url=
 
               <button
                 class="icon-btn"
-                data-study="${esc(w.id)}"
+                data-study="${esc(word.id)}"
                 title="Học từ"
               >
                 →
@@ -638,31 +906,41 @@ const url=
 
     document
       .querySelectorAll('[data-speak]')
-      .forEach(b=>
-        b.onclick=()=>speak(
-          b.dataset.speak
-        )
-      );
+      .forEach(button => {
+
+        button.onclick = () => {
+
+          speak(
+            button.dataset.speak
+          );
+
+        };
+
+      });
 
 
     document
       .querySelectorAll('[data-study]')
-      .forEach(b=>{
+      .forEach(button => {
 
-        b.onclick=()=>{
+        button.onclick = () => {
 
-          const i=
+          const index =
             S.words.findIndex(
-              w=>w.id===b.dataset.study
+              word =>
+                word.id ===
+                button.dataset.study
             );
 
-          if(i>=0){
 
-            S.current=i;
+          if (index >= 0) {
 
-            S.study=true;
+            S.current = index;
+
+            S.study = true;
 
             renderContent();
+
           }
 
         };
@@ -670,34 +948,43 @@ const url=
       });
 
 
-    more.style.display=
-      S.visible<S.filtered.length
-        ?'inline-flex'
-        :'none';
+    if (more) {
+
+      more.style.display =
+        S.visible < S.filtered.length
+          ? 'inline-flex'
+          : 'none';
+
+    }
   }
 
 
-  /* ===================== FLASHCARD ===================== */
+  /* =======================================================
+     FLASHCARD
+  ======================================================= */
 
-  function renderStudy(box){
+  function renderStudy(box) {
 
-    const w=S.words[S.current];
+    const word =
+      S.words[S.current];
 
 
-    if(!w){
+    if (!word) {
 
-      S.study=false;
+      S.study = false;
 
-      return renderVocab(box);
+      renderVocab(box);
+
+      return;
     }
 
 
-    box.innerHTML=`
+    box.innerHTML = `
 
       <div class="study-wrap">
 
         <div class="study-index">
-          ${S.current+1} / ${S.words.length}
+          ${S.current + 1} / ${S.words.length}
         </div>
 
 
@@ -708,7 +995,6 @@ const url=
 
           <div class="flip-inner">
 
-
             <div class="flip-face flip-front">
 
               <div class="front-label">
@@ -717,7 +1003,7 @@ const url=
 
 
               <div class="study-hanzi">
-                ${esc(w.hanzi)}
+                ${esc(word.hanzi)}
               </div>
 
 
@@ -744,17 +1030,17 @@ const url=
 
 
               <div class="study-hanzi small">
-                ${esc(w.hanzi)}
+                ${esc(word.hanzi)}
               </div>
 
 
               <div class="study-pinyin">
-                ${esc(w.pinyin)}
+                ${esc(word.pinyin)}
               </div>
 
 
               <div class="study-meaning">
-                ${esc(w.meaning)}
+                ${esc(word.meaning)}
               </div>
 
 
@@ -766,21 +1052,23 @@ const url=
 
 
                 <div class="example-cn">
-                  ${esc(w.example)}
+                  ${esc(word.example)}
                 </div>
 
 
                 ${
-                  w.example
-                  ?`
-                    <button
-                      class="speak-example"
-                      id="tt-example"
-                    >
-                      🔊 Nghe câu ví dụ
-                    </button>
-                  `
-                  :''
+                  word.example
+                    ? `
+
+                      <button
+                        class="speak-example"
+                        id="tt-example"
+                      >
+                        🔊 Nghe câu ví dụ
+                      </button>
+
+                    `
+                    : ''
                 }
 
               </div>
@@ -805,7 +1093,7 @@ const url=
           <button
             class="btn secondary"
             id="tt-prev"
-            ${S.current===0?'disabled':''}
+            ${S.current === 0 ? 'disabled' : ''}
           >
             ← Từ trước
           </button>
@@ -816,9 +1104,9 @@ const url=
             id="tt-learn"
           >
             ${
-              S.learned[w.id]
-                ?'✓ Đã học'
-                :'Đánh dấu đã học'
+              S.learned[word.id]
+                ? '✓ Đã học'
+                : 'Đánh dấu đã học'
             }
           </button>
 
@@ -845,44 +1133,65 @@ const url=
         </div>
 
       </div>
+
     `;
 
 
-    const flip=()=>
-      document
-        .getElementById('tt-flip')
-        .classList.toggle('flipped');
+    const flip = () => {
+
+      const card =
+        document.getElementById(
+          'tt-flip'
+        );
+
+      if (card) {
+        card.classList.toggle(
+          'flipped'
+        );
+      }
+
+    };
 
 
     document.getElementById(
       'tt-flip'
-    ).onclick=flip;
+    )?.addEventListener(
+      'click',
+      flip
+    );
 
 
     document.getElementById(
       'tt-flip-btn'
-    ).onclick=flip;
+    )?.addEventListener(
+      'click',
+      flip
+    );
 
 
     document.getElementById(
       'tt-speak'
-    ).onclick=e=>{
+    )?.addEventListener(
+      'click',
+      event => {
 
-      e.stopPropagation();
+        event.stopPropagation();
 
-      speak(w.hanzi);
-    };
+        speak(word.hanzi);
+
+      }
+    );
 
 
     document.getElementById(
       'tt-example'
     )?.addEventListener(
       'click',
-      e=>{
+      event => {
 
-        e.stopPropagation();
+        event.stopPropagation();
 
-        speak(w.example);
+        speak(word.example);
 
       }
     );
@@ -890,75 +1199,104 @@ const url=
 
     document.getElementById(
       'tt-prev'
-    ).onclick=()=>{
+    )?.addEventListener(
+      'click',
+      () => {
 
-      S.current--;
+        if (S.current > 0) {
 
-      renderContent();
-    };
+          S.current--;
+
+          renderContent();
+
+        }
+
+      }
+    );
 
 
     document.getElementById(
       'tt-next'
-    ).onclick=()=>{
+    )?.addEventListener(
+      'click',
+      () => {
 
-      S.current=
-        (S.current+1)%S.words.length;
+        S.current =
+          (S.current + 1) %
+          S.words.length;
 
-      renderContent();
-    };
+        renderContent();
+
+      }
+    );
 
 
     document.getElementById(
       'tt-learn'
-    ).onclick=()=>{
+    )?.addEventListener(
+      'click',
+      () => {
 
-      S.learned[w.id]=true;
+        S.learned[word.id] = true;
 
-      localStorage.setItem(
-        'cobi_tangthu_learned',
-        JSON.stringify(S.learned)
-      );
 
-      renderContent();
-    };
+        localStorage.setItem(
+          'cobi_tangthu_learned',
+          JSON.stringify(
+            S.learned
+          )
+        );
+
+
+        renderContent();
+
+      }
+    );
 
 
     document.getElementById(
       'tt-list'
-    ).onclick=()=>{
+    )?.addEventListener(
+      'click',
+      () => {
 
-      S.study=false;
+        S.study = false;
 
-      renderContent();
-    };
+        renderContent();
 
+      }
+    );
   }
 
 
-  /* ===================== KHÓA NGỮ PHÁP / BÀI KHÓA ===================== */
+  /* =======================================================
+     KHÓA NGỮ PHÁP / BÀI ĐỌC
+  ======================================================= */
 
-  async function unlock(type){
+  async function unlock(type) {
 
-    const box=
+    const box =
       document.getElementById(
         'tangthu-content'
       );
 
-    if(!box)return;
+
+    if (!box) return;
 
 
-    box.innerHTML=`
+    const title =
+      type === 'grammar'
+        ? 'Ngữ pháp'
+        : 'Bài đọc';
+
+
+    box.innerHTML = `
 
       <div class="card">
 
         <div class="notice">
 
-          Nội dung ${
-            type==='grammar'
-              ?'Ngữ pháp'
-              :'Bài khóa'
-          }
+          Nội dung ${title}
           được bảo vệ.
 
         </div>
@@ -972,368 +1310,357 @@ const url=
         </button>
 
       </div>
+
     `;
 
 
     document.getElementById(
       'tt-unlock'
-    ).onclick=async()=>{
+    )?.addEventListener(
+      'click',
+      async () => {
 
-      const code=prompt(
-        `Nhập mã truy cập ${
-          type==='grammar'
-            ?'Ngữ pháp'
-            :'Bài khóa'
-        }:`
-      );
-
-
-      if(!code)return;
-
-
-      box.innerHTML=`
-
-        <div class="card">
-
-          <div class="notice">
-            Đang xác thực mã và thiết bị...
-          </div>
-
-        </div>
-
-      `;
-
-
-      try{
-
-        const login=
-          await api(
-            'login',
-            code.trim()
+        const code =
+          prompt(
+            `Nhập mã truy cập ${title}:`
           );
 
 
-        S.token=
-          login.token||
-          code.trim();
+        if (!code) return;
 
 
-        const data=
-          await api(
-            type==='grammar'
-              ?'getGrammar'
-              :'getReading',
-            S.token
-          );
-
-
-        if(type==='grammar')
-          S.grammar=data.items||[];
-        else
-          S.reading=data.items||[];
-
-
-        renderContent();
-
-
-      }catch(e){
-
-        box.innerHTML=`
+        box.innerHTML = `
 
           <div class="card">
 
             <div class="notice">
-              ${esc(e.message)}
+              Đang xác thực mã và thiết bị...
             </div>
-
-
-            <button
-              class="btn secondary"
-              id="tt-retry"
-            >
-              Thử lại
-            </button>
 
           </div>
 
         `;
 
 
-        document.getElementById(
-          'tt-retry'
-        ).onclick=()=>unlock(type);
+        try {
+
+          /*
+             Bước 1:
+             Đăng nhập + khóa thiết bị
+          */
+
+          await api(
+            'login',
+            code.trim()
+          );
+
+
+          /*
+             Bước 2:
+             Lấy nội dung được bảo vệ
+          */
+
+          const result =
+            await api(
+              type === 'grammar'
+                ? 'getGrammar'
+                : 'getReading',
+              code.trim()
+            );
+
+
+          /*
+             Apps Script trả:
+             {
+               success: true,
+               data: [...]
+             }
+          */
+
+          if (type === 'grammar') {
+
+            S.grammar =
+              result.data || [];
+
+          } else {
+
+            S.reading =
+              result.data || [];
+
+          }
+
+
+          renderContent();
+
+        } catch (errorObject) {
+
+          box.innerHTML = `
+
+            <div class="card">
+
+              <div class="notice">
+                ${esc(errorObject.message)}
+              </div>
+
+
+              <button
+                class="btn secondary"
+                id="tt-retry"
+              >
+                Thử lại
+              </button>
+
+            </div>
+
+          `;
+
+
+          document.getElementById(
+            'tt-retry'
+          )?.addEventListener(
+            'click',
+            () => unlock(type)
+          );
+
+        }
 
       }
-
-    };
-
+    );
   }
 
 
-  /* ===================== DEVICE ID ===================== */
+  /* =======================================================
+     NGỮ PHÁP
+  ======================================================= */
 
-  function deviceId(){
+  function renderGrammar(box) {
 
-    let id=
-      localStorage.getItem(
-        'cobi_device_id'
-      );
+    if (!S.grammar?.length) {
 
+      box.innerHTML = `
 
-    if(!id){
+        <div class="card">
 
-      const c=window.crypto;
+          <div class="notice">
+            Chưa có dữ liệu ngữ pháp.
+          </div>
 
+        </div>
 
-      id=
-        c?.randomUUID
-          ?c.randomUUID()
-          :`cobi-${Date.now()}-${Math.random()
-              .toString(36)
-              .slice(2)}`;
+      `;
 
-
-      localStorage.setItem(
-        'cobi_device_id',
-        id
-      );
-
+      return;
     }
 
 
-    return id;
-  }
-
-
-  /* ===================== GOOGLE APPS SCRIPT API ===================== */
-
-  async function api(action,code){
-
-    if(
-      !TANGTHU_CONFIG.apiUrl||
-      TANGTHU_CONFIG.apiUrl.includes('DÁN_')
-    ){
-
-      throw Error(
-        'Chưa nhập Web App URL trong script.js.'
-      );
-
-    }
-
-
-    const r=
-      await fetch(
-        TANGTHU_CONFIG.apiUrl,
-        {
-          method:'POST',
-
-          headers:{
-            'Content-Type':
-              'text/plain;charset=utf-8'
-          },
-
-          body:JSON.stringify({
-
-            action,
-
-            code,
-
-            deviceId:deviceId()
-
-          })
-        }
-      );
-
-
-    if(!r.ok)
-      throw Error(
-        'Không kết nối được máy chủ.'
-      );
-
-
-    const data=await r.json();
-
-
-    if(!data.ok)
-      throw Error(
-        data.message||
-        'Mã truy cập không hợp lệ.'
-      );
-
-
-    return data;
-  }
-
-
-  /* ===================== NGỮ PHÁP ===================== */
-
-  function renderGrammar(box){
-
-    box.innerHTML=`
+    box.innerHTML = `
 
       <div class="grammar-grid">
 
         ${
-          S.grammar.map(x=>`
+          S.grammar
+            .map(item => `
 
-            <article class="card grammar-card">
+              <article class="card grammar-card">
 
-              <h3>
-                ${esc(x.TIEUDE)}
-              </h3>
-
-
-              <div class="grammar-structure">
-                ${esc(x.CAUTRUC)}
-              </div>
+                <h3>
+                  ${esc(item.TIEUDE)}
+                </h3>
 
 
-              <p>
-                ${esc(x.GIAITHICH)}
-              </p>
+                <div class="grammar-structure">
+                  ${esc(item.CAUTRUC)}
+                </div>
 
 
-              <div class="example-box">
-
-                <b>例：</b>
-
-                ${esc(x.VIDU)}
+                <p>
+                  ${esc(item.GIAITHICH)}
+                </p>
 
 
-                <button
-                  class="icon-btn"
-                  data-g="${esc(x.VIDU)}"
-                >
-                  🔊
-                </button>
+                <div class="example-box">
 
-              </div>
+                  <b>例：</b>
 
-            </article>
+                  ${esc(item.VIDU)}
 
-          `).join('')
+
+                  ${
+                    item.VIDU
+                      ? `
+
+                        <button
+                          class="icon-btn"
+                          data-g="${esc(item.VIDU)}"
+                        >
+                          🔊
+                        </button>
+
+                      `
+                      : ''
+                  }
+
+                </div>
+
+              </article>
+
+            `)
+            .join('')
         }
 
       </div>
+
     `;
 
 
     document
       .querySelectorAll('[data-g]')
-      .forEach(b=>
-        b.onclick=()=>speak(
-          b.dataset.g
-        )
-      );
+      .forEach(button => {
 
+        button.onclick = () => {
+
+          speak(
+            button.dataset.g
+          );
+
+        };
+
+      });
   }
 
 
-  /* ===================== BÀI KHÓA ===================== */
+  /* =======================================================
+     BÀI ĐỌC
+  ======================================================= */
 
-  function renderReading(box){
+  function renderReading(box) {
 
-    box.innerHTML=`
+    if (!S.reading?.length) {
+
+      box.innerHTML = `
+
+        <div class="card">
+
+          <div class="notice">
+            Chưa có dữ liệu bài đọc.
+          </div>
+
+        </div>
+
+      `;
+
+      return;
+    }
+
+
+    box.innerHTML = `
 
       <div class="reading-grid">
 
         ${
-          S.reading.map((x,i)=>`
+          S.reading
+            .map((item, index) => `
 
-            <article
-              class="card reading-card"
-            >
-
-              <div class="reading-head">
-
-                <span>
-                  ${esc(x.LEVEL)}
-                </span>
-
-
-                <h3>
-                  ${
-                    esc(
-                      x.TIEUDE||
-                      `Bài ${i+1}`
-                    )
-                  }
-                </h3>
-
-              </div>
-
-
-              <div class="reading-text">
-                ${esc(x.TEXT)}
-              </div>
-
-
-              <button
-                class="btn secondary tt-pinyin"
-                data-i="${i}"
+              <article
+                class="card reading-card"
               >
-                Hiện Pinyin
-              </button>
+
+                <div class="reading-head">
+
+                  <span>
+                    ${esc(item.LEVEL)}
+                  </span>
 
 
-              <div
-                class="reading-pinyin"
-                id="tt-p-${i}"
-                hidden
-              >
-                ${esc(x.PINYIN)}
-              </div>
+                  <h3>
+                    ${
+                      esc(
+                        item.TIEUDE ||
+                        `Bài ${index + 1}`
+                      )
+                    }
+                  </h3>
 
-
-              <details>
-
-                <summary>
-                  Nghĩa tiếng Việt
-                </summary>
-
-
-                <div class="reading-meaning">
-                  ${esc(x.NGHIA)}
                 </div>
 
-              </details>
+
+                <div class="reading-text">
+                  ${esc(item.TEXT)}
+                </div>
 
 
-              <button
-                class="speak-btn"
-                data-r="${esc(x.TEXT)}"
-              >
-                🔊 Nghe bài khóa
-              </button>
+                <button
+                  class="btn secondary tt-pinyin"
+                  data-i="${index}"
+                >
+                  Hiện Pinyin
+                </button>
 
-            </article>
 
-          `).join('')
+                <div
+                  class="reading-pinyin"
+                  id="tt-p-${index}"
+                  hidden
+                >
+                  ${esc(item.PINYIN)}
+                </div>
+
+
+                <details>
+
+                  <summary>
+                    Nghĩa tiếng Việt
+                  </summary>
+
+
+                  <div class="reading-meaning">
+                    ${esc(item.NGHIA)}
+                  </div>
+
+                </details>
+
+
+                <button
+                  class="speak-btn"
+                  data-r="${esc(item.TEXT)}"
+                >
+                  🔊 Nghe bài đọc
+                </button>
+
+              </article>
+
+            `)
+            .join('')
         }
 
       </div>
+
     `;
 
 
     document
       .querySelectorAll('.tt-pinyin')
-      .forEach(b=>{
+      .forEach(button => {
 
-        b.onclick=()=>{
+        button.onclick = () => {
 
-          const e=
+          const element =
             document.getElementById(
-              'tt-p-'+b.dataset.i
+              `tt-p-${button.dataset.i}`
             );
 
 
-          e.hidden=!e.hidden;
+          if (!element) return;
 
 
-          b.textContent=
-            e.hidden
-              ?'Hiện Pinyin'
-              :'Ẩn Pinyin';
+          element.hidden =
+            !element.hidden;
+
+
+          button.textContent =
+            element.hidden
+              ? 'Hiện Pinyin'
+              : 'Ẩn Pinyin';
 
         };
 
@@ -1342,52 +1669,91 @@ const url=
 
     document
       .querySelectorAll('[data-r]')
-      .forEach(b=>
-        b.onclick=()=>speak(
-          b.dataset.r
-        )
-      );
+      .forEach(button => {
 
+        button.onclick = () => {
+
+          speak(
+            button.dataset.r
+          );
+
+        };
+
+      });
   }
 
 
-  /* ===================== LỖI ===================== */
+  /* =======================================================
+     HIỂN THỊ LỖI
+  ======================================================= */
 
-  function error(box,msg){
+  function error(box, message) {
 
-    box.innerHTML=`
+    if (!box) return;
+
+
+    box.innerHTML = `
 
       <div class="card">
 
         <div class="notice">
 
-          ${esc(msg)}
+          ${esc(message)}
 
         </div>
+
+
+        <button
+          class="btn secondary"
+          id="tt-reload-vocab"
+        >
+          Thử tải lại
+        </button>
 
       </div>
 
     `;
 
+
+    document.getElementById(
+      'tt-reload-vocab'
+    )?.addEventListener(
+      'click',
+      () => {
+
+        S.groups = [];
+
+        S.groupId = '';
+
+        S.words = [];
+
+        S.filtered = [];
+
+        renderContent();
+
+      }
+    );
   }
 
 
-  /* ===================== KHỞI ĐỘNG ===================== */
+  /* =======================================================
+     KHỞI ĐỘNG
+  ======================================================= */
 
-  async function init(){
+  async function init() {
 
-    try{
+    try {
 
-      S.learned=
+      S.learned =
         JSON.parse(
           localStorage.getItem(
             'cobi_tangthu_learned'
-          )||'{}'
+          ) || '{}'
         );
 
-    }catch(e){
+    } catch (errorObject) {
 
-      S.learned={};
+      S.learned = {};
 
     }
 
@@ -1395,40 +1761,48 @@ const url=
     render();
 
 
-    try{
+    /*
+       Tải TUVUNG ngay khi vào Tàng Thư Các
+    */
+
+    try {
 
       await loadVocab();
 
       renderContent();
 
-    }catch(e){
+    } catch (errorObject) {
 
       error(
         document.getElementById(
           'tangthu-content'
         ),
-        e.message
+        errorObject.message
       );
 
     }
-
   }
 
 
-  return{
-    render:init
+  return {
+    render: init
   };
 
 })();
 
 
-/* ===================== TRANG CHỦ ===================== */
+/* =========================================================
+   TRANG CHỦ
+========================================================= */
 
-function renderHome(){
+function renderHome() {
 
-  app.innerHTML=`
+  app.innerHTML = `
 
     <section class="page home-page">
+
+
+      <!-- HERO -->
 
       <div class="hero">
 
@@ -1436,24 +1810,31 @@ function renderHome(){
           漢 · 書 · 語 · 學
         </div>
 
+
         <h1>
+
           <span class="hero-vn">
             Thư Quán Hán Ngữ
           </span>
 
+
           <span class="hero-cobi">
             CoBi
           </span>
+
         </h1>
+
 
         <h2>
           一朝入书馆，一生伴汉语
         </h2>
 
+
         <p>
           Một ngày nhập Thư Quán,
           trọn đời hành Hán Ngữ.
         </p>
+
 
         <div class="hero-ornament">
           — ❖ —
@@ -1462,7 +1843,7 @@ function renderHome(){
       </div>
 
 
-      <!-- ================= 3 MỤC CHÍNH ================= -->
+      <!-- 3 KHU VỰC CHÍNH -->
 
       <div class="home-main-grid">
 
@@ -1478,21 +1859,25 @@ function renderHome(){
             藏
           </div>
 
+
           <div class="home-card-content">
 
             <h3>
               Tàng Thư Các
             </h3>
 
+
             <p>
               Kho tàng kiến thức – Nền tảng vững bền.
             </p>
+
 
             <div class="home-card-cn">
               知识宝库，坚实基础
             </div>
 
           </div>
+
 
           <span class="home-card-arrow">
             进入 →
@@ -1505,12 +1890,13 @@ function renderHome(){
 
         <a
           class="home-main-card"
-          href="https://thuquanhanngucobi.github.io/cobi-du-lac-hien/"
+          href="${TANGTHU_CONFIG.duLacHien}"
         >
 
           <div class="home-card-symbol">
             游
           </div>
+
 
           <div class="home-card-content">
 
@@ -1518,15 +1904,18 @@ function renderHome(){
               Du Lạc Hiên
             </h3>
 
+
             <p>
               Ôn tập – Luyện tập – Học mà vui.
             </p>
+
 
             <div class="home-card-cn">
               温故练习，学而有乐
             </div>
 
           </div>
+
 
           <span class="home-card-arrow">
             进入 →
@@ -1539,12 +1928,13 @@ function renderHome(){
 
         <a
           class="home-main-card"
-          href="https://thuquanhanngucobi.github.io/cobi-khao-thi-duong/"
+          href="${TANGTHU_CONFIG.khaoThiDuong}"
         >
 
           <div class="home-card-symbol">
             考
           </div>
+
 
           <div class="home-card-content">
 
@@ -1552,15 +1942,18 @@ function renderHome(){
               Khảo Thí Đường
             </h3>
 
+
             <p>
               Luyện đề – Kiểm tra – Chinh phục HSK.
             </p>
+
 
             <div class="home-card-cn">
               模拟考试，检验实力
             </div>
 
           </div>
+
 
           <span class="home-card-arrow">
             进入 →
@@ -1574,39 +1967,122 @@ function renderHome(){
     </section>
 
   `;
-
 }
 
 
-/* ===================== ĐIỀU HƯỚNG ===================== */
+/* =========================================================
+   ĐIỀU HƯỚNG
+========================================================= */
 
-function route(){
-  let h=location.hash.slice(1)||'home';
+function route() {
 
-  if(['practice','hsk4'].includes(h)){
-    renderPracticeHome();
-  }
-  else if(h==='knowledge'){
-    CoBiTangThu.render(document.getElementById('app'));
-  }
-  else if(h==='review'){
-    renderReviewHome();
-  }
-  else if(h==='review-hsk'){
-    renderReviewHsk();
-  }
-  else if(h==='review-hsk2'){
-    renderHsk2Vocab();
-  }
-  else{
+  const hash =
+    location.hash.slice(1) || 'home';
+
+
+  /*
+     Trang chủ
+  */
+
+  if (
+    hash === 'home' ||
+    hash === ''
+  ) {
+
     renderHome();
+
   }
 
-  document.querySelectorAll('.main-nav a').forEach(a=>{
-    a.classList.toggle(
-      'active',
-      a.dataset.route===h ||
-      (a.dataset.route==='review' && h.startsWith('review'))
-    );
-  });
+
+  /*
+     Tàng Thư Các
+  */
+
+  else if (
+    hash === 'knowledge'
+  ) {
+
+    CoBiTangThu.render();
+
+  }
+
+
+  /*
+     Các route cũ:
+     chuyển thẳng sang repo mới
+  */
+
+  else if (
+    hash === 'review' ||
+    hash === 'review-hsk' ||
+    hash === 'review-hsk2'
+  ) {
+
+    window.location.href =
+      TANGTHU_CONFIG.duLacHien;
+
+    return;
+
+  }
+
+
+  else if (
+    hash === 'practice' ||
+    hash === 'hsk4'
+  ) {
+
+    window.location.href =
+      TANGTHU_CONFIG.khaoThiDuong;
+
+    return;
+
+  }
+
+
+  /*
+     Route không xác định
+  */
+
+  else {
+
+    renderHome();
+
+  }
+
+
+  /*
+     Active menu
+  */
+
+  document
+    .querySelectorAll('.main-nav a')
+    .forEach(link => {
+
+      const routeName =
+        link.dataset.route;
+
+
+      link.classList.toggle(
+        'active',
+        routeName === hash ||
+        (
+          routeName === 'review' &&
+          hash.startsWith('review')
+        )
+      );
+
+    });
 }
+
+
+/* =========================================================
+   KHỞI ĐỘNG WEBSITE
+========================================================= */
+
+window.addEventListener(
+  'hashchange',
+  route
+);
+
+
+route();
