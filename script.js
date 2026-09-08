@@ -2,7 +2,7 @@ const app = document.getElementById('app');
 const toastEl = document.getElementById('toast');
 
 /* =========================================================
-   CẤU HÌNH TÀNG THƯ CÁC
+   CẤU HÌNH
 ========================================================= */
 
 const TANGTHU_CONFIG = {
@@ -34,7 +34,6 @@ const esc = value =>
 
 
 function toast(message) {
-
   if (!toastEl) {
     alert(message);
     return;
@@ -52,7 +51,6 @@ function toast(message) {
 
 
 function speak(text) {
-
   if (!('speechSynthesis' in window)) {
     toast('Trình duyệt không hỗ trợ đọc tiếng Trung.');
     return;
@@ -72,16 +70,13 @@ function speak(text) {
 
 /* =========================================================
    DEVICE ID
-   KHÔNG THAY ĐỔI CƠ CHẾ BẢO MẬT
+   GIỮ NGUYÊN CƠ CHẾ BẢO MẬT
 ========================================================= */
 
 function getDeviceId() {
-
-  let id =
-    localStorage.getItem('cobi_device_id');
+  let id = localStorage.getItem('cobi_device_id');
 
   if (!id) {
-
     const cryptoObj = window.crypto;
 
     id =
@@ -91,10 +86,7 @@ function getDeviceId() {
             .toString(36)
             .slice(2)}`;
 
-    localStorage.setItem(
-      'cobi_device_id',
-      id
-    );
+    localStorage.setItem('cobi_device_id', id);
   }
 
   return id;
@@ -102,32 +94,28 @@ function getDeviceId() {
 
 
 /* =========================================================
-   GỌI GOOGLE APPS SCRIPT
+   APPS SCRIPT
+   DÙNG CHO NGỮ PHÁP / BÀI ĐỌC
 ========================================================= */
 
 async function api(action, code = '') {
-
   if (
     !TANGTHU_CONFIG.apiUrl ||
     TANGTHU_CONFIG.apiUrl.includes('DÁN_')
   ) {
-    throw new Error(
-      'Chưa cấu hình Web App URL.'
-    );
+    throw new Error('Chưa cấu hình Web App URL.');
   }
 
   let response;
 
   try {
-
     response = await fetch(
       TANGTHU_CONFIG.apiUrl,
       {
         method: 'POST',
 
         headers: {
-          'Content-Type':
-            'text/plain;charset=utf-8'
+          'Content-Type': 'text/plain;charset=utf-8'
         },
 
         body: JSON.stringify({
@@ -137,58 +125,31 @@ async function api(action, code = '') {
         })
       }
     );
-
   } catch (error) {
-
-    console.error(
-      'Lỗi kết nối Apps Script:',
-      error
-    );
+    console.error('Lỗi kết nối Apps Script:', error);
 
     throw new Error(
       'Không thể kết nối máy chủ Tàng Thư Các.'
     );
   }
 
-
   if (!response.ok) {
-
     throw new Error(
       `Máy chủ trả về lỗi ${response.status}.`
     );
   }
 
-
   let result;
 
   try {
-
     result = await response.json();
-
   } catch (error) {
-
     throw new Error(
       'Máy chủ trả về dữ liệu không hợp lệ.'
     );
   }
 
-
-  /*
-     Apps Script của bạn trả:
-     {
-       success: true,
-       data: [...]
-     }
-
-     hoặc:
-     {
-       success: false,
-       message: '...'
-     }
-  */
-
   if (!result.success) {
-
     throw new Error(
       result.message ||
       'Không có quyền truy cập.'
@@ -200,54 +161,152 @@ async function api(action, code = '') {
 
 
 /* =========================================================
-   ĐỌC TUVUNG QUA APPS SCRIPT
+   TẢI TUVUNG BẰNG GOOGLE SHEETS JSONP
+   KHÔNG DÙNG FETCH -> TRÁNH CORS
 ========================================================= */
 
-async function loadVocabFromAPI() {
+function loadVocabFromGoogleSheet() {
+  return new Promise((resolve, reject) => {
 
-  const result =
-    await fetch(
-      TANGTHU_CONFIG.apiUrl +
-      '?action=getVocab',
-      {
-        method: 'GET',
-        cache: 'no-store'
+    const callbackName =
+      'cobiVocabCallback_' +
+      Date.now() +
+      '_' +
+      Math.random()
+        .toString(36)
+        .slice(2);
+
+    const script =
+      document.createElement('script');
+
+    let finished = false;
+
+    const cleanup = () => {
+      try {
+        delete window[callbackName];
+      } catch (e) {
+        window[callbackName] = undefined;
       }
+
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+    };
+
+    const fail = message => {
+      if (finished) return;
+
+      finished = true;
+      cleanup();
+
+      reject(
+        new Error(message)
+      );
+    };
+
+    window[callbackName] = response => {
+      if (finished) return;
+
+      finished = true;
+      cleanup();
+
+      try {
+
+        if (
+          !response ||
+          !response.table
+        ) {
+          throw new Error(
+            'Google Sheets không trả về dữ liệu.'
+          );
+        }
+
+        const table =
+          response.table;
+
+        const cols =
+          table.cols || [];
+
+        const rows =
+          table.rows || [];
+
+        const headers =
+          cols.map((col, index) => {
+            return (
+              col.label ||
+              col.id ||
+              `COL_${index}`
+            );
+          });
+
+        const result =
+          rows.map(row => {
+
+            const obj = {};
+
+            headers.forEach(
+              (header, index) => {
+
+                const cell =
+                  row.c?.[index];
+
+                obj[header] =
+                  cell &&
+                  cell.v !== undefined
+                    ? cell.v
+                    : '';
+              }
+            );
+
+            return obj;
+          });
+
+        resolve(result);
+
+      } catch (error) {
+        reject(error);
+      }
+    };
+
+
+    script.onerror = () => {
+      fail(
+        'Không thể tải dữ liệu TUVUNG từ Google Sheets.'
+      );
+    };
+
+
+    const params = new URLSearchParams();
+
+    params.set(
+      'sheet',
+      'TUVUNG'
     );
 
-
-  if (!result.ok) {
-
-    throw new Error(
-      `Không thể kết nối Tàng Thư Các API (${result.status}).`
+    params.set(
+      'tqx',
+      `out:json;responseHandler:${callbackName}`
     );
-  }
 
+    script.src =
+      `https://docs.google.com/spreadsheets/d/` +
+      `${TANGTHU_CONFIG.spreadsheetId}/gviz/tq?` +
+      params.toString();
 
-  let json;
+    script.async = true;
 
-  try {
+    document.head.appendChild(script);
 
-    json = await result.json();
+    setTimeout(() => {
 
-  } catch (error) {
+      if (!finished) {
+        fail(
+          'Quá thời gian tải TUVUNG. Hãy kiểm tra quyền truy cập Google Sheet.'
+        );
+      }
 
-    throw new Error(
-      'Tàng Thư Các API không trả về dữ liệu JSON hợp lệ.'
-    );
-  }
-
-
-  if (!json.success) {
-
-    throw new Error(
-      json.message ||
-      'Không thể tải dữ liệu TUVUNG.'
-    );
-  }
-
-
-  return json.data || [];
+    }, 20000);
+  });
 }
 
 
@@ -285,7 +344,6 @@ const CoBiTangThu = (() => {
 
 
   function itemKey(group, index) {
-
     return `cobi_${group}_${index}`;
   }
 
@@ -297,16 +355,25 @@ const CoBiTangThu = (() => {
   async function loadVocab() {
 
     const rows =
-      await loadVocabFromAPI();
+      await loadVocabFromGoogleSheet();
 
-    const map =
-      new Map();
+    if (!Array.isArray(rows)) {
+      throw new Error(
+        'Dữ liệu TUVUNG không hợp lệ.'
+      );
+    }
+
+    const map = new Map();
 
 
     rows.forEach((row, index) => {
 
       const id =
-        String(row.ID || '').trim();
+        String(
+          row.ID ||
+          row.id ||
+          ''
+        ).trim();
 
       if (!id) return;
 
@@ -327,19 +394,36 @@ const CoBiTangThu = (() => {
 
       map.get(id).items.push({
 
-        id: itemKey(id, index),
+        id: itemKey(
+          id,
+          index
+        ),
 
         hanzi:
-          String(row['TU VUNG'] || '').trim(),
+          String(
+            row['TU VUNG'] ||
+            row['TU_VUNG'] ||
+            row.TU_VUNG ||
+            ''
+          ).trim(),
 
         pinyin:
-          String(row.PINYIN || '').trim(),
+          String(
+            row.PINYIN ||
+            ''
+          ).trim(),
 
         meaning:
-          String(row.NGHIA || '').trim(),
+          String(
+            row.NGHIA ||
+            ''
+          ).trim(),
 
         example:
-          String(row.VIDU || '').trim()
+          String(
+            row.VIDU ||
+            ''
+          ).trim()
 
       });
 
@@ -347,18 +431,28 @@ const CoBiTangThu = (() => {
 
 
     S.groups =
-      Array.from(map.values());
+      Array.from(
+        map.values()
+      );
+
+
+    if (!S.groups.length) {
+      throw new Error(
+        'Không tìm thấy dữ liệu TUVUNG.'
+      );
+    }
 
 
     if (
       !S.groupId ||
       !S.groups.some(
-        group => group.id === S.groupId
+        group =>
+          group.id === S.groupId
       )
     ) {
 
       S.groupId =
-        S.groups[0]?.id || '';
+        S.groups[0].id;
 
     }
 
@@ -367,6 +461,7 @@ const CoBiTangThu = (() => {
       S.groupId,
       false
     );
+
   }
 
 
@@ -374,13 +469,17 @@ const CoBiTangThu = (() => {
      CHỌN NHÓM TỪ
   ======================================================= */
 
-  function setGroup(id, rerender = true) {
+  function setGroup(
+    id,
+    rerender = true
+  ) {
 
     S.groupId = id;
 
     const group =
       S.groups.find(
-        item => item.id === id
+        item =>
+          item.id === id
       );
 
 
@@ -402,6 +501,7 @@ const CoBiTangThu = (() => {
     if (rerender) {
       renderContent();
     }
+
   }
 
 
@@ -501,6 +601,7 @@ const CoBiTangThu = (() => {
 
 
     renderContent();
+
   }
 
 
@@ -535,10 +636,12 @@ const CoBiTangThu = (() => {
       }
 
       return;
+
     }
 
 
     unlock(tab);
+
   }
 
 
@@ -562,6 +665,7 @@ const CoBiTangThu = (() => {
       renderVocab(box);
 
       return;
+
     }
 
 
@@ -578,6 +682,7 @@ const CoBiTangThu = (() => {
       }
 
       return;
+
     }
 
 
@@ -590,6 +695,7 @@ const CoBiTangThu = (() => {
       unlock('reading');
 
     }
+
   }
 
 
@@ -613,6 +719,7 @@ const CoBiTangThu = (() => {
 
       `;
 
+
       loadVocab()
         .then(renderContent)
         .catch(errorObject => {
@@ -625,6 +732,7 @@ const CoBiTangThu = (() => {
         });
 
       return;
+
     }
 
 
@@ -633,12 +741,14 @@ const CoBiTangThu = (() => {
       renderStudy(box);
 
       return;
+
     }
 
 
     const group =
       S.groups.find(
-        item => item.id === S.groupId
+        item =>
+          item.id === S.groupId
       ) ||
       S.groups[0];
 
@@ -703,10 +813,15 @@ const CoBiTangThu = (() => {
             <tr>
 
               <th>#</th>
+
               <th>汉字</th>
+
               <th>Pinyin</th>
+
               <th>Nghĩa</th>
+
               <th>Ví dụ</th>
+
               <th></th>
 
             </tr>
@@ -772,8 +887,11 @@ const CoBiTangThu = (() => {
             const text = [
 
               word.hanzi,
+
               word.pinyin,
+
               word.meaning,
+
               word.example
 
             ]
@@ -815,6 +933,7 @@ const CoBiTangThu = (() => {
 
 
     fillVocab();
+
   }
 
 
@@ -841,66 +960,71 @@ const CoBiTangThu = (() => {
 
     body.innerHTML =
       S.filtered
-        .slice(0, S.visible)
-        .map((word, index) => `
+        .slice(
+          0,
+          S.visible
+        )
+        .map(
+          (word, index) => `
 
-          <tr
-            class="${
-              S.learned[word.id]
-                ? 'learned'
-                : ''
-            }"
-          >
+            <tr
+              class="${
+                S.learned[word.id]
+                  ? 'learned'
+                  : ''
+              }"
+            >
 
-            <td>
-              ${index + 1}
-            </td>
-
-
-            <td class="hanzi-cell">
-              ${esc(word.hanzi)}
-            </td>
-
-
-            <td>
-              ${esc(word.pinyin)}
-            </td>
+              <td>
+                ${index + 1}
+              </td>
 
 
-            <td>
-              ${esc(word.meaning)}
-            </td>
+              <td class="hanzi-cell">
+                ${esc(word.hanzi)}
+              </td>
 
 
-            <td>
-              ${esc(word.example)}
-            </td>
+              <td>
+                ${esc(word.pinyin)}
+              </td>
 
 
-            <td>
-
-              <button
-                class="icon-btn"
-                data-speak="${esc(word.hanzi)}"
-                title="Nghe"
-              >
-                🔊
-              </button>
+              <td>
+                ${esc(word.meaning)}
+              </td>
 
 
-              <button
-                class="icon-btn"
-                data-study="${esc(word.id)}"
-                title="Học từ"
-              >
-                →
-              </button>
+              <td>
+                ${esc(word.example)}
+              </td>
 
-            </td>
 
-          </tr>
+              <td>
 
-        `)
+                <button
+                  class="icon-btn"
+                  data-speak="${esc(word.hanzi)}"
+                  title="Nghe"
+                >
+                  🔊
+                </button>
+
+
+                <button
+                  class="icon-btn"
+                  data-study="${esc(word.id)}"
+                  title="Học từ"
+                >
+                  →
+                </button>
+
+              </td>
+
+            </tr>
+
+          `
+        )
         .join('');
 
 
@@ -951,11 +1075,13 @@ const CoBiTangThu = (() => {
     if (more) {
 
       more.style.display =
-        S.visible < S.filtered.length
+        S.visible <
+        S.filtered.length
           ? 'inline-flex'
           : 'none';
 
     }
+
   }
 
 
@@ -976,6 +1102,7 @@ const CoBiTangThu = (() => {
       renderVocab(box);
 
       return;
+
     }
 
 
@@ -1144,128 +1271,134 @@ const CoBiTangThu = (() => {
           'tt-flip'
         );
 
+
       if (card) {
+
         card.classList.toggle(
           'flipped'
         );
+
       }
 
     };
 
 
-    document.getElementById(
-      'tt-flip'
-    )?.addEventListener(
-      'click',
-      flip
-    );
+    document
+      .getElementById('tt-flip')
+      ?.addEventListener(
+        'click',
+        flip
+      );
 
 
-    document.getElementById(
-      'tt-flip-btn'
-    )?.addEventListener(
-      'click',
-      flip
-    );
+    document
+      .getElementById('tt-flip-btn')
+      ?.addEventListener(
+        'click',
+        flip
+      );
 
 
-    document.getElementById(
-      'tt-speak'
-    )?.addEventListener(
-      'click',
-      event => {
+    document
+      .getElementById('tt-speak')
+      ?.addEventListener(
+        'click',
+        event => {
 
-        event.stopPropagation();
+          event.stopPropagation();
 
-        speak(word.hanzi);
+          speak(
+            word.hanzi
+          );
 
-      }
-    );
-
-
-    document.getElementById(
-      'tt-example'
-    )?.addEventListener(
-      'click',
-      event => {
-
-        event.stopPropagation();
-
-        speak(word.example);
-
-      }
-    );
+        }
+      );
 
 
-    document.getElementById(
-      'tt-prev'
-    )?.addEventListener(
-      'click',
-      () => {
+    document
+      .getElementById('tt-example')
+      ?.addEventListener(
+        'click',
+        event => {
 
-        if (S.current > 0) {
+          event.stopPropagation();
 
-          S.current--;
+          speak(
+            word.example
+          );
+
+        }
+      );
+
+
+    document
+      .getElementById('tt-prev')
+      ?.addEventListener(
+        'click',
+        () => {
+
+          if (S.current > 0) {
+
+            S.current--;
+
+            renderContent();
+
+          }
+
+        }
+      );
+
+
+    document
+      .getElementById('tt-next')
+      ?.addEventListener(
+        'click',
+        () => {
+
+          S.current =
+            (S.current + 1) %
+            S.words.length;
 
           renderContent();
 
         }
-
-      }
-    );
+      );
 
 
-    document.getElementById(
-      'tt-next'
-    )?.addEventListener(
-      'click',
-      () => {
+    document
+      .getElementById('tt-learn')
+      ?.addEventListener(
+        'click',
+        () => {
 
-        S.current =
-          (S.current + 1) %
-          S.words.length;
+          S.learned[word.id] = true;
 
-        renderContent();
+          localStorage.setItem(
+            'cobi_tangthu_learned',
+            JSON.stringify(
+              S.learned
+            )
+          );
 
-      }
-    );
+          renderContent();
 
-
-    document.getElementById(
-      'tt-learn'
-    )?.addEventListener(
-      'click',
-      () => {
-
-        S.learned[word.id] = true;
+        }
+      );
 
 
-        localStorage.setItem(
-          'cobi_tangthu_learned',
-          JSON.stringify(
-            S.learned
-          )
-        );
+    document
+      .getElementById('tt-list')
+      ?.addEventListener(
+        'click',
+        () => {
 
+          S.study = false;
 
-        renderContent();
+          renderContent();
 
-      }
-    );
+        }
+      );
 
-
-    document.getElementById(
-      'tt-list'
-    )?.addEventListener(
-      'click',
-      () => {
-
-        S.study = false;
-
-        renderContent();
-
-      }
-    );
   }
 
 
@@ -1314,118 +1447,106 @@ const CoBiTangThu = (() => {
     `;
 
 
-    document.getElementById(
-      'tt-unlock'
-    )?.addEventListener(
-      'click',
-      async () => {
+    document
+      .getElementById('tt-unlock')
+      ?.addEventListener(
+        'click',
+        async () => {
 
-        const code =
-          prompt(
-            `Nhập mã truy cập ${title}:`
-          );
-
-
-        if (!code) return;
-
-
-        box.innerHTML = `
-
-          <div class="card">
-
-            <div class="notice">
-              Đang xác thực mã và thiết bị...
-            </div>
-
-          </div>
-
-        `;
-
-
-        try {
-
-          /*
-             Bước 1:
-             Đăng nhập + khóa thiết bị
-          */
-
-          await api(
-            'login',
-            code.trim()
-          );
-
-
-          /*
-             Bước 2:
-             Lấy nội dung được bảo vệ
-          */
-
-          const result =
-            await api(
-              type === 'grammar'
-                ? 'getGrammar'
-                : 'getReading',
-              code.trim()
+          const code =
+            prompt(
+              `Nhập mã truy cập ${title}:`
             );
 
 
-          /*
-             Apps Script trả:
-             {
-               success: true,
-               data: [...]
-             }
-          */
+          if (!code) return;
 
-          if (type === 'grammar') {
-
-            S.grammar =
-              result.data || [];
-
-          } else {
-
-            S.reading =
-              result.data || [];
-
-          }
-
-
-          renderContent();
-
-        } catch (errorObject) {
 
           box.innerHTML = `
 
             <div class="card">
 
               <div class="notice">
-                ${esc(errorObject.message)}
+                Đang xác thực mã và thiết bị...
               </div>
-
-
-              <button
-                class="btn secondary"
-                id="tt-retry"
-              >
-                Thử lại
-              </button>
 
             </div>
 
           `;
 
 
-          document.getElementById(
-            'tt-retry'
-          )?.addEventListener(
-            'click',
-            () => unlock(type)
-          );
+          try {
+
+            /* BƯỚC 1: LOGIN */
+
+            await api(
+              'login',
+              code.trim()
+            );
+
+
+            /* BƯỚC 2: LẤY DỮ LIỆU */
+
+            const result =
+              await api(
+                type === 'grammar'
+                  ? 'getGrammar'
+                  : 'getReading',
+                code.trim()
+              );
+
+
+            if (type === 'grammar') {
+
+              S.grammar =
+                result.data || [];
+
+            } else {
+
+              S.reading =
+                result.data || [];
+
+            }
+
+
+            renderContent();
+
+
+          } catch (errorObject) {
+
+            box.innerHTML = `
+
+              <div class="card">
+
+                <div class="notice">
+                  ${esc(errorObject.message)}
+                </div>
+
+
+                <button
+                  class="btn secondary"
+                  id="tt-retry"
+                >
+                  Thử lại
+                </button>
+
+              </div>
+
+            `;
+
+
+            document
+              .getElementById('tt-retry')
+              ?.addEventListener(
+                'click',
+                () => unlock(type)
+              );
+
+          }
 
         }
+      );
 
-      }
-    );
   }
 
 
@@ -1450,6 +1571,7 @@ const CoBiTangThu = (() => {
       `;
 
       return;
+
     }
 
 
@@ -1461,7 +1583,9 @@ const CoBiTangThu = (() => {
           S.grammar
             .map(item => `
 
-              <article class="card grammar-card">
+              <article
+                class="card grammar-card"
+              >
 
                 <h3>
                   ${esc(item.TIEUDE)}
@@ -1483,7 +1607,6 @@ const CoBiTangThu = (() => {
                   <b>例：</b>
 
                   ${esc(item.VIDU)}
-
 
                   ${
                     item.VIDU
@@ -1526,6 +1649,7 @@ const CoBiTangThu = (() => {
         };
 
       });
+
   }
 
 
@@ -1550,6 +1674,7 @@ const CoBiTangThu = (() => {
       `;
 
       return;
+
     }
 
 
@@ -1559,77 +1684,79 @@ const CoBiTangThu = (() => {
 
         ${
           S.reading
-            .map((item, index) => `
+            .map(
+              (item, index) => `
 
-              <article
-                class="card reading-card"
-              >
-
-                <div class="reading-head">
-
-                  <span>
-                    ${esc(item.LEVEL)}
-                  </span>
-
-
-                  <h3>
-                    ${
-                      esc(
-                        item.TIEUDE ||
-                        `Bài ${index + 1}`
-                      )
-                    }
-                  </h3>
-
-                </div>
-
-
-                <div class="reading-text">
-                  ${esc(item.TEXT)}
-                </div>
-
-
-                <button
-                  class="btn secondary tt-pinyin"
-                  data-i="${index}"
+                <article
+                  class="card reading-card"
                 >
-                  Hiện Pinyin
-                </button>
+
+                  <div class="reading-head">
+
+                    <span>
+                      ${esc(item.LEVEL)}
+                    </span>
 
 
-                <div
-                  class="reading-pinyin"
-                  id="tt-p-${index}"
-                  hidden
-                >
-                  ${esc(item.PINYIN)}
-                </div>
+                    <h3>
+                      ${
+                        esc(
+                          item.TIEUDE ||
+                          `Bài ${index + 1}`
+                        )
+                      }
+                    </h3>
 
-
-                <details>
-
-                  <summary>
-                    Nghĩa tiếng Việt
-                  </summary>
-
-
-                  <div class="reading-meaning">
-                    ${esc(item.NGHIA)}
                   </div>
 
-                </details>
+
+                  <div class="reading-text">
+                    ${esc(item.TEXT)}
+                  </div>
 
 
-                <button
-                  class="speak-btn"
-                  data-r="${esc(item.TEXT)}"
-                >
-                  🔊 Nghe bài đọc
-                </button>
+                  <button
+                    class="btn secondary tt-pinyin"
+                    data-i="${index}"
+                  >
+                    Hiện Pinyin
+                  </button>
 
-              </article>
 
-            `)
+                  <div
+                    class="reading-pinyin"
+                    id="tt-p-${index}"
+                    hidden
+                  >
+                    ${esc(item.PINYIN)}
+                  </div>
+
+
+                  <details>
+
+                    <summary>
+                      Nghĩa tiếng Việt
+                    </summary>
+
+
+                    <div class="reading-meaning">
+                      ${esc(item.NGHIA)}
+                    </div>
+
+                  </details>
+
+
+                  <button
+                    class="speak-btn"
+                    data-r="${esc(item.TEXT)}"
+                  >
+                    🔊 Nghe bài đọc
+                  </button>
+
+                </article>
+
+              `
+            )
             .join('')
         }
 
@@ -1680,6 +1807,7 @@ const CoBiTangThu = (() => {
         };
 
       });
+
   }
 
 
@@ -1715,29 +1843,32 @@ const CoBiTangThu = (() => {
     `;
 
 
-    document.getElementById(
-      'tt-reload-vocab'
-    )?.addEventListener(
-      'click',
-      () => {
+    document
+      .getElementById(
+        'tt-reload-vocab'
+      )
+      ?.addEventListener(
+        'click',
+        () => {
 
-        S.groups = [];
+          S.groups = [];
 
-        S.groupId = '';
+          S.groupId = '';
 
-        S.words = [];
+          S.words = [];
 
-        S.filtered = [];
+          S.filtered = [];
 
-        renderContent();
+          renderContent();
 
-      }
-    );
+        }
+      );
+
   }
 
 
   /* =======================================================
-     KHỞI ĐỘNG
+     KHỞI ĐỘNG TÀNG THƯ CÁC
   ======================================================= */
 
   async function init() {
@@ -1761,10 +1892,6 @@ const CoBiTangThu = (() => {
     render();
 
 
-    /*
-       Tải TUVUNG ngay khi vào Tàng Thư Các
-    */
-
     try {
 
       await loadVocab();
@@ -1781,6 +1908,7 @@ const CoBiTangThu = (() => {
       );
 
     }
+
   }
 
 
@@ -1800,9 +1928,6 @@ function renderHome() {
   app.innerHTML = `
 
     <section class="page home-page">
-
-
-      <!-- HERO -->
 
       <div class="hero">
 
@@ -1842,8 +1967,6 @@ function renderHome() {
 
       </div>
 
-
-      <!-- 3 KHU VỰC CHÍNH -->
 
       <div class="home-main-grid">
 
@@ -1980,9 +2103,7 @@ function route() {
     location.hash.slice(1) || 'home';
 
 
-  /*
-     Trang chủ
-  */
+  /* TRANG CHỦ */
 
   if (
     hash === 'home' ||
@@ -1994,9 +2115,7 @@ function route() {
   }
 
 
-  /*
-     Tàng Thư Các
-  */
+  /* TÀNG THƯ CÁC */
 
   else if (
     hash === 'knowledge'
@@ -2007,10 +2126,7 @@ function route() {
   }
 
 
-  /*
-     Các route cũ:
-     chuyển thẳng sang repo mới
-  */
+  /* DU LẠC HIÊN */
 
   else if (
     hash === 'review' ||
@@ -2026,6 +2142,8 @@ function route() {
   }
 
 
+  /* KHẢO THÍ ĐƯỜNG */
+
   else if (
     hash === 'practice' ||
     hash === 'hsk4'
@@ -2039,9 +2157,7 @@ function route() {
   }
 
 
-  /*
-     Route không xác định
-  */
+  /* ROUTE KHÔNG XÁC ĐỊNH */
 
   else {
 
@@ -2050,9 +2166,7 @@ function route() {
   }
 
 
-  /*
-     Active menu
-  */
+  /* ACTIVE MENU */
 
   document
     .querySelectorAll('.main-nav a')
@@ -2064,7 +2178,9 @@ function route() {
 
       link.classList.toggle(
         'active',
+
         routeName === hash ||
+
         (
           routeName === 'review' &&
           hash.startsWith('review')
@@ -2072,6 +2188,7 @@ function route() {
       );
 
     });
+
 }
 
 
@@ -2083,6 +2200,5 @@ window.addEventListener(
   'hashchange',
   route
 );
-
 
 route();
