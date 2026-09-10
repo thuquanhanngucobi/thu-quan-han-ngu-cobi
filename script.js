@@ -313,7 +313,59 @@ function loadVocabFromGoogleSheet() {
 /* =========================================================
    TÀNG THƯ CÁC
 ========================================================= */
+/* =========================================================
+   CHUẨN HÓA DỮ LIỆU GOOGLE SHEETS
+========================================================= */
 
+function normalizeKey(value) {
+  return String(value ?? '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D')
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, '');
+}
+
+function normalizeRow(row) {
+  const out = {};
+
+  Object.entries(row || {}).forEach(([key, value]) => {
+    out[normalizeKey(key)] = value ?? '';
+  });
+
+  return out;
+}
+
+function hskNumber(value) {
+  const match = String(value ?? '').match(/HSK\s*([1-6])/i);
+  return match ? match[1] : '';
+}
+
+function hskLabel(value) {
+  const n = hskNumber(value);
+  return n ? `HSK ${n}` : String(value ?? '').trim();
+}
+
+const HSK_FILTERS = ['all', '1', '2', '3', '4', '5', '6'];
+
+function renderHskFilters(current) {
+  return `
+    <div class="tt-hsk-filters">
+
+      ${HSK_FILTERS.map(value => `
+        <button
+          type="button"
+          class="group-chip ${current === value ? 'active' : ''}"
+          data-hsk-filter="${value}"
+        >
+          ${value === 'all' ? 'Tất cả' : `HSK ${value}`}
+        </button>
+      `).join('')}
+
+    </div>
+  `;
+}
 const CoBiTangThu = (() => {
 
   const S = {
@@ -338,7 +390,11 @@ const CoBiTangThu = (() => {
 
     grammar: null,
 
-    reading: null
+    reading: null,
+
+grammarFilter: 'all',
+
+readingFilter: 'all'
 
   };
 
@@ -354,116 +410,86 @@ const CoBiTangThu = (() => {
 
   async function loadVocab() {
 
-    const rows =
-      await loadVocabFromGoogleSheet();
+    async function loadVocab() {
 
-    if (!Array.isArray(rows)) {
-      throw new Error(
-        'Dữ liệu TUVUNG không hợp lệ.'
-      );
+  const rows = await loadVocabFromAPI();
+
+  const map = new Map();
+
+  rows.forEach((rawRow, index) => {
+
+    const row = normalizeRow(rawRow);
+
+    const id =
+      String(row.ID || '').trim();
+
+    const hanzi =
+      String(row.TUVUNG || '').trim();
+
+    if (!id || !hanzi) return;
+
+    if (!map.has(id)) {
+
+      map.set(id, {
+        id: id,
+        title: hskLabel(id),
+        items: []
+      });
+
     }
 
-    const map = new Map();
+    map.get(id).items.push({
 
+      id: itemKey(id, index),
 
-    rows.forEach((row, index) => {
+      hanzi: hanzi,
 
-      const id =
-        String(
-          row.ID ||
-          row.id ||
-          ''
-        ).trim();
+      pinyin:
+        String(row.PINYIN || '').trim(),
 
-      if (!id) return;
+      meaning:
+        String(row.NGHIA || '').trim(),
 
-
-      if (!map.has(id)) {
-
-        map.set(
-          id,
-          {
-            id: id,
-            title: id,
-            items: []
-          }
-        );
-
-      }
-
-
-      map.get(id).items.push({
-
-        id: itemKey(
-          id,
-          index
-        ),
-
-        hanzi:
-          String(
-            row['TU VUNG'] ||
-            row['TU_VUNG'] ||
-            row.TU_VUNG ||
-            ''
-          ).trim(),
-
-        pinyin:
-          String(
-            row.PINYIN ||
-            ''
-          ).trim(),
-
-        meaning:
-          String(
-            row.NGHIA ||
-            ''
-          ).trim(),
-
-        example:
-          String(
-            row.VIDU ||
-            ''
-          ).trim()
-
-      });
+      example:
+        String(row.VIDU || '').trim()
 
     });
 
+  });
 
-    S.groups =
-      Array.from(
-        map.values()
-      );
+  S.groups =
+    Array.from(map.values());
 
+  S.groups.sort((a, b) => {
 
-    if (!S.groups.length) {
-      throw new Error(
-        'Không tìm thấy dữ liệu TUVUNG.'
-      );
-    }
+    const na =
+      Number(hskNumber(a.id) || 99);
 
+    const nb =
+      Number(hskNumber(b.id) || 99);
 
-    if (
-      !S.groupId ||
-      !S.groups.some(
-        group =>
-          group.id === S.groupId
-      )
-    ) {
+    return na - nb ||
+      a.id.localeCompare(b.id);
 
-      S.groupId =
-        S.groups[0].id;
+  });
 
-    }
+  if (
+    !S.groupId ||
+    !S.groups.some(
+      group => group.id === S.groupId
+    )
+  ) {
 
-
-    setGroup(
-      S.groupId,
-      false
-    );
+    S.groupId =
+      S.groups[0]?.id || '';
 
   }
 
+  setGroup(
+    S.groupId,
+    false
+  );
+}
 
   /* =======================================================
      CHỌN NHÓM TỪ
@@ -1496,17 +1522,19 @@ const CoBiTangThu = (() => {
               );
 
 
-            if (type === 'grammar') {
+           if (type === 'grammar') {
 
-              S.grammar =
-                result.data || [];
+  S.grammar =
+    (result.data || [])
+      .map(normalizeRow);
 
-            } else {
+} else {
 
-              S.reading =
-                result.data || [];
+  S.reading =
+    (result.data || [])
+      .map(normalizeRow);
 
-            }
+}
 
 
             renderContent();
@@ -1554,138 +1582,218 @@ const CoBiTangThu = (() => {
      NGỮ PHÁP
   ======================================================= */
 
-  function renderGrammar(box) {
+ function renderGrammar(box) {
 
-    if (!S.grammar?.length) {
-
-      box.innerHTML = `
-
-        <div class="card">
-
-          <div class="notice">
-            Chưa có dữ liệu ngữ pháp.
-          </div>
-
-        </div>
-
-      `;
-
-      return;
-
-    }
-
+  if (!S.grammar?.length) {
 
     box.innerHTML = `
-
-      <div class="grammar-grid">
-
-        ${
-          S.grammar
-            .map(item => `
-
-              <article
-                class="card grammar-card"
-              >
-
-                <h3>
-                  ${esc(item.TIEUDE)}
-                </h3>
-
-
-                <div class="grammar-structure">
-                  ${esc(item.CAUTRUC)}
-                </div>
-
-
-                <p>
-                  ${esc(item.GIAITHICH)}
-                </p>
-
-
-                <div class="example-box">
-
-                  <b>例：</b>
-
-                  ${esc(item.VIDU)}
-
-                  ${
-                    item.VIDU
-                      ? `
-
-                        <button
-                          class="icon-btn"
-                          data-g="${esc(item.VIDU)}"
-                        >
-                          🔊
-                        </button>
-
-                      `
-                      : ''
-                  }
-
-                </div>
-
-              </article>
-
-            `)
-            .join('')
-        }
-
+      <div class="card">
+        <div class="notice">
+          Chưa có dữ liệu ngữ pháp.
+        </div>
       </div>
-
     `;
 
-
-    document
-      .querySelectorAll('[data-g]')
-      .forEach(button => {
-
-        button.onclick = () => {
-
-          speak(
-            button.dataset.g
-          );
-
-        };
-
-      });
-
+    return;
   }
 
+  const rows =
+    S.grammar.map(normalizeRow);
+
+  const filtered =
+    S.grammarFilter === 'all'
+      ? rows
+      : rows.filter(
+          item =>
+            hskNumber(item.ID) ===
+            S.grammarFilter
+        );
+
+  box.innerHTML = `
+
+    <div class="card">
+
+      ${renderHskFilters(
+        S.grammarFilter
+      )}
+
+    </div>
+
+    ${
+      filtered.length
+
+        ? `
+
+          <div class="grammar-grid">
+
+            ${
+              filtered.map(item => `
+
+                <article class="card grammar-card">
+
+                  <div class="reading-head">
+
+                    <span>
+                      ${esc(
+                        hskLabel(item.ID)
+                      )}
+                    </span>
+
+                    <h3>
+                      ${esc(
+                        item.TIEUDE
+                      )}
+                    </h3>
+
+                  </div>
+
+                  <div class="grammar-structure">
+                    ${esc(
+                      item.CAUTRUC
+                    )}
+                  </div>
+
+                  <p>
+                    ${esc(
+                      item.GIAITHICH
+                    )}
+                  </p>
+
+                  <div class="example-box">
+
+                    <b>例：</b>
+
+                    ${esc(
+                      item.VIDU
+                    )}
+
+                    ${
+                      item.VIDU
+                        ? `
+
+                          <button
+                            class="icon-btn"
+                            data-g="${esc(
+                              item.VIDU
+                            )}"
+                          >
+                            🔊
+                          </button>
+
+                        `
+                        : ''
+                    }
+
+                  </div>
+
+                </article>
+
+              `).join('')
+            }
+
+          </div>
+
+        `
+
+        : `
+
+          <div class="card">
+
+            <div class="notice">
+              Chưa có dữ liệu ngữ pháp HSK
+              ${esc(S.grammarFilter)}.
+            </div>
+
+          </div>
+
+        `
+    }
+
+  `;
+
+  document
+    .querySelectorAll('[data-hsk-filter]')
+    .forEach(button => {
+
+      button.onclick = () => {
+
+        S.grammarFilter =
+          button.dataset.hskFilter;
+
+        renderContent();
+
+      };
+
+    });
+
+  document
+    .querySelectorAll('[data-g]')
+    .forEach(button => {
+
+      button.onclick = () => {
+
+        speak(
+          button.dataset.g
+        );
+
+      };
+
+    });
+
+}
 
   /* =======================================================
      BÀI ĐỌC
   ======================================================= */
 
-  function renderReading(box) {
+function renderReading(box) {
 
-    if (!S.reading?.length) {
-
-      box.innerHTML = `
-
-        <div class="card">
-
-          <div class="notice">
-            Chưa có dữ liệu bài đọc.
-          </div>
-
-        </div>
-
-      `;
-
-      return;
-
-    }
-
+  if (!S.reading?.length) {
 
     box.innerHTML = `
+      <div class="card">
 
-      <div class="reading-grid">
+        <div class="notice">
+          Chưa có dữ liệu bài đọc.
+        </div>
 
-        ${
-          S.reading
-            .map(
-              (item, index) => `
+      </div>
+    `;
+
+    return;
+  }
+
+  const rows =
+    S.reading.map(normalizeRow);
+
+  const filtered =
+    S.readingFilter === 'all'
+      ? rows
+      : rows.filter(
+          item =>
+            hskNumber(item.LEVEL) ===
+            S.readingFilter
+        );
+
+  box.innerHTML = `
+
+    <div class="card">
+
+      ${renderHskFilters(
+        S.readingFilter
+      )}
+
+    </div>
+
+    ${
+      filtered.length
+
+        ? `
+
+          <div class="reading-grid">
+
+            ${
+              filtered.map((item, index) => `
 
                 <article
                   class="card reading-card"
@@ -1694,26 +1802,23 @@ const CoBiTangThu = (() => {
                   <div class="reading-head">
 
                     <span>
-                      ${esc(item.LEVEL)}
+                      ${esc(
+                        hskLabel(item.LEVEL)
+                      )}
                     </span>
 
-
                     <h3>
-                      ${
-                        esc(
-                          item.TIEUDE ||
-                          `Bài ${index + 1}`
-                        )
-                      }
+                      ${esc(
+                        item.TIEUDE ||
+                        `Bài ${index + 1}`
+                      )}
                     </h3>
 
                   </div>
 
-
                   <div class="reading-text">
                     ${esc(item.TEXT)}
                   </div>
-
 
                   <button
                     class="btn secondary tt-pinyin"
@@ -1721,7 +1826,6 @@ const CoBiTangThu = (() => {
                   >
                     Hiện Pinyin
                   </button>
-
 
                   <div
                     class="reading-pinyin"
@@ -1731,20 +1835,17 @@ const CoBiTangThu = (() => {
                     ${esc(item.PINYIN)}
                   </div>
 
-
                   <details>
 
                     <summary>
                       Nghĩa tiếng Việt
                     </summary>
 
-
                     <div class="reading-meaning">
                       ${esc(item.NGHIA)}
                     </div>
 
                   </details>
-
 
                   <button
                     class="speak-btn"
@@ -1755,60 +1856,84 @@ const CoBiTangThu = (() => {
 
                 </article>
 
-              `
-            )
-            .join('')
-        }
+              `).join('')
+            }
 
-      </div>
+          </div>
 
-    `;
+        `
 
+        : `
 
-    document
-      .querySelectorAll('.tt-pinyin')
-      .forEach(button => {
+          <div class="card">
 
-        button.onclick = () => {
+            <div class="notice">
+              Chưa có bài đọc HSK
+              ${esc(S.readingFilter)}.
+            </div>
 
-          const element =
-            document.getElementById(
-              `tt-p-${button.dataset.i}`
-            );
+          </div>
 
+        `
+    }
 
-          if (!element) return;
+  `;
 
+  document
+    .querySelectorAll('[data-hsk-filter]')
+    .forEach(button => {
 
-          element.hidden =
-            !element.hidden;
+      button.onclick = () => {
 
+        S.readingFilter =
+          button.dataset.hskFilter;
 
-          button.textContent =
-            element.hidden
-              ? 'Hiện Pinyin'
-              : 'Ẩn Pinyin';
+        renderContent();
 
-        };
+      };
 
-      });
+    });
 
+  document
+    .querySelectorAll('.tt-pinyin')
+    .forEach(button => {
 
-    document
-      .querySelectorAll('[data-r]')
-      .forEach(button => {
+      button.onclick = () => {
 
-        button.onclick = () => {
-
-          speak(
-            button.dataset.r
+        const element =
+          document.getElementById(
+            `tt-p-${button.dataset.i}`
           );
 
-        };
+        if (!element) return;
 
-      });
+        element.hidden =
+          !element.hidden;
 
-  }
+        button.textContent =
+          element.hidden
+            ? 'Hiện Pinyin'
+            : 'Ẩn Pinyin';
+
+      };
+
+    });
+
+  document
+    .querySelectorAll('[data-r]')
+    .forEach(button => {
+
+      button.onclick = () => {
+
+        speak(
+          button.dataset.r
+        );
+
+      };
+
+    });
+
+}
 
 
   /* =======================================================
