@@ -89,59 +89,31 @@ async function api(action, code = '') {
 /* =========================================================
    TẢI TỪ VỰNG BẰNG GOOGLE SHEETS JSONP (KHÔNG PASS)
 ========================================================= */
-function loadVocabFromGoogleSheet() {
-  return new Promise((resolve, reject) => {
-    const callbackName = 'cobiVocabCallback_' + Date.now() + '_' + Math.random().toString(36).slice(2);
-    const script = document.createElement('script');
-    let finished = false;
-
-    const cleanup = () => {
-      try { delete window[callbackName]; } catch (e) { window[callbackName] = undefined; }
-      if (script.parentNode) script.parentNode.removeChild(script);
-    };
-
-    const fail = message => {
-      if (finished) return;
-      finished = true; cleanup(); reject(new Error(message));
-    };
-
-    window[callbackName] = response => {
-      if (finished) return;
-      finished = true; cleanup();
-      try {
-        if (!response || !response.table) throw new Error('Google Sheets không trả về dữ liệu.');
-        const table = response.table;
-        const cols = table.cols || [];
-        const rows = table.rows || [];
-        const headers = cols.map((col, index) => col.label || col.id || `COL_${index}`);
-        const result = rows.map(row => {
-          const obj = {};
-          headers.forEach((header, index) => {
-            const cell = row.c?.[index];
-            obj[header] = cell && cell.v !== undefined ? cell.v : '';
-          });
-          return obj;
-        });
-        resolve(result);
-      } catch (error) {
-        reject(error);
-      }
-    };
-
-    script.onerror = () => fail('Không thể tải dữ liệu TUVUNG từ Google Sheets.');
-    const params = new URLSearchParams();
-    params.set('sheet', 'TUVUNG');
-    params.set('tqx', `out:json;responseHandler:${callbackName}`);
-    script.src = `https://docs.google.com/spreadsheets/d/${TANGTHU_CONFIG.spreadsheetId}/gviz/tq?${params.toString()}`;
-    script.async = true;
-    document.head.appendChild(script);
-
-    setTimeout(() => {
-      if (!finished) fail('Quá thời gian tải TUVUNG. Hãy kiểm tra lại Google Sheet.');
-    }, 20000);
-  });
+/* =========================================================
+   TẢI TỪ VỰNG BẰNG APPS SCRIPT API (ỔN ĐỊNH HƠN)
+========================================================= */
+async function loadVocabFromGoogleSheet() {
+  try {
+    // Gọi thẳng vào nhánh doGet(action='getVocab') trong code.gs của bạn
+    const url = TANGTHU_CONFIG.apiUrl + '?action=getVocab';
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new Error(`Lỗi kết nối máy chủ: ${response.status}`);
+    }
+    
+    const result = await response.json();
+    
+    if (!result.success) {
+      throw new Error(result.message || 'Lỗi tải dữ liệu từ vựng.');
+    }
+    
+    return result.data; // Trả về mảng dữ liệu
+  } catch (error) {
+    console.error('Lỗi lấy Từ vựng:', error);
+    throw new Error('Không thể tải dữ liệu TUVUNG. Bạn hãy kiểm tra lại kết nối mạng.');
+  }
 }
-
 /* =========================================================
    TÀNG THƯ CÁC SYSTEM
 ========================================================= */
