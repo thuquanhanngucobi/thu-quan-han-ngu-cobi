@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif:wght@400;600;700&display=swap');
+
+:root {
+  --red: #9e3f37;
+  --gold: #b58a4b;
+  --ink: #29251f;
+  --brown: #493326;
+  --line: #d8c9ad;
+  --paper: #fdf6e3;
+}
+
+body { font-family: "Noto Serif", serif; background: transparent; padding: 20px; color: var(--ink); }
+
+.vocab-container { max-width: 1000px; margin: 0 auto; }
+
+/* HEADER TÙY CHỈNH */
+.vocab-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; gap: 20px; flex-wrap: wrap; }
+
+.hsk-filters { display: flex; gap: 10px; flex-wrap: wrap; }
+.chip {
+  padding: 8px 16px; border-radius: 20px; border: 1px solid var(--line);
+  background: white; color: var(--brown); cursor: pointer; font-weight: 600; transition: 0.2s;
+}
+.chip:hover { border-color: var(--gold); }
+.chip.active { background: var(--red); color: white; border-color: var(--red); }
+
+.view-toggle { display: flex; background: white; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.toggle-btn {
+  padding: 10px 20px; border: none; background: transparent; cursor: pointer; font-weight: 600; color: var(--brown); transition: 0.2s;
+}
+.toggle-btn.active { background: #f2e8d5; color: var(--red); }
+
+/* CHẾ ĐỘ DANH SÁCH */
+.search-bar input {
+  width: 100%; padding: 12px 15px; border: 1px solid var(--line); border-radius: 6px; font-family: inherit; margin-bottom: 20px; outline: none;
+}
+.search-bar input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(181, 138, 75, 0.15); }
+
+.table-wrapper { background: white; border: 1px solid var(--line); border-radius: 6px; overflow: auto; }
+.vocab-table { width: 100%; border-collapse: collapse; text-align: left; }
+.vocab-table th, .vocab-table td { padding: 15px; border-bottom: 1px solid var(--line); }
+.vocab-table th { background: #f9f4eb; color: var(--red); }
+.vocab-table tr:hover { background: #fcfaf5; }
+.hanzi-col { font-family: "Ma Shan Zheng", cursive; font-size: 26px; color: var(--red); }
+
+/* CHẾ ĐỘ FLASHCARD */
+.flashcard-wrapper { max-width: 500px; margin: 0 auto; text-align: center; }
+.study-progress { margin-bottom: 15px; color: var(--brown); font-weight: 600; }
+
+.flip-card { width: 100%; height: 550px; perspective: 1000px; cursor: pointer; margin-bottom: 25px; }
+.flip-inner { width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+.flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+
+.flip-face {
+  position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+  background: white; border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+
+.flip-front .card-image { height: 45%; background-size: cover; background-position: center; border-bottom: 3px solid var(--gold); }
+.flip-front .card-content { height: 55%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; position: relative; }
+
+.hanzi-large { font-family: "Ma Shan Zheng", cursive; font-size: 80px; color: var(--red); line-height: 1; margin-bottom: 10px; }
+.pinyin-medium { font-size: 22px; color: var(--brown); margin-bottom: 5px; }
+.meaning-medium { font-size: 18px; color: #5a4b41; }
+.audio-btn { position: absolute; right: 20px; bottom: 20px; background: #f2e8d5; border: 1px solid var(--line); border-radius: 50%; width: 45px; height: 45px; cursor: pointer; font-size: 20px; transition: 0.2s; }
+.audio-btn:hover { background: var(--gold); color: white; border-color: var(--gold); }
+
+.flip-back { transform: rotateY(180deg); padding: 30px; justify-content: center; align-items: center; background: #fdfbf7; }
+.hanzi-small { font-family: "Ma Shan Zheng", cursive; font-size: 50px; color: var(--red); margin-bottom: 25px; }
+.example-box { background: #f2e8d5; border: 1px solid var(--line); border-radius: 8px; padding: 20px; width: 100%; }
+.example-label { font-size: 12px; color: var(--brown); font-weight: bold; letter-spacing: 1px; margin-bottom: 15px; }
+.example-cn { font-size: 22px; color: var(--red); margin-bottom: 10px; line-height: 1.5; }
+.example-vi { font-size: 16px; color: #5a4b41; margin-bottom: 20px; }
+.audio-btn.small { position: static; width: auto; height: auto; border-radius: 20px; padding: 8px 15px; font-size: 14px; font-family: inherit; font-weight: 600; }
+
+.flashcard-controls { display: flex; justify-content: space-between; gap: 15px; }
+.ctrl-btn { flex: 1; padding: 12px; border: 1px solid var(--line); background: white; border-radius: 6px; cursor: pointer; font-weight: 600; color: var(--brown); transition: 0.2s; }
+.ctrl-btn:hover { border-color: var(--gold); background: #fdfbf7; }
+.ctrl-btn.primary { background: var(--red); color: white; border-color: var(--red); }
+.ctrl-btn.primary:hover { background: #8b362f; }

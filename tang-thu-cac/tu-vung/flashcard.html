@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Từ Vựng Flashcard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #2b2622; --brown-dark: #4a3525; --gold-earth: #b38b4d;
+      --blue-water: #1e3a5f; --blue-light: #e6edf2;
+      --paper: #fcf9f2; --line: #d8c9ad;
+    }
+    
+    body { font-family: "Noto Serif", serif; background: transparent; margin: 0; padding: 20px 20px 60px; min-height: 100vh; }
+    .container { max-width: 650px; margin: 0 auto; } 
+
+    /* THANH BỘ LỌC */
+    .filter-wrapper {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(245, 238, 219, 0.95); backdrop-filter: blur(5px);
+      border: 1px solid var(--gold-earth); padding: 15px 25px; border-radius: 12px; 
+      margin-bottom: 35px; display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    select {
+      padding: 10px 20px; border-radius: 8px; border: 1px solid var(--line);
+      background: white; color: var(--blue-water); font-weight: 700; font-size: 16px;
+      font-family: inherit; outline: none; cursor: pointer;
+    }
+    .total-count { font-size: 16px; font-weight: 600; color: var(--brown-dark); }
+
+    .card-list { display: flex; flex-direction: column; }
+
+    /* KHUNG THẺ LẬT - ÉP CỨNG CHIỀU CAO & KHOẢNG CÁCH */
+    .flip-card { 
+      width: 100%; 
+      height: 220px; /* Chiều cao thẻ gọn gàng hơn */
+      margin-bottom: 35px; /* Ép cứng khoảng cách để tuyệt đối không dính nhau */
+      perspective: 1000px; cursor: pointer; 
+    }
+
+    .flip-inner { width: 100%; height: 100%; transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; position: relative; }
+    .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+
+    .flip-face {
+      position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+      background: var(--paper); border: 2px solid var(--line); border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06); display: flex; box-sizing: border-box;
+    }
+
+    /* MẶT TRƯỚC */
+    .flip-front { padding: 25px 35px; align-items: center; justify-content: space-between; }
+    .front-left { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 10px; flex: 1; }
+    
+    .index { font-size: 14px; color: var(--brown-dark); opacity: 0.7; font-weight: 600; letter-spacing: 1px; }
+    .hanzi-row { display: flex; align-items: center; gap: 15px; }
+    
+    /* CHỮ HÁN SIÊU TO */
+    .hanzi { font-family: "Ma Shan Zheng", cursive; font-size: 100px; color: var(--ink); line-height: 0.9; }
+
+    .audio-btn {
+      background: white; border: 1px solid var(--blue-water); color: var(--blue-water);
+      width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+      cursor: pointer; font-size: 18px; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .audio-btn:hover { background: var(--blue-water); color: white; }
+
+    .pinyin-box { background: white; color: var(--blue-water); border: 1px solid var(--line); padding: 6px 18px; border-radius: 8px; font-size: 20px; font-weight: 700; font-family: sans-serif; }
+
+    /* KHUNG ẢNH GỌN GÀNG TỈ LỆ CHUẨN */
+    /* TĂNG KÍCH THƯỚC KHUNG ẢNH */
+.front-right { 
+  flex: 0 0 260px; /* Độ rộng khung ảnh (Tăng từ 160px lên 260px) */
+  height: 200px;   /* Chiều cao khung ảnh (Tăng từ 160px lên 200px) */
+  display: flex; align-items: center; justify-content: center; 
+}
+.vocab-img { 
+  max-width: 100%; max-height: 100%; 
+  object-fit: cover; /* Đổi thành cover để ảnh lấp đầy khung đẹp hơn */
+  border-radius: 16px; /* Bo góc ảnh mềm mại theo thẻ */
+}
+
+    /* MẶT SAU */
+    .flip-back { transform: rotateY(180deg); flex-direction: column; justify-content: center; align-items: center; padding: 25px; text-align: center; }
+    .meaning { font-size: 24px; font-weight: 700; color: var(--blue-water); margin-bottom: 15px; }
+    .example { font-size: 20px; color: var(--ink); margin-bottom: 20px; line-height: 1.5; }
+
+    .audio-example {
+      background: white; border: 1px solid var(--blue-water); color: var(--blue-water);
+      padding: 8px 24px; border-radius: 20px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: 0.2s;
+    }
+    .audio-example:hover { background: var(--blue-water); color: white; }
+
+    #loading { text-align: center; color: var(--paper); font-size: 18px; margin-top: 50px; background: rgba(0,0,0,0.5); padding: 12px 25px; border-radius: 8px; display: inline-block; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div style="text-align: center;"><div id="loading">Đang nạp từ vựng...</div></div>
+    
+    <div id="app-content" style="display: none;">
+      <div class="filter-wrapper">
+        <select id="lesson-select"></select>
+        <div class="total-count" id="total-text"></div>
+      </div>
+      <div class="card-list" id="card-list"></div>
+    </div>
+  </div>
+
+  <script>
+    // DÁN LINK API CỦA BẠN VÀO ĐÂY (NHỚ GIỮ LẠI PHẦN DUÔI THỜI GIAN)
+    const API_URL = 'https://script.google.com/macros/s/AKfycby1TyfXxZVmt2aoSIwOaNXxrrSmOXIHv-CVAU-B_9Xiv-Dxt4LyW2Yd1DSaJIOg4pfUIw/exec?action=getVocabLesson&t=' + new Date().getTime();
+    
+    let allVocab = [];
+    const listEl = document.getElementById('card-list');
+    const selectEl = document.getElementById('lesson-select');
+    const totalEl = document.getElementById('total-text');
+
+    async function fetchData() {
+      try {
+        const res = await fetch(API_URL);
+        const json = await res.json();
+        if (json.success && json.data.length > 0) {
+          allVocab = json.data.filter(item => item['Hán Tự'] || item['TUVUNG']);
+          setupFilter();
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('app-content').style.display = 'block';
+        } else {
+          document.getElementById('loading').textContent = "Không tìm thấy dữ liệu.";
+        }
+      } catch (error) {
+        document.getElementById('loading').textContent = "Lỗi tải dữ liệu. Hãy kiểm tra lại link API.";
+      }
+    }
+
+    function setupFilter() {
+      const lessons = [...new Set(allVocab.map(item => item['Bài học'] || 'Tất cả'))];
+      selectEl.innerHTML = lessons.map(l => `<option value="${l}">${l}</option>`).join('');
+      selectEl.addEventListener('change', (e) => renderCards(e.target.value));
+      renderCards(lessons[0]);
+    }
+
+    function renderCards(lesson) {
+      const filtered = allVocab.filter(item => (item['Bài học'] || 'Tất cả') === lesson);
+      totalEl.textContent = `Tổng: ${filtered.length} từ`;
+      
+      listEl.innerHTML = filtered.map((item, index) => {
+        const num = (index + 1).toString().padStart(2, '0');
+        const hanzi = item['Hán Tự'] || item['TUVUNG'] || '';
+        const pinyin = item['Pinyin'] || item['PINYIN'] || '';
+        const meaning = item['Nghĩa'] || item['NGHIA'] || '';
+        const example = item['Ví dụ'] || item['VIDU'] || '';
+        const img = item['Hình ảnh'] || item['HINHANH'] || '';
+        
+        const hasImg = img.trim() !== '';
+
+        return `
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <!-- MẶT TRƯỚC -->
+              <div class="flip-face flip-front">
+                <div class="front-left" style="${!hasImg ? 'align-items: center; text-align: center;' : ''}">
+                  <div class="index" style="${!hasImg ? 'width: 100%;' : ''}">${num} / ${filtered.length}</div>
+                  <div class="hanzi-row">
+                    <div class="hanzi">${hanzi}</div>
+                    <button class="audio-btn" onclick="playAudio(event, '${hanzi}')">🔊</button>
+                  </div>
+                  <div class="pinyin-box">${pinyin}</div>
+                </div>
+                ${hasImg ? `<div class="front-right"><img class="vocab-img" src="${img}" alt="minh họa"></div>` : ''}
+              </div>
+              <!-- MẶT SAU -->
+              <div class="flip-face flip-back">
+                <div class="meaning">${meaning}</div>
+                <div class="example">${example || '(Chưa có ví dụ)'}</div>
+                ${example ? `<button class="audio-example" onclick="playAudio(event, '${example}')">🔊 Nghe ví dụ</button>` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function playAudio(event, text) {
+      event.stopPropagation();
+      if (!text) return;
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'zh-CN'; u.rate = 0.85;
+        window.speechSynthesis.speak(u);
+      }
+    }
+    fetchData();
+  </script>
+</body>
+</html>
