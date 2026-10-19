@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thư Quán Hán Ngữ CoBi - Du Lạc Hiên (游乐轩)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Lora', 'Noto Serif TC', serif; background-color: #fefae0; color: #7f5539; line-height: 1.6; }
+    .scroll-container { background-color: #fcf6e8; border: 4px solid #b7906c; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(127, 85, 57, 0.1); }
+    .selected { border-color: #8b5e34 !important; background-color: #e0ac69 !important; color: #ffffff !important; }
+    .matched { visibility: hidden; }
+    @keyframes sway { 0% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } 100% { transform: rotate(-2deg); } }
+    .lantern { animation: sway 4s ease-in-out infinite; }
+    .loader { border: 4px solid #f3f3f3; border-top: 4px solid #8b5e34; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .word-tile { cursor: pointer; transition: all 0.2s; }
+    .word-tile:active { transform: scale(0.95); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4 md:p-8">
+
+  <!-- Màn hình Nhập Môn -->
+  <div id="login-screen" class="fixed inset-0 bg-[#fefae0] z-50 flex items-center justify-center p-4">
+    <div class="scroll-container p-8 max-w-md w-full text-center relative overflow-hidden">
+      <img src="https://raw.githubusercontent.com/thuquanhanngucobi/cobi-du-lac-hien/refs/heads/main/quat.png" class="absolute -right-10 -bottom-10 h-32 opacity-20 pointer-events-none">
+      <h2 class="text-3xl font-bold mb-2 text-[#5c3d2e]">Nhập Môn Thư Quán</h2>
+      <p class="text-[#7f5539] mb-6 italic">Xin vui lòng xuất trình lệnh bài để bắt đầu tu luyện.</p>
+      <input type="text" id="pass-input" placeholder="Nhập mã học viên..." class="w-full p-4 mb-4 border-2 border-[#b7906c] rounded bg-[#fcf6e8] text-[#5c3d2e] font-bold text-center focus:outline-none focus:border-[#8b5e34]">
+      <button onclick="checkLogin()" id="login-btn" class="w-full bg-[#b7906c] text-white font-bold py-3 px-4 rounded transition hover:bg-[#8b5e34] shadow-md">Xác Nhận</button>
+      <p id="login-error" class="text-red-600 mt-4 font-semibold hidden"></p>
+    </div>
+  </div>
+
+  <div id="loading-screen" class="fixed inset-0 bg-[#fefae0] z-40 hidden flex items-center justify-center p-4">
+    <div class="text-center">
+      <div class="loader mb-4"></div>
+      <h2 class="text-2xl font-bold text-[#5c3d2e]">Đang kết nối Tàng Kinh Các...</h2>
+    </div>
+  </div>
+
+  <header class="w-full max-w-5xl flex flex-col items-center mb-10 relative">
+    <img src="https://raw.githubusercontent.com/thuquanhanngucobi/cobi-du-lac-hien/refs/heads/main/denlong.png" class="absolute left-0 top-0 h-28 md:h-36 lantern hidden sm:block">
+    <img src="https://raw.githubusercontent.com/thuquanhanngucobi/cobi-du-lac-hien/refs/heads/main/denlong.png" class="absolute right-0 top-0 h-28 md:h-36 lantern hidden sm:block">
+    <img src="https://raw.githubusercontent.com/thuquanhanngucobi/cobi-du-lac-hien/refs/heads/main/LOGO%20NEW.png" class="h-28 md:h-32 mb-4 drop-shadow-md">
+    <h1 class="text-3xl md:text-5xl font-bold text-center tracking-wide text-[#5c3d2e]">Thư Quán Hán Ngữ CoBi - Du Lạc Hiên (游乐轩)</h1>
+    <p class="text-lg md:text-xl italic mt-2 text-center text-[#7f5539]">"Tự do dạo chơi – Ngàn từ tự đến."</p>
+  </header>
+
+  <main class="w-full max-w-5xl flex-1 flex flex-col items-center relative">
+    <img src="https://raw.githubusercontent.com/thuquanhanngucobi/cobi-du-lac-hien/refs/heads/main/quat.png" class="absolute -right-16 -bottom-6 h-32 md:h-44 hidden lg:block opacity-75 pointer-events-none">
+
+    <div id="mode-select-screen" class="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-4 hidden">
+      <button onclick="selectMode('tich_tu')" class="scroll-container p-6 text-center flex flex-col items-center hover:scale-105 hover:shadow-lg transition">
+        <h2 class="text-2xl font-bold mb-1 text-[#5c3d2e]">Tích Từ Tĩnh Thất</h2>
+        <p class="text-sm font-bold text-[#8b5e34] mb-3">积词靜室</p>
+      </button>
+      <button onclick="selectMode('ngu_phap')" class="scroll-container p-6 text-center flex flex-col items-center hover:scale-105 hover:shadow-lg transition">
+        <h2 class="text-2xl font-bold mb-1 text-[#5c3d2e]">Ngự Pháp Tĩnh Thất</h2>
+        <p class="text-sm font-bold text-[#8b5e34] mb-3">御法靜室</p>
+      </button>
+      <button onclick="selectMode('on_co')" class="scroll-container p-6 text-center flex flex-col items-center hover:scale-105 hover:shadow-lg transition">
+        <h2 class="text-2xl font-bold mb-1 text-[#5c3d2e]">Ôn Cố Hiên</h2>
+        <p class="text-sm font-bold text-[#8b5e34] mb-3">溫故轩</p>
+      </button>
+    </div>
+
+    <div id="level-select-screen" class="hidden w-full max-w-4xl">
+      <button onclick="showScreen('mode-select-screen')" class="mb-6 text-lg font-bold hover:underline text-[#8b5e34]">← Trở về Du Lạc Hiên</button>
+      <h2 id="level-title" class="text-3xl font-bold mb-8 text-center text-[#5c3d2e]"></h2>
+      <div id="level-list" class="w-full"></div>
+    </div>
+
+    <div id="tichtu-game-select" class="hidden w-full max-w-4xl">
+      <button onclick="showScreen('level-select-screen')" class="mb-6 text-lg font-bold hover:underline text-[#8b5e34]">← Chọn bài khác</button>
+      <h2 id="tt-selected-name" class="text-3xl font-bold mb-8 text-center text-[#5c3d2e]"></h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <button onclick="startGame(1)" class="scroll-container p-6 text-center hover:border-[#8b5e34] transition"><h3 class="font-bold text-xl mb-2 text-[#5c3d2e]">1. Linh Thạch Ghép Cặp</h3></button>
+        <button id="btn-game-2" onclick="startGame(2)" class="scroll-container p-6 text-center hover:border-[#8b5e34] transition"><h3 class="font-bold text-xl mb-2 text-[#5c3d2e]">2. Thính Âm Tầm Câu</h3></button>
+        <button id="btn-game-3" onclick="startGame(3)" class="scroll-container p-6 text-center hover:border-[#8b5e34] transition relative overflow-hidden"><div class="absolute -right-8 top-4 bg-red-600 text-white text-[10px] font-bold px-8 py-1 transform rotate-45">Khảo Thí</div><h3 class="font-bold text-xl mb-2 text-[#5c3d2e]">3. Vấn Đạo Thất</h3></button>
+      </div>
+    </div>
+
+    <div id="nguphap-select-screen" class="hidden w-full max-w-4xl">
+      <button onclick="showScreen('level-select-screen')" class="mb-6 text-lg font-bold hover:underline text-[#8b5e34]">← Chọn bài khác</button>
+      <h2 id="np-selected-name" class="text-3xl font-bold mb-8 text-center text-[#5c3d2e]"></h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <button id="btn-np-lythuyet" onclick="startNguPhapTheory()" class="scroll-container p-10 text-center hover:border-[#8b5e34] transition"><h2 class="text-2xl font-bold mb-2 text-[#5c3d2e]">Ngự Pháp Tâm Quyết</h2><p class="text-sm font-bold text-[#8b5e34] mb-3">御法心訣</p></button>
+        <button id="btn-np-thuchanh" onclick="startNguPhapPractice()" class="scroll-container p-10 text-center hover:border-[#8b5e34] transition relative overflow-hidden"><div class="absolute -right-8 top-4 bg-red-600 text-white text-[10px] font-bold px-8 py-1 transform rotate-45">Khảo Thí</div><h2 class="text-2xl font-bold mb-2 text-[#5c3d2e]">Phá Trận Đài</h2><p class="text-sm font-bold text-[#8b5e34] mb-3">破阵台</p></button>
+      </div>
+    </div>
+
+    <!-- TÍCH TỪ: Khung Chơi Game -->
+    <div id="game-play-screen" class="hidden w-full scroll-container p-6 md:p-10 max-w-4xl">
+      <div class="flex justify-between items-center mb-8 border-b-2 border-[#b7906c]/30 pb-4">
+        <button onclick="showScreen('tichtu-game-select')" class="hover:underline font-bold text-[#8b5e34] text-lg">← Dừng tu luyện</button>
+        <span id="game-status" class="text-xl font-bold text-[#5c3d2e]"></span>
+      </div>
+      <div id="game1-area" class="hidden"><div class="grid grid-cols-2 gap-4 md:gap-12"><div id="g1-col-hanzi" class="space-y-3"></div><div id="g1-col-meaning" class="space-y-3"></div></div></div>
+      <div id="game2-area" class="hidden"><div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12"><div id="g2-col-audio" class="space-y-4"></div><div id="g2-col-hanzi" class="space-y-4"></div></div></div>
+      <div id="game3-area" class="hidden max-w-2xl mx-auto text-center">
+        <div class="mb-4 text-[#8b5e34] font-bold text-lg" id="g3-progress"></div>
+        <button onclick="playG3Audio()" class="mx-auto scroll-container p-8 text-center text-xl font-bold flex flex-col items-center justify-center hover:border-[#8b5e34] transition mb-8 w-full md:w-3/4"><span class="text-5xl mb-3">🔊</span><span>Bấm nghe</span></button>
+        <input type="text" id="g3-input" class="w-full p-4 mb-4 border-2 border-[#b7906c] rounded bg-[#fcf6e8] text-[#5c3d2e] font-bold text-xl text-center focus:outline-none focus:border-[#8b5e34]">
+        <div id="g3-feedback" class="h-10 font-bold text-lg md:text-xl mb-4 flex items-center justify-center"></div>
+        <div class="flex justify-center gap-4">
+          <button id="g3-btn-check" onclick="checkG3Answer()" class="bg-[#b7906c] text-white font-bold py-3 px-8 rounded">Kiểm tra</button>
+          <button id="g3-btn-help" onclick="showG3Help()" class="bg-gray-400 text-white font-bold py-3 px-8 rounded">Trợ giúp</button>
+          <button id="g3-btn-next" onclick="nextG3Question()" class="hidden bg-green-600 text-white font-bold py-3 px-8 rounded">Tiếp theo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NGỰ PHÁP -->
+    <div id="np-theory-screen" class="hidden w-full scroll-container p-6 md:p-10 max-w-4xl">
+      <div class="flex justify-between items-center mb-8 border-b-2 border-[#b7906c]/30 pb-4">
+        <button onclick="showScreen('nguphap-select-screen')" class="hover:underline font-bold text-[#8b5e34] text-lg">← Gấp bí kíp lại</button>
+        <span class="text-xl font-bold text-[#5c3d2e]">Ngự Pháp Tâm Quyết</span>
+      </div>
+      <div id="np-theory-content" class="space-y-6"></div>
+    </div>
+
+    <div id="np-practice-screen" class="hidden w-full scroll-container p-6 md:p-10 max-w-4xl text-center">
+      <div class="flex justify-between items-center mb-8 border-b-2 border-[#b7906c]/30 pb-4">
+        <button onclick="showScreen('nguphap-select-screen')" class="hover:underline font-bold text-[#8b5e34] text-lg">← Rời khỏi đài</button>
+        <span class="text-xl font-bold text-[#5c3d2e]">Phá Trận Đài</span>
+      </div>
+      <div id="np-practice-area" class="max-w-3xl mx-auto">
+        <div class="mb-4 text-[#8b5e34] font-bold text-lg" id="npp-progress"></div>
+        <h3 id="npp-instruction" class="text-2xl font-bold mb-6 text-[#5c3d2e]"></h3>
+        <div id="npp-dientu-area" class="hidden"><div id="npp-sentence" class="text-2xl font-bold text-[#7f5539] mb-8 bg-[#fefae0] p-6 border-2 border-[#b7906c] rounded leading-loose"></div><div id="npp-options" class="flex flex-wrap justify-center gap-4 mb-8"></div></div>
+        <div id="npp-sapxep-area" class="hidden"><div id="npp-answer-box" class="min-h-[100px] p-4 bg-[#fefae0] border-2 border-dashed border-[#b7906c] rounded flex flex-wrap gap-3 justify-center items-center mb-8"></div><div id="npp-words-pool" class="flex flex-wrap justify-center gap-3 mb-8"></div></div>
+        <div id="npp-feedback" class="h-10 font-bold text-lg mb-4 flex items-center justify-center"></div>
+        <div class="flex justify-center gap-4">
+          <button id="npp-btn-check" onclick="checkNpPractice()" class="bg-[#b7906c] text-white font-bold py-3 px-8 rounded">Phá Trận</button>
+          <button id="npp-btn-help" onclick="showNpHelp()" class="bg-gray-400 text-white font-bold py-3 px-8 rounded">Trợ giúp</button>
+          <button id="npp-btn-next" onclick="nextNpPractice()" class="hidden bg-green-600 text-white font-bold py-3 px-8 rounded">Trận tiếp theo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÔN CỐ HIÊN -->
+    <div id="onco-practice-screen" class="hidden w-full scroll-container p-6 md:p-10 max-w-4xl text-center">
+      <div class="flex justify-between items-center mb-8 border-b-2 border-[#b7906c]/30 pb-4">
+        <button onclick="showScreen('level-select-screen')" class="hover:underline font-bold text-[#8b5e34] text-lg">← Rời khỏi đài</button>
+        <span class="text-xl font-bold text-[#5c3d2e]">Ôn Cố Hiên (溫故轩)</span>
+      </div>
+      
+      <div id="oc-practice-area" class="max-w-3xl mx-auto">
+        <div class="mb-4 text-2xl font-bold text-[#b7906c]" id="oc-score-display">Điểm: 0</div>
+        <h3 id="oc-instruction" class="text-xl font-bold mb-6 text-[#5c3d2e]"></h3>
+        
+        <!-- Khu 1: Nghe Lệnh Sư Phụ -->
+        <div id="oc-nghelenh-area" class="hidden">
+          <div id="oc-words-pool" class="flex flex-wrap justify-center gap-4 mb-8 min-h-[150px]"></div>
+          <div id="oc-live-feedback" class="text-lg font-bold h-8 mb-4 flex items-center justify-center"></div>
+        </div>
+
+        <!-- Khu 2: Trắc Nghiệm Nghe -->
+        <div id="oc-tracnghiem-area" class="hidden w-full max-w-2xl mx-auto">
+          <button onclick="playOcAudio()" class="mx-auto scroll-container p-6 text-center text-xl font-bold flex flex-col items-center justify-center hover:border-[#8b5e34] hover:shadow-lg transition mb-8 w-full shadow-sm bg-[#fcf6e8]">
+            <span class="text-5xl mb-3">🔊</span><span>Bấm để nghe câu hỏi</span>
+          </button>
+          <div id="oc-mc-options" class="flex flex-col gap-3 mb-6"></div>
+          <div id="oc-mc-feedback" class="h-10 font-bold text-lg mb-4 flex items-center justify-center"></div>
+          <div class="flex justify-center gap-4">
+            <button id="oc-btn-mc-check" onclick="checkOcTracNghiem()" class="bg-[#b7906c] text-white font-bold py-3 px-8 rounded transition hover:bg-[#8b5e34] shadow text-lg hidden">Xác nhận</button>
+            <button id="oc-btn-mc-help" onclick="showOcTracNghiemHelp()" class="bg-gray-400 text-white font-bold py-3 px-8 rounded transition hover:bg-gray-500 shadow text-lg">Trợ giúp</button>
+          </div>
+        </div>
+
+        <!-- Khu 3: Chép Chính Tả / Trả Lời Câu Hỏi -->
+        <div id="oc-chinhta-area" class="hidden w-full max-w-2xl mx-auto text-center">
+          <button onclick="playOcChinhTaAudio()" id="oc-btn-ct-audio" class="mx-auto scroll-container p-6 text-center text-xl font-bold flex flex-col items-center justify-center hover:border-[#8b5e34] hover:shadow-lg transition mb-8 w-full shadow-sm bg-[#fcf6e8]">
+            <span class="text-5xl mb-3">🔊</span><span>Bấm để nghe</span>
+          </button>
+          <input type="text" id="oc-ct-input" placeholder="Gõ Hán tự vào đây..." class="w-full p-4 mb-4 border-2 border-[#b7906c] rounded bg-[#fcf6e8] text-[#5c3d2e] font-bold text-xl md:text-2xl text-center focus:outline-none focus:border-[#8b5e34]">
+          <div id="oc-ct-feedback" class="h-10 font-bold text-lg md:text-xl mb-4 flex items-center justify-center"></div>
+          <div class="flex justify-center gap-4">
+            <button id="oc-btn-ct-check" onclick="checkOcChinhTa()" class="bg-[#b7906c] text-white font-bold py-3 px-8 rounded transition hover:bg-[#8b5e34] shadow text-lg">Kiểm tra</button>
+            <button id="oc-btn-ct-help" onclick="showOcChinhTaHelp()" class="bg-gray-400 text-white font-bold py-3 px-8 rounded transition hover:bg-gray-500 shadow text-lg">Trợ giúp</button>
+          </div>
+        </div>
+
+        <!-- Khu 4 & 5: Điền từ & Sắp xếp câu (MỚI BỔ SUNG) -->
+        <div id="oc-dientusapxep-area" class="hidden w-full max-w-3xl mx-auto text-center">
+          <div id="oc-dientu-content" class="hidden">
+            <div id="oc-dt-sentence" class="text-2xl font-bold text-[#7f5539] mb-8 bg-[#fefae0] p-6 border-2 border-[#b7906c] rounded leading-loose"></div>
+            <div id="oc-dt-options" class="flex flex-wrap justify-center gap-4 mb-8"></div>
+          </div>
+          <div id="oc-sapxep-content" class="hidden">
+            <div id="oc-sx-answer-box" class="min-h-[100px] p-4 bg-[#fefae0] border-2 border-dashed border-[#b7906c] rounded flex flex-wrap gap-3 justify-center items-center mb-8"></div>
+            <div id="oc-sx-words-pool" class="flex flex-wrap justify-center gap-3 mb-8"></div>
+          </div>
+          <div id="oc-dtsx-feedback" class="h-10 font-bold text-lg mb-4 flex items-center justify-center"></div>
+          <div class="flex justify-center gap-4">
+            <button id="oc-btn-dtsx-check" onclick="checkOcDienTuSapXep()" class="bg-[#b7906c] text-white font-bold py-3 px-8 rounded transition hover:bg-[#8b5e34] shadow text-lg">Phá Trận</button>
+            <button id="oc-btn-dtsx-help" onclick="showOcDienTuSapXepHelp()" class="bg-gray-400 text-white font-bold py-3 px-8 rounded transition hover:bg-gray-500 shadow text-lg">Trợ giúp</button>
+          </div>
+        </div>
+
+        <div class="flex justify-center gap-4 mt-6">
+          <button id="oc-btn-next" onclick="nextOcPractice()" class="hidden bg-green-600 text-white font-bold py-3 px-8 rounded transition hover:bg-green-700 shadow text-lg">Chuyển ải tiếp theo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Win Message -->
+    <div id="win-message" class="hidden text-center py-16 scroll-container w-full max-w-4xl mt-6">
+      <h2 class="text-4xl font-bold mb-4 text-[#5c3d2e]">🎉 ĐẠI CÔNG CÁO THÀNH!</h2>
+      <p id="win-score-text" class="text-2xl font-bold text-red-600 mb-8"></p>
+      <button onclick="showScreen('mode-select-screen')" class="bg-[#b7906c] text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-[#8b5e34] transition shadow-lg">Tiếp tục tu luyện</button>
+    </div>
+  </main>
+  
+  <footer class="w-full max-w-5xl mt-16 pt-8 border-t-2 border-[#b7906c]/40 text-base pb-8 text-center md:text-left">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="flex flex-col justify-center"><h3 class="font-bold text-xl text-[#5c3d2e] mb-1">书馆 · CoBi</h3><p class="italic text-[#7f5539]">Một ngày nhập Thư Quán, trọn đời hành Hán Ngữ.</p></div>
+      <div class="flex flex-col justify-center space-y-2"><p><span class="font-bold text-[#5c3d2e]">Địa chỉ:</span> K814 H83B/37 Trần Cao Vân, Đà Nẵng</p></div>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
