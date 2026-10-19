@@ -3,67 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thư Quán Hán Ngữ CoBi</title>
+  <title>Thư Quán Hán Ngữ CoBi - Portal</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="ink-wash wash-left" aria-hidden="true"></div>
-  <div class="ink-wash wash-right" aria-hidden="true"></div>
+  <!-- Lớp phủ làm mờ ảnh nền -->
+  <div class="bg-blur"></div>
 
-  <div class="floating-ornaments" aria-hidden="true">
-    <div class="lantern lantern-left"><span></span></div>
-    <div class="lantern lantern-right"><span></span></div>
-    <div class="silk-ribbon ribbon-left"></div>
-    <div class="silk-ribbon ribbon-right"></div>
-    <div class="red-umbrella umbrella-left"><i></i></div>
-  </div>
-
-  <header class="site-header">
-    <div class="header-inner">
-      <a class="brand" href="#home" data-route="home">
-        <span class="brand-seal">CoBi</span>
-        <span>
-          <strong><span class="brand-vn">Thư Quán Hán Ngữ</span> <span class="brand-cobi">CoBi</span></strong>
-          <small>一朝入书馆，一生伴汉语</small>
-        </span>
-      </a>
-      <nav class="main-nav" aria-label="Điều hướng chính">
-<a href="#knowledge" data-route="knowledge">Tàng Thư Các</a>
-<a href="https://thuquanhanngucobi.github.io/cobi-du-lac-hien/">Du Lạc Hiên</a>
-<a href="https://thuquanhanngucobi.github.io/cobi-khao-thi-duong/">Khảo Thí Đường</a>
+  <!-- Khung giấy cổ chứa toàn bộ nội dung -->
+  <div class="app-shell">
+    
+    <!-- Họa tiết trang trí 4 góc -->
+    <div class="ornament corner-tl"></div>
+    <div class="ornament corner-tr"></div>
+    <div class="ornament corner-bl"></div>
+    <div class="ornament corner-br"></div>
+    
+    <!-- 1. THANH CÔNG CỤ TRÊN (CỐ ĐỊNH VĨNH CỬU) -->
+    <header class="topbar">
+      <div class="brand" id="btn-home" title="Về Trang Chủ">
+        <button id="menu-toggle" class="hamburger" style="display: none;">☰</button>
+        <div class="brand-seal">CoBi</div>
+        <div class="brand-text">
+          <strong>Thư Quán Hán Ngữ</strong>
+          <span>一朝入书馆，一生伴汉语</span>
+        </div>
+      </div>
+      <nav class="main-nav">
+        <button class="nav-btn" data-target="tang-thu-cac">Tàng Thư Các</button>
+        <button class="nav-btn" data-target="du-lac-hien">Du Lạc Hiên</button>
+        <button class="nav-btn" data-target="khao-thi-duong">Khảo Thí Đường</button>
       </nav>
-    </div>
-  </header>
-  
-  <!-- THÊM ẢNH BÌA TẠI ĐÂY -->
-  <div class="hero-banner" style="text-align: center; margin: 20px auto; max-width: 500px; margin-bottom: 0;">
-    <img src="https://raw.githubusercontent.com/thuquanhanngucobi/thu-quan-han-ngu-cobi/refs/heads/main/img/LOGO%20NEW.png" alt="Thư Quán Hán Ngữ CoBi" style="width: 20%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: -50px;">
-  </div>
-  
-  <main id="app"></main>
-  <footer class="site-footer">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-title">书馆 · CoBi</div>
-        <p>Một ngày nhập Thư Quán, trọn đời hành Hán Ngữ.</p>
-      </div>
-      <div>
-        <h3>Thông tin</h3>
-        <p>Địa chỉ: <span id="center-address"></span></p>
-        <p>Liên hệ: <span id="center-contact"></span></p>
-      </div>
-      <div>
-        <h3>Khóa học</h3>
-        <p>Muốn tìm hiểu chương trình học tại CoBi?</p>
-        <a href="https://hanngucobi.wordpress.com/" target="_blank" rel="noopener">Xem thông tin khóa học →</a>
-      </div>
-    </div>
-    <div class="footer-bottom">© 2026 Hán Ngữ CoBi · Thư Quán</div>
-  </footer>
+    </header>
 
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="data/hsk4/test01.js"></script>
-  <script src="data/hsk2_vocab.js"></script>
-  <script src="script.js?v=6"></script>
+    <!-- KHU VỰC CHÍNH (THAY ĐỔI THEO THAO TÁC) -->
+    <div class="main-layout">
+      <!-- Thanh bên trái (Ẩn ở trang chủ, hiện khi chọn mục) -->
+      <aside class="sidebar" id="sidebar" style="display: none;">
+        <h3 id="sidebar-title" class="sidebar-title">Tàng Thư Các</h3>
+        <ul id="module-list" class="module-list"></ul>
+      </aside>
+
+      <!-- Nội dung trung tâm (Iframe) -->
+      <main class="content-area">
+        <iframe id="content-frame" src="home.html" frameborder="0"></iframe>
+      </main>
+    </div>
+
+    <!-- 3. THÔNG TIN TRUNG TÂM (CỐ ĐỊNH VĨNH CỬU) -->
+    <footer class="bottombar">
+      <div class="footer-info">
+        <span>📍 <b>Địa chỉ:</b> Đà Nẵng, Việt Nam</span>
+        <span>📞 <b>Liên hệ:</b> Thư Quán Hán Ngữ CoBi</span>
+        <span>🌐 <b>Website:</b> hanngucobi.wordpress.com</span>
+      </div>
+      <div class="footer-copyright">
+        © 2026 Hán Ngữ CoBi · Kho tàng kiến thức, nền tảng vững bền.
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
