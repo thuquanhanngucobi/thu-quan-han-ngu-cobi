@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thư Quán Hán Ngữ · Mô Hình Từ Vựng Thời Gian Tương Tác</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@600;900&family=Playfair+Display:ital,wght@0,700;1,600&display=swap');
+
+    :root {
+      --bg-paper: #f5f0e6;
+      --card-bg: #fffdf9;
+      --primary-red: #8c2424;
+      --text-dark: #3a2e2b;
+      --border-color: #d8c8b0;
+      --accent-gold: #c29b38;
+      --accent-blue: #2a6f97;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-paper);
+      background-image: radial-gradient(#e2d5c3 1.2px, transparent 1.2px);
+      background-size: 22px 22px;
+      font-family: 'Noto Serif SC', 'Times New Roman', serif;
+      color: var(--text-dark);
+      padding: 30px 15px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 35px;
+      border-bottom: 2px dashed var(--primary-red);
+      padding-bottom: 20px;
+    }
+    header h1 .vi-title {
+      font-family: 'Playfair Display', 'Aref Ruqaa', serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--primary-red);
+      letter-spacing: 1px;
+      margin-right: 12px;
+    }
+    header h1 .zh-title {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 46px;
+      color: var(--primary-red);
+    }
+    header p {
+      font-size: 16px;
+      color: #6e5c55;
+      font-style: italic;
+      margin-top: 6px;
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 35px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    .section-title {
+      font-size: 21px;
+      font-weight: 900;
+      color: var(--primary-red);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-left: 5px solid var(--primary-red);
+      padding-left: 12px;
+    }
+
+    /* Slider styling */
+    .slider-box {
+      margin: 20px 0 10px 0;
+      position: relative;
+    }
+    .custom-slider {
+      width: 100%;
+      -webkit-appearance: none;
+      height: 10px;
+      border-radius: 5px;
+      background: #e2d5c3;
+      outline: none;
+      cursor: pointer;
+    }
+    .custom-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary-red);
+      border: 3px solid #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    .custom-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
+    }
+
+    /* Tick Buttons */
+    .ticks-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
+      gap: 4px;
+      overflow-x: auto;
+    }
+    .tick-btn {
+      background: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-align: center;
+      font-family: inherit;
+      color: #7a6b63;
+      transition: all 0.2s ease;
+      padding: 6px 8px;
+      border-radius: 8px;
+      flex: 1;
+      min-width: 68px;
+    }
+    .tick-btn .zh {
+      font-size: 16px;
+      font-weight: bold;
+      display: block;
+    }
+    .tick-btn .vi {
+      font-size: 11px;
+      display: block;
+      margin-top: 2px;
+    }
+    .tick-btn.active {
+      background: var(--primary-red);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(140, 36, 36, 0.25);
+    }
+
+    /* KHUNG HIỂN THỊ TỪ VỰNG & HIỆU ỨNG CHUYỂN CẢNH PPT */
+    .vocab-card {
+      background: #fff;
+      border: 1px solid #e8dec8;
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      margin-top: 18px;
+      transition: background 0.5s ease, box-shadow 0.5s ease;
+    }
+
+    /* KHUNG CHỨA ẢNH CHUYỂN MƯỢT FADE IN / FADE OUT (PPT STYLE) */
+    .vocab-img-box {
+      width: 180px;
+      height: 180px;
+      border-radius: 14px;
+      flex-shrink: 0;
+      border: 2px solid #e2d5c3;
+      overflow: hidden;
+      position: relative;
+      background: #fdfaf3;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .vocab-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Class hiệu ứng chuyển cảnh mượt */
+    .vocab-img-box img.fade-out {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    .vocab-info { flex-grow: 1; }
+    .vocab-info .hanzi {
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--primary-red);
+      line-height: 1.1;
+      transition: opacity 0.3s ease;
+    }
+    .vocab-info .pinyin {
+      font-size: 18px;
+      color: var(--accent-gold);
+      font-weight: bold;
+      margin: 4px 0;
+    }
+    .vocab-info .meaning {
+      font-size: 19px;
+      font-weight: bold;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .vocab-info .example {
+      font-style: italic;
+      color: #554842;
+      font-size: 15px;
+      background: #fcf8f2;
+      padding: 10px 14px;
+      border-left: 4px solid var(--accent-gold);
+      border-radius: 0 8px 8px 0;
+    }
+
+    /* Rules & Dialogue Grid */
+    .rule-box {
+      background: #faf6ee;
+      border: 1px solid #e2d5c3;
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 12px;
+      font-size: 15.5px;
+      line-height: 1.6;
+    }
+    .dialogue-item {
+      background: #fff;
+      border-left: 5px solid var(--accent-blue);
+      padding: 14px 18px;
+      margin-bottom: 12px;
+      border-radius: 0 10px 10px 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .dialogue-item .speaker {
+      font-weight: bold;
+      color: var(--accent-blue);
+    }
+
+    @media (max-width: 650px) {
+      .vocab-card { flex-direction: column; text-align: center; }
+      .vocab-img-box { width: 100%; height: 200px; }
+      .vocab-info .example { border-left: none; border-top: 3px solid var(--accent-gold); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>
+      <span class="vi-title">Thư Quán Hán Ngữ</span>
+      <span class="zh-title">時間詞彙</span>
+    </h1>
+    <p>Mô Hình Tương Tác Chuyển Cảnh Mượt · PPT Smooth Fade</p>
+  </header>
+
+  <!-- PHẦN 1: 3 TRỤC TUYẾN TÍNH (NĂM - THÁNG - NGÀY) -->
+  <div class="section-card">
+    <div class="section-title">1. Trục Năm (年 / nián) · Quá Khứ ◄ Hiện Tại ► Tương Lai</div>
+    <div class="slider-box">
+      <input type="range" id="sliderYear" class="custom-slider" min="0" max="6" value="3">
+      <div class="ticks-container" id="ticksYear"></div>
+    </div>
+    <div class="vocab-card" id="cardYear">
+      <div class="vocab-img-box"><img id="imgYear" src="" alt="Thời gian"></div>
+      <div class="vocab-info">
+        <div class="hanzi" id="hzYear"></div>
+        <div class="pinyin" id="pyYear"></div>
+        <div class="meaning" id="mnYear"></div>
+        <div class="example" id="exYear"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">2. Trục Tháng (月 / yuè) · Tiến Hoá Theo Chu Kỳ</div>
+    <div class="slider-box">
+      <input type="range" id="sliderMonth" class="custom-slider" min="0" max="6" value="3">
+      <div class="ticks-container" id="ticksMonth"></div>
+    </div>
+    <div class="vocab-card" id="cardMonth">
+      <div class="vocab-img-box"><img id="imgMonth" src="" alt="Thời gian"></div>
+      <div class="vocab-info">
+        <div class="hanzi" id="hzMonth"></div>
+        <div class="pinyin" id="pyMonth"></div>
+        <div class="meaning" id="mnMonth"></div>
+        <div class="example" id="exMonth"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">3. Trục Ngày (天 / tiān) · Quy Luật Dịch Chuyển</div>
+    <div class="slider-box">
+      <input type="range" id="sliderDay" class="custom-slider" min="0" max="6" value="3">
+      <div class="ticks-container" id="ticksDay"></div>
+    </div>
+    <div class="vocab-card" id="cardDay">
+      <div class="vocab-img-box"><img id="imgDay" src="" alt="Thời gian"></div>
+      <div class="vocab-info">
+        <div class="hanzi" id="hzDay"></div>
+        <div class="pinyin" id="pyDay"></div>
+        <div class="meaning" id="mnDay"></div>
+        <div class="example" id="exDay"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHẦN 2: TRỤC BUỔI TRONG NGÀY (CHUYỂN MỜ NỀN THEO BÌNH MINH - ĐÊM) -->
+  <div class="section-card">
+    <div class="section-title">4. Dòng Chảy Buổi Trong Ngày (Sáng ➔ Trưa ➔ Chiều ➔ Đêm)</div>
+    <div class="slider-box">
+      <input type="range" id="sliderTimeOfDay" class="custom-slider" min="0" max="6" value="0">
+      <div class="ticks-container" id="ticksTimeOfDay"></div>
+    </div>
+    <div class="vocab-card" id="cardTimeOfDay">
+      <div class="vocab-img-box"><img id="imgTimeOfDay" src="" alt="Thời gian"></div>
+      <div class="vocab-info">
+        <div class="hanzi" id="hzTimeOfDay"></div>
+        <div class="pinyin" id="pyTimeOfDay"></div>
+        <div class="meaning" id="mnTimeOfDay"></div>
+        <div class="example" id="exTimeOfDay"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHẦN 3: 2 TRỤC TUẦN & THỨ -->
+  <div class="section-card">
+    <div class="section-title">5. Thứ Trong Tuần (星期一 ➔ 星期日)</div>
+    <div class="slider-box">
+      <input type="range" id="sliderWeekDay" class="custom-slider" min="0" max="6" value="0">
+      <div class="ticks-container" id="ticksWeekDay"></div>
+    </div>
+    <div class="vocab-card" id="cardWeekDay">
+      <div class="vocab-img-box"><img id="imgWeekDay" src="" alt="Thời gian"></div>
+      <div class="vocab-info">
+        <div class="hanzi" id="hzWeekDay"></div>
+        <div class="pinyin" id="pyWeekDay"></div>
+        <div class="meaning" id="mnWeekDay"></div>
+        <div class="example" id="exWeekDay"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">6. Chu Kỳ Tuần Lễ & Số Lượng Tuần (个星期)</div>
+    <div class="slider-box">
+      <input type="range" id="sliderWeekCycle" class="custom-slider" min="0" max="6" value="3">
+      <div class="ticks-container" id="ticksWeekCycle"></div>
+    </div>
+    <div class="vocab-card" id="cardWeekCycle">
+      <div class="vocab-img-box"><img id="imgWeekCycle" src="" alt="Thời gian"></div>
+      <div class="vocab-info">
+        <div class="hanzi" id="hzWeekCycle"></div>
+        <div class="pinyin" id="pyWeekCycle"></div>
+        <div class="meaning" id="mnWeekCycle"></div>
+        <div class="example" id="exWeekCycle"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHẦN 4: QUY TẮC NGÀY THÁNG NĂM -->
+  <div class="section-card">
+    <div class="section-title">7. Quy Tắc Nói Ngày Tháng Năm Trong Tiếng Trung</div>
+    <div class="rule-box">
+      <p><b>📌 Quy tắc thứ tự:</b> Nói từ <b>LỚN ➔ NHỎ</b> (Năm ➔ Tháng ➔ Ngày/Mốc ➔ Thứ ➔ Buổi).</p>
+      <p style="margin-top:6px;"><b>👉 Công thức chuẩn:</b> <span style="color:var(--primary-red); font-weight:bold;">...年 + ...月 + ...号/日 + 星期... + Buổi</span></p>
+      <hr style="margin: 10px 0; border:none; border-top: 1px dashed #d8c8b0;">
+      <p><b>📌 Phân biệt 号 (hào) và 日 (rì):</b></p>
+      <ul style="margin-left: 20px;">
+        <li><b>号 (hào):</b> Dùng trong khẩu ngữ / giao tiếp hàng ngày (VD: 10月25号).</li>
+        <li><b>日 (rì):</b> Dùng trong văn viết, báo chí, hợp đồng trang trọng (VD: 10月25日).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PHẦN 5: HỘI THOẠI HẸN HÒ & SINH NHẬT -->
+  <div class="section-card">
+    <div class="section-title">8. Mẫu Câu Hỏi Đáp & Rủ Rê (Hẹn Hò, Sinh Nhật)</div>
+    <div class="dialogue-item">
+      <p><span class="speaker">A:</span> 今天是几月几号？星期几？ <i>(Hôm nay là ngày mấy tháng mấy? Thứ mấy?)</i></p>
+      <p><span class="speaker">B:</span> 今天是10月25号，星期五。 <i>(Hôm nay là ngày 25 tháng 10, Thứ Sáu.)</i></p>
+    </div>
+    <div class="dialogue-item">
+      <p><span class="speaker">A:</span> 你的生日是几月几号？ <i>(Sinh nhật của bạn là ngày mấy tháng mấy?)</i></p>
+      <p><span class="speaker">B:</span> 我的生日是2月9号。 <i>(Sinh nhật của tôi là ngày 9 tháng 2.)</i> ➔ <b>祝你生日快乐！🎉</b></p>
+    </div>
+    <div class="dialogue-item">
+      <p><span class="speaker">A:</span> 明天晚上你有空儿吗？我想请你看电影 / 吃晚饭。 <i>(Tối mai bạn rảnh không? Tôi muốn mời bạn xem phim / ăn tối.)</i></p>
+      <p><span class="speaker">B:</span> 为什么？ <i>(Tại sao thế?)</i></p>
+      <p><span class="speaker">A:</span> 因为明天是我的生日！ <i>(Vì ngày mai là sinh nhật tôi!)</i> ➔ <b>太好了！晚上学校见！🍿</b></p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  /* 
+    ========================================================================
+    CÔ CÓ THỂ TỰ THAY LINK ẢNH CỦA CÔ VÀO MỤC "img": "LINK_ẢNH_MỚI" Ở DƯỚI ĐÂY:
+    ========================================================================
+  */
+
+  const dataYear = [
+    { zh: "两年前", vi: "2 năm trước", py: "liǎng nián qián", ex: "两年前我在中国学习。(2 năm trước tôi học ở Trung Quốc.)", img: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=400&q=80" },
+    { zh: "前年", vi: "Năm kia", py: "qiánnián", ex: "前年去过北京。(Năm kia tôi đã đi Bắc Kinh.)", img: "https://images.unsplash.com/photo-1508807526345-15e9b5f4eaff?w=400&q=80" },
+    { zh: "去年", vi: "Năm ngoái", py: "qùnián", ex: "去年我很忙。(Năm ngoái tôi rất bận.)", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&q=80" },
+    { zh: "今年", vi: "Năm nay", py: "jīnnián", ex: "今年你多大？(Năm nay bạn bao nhiêu tuổi?)", img: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&q=80" },
+    { zh: "明年", vi: "Sang năm", py: "míngnián", ex: "明年我想去留学。(Sang năm tôi muốn đi du học.)", img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&q=80" },
+    { zh: "后年", vi: "Năm sau nữa", py: "hòunián", ex: "后年我们毕业。(Năm sau nữa chúng tôi tốt nghiệp.)", img: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&q=80" },
+    { zh: "两年后", vi: "2 năm sau", py: "liǎng nián hòu", ex: "两年后他回国。(2 năm sau anh ấy về nước.)", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=400&q=80" }
+  ];
+
+  const dataMonth = [
+    { zh: "两个月前", vi: "2 tháng trước", py: "liǎng gè yuè qián", ex: "两个月前我们认识。(2 tháng trước chúng tôi quen nhau.)", img: "https://images.unsplash.com/photo-1506784365847-bbad939e9335?w=400&q=80" },
+    { zh: "上上个月", vi: "Tháng trước nữa", py: "shàng shàng gè yuè", ex: "上上个月天气很热。(Tháng trước nữa thời tiết rất nóng.)", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80" },
+    { zh: "上个月", vi: "Tháng trước", py: "shàng gè yuè", ex: "上个月去旅游。(Tháng trước tôi đi du lịch.)", img: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&q=80" },
+    { zh: "这个月", vi: "Tháng này", py: "zhè gè yuè", ex: "这个月真漂亮！(Tháng này thật đẹp!)", img: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&q=80" },
+    { zh: "下个月", vi: "Tháng sau", py: "xià gè yuè", ex: "下个月有考试。(Tháng sau có kỳ thi.)", img: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&q=80" },
+    { zh: "下下个月", vi: "Tháng sau nữa", py: "xià xià gè yuè", ex: "下下个月去中国。(Tháng sau nữa đi Trung Quốc.)", img: "https://images.unsplash.com/photo-1543731068-7e0f5beff43a?w=400&q=80" },
+    { zh: "两个月后", vi: "2 tháng sau", py: "liǎng gè yuè hòu", ex: "两个月后放假。(2 tháng sau được nghỉ phép.)", img: "https://images.unsplash.com/photo-1476514525535-ce74f452893a?w=400&q=80" }
+  ];
+
+  const dataDay = [
+    { zh: "两天前", vi: "2 ngày trước", py: "liǎng tiān qián", ex: "两天前买的。(Mua từ 2 ngày trước.)", img: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=400&q=80" },
+    { zh: "前天", vi: "Hôm kia", py: "qiántiān", ex: "前天是我生日。(Hôm kia là sinh nhật tôi.)", img: "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=400&q=80" },
+    { zh: "昨天", vi: "Hôm qua", py: "zuótiān", ex: "昨天你去哪儿了？(Hôm qua bạn đi đâu?)", img: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=400&q=80" },
+    { zh: "今天", vi: "Hôm nay", py: "jīntiān", ex: "今天是几月几号？(Hôm nay là ngày mấy tháng mấy?)", img: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&q=80" },
+    { zh: "明天", vi: "Ngày mai", py: "míngtiān", ex: "明天看电影吗？(Ngày mai xem phim không?)", img: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&q=80" },
+    { zh: "后天", vi: "Ngày mốt", py: "hòutiān", ex: "后天学校见！(Ngày mốt gặp ở trường nhé!)", img: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&q=80" },
+    { zh: "两天后", vi: "2 ngày sau", py: "liǎng tiān hòu", ex: "两天后我回家。(2 ngày sau tôi về nhà.)", img: "https://images.unsplash.com/photo-1517840901100-8179e982acb7?w=400&q=80" }
+  ];
+
+  /* BỘ ẢNH MÔ PHỎNG ÁNH SÁNG THEO BUỔI CHUYỂN MƯỢT CỰC NGHỆ THUẬT */
+  const dataTimeOfDay = [
+    { zh: "早上", vi: "Sáng sớm (6h - 8h)", py: "zǎoshang", ex: "早上好！(Chào buổi sáng!)", img: "https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?w=400&q=80", bg: "#fff9e6" },
+    { zh: "上午", vi: "Buổi sáng (8h - 11h)", py: "shàngwǔ", ex: "上午我有课。(Buổi sáng tôi có lớp.)", img: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&q=80", bg: "#ffffff" },
+    { zh: "中午", vi: "Buổi trưa (11h - 13h)", py: "zhōngwǔ", ex: "中午吃午饭。(Buổi trưa ăn cơm trưa.)", img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80", bg: "#fffdf0" },
+    { zh: "下午", vi: "Buổi chiều (13h - 18h)", py: "xiàwǔ", ex: "下午去喝咖啡。(Buổi chiều đi uống cà phê.)", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80", bg: "#fff3e6" },
+    { zh: "晚上", vi: "Buổi tối (18h - 22h)", py: "wǎnshang", ex: "晚上想请你吃晚饭。(Tối nay muốn mời bạn ăn tối.)", img: "https://images.unsplash.com/photo-1514565131-fce0801e5785?w=400&q=80", bg: "#f0f4f8" },
+    { zh: "夜里 / 晚上", vi: "Ban đêm (22h - Sáng)", py: "yèli", ex: "夜里要好好休息。(Ban đêm cần nghỉ ngơi tốt.)", img: "https://images.unsplash.com/photo-1509773896072-9ff55708147f?w=400&q=80", bg: "#e6ecf2" },
+    { zh: "白天", vi: "Ban ngày", py: "báitiān", ex: "白天工作，晚上学习。(Ban ngày làm việc, ban đêm học tập.)", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&q=80", bg: "#ffffff" }
+  ];
+
+  const dataWeekDay = [
+    { zh: "星期一", vi: "Thứ 2", py: "xīngqīyī", ex: "星期一上课。(Thứ 2 lên lớp.)", img: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&q=80" },
+    { zh: "星期二", vi: "Thứ 3", py: "xīngqīèr", ex: "星期二买东西。(Thứ 3 đi mua đồ.)", img: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=400&q=80" },
+    { zh: "星期三", vi: "Thứ 4", py: "xīngqīsān", ex: "星期三看电影。(Thứ 4 xem phim.)", img: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&q=80" },
+    { zh: "星期四", vi: "Thứ 5", py: "xīngqīsì", ex: "星期四有空儿。(Thứ 5 có thời gian rảnh.)", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&q=80" },
+    { zh: "星期五", vi: "Thứ 6", py: "xīngqīwǔ", ex: "星期五晚上学校见！(Tối Thứ 6 gặp ở trường!)", img: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&q=80" },
+    { zh: "星期六", vi: "Thứ 7", py: "xīngqīliù", ex: "星期六去玩儿。(Thứ 7 đi chơi.)", img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=400&q=80" },
+    { zh: "星期日 / 天", vi: "Chủ Nhật", py: "xīngqīrì / tiān", ex: "星期日休息。(Chủ Nhật nghỉ ngơi.)", img: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=400&q=80" }
+  ];
+
+  const dataWeekCycle = [
+    { zh: "两个星期前", vi: "2 tuần trước", py: "liǎng gè xīngqī qián", ex: "两个星期前我买的。(Tôi mua từ 2 tuần trước.)", img: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&q=80" },
+    { zh: "上上个星期", vi: "2 tuần trước", py: "shàng shàng gè xīngqī", ex: "上上个星期很忙。(2 tuần trước rất bận.)", img: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&q=80" },
+    { zh: "上个星期", vi: "Tuần trước", py: "shàng gè xīngqī", ex: "上个星期我去北京了。(Tuần trước tôi đã đi Bắc Kinh.)", img: "https://images.unsplash.com/photo-1508807526345-15e9b5f4eaff?w=400&q=80" },
+    { zh: "这个星期", vi: "Tuần này", py: "zhè gè xīngqī", ex: "这个星期天天有课。(Tuần này ngày nào cũng có lớp.)", img: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&q=80" },
+    { zh: "下个星期", vi: "Tuần sau", py: "xià gè xīngqī", ex: "下个星期你有空儿吗？(Tuần sau bạn có rảnh không?)", img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&q=80" },
+    { zh: "下下个星期", vi: "2 tuần sau", py: "xià xià gè xīngqī", ex: "下下个星期考试。(2 tuần sau thi.)", img: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&q=80" },
+    { zh: "两个星期后", vi: "2 tuần sau", py: "liǎng gè xīngqī hòu", ex: "两个星期后见！(2 tuần sau gặp nhé!)", img: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&q=80" }
+  ];
+
+  // HÀM KHỞI TẠO VÀ XỬ LÝ CHUYỂN CẢNH MƯỢT PPT (SMOOTH TRANSITION)
+  function initSlider(sliderId, ticksId, ids, data) {
+    const slider = document.getElementById(sliderId);
+    const ticksBox = document.getElementById(ticksId);
+
+    ticksBox.innerHTML = '';
+    data.forEach((item, index) => {
+      const btn = document.createElement('button');
+      btn.className = `tick-btn ${index === parseInt(slider.value) ? 'active' : ''}`;
+      btn.innerHTML = `<span class="zh">${item.zh}</span><span class="vi">${item.vi}</span>`;
+      btn.onclick = () => {
+        slider.value = index;
+        renderSmooth(index, ids, data, ticksBox);
+      };
+      ticksBox.appendChild(btn);
+    });
+
+    slider.oninput = (e) => renderSmooth(parseInt(e.target.value), ids, data, ticksBox);
+    renderSmooth(parseInt(slider.value), ids, data, ticksBox, true);
+  }
+
+  function renderSmooth(idx, ids, data, ticksBox, isFirstRender = false) {
+    const item = data[idx];
+    const imgElem = document.getElementById(ids.img);
+    const cardElem = document.getElementById(ids.card);
+
+    if (isFirstRender) {
+      imgElem.src = item.img;
+      document.getElementById(ids.hz).textContent = item.zh;
+      document.getElementById(ids.py).textContent = item.py;
+      document.getElementById(ids.mn).textContent = item.vi;
+      document.getElementById(ids.ex).textContent = "Ví dụ: " + item.ex;
+      if (item.bg && cardElem) cardElem.style.backgroundColor = item.bg;
+    } else {
+      // HIỆU ỨNG POWERPOINT CROSS-FADE (MỜ DẦN & PHÓNG TO)
+      imgElem.classList.add('fade-out');
+      
+      setTimeout(() => {
+        imgElem.src = item.img;
+        document.getElementById(ids.hz).textContent = item.zh;
+        document.getElementById(ids.py).textContent = item.py;
+        document.getElementById(ids.mn).textContent = item.vi;
+        document.getElementById(ids.ex).textContent = "Ví dụ: " + item.ex;
+        if (item.bg && cardElem) cardElem.style.backgroundColor = item.bg;
+
+        imgElem.classList.remove('fade-out');
+      }, 200);
+    }
+
+    const btns = ticksBox.querySelectorAll('.tick-btn');
+    btns.forEach((b, i) => {
+      if (i === idx) b.classList.add('active');
+      else b.classList.remove('active');
+    });
+  }
+
+  // KHỞI CHẠY TẤT CẢ TRỤC
+  initSlider('sliderYear', 'ticksYear', { hz: 'hzYear', py: 'pyYear', mn: 'mnYear', ex: 'exYear', img: 'imgYear', card: 'cardYear' }, dataYear);
+  initSlider('sliderMonth', 'ticksMonth', { hz: 'hzMonth', py: 'pyMonth', mn: 'mnMonth', ex: 'exMonth', img: 'imgMonth', card: 'cardMonth' }, dataMonth);
+  initSlider('sliderDay', 'ticksDay', { hz: 'hzDay', py: 'pyDay', mn: 'mnDay', ex: 'exDay', img: 'imgDay', card: 'cardDay' }, dataDay);
+  initSlider('sliderTimeOfDay', 'ticksTimeOfDay', { hz: 'hzTimeOfDay', py: 'pyTimeOfDay', mn: 'mnTimeOfDay', ex: 'exTimeOfDay', img: 'imgTimeOfDay', card: 'cardTimeOfDay' }, dataTimeOfDay);
+  initSlider('sliderWeekDay', 'ticksWeekDay', { hz: 'hzWeekDay', py: 'pyWeekDay', mn: 'mnWeekDay', ex: 'exWeekDay', img: 'imgWeekDay', card: 'cardWeekDay' }, dataWeekDay);
+  initSlider('sliderWeekCycle', 'ticksWeekCycle', { hz: 'hzWeekCycle', py: 'pyWeekCycle', mn: 'mnWeekCycle', ex: 'exWeekCycle', img: 'imgWeekCycle', card: 'cardWeekCycle' }, dataWeekCycle);
+</script>
+
+</body>
+</html>
