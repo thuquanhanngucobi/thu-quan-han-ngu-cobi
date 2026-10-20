@@ -123,27 +123,39 @@ iframe { width: 100%; height: 100%; min-height: 600px; display: block; border: n
 .hamburger { display: none; background: none; border: none; font-size: 24px; color: var(--blue-water); cursor: pointer; }
 
 /* TỐI ƯU HIỂN THỊ VÀ CUỘN TRANG TRÊN ĐIỆN THOẠI */
+/* CHỈ ÁP DỤNG CHO ĐIỆN THOẠI (DƯỚI 850PX) */
 @media (max-width: 850px) {
-  body { padding: 8px; }
-  .hamburger { display: block; }
+  body { padding: 5px; }
+  .app-shell { height: auto; min-height: 100vh; gap: 10px; }
   
-  /* Chuyển app-shell sang height: auto để cuộn được tự do */
-  .app-shell { min-height: 100vh; height: auto; gap: 10px; }
+  /* Xử lý dứt điểm lỗi nút Menu dính vào Logo */
+  .topbar { 
+    flex-wrap: wrap; padding: 12px 15px; 
+    justify-content: space-between; align-items: center;
+  }
+  .brand { max-width: 75%; } /* Ép logo nhỏ lại để chừa chỗ cho nút menu */
+  .hamburger { 
+    display: block; width: 40px; text-align: right; 
+    margin-left: auto; font-size: 28px;
+  }
+  .main-nav { 
+    width: 100%; order: 3; overflow-x: auto; white-space: nowrap; 
+    padding-top: 12px; border-top: 1px dashed var(--line); margin-top: 8px; 
+  }
   
-  .topbar { padding: 10px 15px; flex-wrap: wrap; gap: 8px; }
-  .main-nav { width: 100%; overflow-x: auto; white-space: nowrap; padding-bottom: 5px; }
-  
+  /* Sidebar trượt mượt mà */
   .sidebar { 
-    position: fixed; top: 75px; left: 8px; bottom: 8px; width: 260px;
+    position: fixed; top: 85px; left: 10px; bottom: 10px; width: 260px;
     z-index: 100; box-shadow: 5px 0 25px rgba(0,0,0,0.3); 
-    transform: translateX(-110%); transition: transform 0.3s ease; 
+    transform: translateX(-120%); transition: transform 0.3s ease; 
     background: #fdfaf3;
   }
   .sidebar.open { transform: translateX(0); }
   
-  .main-layout { flex-direction: column; min-height: unset; }
-  /* Cho phép thẻ iframe dài ra tự do trên đt */
-  .content-area { height: auto; min-height: 70vh; overflow: visible; }
+  /* Xử lý cuộn Iframe mượt mà, không bị kẹt */
+  .main-layout { flex-direction: column; height: 80vh; min-height: 600px; }
+  .content-area { flex: 1; height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  iframe { height: 100%; min-height: 100%; display: block; width: 100%; }
   
   .bottombar { flex-direction: column; text-align: center; gap: 6px; padding: 12px; }
   .footer-info { flex-direction: column; gap: 4px; align-items: center; }
