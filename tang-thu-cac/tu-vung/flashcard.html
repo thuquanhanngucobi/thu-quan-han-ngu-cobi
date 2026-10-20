@@ -36,8 +36,8 @@
     /* KHUNG THẺ LẬT - ÉP CỨNG CHIỀU CAO & KHOẢNG CÁCH */
     .flip-card { 
       width: 100%; 
-      height: 220px; /* Chiều cao thẻ gọn gàng hơn */
-      margin-bottom: 35px; /* Ép cứng khoảng cách để tuyệt đối không dính nhau */
+      height: 220px; 
+      margin-bottom: 35px; 
       perspective: 1000px; cursor: pointer; 
     }
 
@@ -70,17 +70,16 @@
     .pinyin-box { background: white; color: var(--blue-water); border: 1px solid var(--line); padding: 6px 18px; border-radius: 8px; font-size: 20px; font-weight: 700; font-family: sans-serif; }
 
     /* KHUNG ẢNH GỌN GÀNG TỈ LỆ CHUẨN */
-    /* TĂNG KÍCH THƯỚC KHUNG ẢNH */
-.front-right { 
-  flex: 0 0 260px; /* Độ rộng khung ảnh (Tăng từ 160px lên 260px) */
-  height: 200px;   /* Chiều cao khung ảnh (Tăng từ 160px lên 200px) */
-  display: flex; align-items: center; justify-content: center; 
-}
-.vocab-img { 
-  max-width: 100%; max-height: 100%; 
-  object-fit: cover; /* Đổi thành cover để ảnh lấp đầy khung đẹp hơn */
-  border-radius: 16px; /* Bo góc ảnh mềm mại theo thẻ */
-}
+    .front-right { 
+      flex: 0 0 260px; 
+      height: 200px;   
+      display: flex; align-items: center; justify-content: center; 
+    }
+    .vocab-img { 
+      max-width: 100%; max-height: 100%; 
+      object-fit: cover; 
+      border-radius: 16px; 
+    }
 
     /* MẶT SAU */
     .flip-back { transform: rotateY(180deg); flex-direction: column; justify-content: center; align-items: center; padding: 25px; text-align: center; }
@@ -94,6 +93,26 @@
     .audio-example:hover { background: var(--blue-water); color: white; }
 
     #loading { text-align: center; color: var(--paper); font-size: 18px; margin-top: 50px; background: rgba(0,0,0,0.5); padding: 12px 25px; border-radius: 8px; display: inline-block; }
+
+    /* =========================================================
+       ĐOẠN CSS MỚI: TỐI ƯU THẺ FLASHCARD TRÊN ĐIỆN THOẠI 
+       ========================================================= */
+    @media (max-width: 600px) {
+      .flip-card { height: 380px; margin-bottom: 25px; }
+      .flip-front { flex-direction: column; padding: 20px; align-items: center; text-align: center; }
+      
+      .front-left { width: 100%; align-items: center; gap: 10px; flex: unset; }
+      .hanzi-row { justify-content: center; gap: 15px; }
+      .hanzi { font-size: 70px; }
+      .pinyin-box { font-size: 18px; padding: 6px 16px; }
+      
+      .front-right { width: 100%; height: 150px; margin-top: 15px; flex: unset; display: flex; justify-content: center; }
+      .vocab-img { max-width: 100%; max-height: 150px; object-fit: contain; }
+      
+      .flip-back { padding: 20px 15px; }
+      .meaning { font-size: 22px; margin-bottom: 15px; }
+      .example { font-size: 18px; margin-bottom: 20px; }
+    }
   </style>
 </head>
 <body>
@@ -111,7 +130,7 @@
   </div>
 
   <script>
-    // DÁN LINK API CỦA BẠN VÀO ĐÂY (NHỚ GIỮ LẠI PHẦN DUÔI THỜI GIAN)
+    // LINK API CỦA BẠN (Cập nhật ?action=getVocabLesson)
     const API_URL = 'https://script.google.com/macros/s/AKfycby1TyfXxZVmt2aoSIwOaNXxrrSmOXIHv-CVAU-B_9Xiv-Dxt4LyW2Yd1DSaJIOg4pfUIw/exec?action=getVocabLesson&t=' + new Date().getTime();
     
     let allVocab = [];
@@ -124,7 +143,14 @@
         const res = await fetch(API_URL);
         const json = await res.json();
         if (json.success && json.data.length > 0) {
-          allVocab = json.data.filter(item => item['Hán Tự'] || item['TUVUNG']);
+          // Khóa chặt tên cột giống y như file Danh sách
+          allVocab = json.data.filter(item => item['Hán tự'] || item['Hán Tự'] || item['TUVUNG']);
+          
+          if(allVocab.length === 0) {
+            document.getElementById('loading').textContent = "Không tìm thấy dữ liệu ở cột 'Hán tự'.";
+            return;
+          }
+
           setupFilter();
           document.getElementById('loading').style.display = 'none';
           document.getElementById('app-content').style.display = 'block';
@@ -137,23 +163,25 @@
     }
 
     function setupFilter() {
-      const lessons = [...new Set(allVocab.map(item => item['Bài học'] || 'Tất cả'))];
+      // Dùng cột ID hoặc Bài học làm tiêu chí lọc
+      const lessons = [...new Set(allVocab.map(item => item['ID'] || item['Bài học'] || 'Tất cả'))];
       selectEl.innerHTML = lessons.map(l => `<option value="${l}">${l}</option>`).join('');
       selectEl.addEventListener('change', (e) => renderCards(e.target.value));
       renderCards(lessons[0]);
     }
 
     function renderCards(lesson) {
-      const filtered = allVocab.filter(item => (item['Bài học'] || 'Tất cả') === lesson);
+      const filtered = allVocab.filter(item => (item['ID'] || item['Bài học'] || 'Tất cả') === lesson);
       totalEl.textContent = `Tổng: ${filtered.length} từ`;
       
       listEl.innerHTML = filtered.map((item, index) => {
         const num = (index + 1).toString().padStart(2, '0');
-        const hanzi = item['Hán Tự'] || item['TUVUNG'] || '';
-        const pinyin = item['Pinyin'] || item['PINYIN'] || '';
-        const meaning = item['Nghĩa'] || item['NGHIA'] || '';
-        const example = item['Ví dụ'] || item['VIDU'] || '';
-        const img = item['Hình ảnh'] || item['HINHANH'] || '';
+        // Quét chuẩn tên cột theo file Excel mới
+        const hanzi = item['Hán tự'] || item['Hán Tự'] || item['TUVUNG'] || '';
+        const pinyin = item['PINYIN'] || item['Pinyin'] || '';
+        const meaning = item['NGHIA'] || item['Nghĩa'] || '';
+        const example = item['VIDU'] || item['Ví dụ'] || '';
+        const img = item['HINHANH'] || item['Hình ảnh'] || '';
         
         const hasImg = img.trim() !== '';
 
