@@ -18,7 +18,7 @@ const COBI_DATA = {
           { id: "ttc-l1", name: "Quyển 1", path: "./tang-thu-cac/bai-giang/quyen-1/index.html" },
                {id: "lec-b1", name: "Bài 1: Dòng chảy thời gian", path: "./tang-thu-cac/bai-giang/quyen-1/bai8-time.html" },
           { id: "ttc-l2", name: "Quyển 2", path: "./tang-thu-cac/bai-giang/quyen-2/index.html" },
-          { id: "ttc-l3", name: "HSK 3", path: "./tang-thu-cac/bai-giang/hsk-3/index.html" }
+          
         ]
       },
       { id: "ttc-grammar", name: "Hệ thống Ngữ Pháp", path: "./tang-thu-cac/ngu-phap/index.html" }
