@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CoBi 小区 · Trò chơi giao thông</title>
+<style>
+:root{--bg:#e6f5ff;--card:#fff;--text:#2b3350;--mut:#6b7494;--line:#dfe6f5;--pri:#ff7a59;--ok:#1f9d63;--bad:#d64545;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171d33;--card:#252d49;--text:#eef1ff;--mut:#a9b1d1;--line:#3a4470;--ok:#4fd99a;--bad:#ff8080}}
+:root[data-theme="dark"]{--bg:#171d33;--card:#252d49;--text:#eef1ff;--mut:#a9b1d1;--line:#3a4470;--ok:#4fd99a;--bad:#ff8080}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif}
+#app{max-width:1280px;margin:0 auto;padding:12px}
+h1{font-size:22px;margin:4px 0 10px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:14px;margin-bottom:12px}
+.center{max-width:460px;margin:40px auto;text-align:center}
+.center .big{font-size:64px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:12px;align-items:start}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.mapwrap{border-radius:22px;overflow:hidden;border:3px solid var(--line);margin-bottom:12px;background:#b7e4a0}
+svg{display:block;width:100%;height:auto}
+.pl{transition:opacity .3s}.dim .pl{opacity:.45}.dim .pl.hl{opacity:1}.pl.hl rect:first-child{stroke:#ff7a59}
+.tk{transition:transform .5s ease}
+.tk .ring{fill:#fff;stroke-width:4}.tk .nm{font-size:14px;font-weight:700;paint-order:stroke;stroke:#fff;stroke-width:4px}
+.arw{fill:#ff7a59;stroke:#fff;stroke-width:2}
+input{font:inherit;font-size:20px;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--text);width:100%}
+.row{display:flex;gap:8px}
+button{font:inherit;font-weight:700;border:0;border-radius:12px;padding:10px 18px;background:var(--pri);color:#fff;cursor:pointer;white-space:nowrap}
+button.sec{background:var(--line);color:var(--text)}
+button:disabled{opacity:.5}
+.chips span{display:inline-block;background:var(--bg);border-radius:20px;padding:3px 12px;margin:0 6px 6px 0;font-size:14px;font-weight:600}
+.q{font-size:20px;font-weight:700;margin:0 0 4px}.mut{color:var(--mut);font-size:14px}
+#fb{min-height:24px;font-weight:600;margin:0 4px 12px}.ok{color:var(--ok)}.bad{color:var(--bad)}
+#log div{font-size:18px;padding:2px 0}
+.bd{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px dashed var(--line)}.bd b{flex:1;overflow:hidden;text-overflow:ellipsis}
+.overlay{position:fixed;inset:0;background:rgba(10,15,40,.7);display:flex;align-items:center;justify-content:center;z-index:20;padding:16px}
+.overlay .card{max-width:480px;width:100%;max-height:90%;overflow:auto;text-align:center}
+.pod{display:flex;justify-content:center;align-items:flex-end;gap:8px;margin:10px 0}.pod div{flex:1;border-radius:12px 12px 0 0;padding:8px 4px;background:var(--bg)}
+details{margin-bottom:10px;font-size:14px}summary{cursor:pointer;font-weight:600}
+[hidden]{display:none!important}
+</style></head><body><div id="app">
+<h1>🚌 CoBi 小区 · 交通大赛 <span class="mut">Cuộc đua giao thông</span></h1>
+<section id="s-name" class="card center">
+ <div class="big">🧒🗺️</div>
+ <p class="q">欢迎来到 CoBi 小区！</p>
+ <p class="mut">Hãy đặt tên cho nhân vật của bạn</p>
+ <div class="row"><input id="nm" maxlength="12" placeholder="Tên nhân vật / 你的名字" autocomplete="off"><button id="join">进入</button></div>
+ <p><button id="tch" class="sec" hidden>👩‍🏫 Tôi là giáo viên, chỉ điều khiển (không chơi)</button></p>
+</section>
+<section id="s-main" hidden><div class="grid"><div>
+ <div class="chips" id="banner"></div>
+ <div class="mapwrap"><svg id="map" viewBox="0 0 900 640"></svg></div>
+ <div id="ctl" class="card" hidden></div>
+ <div id="panel" class="card"></div>
+ <div id="fb"></div>
+ <details><summary>💡 Gợi ý cú pháp</summary>
+  <p>Địa điểm: 我想去 + nơi muốn đến<br>Phương tiện: 坐 + 地铁/火车/飞机/公交车/公共汽车/出租车 · 打车/打滴滴 · 开 + 车/汽车/摩托车 · 骑 + 自行车/马 · 走路<br>Chỉ đường: 往前走 · 往右拐 · 往左拐 (mỗi câu lệnh đi 1 đoạn đường, có thể viết nhiều lệnh cách nhau bằng dấu phẩy)</p></details>
+</div><aside class="card" id="board"></aside></div></section>
+<div id="end" class="overlay" hidden></div>
+</div>
+<script>
+const COLS=6,ROWS=5,X0=80,DX=148,Y0=70,DY=120,NS='http://www.w3.org/2000/svg';
+const px=c=>X0+c*DX,py=r=>Y0+r*DY;
+const HOME={n:'家',e:'🏠',c:2,r:4,col:'#ffd166',v:'Nhà'};
+const PL=[
+{n:'学校',e:'🏫',c:0,r:0,col:'#ffadad',v:'Trường học'},
+{n:'电影院',e:'🎬',c:2,r:0,col:'#cdb4ff',v:'Rạp chiếu phim'},
+{n:'北京银行',e:'🏦',c:4,r:0,col:'#a0c4ff',v:'Ngân hàng Bắc Kinh'},
+{n:'书店',e:'📚',c:1,r:1,col:'#fdffb6',v:'Hiệu sách'},
+{n:'超市',e:'🛒',c:3,r:1,col:'#caffbf',v:'Siêu thị'},
+{n:'邮局',e:'📮',c:5,r:1,col:'#ffc6ff',v:'Bưu điện'},
+{n:'火车站',e:'🚉',c:0,r:2,col:'#9bf6ff',v:'Ga tàu hỏa'},
+{n:'取款机',e:'🏧',c:3,r:3,col:'#ffd6a5',v:'Cây ATM'},
+{n:'四川饭店',e:'🌶️',c:5,r:3,col:'#ffadad',v:'Nhà hàng Tứ Xuyên'},
+{n:'地铁站',e:'🚇',c:5,r:4,col:'#bdb2ff',v:'Ga tàu điện ngầm'}];
+const VEH=[[/坐地铁/,'🚇'],[/坐火车/,'🚆'],[/坐飞机/,'✈️'],[/坐(公交车|公共汽车)/,'🚌'],[/坐出租车|打车|打滴滴/,'🚕'],[/开(汽车|车)/,'🚗'],[/(开|骑)摩托车/,'🛵'],[/骑自行车/,'🚲'],[/骑马/,'🐎'],[/走路/,'🚶']];
+const MV=/([往向]?前[面]?走|一?直走)|([往向]?右[边]?[拐转])|([往向]?左[边]?[拐转])|(掉头|[往向]?[回后]走)/g;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const hue=s=>{let h=0;for(const ch of String(s))h=(h*31+ch.charCodeAt(0))%360;return h};
+const AV=['🧒','👧','🧑','🐱','🐼','🐰','🦊','🐯','🐻','🐸'];
+let db=null,user=null,isTeacher=false,me=null,spec=false,busy=false,psig='',LOG=[];
+let myId='p'+Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-3);
+let G={phase:'lobby',round:1,startedAt:0},others=[];
+
+/* ---------- map ---------- */
+function buildMap(){
+ let s='<rect width="900" height="640" fill="#b7e4a0"/>';
+ const dec=['🌳','🌷','⛲','🏡','🌻','🐦','🌼','🌲'];
+ for(let r=0;r<ROWS-1;r++)for(let c=0;c<COLS-1;c++){
+  const cx=px(c)+DX/2,cy=py(r)+DY/2;
+  s+=`<rect x="${px(c)+22}" y="${py(r)+22}" width="${DX-44}" height="${DY-44}" rx="22" fill="${(c+r)%2?'#cdf0b8':'#c3ebab'}"/><text x="${cx-20}" y="${cy+8}" font-size="26" text-anchor="middle">${dec[(c*3+r*5)%8]}</text><text x="${cx+20}" y="${cy+10}" font-size="22" text-anchor="middle">${dec[(c*5+r*3+2)%8]}</text>`;
+ }
+ let d='';
+ for(let r=0;r<ROWS;r++)d+=`M${px(0)} ${py(r)}H${px(COLS-1)}`;
+ for(let c=0;c<COLS;c++)d+=`M${px(c)} ${py(0)}V${py(ROWS-1)}`;
+ s+=`<path d="${d}" stroke="#7d8aa8" stroke-width="40" stroke-linecap="round" fill="none"/><path d="${d}" stroke="#dfe4ef" stroke-width="32" stroke-linecap="round" fill="none"/><path d="${d}" stroke="#fff" stroke-width="3" stroke-dasharray="12 12" fill="none" opacity=".85"/>`;
+ for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++)s+=`<circle cx="${px(c)}" cy="${py(r)}" r="19" fill="#dfe4ef"/>`;
+ [HOME,...PL].forEach(p=>{const x=px(p.c),y=py(p.r),w=p.n.length*16+20;
+  s+=`<g class="pl" data-n="${p.n}"><rect x="${x-34}" y="${y-34}" width="68" height="68" rx="18" fill="${p.col}" stroke="#fff" stroke-width="5"/><text x="${x}" y="${y}" font-size="36" text-anchor="middle" dominant-baseline="central">${p.e}</text><rect x="${x-w/2}" y="${y+38}" width="${w}" height="24" rx="12" fill="#fff" opacity=".93"/><text x="${x}" y="${y+55}" font-size="15" font-weight="700" text-anchor="middle" fill="#2b3350">${p.n}</text></g>`});
+ s+=`<text x="${px(2)}" y="${py(4)-42}" font-size="14" font-weight="700" text-anchor="middle" fill="#c2410c" stroke="#fff" stroke-width="4" paint-order="stroke">起点 · 前 ⬆</text><text id="flag" font-size="32" visibility="hidden">🚩</text><g id="tl"></g>`;
+ $('map').innerHTML=s;
+}
+const placeAt=(c,r)=>[HOME,...PL].find(p=>p.c===c&&p.r===r);
+function allPlayers(){return others.filter(p=>p.round===G.round&&p.id!==myId).concat(me?[me]:[])}
+function renderTokens(){
+ const tl=$('tl'),list=allPlayers(),slots={},seen={};
+ list.forEach(p=>{(slots[p.x+','+p.y]=slots[p.x+','+p.y]||[]).push(p)});
+ for(const k in slots){slots[k].sort((a,b)=>a.id<b.id?-1:1).forEach((p,i)=>{
+  const pl=placeAt(p.x,p.y),a=i*2.4,rad=i?24+Math.floor(i/7)*16:0;
+  const x=px(p.x)+(pl?24:0)+Math.cos(a)*rad,y=py(p.y)+(pl?22:0)+Math.sin(a)*rad;
+  let g=document.getElementById('tk-'+p.id);
+  if(!g){g=document.createElementNS(NS,'g');g.id='tk-'+p.id;g.setAttribute('class','tk');
+   g.innerHTML='<circle r="19" class="ring"/><text class="em" text-anchor="middle" dy="9" font-size="26"></text><path class="arw" d="M0,-36 L8,-25 H-8Z" visibility="hidden"/><text class="nm" text-anchor="middle" y="-28"></text>';tl.appendChild(g)}
+  g.style.transform=`translate(${x}px,${y}px)`;
+  const col=`hsl(${hue(p.id)},70%,45%)`;
+  g.querySelector('.ring').style.stroke=col;g.querySelector('.nm').style.fill=col;
+  g.querySelector('.nm').textContent=p.name;
+  g.querySelector('.em').textContent=p.stage>=2&&p.vehicle?p.vehicle:AV[hue(p.id)%10];
+  const ar=g.querySelector('.arw');ar.setAttribute('visibility',p.id===myId&&p.stage===2?'visible':'hidden');ar.setAttribute('transform',`rotate(${(p.h||0)*90})`);
+  seen['tk-'+p.id]=1;
+ })}
+ [...tl.children].forEach(g=>{if(!seen[g.id])g.remove()});
+}
+
+/* ---------- state sync ---------- */
+function push(){if(db&&me)db.doc('players/'+myId).set(me).catch(()=>{})}
+function setG(o){if(db)db.doc('game/state').set(o).catch(()=>{});G=o;onG()}
+function onG(){
+ if(me&&me.round!==G.round){Object.assign(me,{round:G.round,stage:-1,x:2,y:4,h:0,vehicle:'',dest:'',steps:0,finishedAt:0});LOG=[];psig='';push()}
+ render();
+}
+function onP(){
+ if(isTeacher&&db&&G.phase==='playing'){const ps=others.filter(p=>p.round===G.round);if(ps.length&&ps.every(p=>p.finishedAt>0))setG({...G,phase:'ended'})}
+ render();
+}
+/* ---------- CẤU HÌNH (sửa 2 dòng này) ---------- */
+const CONFIG={
+ DB_URL:"",          // dán link Firebase Realtime Database, ví dụ https://ten-du-an-default-rtdb.firebaseio.com
+ TEACHER_PIN:"1234"  // mã bí mật của giáo viên để bấm Bắt đầu / Kết thúc
+};
+/* ---------- đồng bộ nhiều người (Firebase REST, thăm dò mỗi giây) ---------- */
+function makeDb(){
+ const base=CONFIG.DB_URL.replace(/\/$/,'')+'/cobi';
+ const gl=[],pl=[];let lastG='',lastP='';
+ const put=(p,d)=>fetch(`${base}/${p}.json`,{method:'PUT',body:JSON.stringify(d)}).then(r=>{if(!r.ok)throw 0});
+ async function poll(){
+  try{
+   const r=await fetch(base+'.json');const v=(await r.json())||{};
+   const st=v.game&&v.game.state,ps=v.players||{};
+   const a=JSON.stringify(st||0),b=JSON.stringify(ps);
+   if(a!==lastG&&Date.now()-wroteG>1500){lastG=a;gl.forEach(cb=>cb({exists:!!st,data:()=>st}))}
+   if(b!==lastP){lastP=b;pl.forEach(cb=>cb({docs:Object.keys(ps).map(id=>({id,data:()=>ps[id]}))}))}
+  }catch(e){}
+  setTimeout(poll,1000);
+ }
+ setTimeout(poll,50);
+ return{doc:p=>({set:d=>{if(p.startsWith('game'))wroteG=Date.now();return put(p,d)},onSnapshot:cb=>{gl.push(cb)}}),collection:()=>({onSnapshot:cb=>{pl.push(cb)}})};
+}
+let wroteG=0;
+const ready=Promise.resolve();
+if(CONFIG.DB_URL){
+ db=makeDb();
+ db.doc('game/state').onSnapshot(s=>{G=Object.assign({phase:'lobby',round:1,startedAt:0},s.exists?s.data():{});onG()});
+ db.collection('players').onSnapshot(s=>{others=s.docs.map(d=>({...d.data(),id:d.id}));onP()});
+}
+
+/* ---------- ranking ---------- */
+const rank=()=>allPlayers().slice().sort((a,b)=>{const fa=a.finishedAt>0,fb=b.finishedAt>0;if(fa&&fb)return a.finishedAt-b.finishedAt;if(fa!==fb)return fa?-1:1;return(b.stage-a.stage)||(a.steps-b.steps)});
+const tm=p=>((p.finishedAt-G.startedAt)/1000).toFixed(1)+' giây';
+const MED=['🥇','🥈','🥉'];
+function status(p){return p.finishedAt>0?`✅ ${tm(p)}`:p.stage<0?'đã vào':['chọn nơi đến','chọn phương tiện','đang đi'][p.stage]+(p.stage===2?` (${p.steps} bước)`:'')}
+
+/* ---------- render ---------- */
+function render(){
+ const joined=me||spec;
+ $('s-name').hidden=!!joined;$('s-main').hidden=!joined;
+ if(!joined)return;
+ if(me&&G.phase==='playing'&&me.stage===-1){me.stage=0;push()}
+ const dest=me&&me.stage>=1?me.dest:'';
+ $('map').classList.toggle('dim',!!dest);
+ document.querySelectorAll('.pl').forEach(g=>g.classList.toggle('hl',g.dataset.n==='家'||g.dataset.n===dest));
+ const D=PL.find(p=>p.n===dest),fl=$('flag');
+ if(D){fl.setAttribute('x',px(D.c)-46);fl.setAttribute('y',py(D.r)-22);fl.setAttribute('visibility','visible')}else fl.setAttribute('visibility','hidden');
+ $('banner').innerHTML=me?`<span>${AV[hue(myId)%10]} ${esc(me.name)}</span>${dest?`<span>🚩 ${esc(dest)}</span>`:''}${me.vehicle?`<span>${me.vehicle}</span>`:''}<span>👣 ${me.steps}</span>`:'<span>👀 Chế độ giáo viên</span>';
+ control();panel();board();endView();renderTokens();
+}
+function control(){
+ const can=isTeacher||!db;$('ctl').hidden=!can;if(!can)return;
+ const n=allPlayers().length,k=G.phase+n;
+ if($('ctl').dataset.k===k)return;$('ctl').dataset.k=k;
+ $('ctl').innerHTML=`<b>👩‍🏫 Giáo viên</b> · ${n} người chơi · &nbsp;`+(G.phase==='lobby'?'<button id="bs">▶ Bắt đầu</button> ':G.phase==='playing'?'<button id="be">🏁 Kết thúc &amp; xếp hạng</button> ':'')+'<button id="bn" class="sec">🔄 Ván mới</button>';
+ if($('bs'))$('bs').onclick=()=>setG({phase:'playing',round:G.round,startedAt:Date.now()});
+ if($('be'))$('be').onclick=()=>setG({...G,phase:'ended'});
+ $('bn').onclick=()=>{LOG=[];setG({phase:'lobby',round:G.round+1,startedAt:0})};
+}
+const PROMPTS=[['你想去哪儿？','Bạn muốn đi đâu? Hãy gõ cả câu.','我想去超市。 (Wǒ xiǎng qù chāoshì.)'],
+['你想怎么去？','Bạn muốn đi bằng phương tiện gì?','我想骑自行车去超市。 (Wǒ xiǎng qí zìxíngchē qù chāoshì.)'],
+['请告诉我怎么走。','Hãy chỉ đường cho xe, rồi gửi để xe chạy.','从家往前走 · 往右拐 · 往左拐 (Cóng jiā wǎng qián zǒu…)']];
+function panel(){
+ const sg=me?me.stage:'s',sig=G.phase+sg;if(sig===psig)return;psig=sig;let h='';
+ if(!me)h='<p>👀 Bạn đang quan sát lớp chơi.</p>';
+ else if(G.phase==='ended')h='<p>🏁 Ván đã kết thúc! Chờ giáo viên bấm “Ván mới”.</p>';
+ else if(sg===-1)h='<p class="q">✅ Bạn đã vào khu phố CoBi!</p><p class="mut">Tất cả đang ở 家. Chờ giáo viên bấm “Bắt đầu”…</p>';
+ else if(sg===3)h=`<p class="q">🎉 到了！Bạn đã đến ${esc(me.dest)}!</p><p class="mut">Thời gian: ${tm(me)} · ${me.steps} bước. Xem bảng xếp hạng bên cạnh.</p>`;
+ else{const q=PROMPTS[sg];h=`<p class="q">${q[0]}</p><p class="mut">${q[1]}<br>Ví dụ: ${q[2]}</p><div class="row"><input id="inp" lang="zh" autocomplete="off" placeholder="用中文输入…"><button id="go">发送</button></div>${sg===2?'<div id="log"></div>':''}`}
+ $('panel').innerHTML=h;
+ if($('inp')){const f=()=>{const v=$('inp').value;if(v.trim()&&!busy){$('inp').value='';submit(v)}};
+  $('go').onclick=f;$('inp').onkeydown=e=>{if(e.key==='Enter'&&!e.isComposing&&e.keyCode!==229)f()};$('inp').focus();
+  if(sg===2)drawLog()}
+}
+function drawLog(){if($('log'))$('log').innerHTML=LOG.map(l=>`<div>${esc(l)}</div>`).join('')}
+function board(){
+ const r=rank();
+ $('board').innerHTML='<p class="q">🏆 Bảng xếp hạng</p>'+(r.length?r.map((p,i)=>`<div class="bd"><span>${p.finishedAt>0?(MED[i]||i+1+'.'):'•'}</span><b>${esc(p.name)}${p.id===myId?' (bạn)':''}</b><span class="mut">${status(p)}</span></div>`).join(''):'<p class="mut">Chưa có người chơi.</p>');
+}
+function endView(){
+ const o=$('end');o.hidden=G.phase!=='ended';if(o.hidden)return;
+ const r=rank(),top=r.filter(p=>p.finishedAt>0).slice(0,3);
+ o.innerHTML=`<div class="card"><div style="font-size:48px">🏆</div><p class="q">Tổng kết · 排名</p>`+(top.length?`<div class="pod">${top.map((p,i)=>`<div><div style="font-size:32px">${MED[i]}</div><b>${esc(p.name)}</b><div class="mut">${tm(p)}</div></div>`).join('')}</div>`:'<p class="mut">Chưa ai đến đích.</p>')+r.map((p,i)=>`<div class="bd"><span>${i+1}.</span><b>${esc(p.name)}</b><span class="mut">${p.finishedAt>0?tm(p)+' · '+esc(p.dest):'chưa đến'}</span></div>`).join('')+((isTeacher||!db)?'<p><button id="bn2">🔄 Ván mới</button></p>':'<p class="mut">Chờ giáo viên bắt đầu ván mới…</p>')+'</div>';
+ if($('bn2'))$('bn2').onclick=()=>{LOG=[];setG({phase:'lobby',round:G.round+1,startedAt:0})};
+}
+
+/* ---------- gameplay ---------- */
+function fb(t,ok){$('fb').className=ok?'ok':'bad';$('fb').textContent=t}
+function submit(raw){
+ const t=raw.replace(/\s/g,'');
+ if(me.stage===0){
+  const p=PL.find(p=>t.includes(p.n));
+  if(!p)return fb('❌ Chưa thấy địa điểm hợp lệ. Hãy gõ ví dụ: 我想去超市。');
+  if(!t.includes('去'))return fb('❌ Hãy dùng câu 我想去 + địa điểm.');
+  me.dest=p.n;me.stage=1;push();fb(`✅ 好！Điểm đến: ${p.n} (${p.v}). Giờ hãy chọn phương tiện.`,1);render();
+ }else if(me.stage===1){
+  const v=VEH.find(v=>v[0].test(t));
+  if(!v)return fb('❌ Cú pháp phương tiện chưa đúng. Ví dụ: 我想骑自行车去'+me.dest+'。');
+  me.vehicle=v[1];me.stage=2;me.x=2;me.y=4;me.h=0;LOG=[];push();fb(`✅ 好！Xe ${v[1]} đang ở 家, quay mặt lên phía trên (⬆ = 往前). Hãy chỉ đường!`,1);render();
+ }else if(me.stage===2)run(t);
+}
+async function run(t){
+ const ms=[...t.matchAll(MV)];
+ if(!ms.length)return fb('❌ Chưa hiểu lệnh. Hãy dùng 往前走 / 往右拐 / 往左拐.');
+ busy=true;let done=false,blocked=false;
+ for(const m of ms){
+  const nh=m[1]?me.h:m[2]?(me.h+1)%4:m[3]?(me.h+3)%4:(me.h+2)%4;
+  const nx=me.x+[0,1,0,-1][nh],ny=me.y+[-1,0,1,0][nh];
+  if(nx<0||ny<0||nx>=COLS||ny>=ROWS){blocked=true;break}
+  me.h=nh;me.x=nx;me.y=ny;me.steps++;LOG.push(m[0]);drawLog();push();render();
+  await sleep(550);
+  const pl=placeAt(nx,ny);
+  if(pl&&pl.n===me.dest){me.stage=3;me.finishedAt=Date.now();push();done=true;break}
+ }
+ busy=false;
+ if(done){fb('🎉 到了！',1);render();return}
+ const pl=placeAt(me.x,me.y);
+ fb((blocked?'🚧 前面没有路了 (hết đường). ':'')+`Xe đang ở: ${pl?pl.n+' (chưa phải điểm đến)':'một ngã tư'}. Hãy nhập tiếp lệnh.`,!blocked);
+ if($('inp'))$('inp').focus();
+}
+function enter(sp){
+ const name=$('nm').value.trim();
+ if(!sp&&!name){$('nm').focus();return}
+ ready.then(()=>{
+  if(sp){spec=true}else me={id:myId,name,round:G.round,stage:G.phase==='playing'?0:-1,x:2,y:4,h:0,vehicle:'',dest:'',steps:0,finishedAt:0};
+  push();psig='';render();
+ });
+}
+$('join').onclick=()=>enter(false);
+$('nm').onkeydown=e=>{if(e.key==='Enter'&&!e.isComposing&&e.keyCode!==229)enter(false)};
+$('tch').hidden=!CONFIG.DB_URL;
+$('tch').onclick=()=>{if(prompt('Nhập mã giáo viên / 请输入教师密码')===CONFIG.TEACHER_PIN){isTeacher=true;enter(true)}else alert('Sai mã')};
+buildMap();
+</script></body></html>
