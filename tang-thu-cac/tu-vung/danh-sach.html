@@ -6,14 +6,16 @@
   <title>Danh Sách Từ Vựng</title>
   <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    * { box-sizing: border-box; }
     :root {
       --ink: #2b2622; --brown-dark: #4a3525; --gold-earth: #b38b4d;
       --blue-water: #1e3a5f; --blue-light: #e6edf2;
       --paper: rgba(245, 238, 219, 0.95); --line: #d8c9ad;
     }
-    
-    body { 
-      font-family: "Noto Serif", serif; background: transparent; 
+
+    html { background: transparent; }
+    body {
+      font-family: "Noto Serif", serif; background: transparent;
       margin: 0; padding: 20px 20px 60px; color: var(--ink);
     }
     .container { max-width: 900px; margin: 0 auto; }
@@ -21,13 +23,13 @@
     /* THANH TÌM KIẾM & BỘ LỌC */
     .top-controls {
       position: sticky; top: 0; z-index: 10;
-      background: var(--paper); backdrop-filter: blur(5px);
-      border: 1px solid var(--gold-earth); padding: 20px; border-radius: 16px; 
-      margin-bottom: 30px; display: flex; gap: 20px; align-items: center;
+      background: var(--paper);
+      -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px);
+      border: 1px solid var(--gold-earth); padding: 16px; border-radius: 16px;
+      margin-bottom: 24px; display: flex; gap: 16px; align-items: center;
       box-shadow: 0 8px 20px rgba(0,0,0,0.06);
     }
-
-    .search-box { flex: 1; }
+    .search-box { flex: 1; min-width: 0; }
     .search-box input {
       width: 100%; padding: 12px 20px; border-radius: 12px; border: 1px solid var(--line);
       font-family: inherit; font-size: 16px; outline: none; transition: 0.3s;
@@ -38,7 +40,7 @@
     .hsk-filter {
       padding: 12px 20px; border-radius: 12px; border: 1px solid var(--line);
       background: white; color: var(--blue-water); font-weight: 700; font-size: 16px;
-      font-family: inherit; outline: none; cursor: pointer;
+      font-family: inherit; outline: none; cursor: pointer; max-width: 100%;
     }
 
     /* BẢNG TỪ VỰNG */
@@ -46,33 +48,29 @@
       background: var(--paper);
       border-radius: 16px;
       border: 1px solid var(--gold-earth);
-      overflow: hidden; 
+      overflow: hidden;
       box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     }
-
     table { width: 100%; border-collapse: collapse; text-align: left; }
-    
-    th { 
-      background: var(--blue-water); color: white; 
+    th {
+      background: var(--blue-water); color: white;
       padding: 18px 20px; font-weight: 600; font-size: 16px; letter-spacing: 1px;
     }
-    
-    td { 
-      padding: 16px 20px; border-bottom: 1px dashed var(--line); 
+    td {
+      padding: 16px 20px; border-bottom: 1px dashed var(--line);
       vertical-align: middle; color: var(--brown-dark); font-size: 16px;
     }
-    
     tr:last-child td { border-bottom: none; }
     tr:hover td { background: rgba(255,255,255,0.4); }
 
-    .hanzi-cell { 
-      font-family: "Ma Shan Zheng", cursive; font-size: 42px; 
-      color: var(--ink); line-height: 1; display: flex; align-items: center; gap: 15px;
+    /* Hán tự + nút loa nằm trong một khung riêng để <td> giữ nguyên là ô bảng */
+    .hanzi-wrap {
+      display: flex; align-items: center; gap: 15px;
+      font-family: "Ma Shan Zheng", cursive; font-size: 42px; color: var(--ink); line-height: 1.1;
     }
-
     .pinyin-cell { font-weight: 700; color: var(--blue-water); font-family: sans-serif; font-size: 20px; }
+    .empty-row { text-align: center; padding: 30px; }
 
-    /* NÚT ÂM THANH */
     .audio-btn {
       background: white; border: 1px solid var(--blue-water); color: var(--blue-water);
       width: 38px; height: 38px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
@@ -81,38 +79,46 @@
     }
     .audio-btn:hover { background: var(--blue-water); color: white; transform: scale(1.1); }
 
-    #loading { text-align: center; color: var(--paper); font-size: 18px; margin-top: 50px; background: rgba(0,0,0,0.5); padding: 12px 25px; border-radius: 12px; display: inline-block; }
+    .status-msg { text-align: center; }
+    #loading { color: #fff; font-size: 18px; margin-top: 50px; background: rgba(0,0,0,0.5); padding: 12px 25px; border-radius: 12px; display: inline-block; }
 
-@media (max-width: 700px) {
-  .top-controls { flex-direction: column; }
-  .search-box, .hsk-filter { width: 100%; }
-  table, thead, tbody, th, td, tr { display: block; }
-  th { display: none; }
-  
-  /* Đẩy nội dung ra xa nhãn dán */
-  td { position: relative; padding: 15px 15px 15px 120px; min-height: 55px; }
-  td::before { 
-    content: attr(data-label); position: absolute; left: 15px; top: 18px; 
-    font-weight: 700; color: var(--blue-water); font-size: 14px;
-  }
-  
-  /* Chỉnh lại cột Hán tự */
-  .hanzi-cell { font-size: 38px; display: block; }
-  .hanzi-cell::before { top: 25px; }
-  .hanzi-cell .audio-btn { display: inline-flex; vertical-align: middle; margin-left: 15px; }
-}
+    /* ĐIỆN THOẠI: mỗi từ là một thẻ dọc, các dòng xếp chồng gọn gàng */
+    @media (max-width: 700px) {
+      body { padding: 12px 12px 40px; }
+      .top-controls { flex-direction: column; align-items: stretch; gap: 10px; padding: 12px; }
+      .hsk-filter { width: 100%; }
+
+      table, tbody, tr, td { display: block; width: 100%; }
+      thead { display: none; }
+
+      tr { padding: 12px 6px; border-bottom: 1px dashed var(--line); }
+      tr:last-child { border-bottom: none; }
+      tr:hover td { background: transparent; }
+
+      td { border: none; padding: 5px 14px; font-size: 16px; }
+      td[data-label]::before {
+        content: attr(data-label);
+        display: block; margin-bottom: 2px;
+        font-weight: 600; font-size: 12px; letter-spacing: 0.5px;
+        color: var(--blue-water); opacity: 0.8;
+      }
+      /* Hán tự đã đủ rõ nên bỏ nhãn */
+      td.hanzi-cell::before { display: none; }
+      .hanzi-wrap { font-size: 38px; }
+      .pinyin-cell { font-size: 18px; }
+      .empty-row { padding: 24px 14px; }
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <div style="text-align: center;"><div id="loading">Đang tải danh sách từ vựng...</div></div>
-    
+    <div class="status-msg"><div id="loading">Đang tải danh sách từ vựng...</div></div>
+
     <div id="app-content" style="display: none;">
-      
       <div class="top-controls">
         <div class="search-box">
-          <input type="text" id="search-input" placeholder="Nhập Hán tự, Pinyin hoặc Nghĩa để tìm kiếm...">
+          <input type="text" id="search-input" placeholder="Nhập Hán tự, Pinyin hoặc Nghĩa để tìm kiếm..." autocomplete="off">
         </div>
         <select id="hsk-select" class="hsk-filter">
           <option value="all">Tất cả bài học</option>
@@ -128,114 +134,109 @@
               <th>Nghĩa Tiếng Việt</th>
             </tr>
           </thead>
-          <tbody id="table-body">
-            <!-- Dữ liệu render tại đây -->
-          </tbody>
+          <tbody id="table-body"></tbody>
         </table>
       </div>
-
     </div>
   </div>
 
+  <!-- Khi chạy trong khung, config.js của trang cha sẽ được dùng. Dòng dưới chỉ để mở trang này riêng lẻ
+       (đường dẫn tính từ tang-thu-cac/tu-vung/ ra thư mục gốc). Sai đường dẫn cũng không sao. -->
+  <script src="../../config.js"></script>
   <script>
-    // Link API cập nhật chính xác
-    const API_URL = 'https://script.google.com/macros/s/AKfycby1TyfXxZVmt2aoSIwOaNXxrrSmOXIHv-CVAU-B_9Xiv-Dxt4LyW2Yd1DSaJIOg4pfUIw/exec?action=getVocabHSK&t=' + new Date().getTime();
-    
+    const CFG = (function () {
+      if (window.cobiFetchSheet) return window;
+      try { if (window.parent && window.parent.cobiFetchSheet) return window.parent; } catch (e) {}
+      return null;
+    })();
+
     let allVocab = [];
+    const loadingEl = document.getElementById('loading');
     const tbody = document.getElementById('table-body');
     const searchInput = document.getElementById('search-input');
     const hskSelect = document.getElementById('hsk-select');
 
-    async function fetchList() {
-      try {
-        const res = await fetch(API_URL);
-        const json = await res.json();
-        
-        if (json.success && json.data.length > 0) {
-          // Khóa chặt tên cột "Hán tự" theo đúng ảnh bạn gửi
-          allVocab = json.data.filter(item => item['Hán tự']);
-          
-          if(allVocab.length === 0) {
-            document.getElementById('loading').textContent = "Không tìm thấy dữ liệu ở cột 'Hán tự'.";
-            return;
-          }
+    function esc(s) {
+      return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
 
-          setupFilters();
-          renderTable();
-          document.getElementById('loading').style.display = 'none';
-          document.getElementById('app-content').style.display = 'block';
-        } else {
-          document.getElementById('loading').textContent = "Không có dữ liệu trong trang tính.";
-        }
+    async function fetchList() {
+      if (!CFG) { loadingEl.textContent = 'Không tìm thấy config.js. Hãy mở trang qua trang chủ của Thư Quán.'; return; }
+      try {
+        const rows = await CFG.cobiFetchSheet('getVocabHSK');
+        allVocab = rows.map(r => ({
+          level:   CFG.cobiPick(r, ['ID']) || 'Khác',
+          hanzi:   CFG.cobiPick(r, ['Hán tự', 'HANTU', 'TUVUNG']),
+          pinyin:  CFG.cobiPick(r, ['PINYIN']),
+          meaning: CFG.cobiPick(r, ['NGHIA', 'Nghĩa'])
+        })).filter(v => v.hanzi);
+
+        if (allVocab.length === 0) { loadingEl.textContent = 'Không tìm thấy dữ liệu ở cột "Hán tự".'; return; }
+
+        setupFilters();
+        renderTable();
+        loadingEl.style.display = 'none';
+        document.getElementById('app-content').style.display = 'block';
       } catch (e) {
-        document.getElementById('loading').textContent = "Lỗi mạng hoặc link API. Vui lòng tải lại trang.";
+        loadingEl.textContent = e.message || 'Lỗi tải dữ liệu.';
       }
     }
 
     function setupFilters() {
-      // Nhận diện theo cột ID
-      const hsks = [...new Set(allVocab.map(item => item['ID'] || 'Khác'))];
-      hsks.forEach(hsk => {
-        if(hsk) {
-          const option = document.createElement('option');
-          option.value = hsk;
-          option.textContent = hsk;
-          hskSelect.appendChild(option);
-        }
+      const levels = [...new Set(allVocab.map(v => v.level))]
+        .sort((a, b) => a.localeCompare(b, 'vi', { numeric: true }));
+      levels.forEach(level => {
+        const option = document.createElement('option');
+        option.value = level;
+        option.textContent = level;
+        hskSelect.appendChild(option);
       });
-
       searchInput.addEventListener('input', renderTable);
       hskSelect.addEventListener('change', renderTable);
     }
 
     function renderTable() {
       const keyword = searchInput.value.toLowerCase().trim();
-      const hskFilter = hskSelect.value;
+      const levelFilter = hskSelect.value;
 
-      const filtered = allVocab.filter(item => {
-        // Cập nhật lấy chính xác dữ liệu theo 3 cột
-        const hanzi = (item['Hán tự'] || '').toLowerCase();
-        const pinyin = (item['PINYIN'] || '').toLowerCase();
-        const meaning = (item['NGHIA'] || '').toLowerCase();
-        const level = item['ID'] || 'Khác';
-
-        const matchKeyword = hanzi.includes(keyword) || pinyin.includes(keyword) || meaning.includes(keyword);
-        const matchHsk = hskFilter === 'all' || level === hskFilter;
-
-        return matchKeyword && matchHsk;
+      const filtered = allVocab.filter(v => {
+        const matchKeyword = !keyword ||
+          v.hanzi.toLowerCase().includes(keyword) ||
+          v.pinyin.toLowerCase().includes(keyword) ||
+          v.meaning.toLowerCase().includes(keyword);
+        const matchLevel = levelFilter === 'all' || v.level === levelFilter;
+        return matchKeyword && matchLevel;
       });
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; padding: 30px;">Không tìm thấy từ vựng nào.</td></tr>`;
+        tbody.innerHTML = '<tr><td colspan="3" class="empty-row">Không tìm thấy từ vựng nào.</td></tr>';
         return;
       }
 
-      tbody.innerHTML = filtered.map(item => {
-        const hanzi = item['Hán tự'] || '';
-        const pinyin = item['PINYIN'] || '';
-        const meaning = item['NGHIA'] || '';
-
-        return `
-          <tr>
-            <td data-label="Hán Tự" class="hanzi-cell">
-              ${hanzi}
-              <button class="audio-btn" onclick="playAudio('${hanzi}')">🔊</button>
-            </td>
-            <td data-label="Pinyin" class="pinyin-cell">${pinyin}</td>
-            <td data-label="Nghĩa">${meaning}</td>
-          </tr>
-        `;
-      }).join('');
+      tbody.innerHTML = filtered.map(v => `
+        <tr>
+          <td data-label="Hán Tự" class="hanzi-cell">
+            <div class="hanzi-wrap">
+              <span>${esc(v.hanzi)}</span>
+              <button class="audio-btn" type="button" data-audio="${esc(v.hanzi)}" aria-label="Nghe phát âm">🔊</button>
+            </div>
+          </td>
+          <td data-label="Pinyin" class="pinyin-cell">${esc(v.pinyin)}</td>
+          <td data-label="Nghĩa">${esc(v.meaning)}</td>
+        </tr>`).join('');
     }
 
+    tbody.addEventListener('click', e => {
+      const btn = e.target.closest('[data-audio]');
+      if (btn) playAudio(btn.dataset.audio);
+    });
+
     function playAudio(text) {
-      if (!text) return;
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(text);
-        u.lang = 'zh-CN'; u.rate = 0.85;
-        window.speechSynthesis.speak(u);
-      }
+      if (!text || !('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'zh-CN'; u.rate = 0.85;
+      window.speechSynthesis.speak(u);
     }
 
     fetchList();

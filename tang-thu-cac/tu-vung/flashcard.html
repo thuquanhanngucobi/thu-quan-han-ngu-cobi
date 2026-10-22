@@ -11,80 +11,93 @@
       --blue-water: #1e3a5f; --blue-light: #e6edf2;
       --paper: #fcf9f2; --line: #d8c9ad;
     }
-    
-    body { font-family: "Noto Serif", serif; background: transparent; margin: 0; padding: 20px 20px 60px; min-height: 100vh; }
-    .container { max-width: 650px; margin: 0 auto; } 
+    * { box-sizing: border-box; }
+
+    html, body { background: transparent; }
+    body {
+      font-family: "Noto Serif", serif; margin: 0;
+      padding: 16px 16px 40px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .container { max-width: 650px; margin: 0 auto; }
 
     /* THANH BỘ LỌC */
     .filter-wrapper {
       position: sticky; top: 0; z-index: 10;
-      background: rgba(245, 238, 219, 0.95); backdrop-filter: blur(5px);
-      border: 1px solid var(--gold-earth); padding: 15px 25px; border-radius: 12px; 
-      margin-bottom: 35px; display: flex; justify-content: space-between; align-items: center;
+      background: rgba(245, 238, 219, 0.95); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+      border: 1px solid var(--gold-earth); padding: 12px 20px; border-radius: 12px;
+      margin-bottom: 28px; display: flex; justify-content: space-between; align-items: center; gap: 12px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     }
-    
     select {
-      padding: 10px 20px; border-radius: 8px; border: 1px solid var(--line);
+      padding: 10px 16px; border-radius: 8px; border: 1px solid var(--line);
       background: white; color: var(--blue-water); font-weight: 700; font-size: 16px;
-      font-family: inherit; outline: none; cursor: pointer;
+      font-family: inherit; outline: none; cursor: pointer; min-width: 0; max-width: 60%;
     }
-    .total-count { font-size: 16px; font-weight: 600; color: var(--brown-dark); }
+    .total-count { font-size: 15px; font-weight: 600; color: var(--brown-dark); white-space: nowrap; }
 
     .card-list { display: flex; flex-direction: column; }
 
-    /* KHUNG THẺ LẬT - ÉP CỨNG CHIỀU CAO & KHOẢNG CÁCH */
-    .flip-card { 
-      width: 100%; 
-      height: 220px; 
-      margin-bottom: 35px; 
-      perspective: 1000px; cursor: pointer; 
+    /* ===== THẺ LẬT: CHIỀU CAO TỰ GIÃN THEO NỘI DUNG =====
+       Hai mặt xếp chồng trong CÙNG 1 ô lưới, nên thẻ luôn cao bằng mặt cao hơn.
+       Không còn ép height cố định => ảnh không thể tràn ra ngoài khung. */
+    .flip-card { width: 100%; margin-bottom: 28px; perspective: 1000px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .flip-inner {
+      display: grid; position: relative;
+      transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transform-style: preserve-3d;
     }
-
-    .flip-inner { width: 100%; height: 100%; transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; position: relative; }
     .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
 
     .flip-face {
-      position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+      grid-area: 1 / 1;
+      min-height: 230px;
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
       background: var(--paper); border: 2px solid var(--line); border-radius: 16px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.06); display: flex; box-sizing: border-box;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06); display: flex;
+      overflow: hidden;
     }
 
     /* MẶT TRƯỚC */
-    .flip-front { padding: 25px 35px; align-items: center; justify-content: space-between; }
-    .front-left { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 10px; flex: 1; }
-    
+    .flip-front { padding: 22px 28px; align-items: center; justify-content: space-between; gap: 20px; }
+    .front-left { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 10px; flex: 1; min-width: 0; }
+    .front-left.no-img { align-items: center; text-align: center; }
+
     .index { font-size: 14px; color: var(--brown-dark); opacity: 0.7; font-weight: 600; letter-spacing: 1px; }
-    .hanzi-row { display: flex; align-items: center; gap: 15px; }
-    
-    /* CHỮ HÁN SIÊU TO */
-    .hanzi { font-family: "Ma Shan Zheng", cursive; font-size: 100px; color: var(--ink); line-height: 0.9; }
+    .hanzi-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .no-img .hanzi-row { justify-content: center; }
+
+    /* CHỮ HÁN SIÊU TO - tự thu nhỏ khi từ dài */
+    .hanzi { font-family: "Ma Shan Zheng", cursive; font-size: 100px; color: var(--ink); line-height: 1; word-break: keep-all; }
+    .hanzi.len-3 { font-size: 76px; }
+    .hanzi.len-4 { font-size: 62px; }
+    .hanzi.len-5 { font-size: 48px; }
 
     .audio-btn {
+      flex-shrink: 0;
       background: white; border: 1px solid var(--blue-water); color: var(--blue-water);
-      width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+      width: 42px; height: 42px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
       cursor: pointer; font-size: 18px; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
     .audio-btn:hover { background: var(--blue-water); color: white; }
 
     .pinyin-box { background: white; color: var(--blue-water); border: 1px solid var(--line); padding: 6px 18px; border-radius: 8px; font-size: 20px; font-weight: 700; font-family: sans-serif; }
 
-    /* KHUNG ẢNH GỌN GÀNG TỈ LỆ CHUẨN */
-    .front-right { 
-      flex: 0 0 260px; 
-      height: 200px;   
-      display: flex; align-items: center; justify-content: center; 
-    }
-    .vocab-img { 
-      max-width: 100%; max-height: 100%; 
-      object-fit: cover; 
-      border-radius: 16px; 
+    /* KHUNG ẢNH */
+    .front-right { flex: 0 0 240px; height: 190px; }
+    .vocab-img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; display: block; }
+    .front-right.pending { display: none; }
+    .emoji-tile {
+      width: 100%; height: 100%; display: grid; place-items: center;
+      font-size: 96px; line-height: 1;
+      font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+      background: rgba(255,255,255,0.75); border: 1px solid var(--line); border-radius: 12px;
     }
 
     /* MẶT SAU */
-    .flip-back { transform: rotateY(180deg); flex-direction: column; justify-content: center; align-items: center; padding: 25px; text-align: center; }
-    .meaning { font-size: 24px; font-weight: 700; color: var(--blue-water); margin-bottom: 15px; }
-    .example { font-size: 20px; color: var(--ink); margin-bottom: 20px; line-height: 1.5; }
+    .flip-back { transform: rotateY(180deg); flex-direction: column; justify-content: center; align-items: center; padding: 24px; text-align: center; }
+    .meaning { font-size: 24px; font-weight: 700; color: var(--blue-water); margin-bottom: 14px; }
+    .example { font-size: 19px; color: var(--ink); margin-bottom: 18px; line-height: 1.5; }
 
     .audio-example {
       background: white; border: 1px solid var(--blue-water); color: var(--blue-water);
@@ -92,26 +105,29 @@
     }
     .audio-example:hover { background: var(--blue-water); color: white; }
 
-    #loading { text-align: center; color: var(--paper); font-size: 18px; margin-top: 50px; background: rgba(0,0,0,0.5); padding: 12px 25px; border-radius: 8px; display: inline-block; }
+    #loading { text-align: center; color: #fff; font-size: 18px; margin-top: 40px; background: rgba(0,0,0,0.5); padding: 12px 25px; border-radius: 8px; display: inline-block; }
 
-    /* =========================================================
-       ĐOẠN CSS MỚI: TỐI ƯU THẺ FLASHCARD TRÊN ĐIỆN THOẠI 
-       ========================================================= */
+    /* ===== ĐIỆN THOẠI ===== */
     @media (max-width: 600px) {
-      .flip-card { height: 380px; margin-bottom: 25px; }
-      .flip-front { flex-direction: column; padding: 20px; align-items: center; text-align: center; }
-      
-      .front-left { width: 100%; align-items: center; gap: 10px; flex: unset; }
-      .hanzi-row { justify-content: center; gap: 15px; }
-      .hanzi { font-size: 70px; }
-      .pinyin-box { font-size: 18px; padding: 6px 16px; }
-      
-      .front-right { width: 100%; height: 150px; margin-top: 15px; flex: unset; display: flex; justify-content: center; }
-      .vocab-img { max-width: 100%; max-height: 150px; object-fit: contain; }
-      
-      .flip-back { padding: 20px 15px; }
-      .meaning { font-size: 22px; margin-bottom: 15px; }
-      .example { font-size: 18px; margin-bottom: 20px; }
+      body { padding: 10px 10px 30px; }
+      .filter-wrapper { padding: 10px 12px; margin-bottom: 20px; }
+      select { font-size: 15px; padding: 8px 10px; }
+      .flip-card { margin-bottom: 20px; }
+
+      .flip-front { flex-direction: column; padding: 16px; gap: 14px; justify-content: center; }
+      .front-left { align-items: center; text-align: center; width: 100%; }
+      .hanzi-row { justify-content: center; }
+      .hanzi { font-size: 72px; }
+      .hanzi.len-3 { font-size: 56px; }
+      .hanzi.len-4 { font-size: 46px; }
+      .hanzi.len-5 { font-size: 36px; }
+      .pinyin-box { font-size: 18px; }
+
+      .front-right { flex: none; width: 100%; height: 130px; }
+      .emoji-tile { font-size: 72px; }
+
+      .meaning { font-size: 21px; }
+      .example { font-size: 17px; }
     }
   </style>
 </head>
@@ -119,7 +135,7 @@
 
   <div class="container">
     <div style="text-align: center;"><div id="loading">Đang nạp từ vựng...</div></div>
-    
+
     <div id="app-content" style="display: none;">
       <div class="filter-wrapper">
         <select id="lesson-select"></select>
@@ -129,99 +145,210 @@
     </div>
   </div>
 
+  <!-- Link API lấy từ config.js ở thư mục gốc (chỉ sửa link ở đó) -->
+  <script src="../../config.js"></script>
   <script>
-    // LINK API CỦA BẠN (Cập nhật ?action=getVocabLesson)
-    const API_URL = 'https://script.google.com/macros/s/AKfycby1TyfXxZVmt2aoSIwOaNXxrrSmOXIHv-CVAU-B_9Xiv-Dxt4LyW2Yd1DSaJIOg4pfUIw/exec?action=getVocabLesson&t=' + new Date().getTime();
-    
     let allVocab = [];
     const listEl = document.getElementById('card-list');
     const selectEl = document.getElementById('lesson-select');
     const totalEl = document.getElementById('total-text');
+    const loadingEl = document.getElementById('loading');
+
+    // Link API dự phòng: chỉ dùng khi config.js không có COBI_API_URL (bản config.js cũ)
+    const FALLBACK_API = 'https://script.google.com/macros/s/AKfycby1TyfXxZVmt2aoSIwOaNXxrrSmOXIHv-CVAU-B_9Xiv-Dxt4LyW2Yd1DSaJIOg4pfUIw/exec';
+
+    // Chuẩn hóa tên cột ngay tại trình duyệt: "Hán tự", "HÁN TỰ", "hantu" đều thành "hantu"
+    // => chạy được cả với code.gs cũ lẫn code.gs mới.
+    const normKey = (s) => String(s).toLowerCase().normalize('NFD')
+      .replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/[^a-z0-9]/g, '');
+    const normItem = (raw) => {
+      const o = {};
+      Object.keys(raw).forEach(k => { const nk = normKey(k); if (nk) o[nk] = raw[k] == null ? '' : String(raw[k]); });
+      return o;
+    };
+
+    async function loadVocab() {
+      const base = (typeof COBI_API_URL !== 'undefined') ? COBI_API_URL : FALLBACK_API;
+      const res = await fetch(base + '?action=getVocabLesson&t=' + Date.now());
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const json = await res.json();
+      if (!json.success) throw new Error(json.message || 'API báo lỗi');
+      return (json.data || []).map(normItem);
+    }
+
+    const get = (item, ...keys) => {
+      for (const k of keys) { if (item[k]) return String(item[k]).trim(); }
+      return '';
+    };
+    const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
     async function fetchData() {
       try {
-        const res = await fetch(API_URL);
-        const json = await res.json();
-        if (json.success && json.data.length > 0) {
-          // Khóa chặt tên cột giống y như file Danh sách
-          allVocab = json.data.filter(item => item['Hán tự'] || item['Hán Tự'] || item['TUVUNG']);
-          
-          if(allVocab.length === 0) {
-            document.getElementById('loading').textContent = "Không tìm thấy dữ liệu ở cột 'Hán tự'.";
-            return;
-          }
-
-          setupFilter();
-          document.getElementById('loading').style.display = 'none';
-          document.getElementById('app-content').style.display = 'block';
-        } else {
-          document.getElementById('loading').textContent = "Không tìm thấy dữ liệu.";
+        const data = await loadVocab();
+        allVocab = data.filter(item => get(item, 'hantu', 'tuvung'));
+        if (allVocab.length === 0) {
+          loadingEl.textContent = "Không tìm thấy dữ liệu (kiểm tra cột 'Hán tự' trong tab TV THEO BÀI).";
+          return;
         }
+        setupFilter();
+        loadingEl.style.display = 'none';
+        document.getElementById('app-content').style.display = 'block';
       } catch (error) {
-        document.getElementById('loading').textContent = "Lỗi tải dữ liệu. Hãy kiểm tra lại link API.";
+        loadingEl.textContent = "Lỗi tải dữ liệu: " + error.message;
       }
     }
 
     function setupFilter() {
-      // Dùng cột ID hoặc Bài học làm tiêu chí lọc
-      const lessons = [...new Set(allVocab.map(item => item['ID'] || item['Bài học'] || 'Tất cả'))];
-      selectEl.innerHTML = lessons.map(l => `<option value="${l}">${l}</option>`).join('');
+      const lessons = [...new Set(allVocab.map(item => get(item, 'baihoc') || 'Tất cả'))];
+      selectEl.innerHTML = lessons.map(l => `<option value="${esc(l)}">${esc(l)}</option>`).join('');
       selectEl.addEventListener('change', (e) => renderCards(e.target.value));
       renderCards(lessons[0]);
     }
 
     function renderCards(lesson) {
-      const filtered = allVocab.filter(item => (item['ID'] || item['Bài học'] || 'Tất cả') === lesson);
+      const filtered = allVocab.filter(item => (get(item, 'baihoc') || 'Tất cả') === lesson);
       totalEl.textContent = `Tổng: ${filtered.length} từ`;
-      
+
       listEl.innerHTML = filtered.map((item, index) => {
-        const num = (index + 1).toString().padStart(2, '0');
-        // Quét chuẩn tên cột theo file Excel mới
-        const hanzi = item['Hán tự'] || item['Hán Tự'] || item['TUVUNG'] || '';
-        const pinyin = item['PINYIN'] || item['Pinyin'] || '';
-        const meaning = item['NGHIA'] || item['Nghĩa'] || '';
-        const example = item['VIDU'] || item['Ví dụ'] || '';
-        const img = item['HINHANH'] || item['Hình ảnh'] || '';
-        
-        const hasImg = img.trim() !== '';
+        const num = String(index + 1).padStart(2, '0');
+        const hanzi = get(item, 'hantu', 'tuvung');
+        const pinyin = get(item, 'pinyin');
+        const meaning = get(item, 'nghia');
+        const example = get(item, 'vidu');
+        const img = get(item, 'hinhanh');
+        const emoji = img ? '' : (get(item, 'emoji') || findEmoji(meaning));   // Ô HINHANH trống => dùng biểu tượng hoạt hình theo nghĩa
+        const lenClass = hanzi.length >= 5 ? 'len-5' : hanzi.length === 4 ? 'len-4' : hanzi.length === 3 ? 'len-3' : '';
 
         return `
-          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-card">
             <div class="flip-inner">
-              <!-- MẶT TRƯỚC -->
               <div class="flip-face flip-front">
-                <div class="front-left" style="${!hasImg ? 'align-items: center; text-align: center;' : ''}">
-                  <div class="index" style="${!hasImg ? 'width: 100%;' : ''}">${num} / ${filtered.length}</div>
+                <div class="front-left ${(img || emoji) ? '' : 'no-img'}">
+                  <div class="index">${num} / ${filtered.length}</div>
                   <div class="hanzi-row">
-                    <div class="hanzi">${hanzi}</div>
-                    <button class="audio-btn" onclick="playAudio(event, '${hanzi}')">🔊</button>
+                    <div class="hanzi ${lenClass}">${esc(hanzi)}</div>
+                    <button class="audio-btn" data-say="${esc(hanzi)}" aria-label="Phát âm">🔊</button>
                   </div>
-                  <div class="pinyin-box">${pinyin}</div>
+                  <div class="pinyin-box">${esc(pinyin)}</div>
                 </div>
-                ${hasImg ? `<div class="front-right"><img class="vocab-img" src="${img}" alt="minh họa"></div>` : ''}
+                ${img
+                  ? `<div class="front-right"><img class="vocab-img" src="${esc(img)}" alt="minh họa" loading="lazy" onerror="this.parentNode.classList.add('pending')"></div>`
+                  : (emoji ? `<div class="front-right"><div class="emoji-tile">${emoji}</div></div>` : '')}
               </div>
-              <!-- MẶT SAU -->
               <div class="flip-face flip-back">
-                <div class="meaning">${meaning}</div>
-                <div class="example">${example || '(Chưa có ví dụ)'}</div>
-                ${example ? `<button class="audio-example" onclick="playAudio(event, '${example}')">🔊 Nghe ví dụ</button>` : ''}
+                <div class="meaning">${esc(meaning)}</div>
+                <div class="example">${example ? esc(example) : '(Chưa có ví dụ)'}</div>
+                ${example ? `<button class="audio-example" data-say="${esc(example)}">🔊 Nghe ví dụ</button>` : ''}
               </div>
             </div>
-          </div>
-        `;
+          </div>`;
       }).join('');
+
     }
 
-    function playAudio(event, text) {
-      event.stopPropagation();
-      if (!text) return;
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(text);
-        u.lang = 'zh-CN'; u.rate = 0.85;
-        window.speechSynthesis.speak(u);
+    /* ================= MINH HỌA BẰNG BIỂU TƯỢNG HOẠT HÌNH (EMOJI) =================
+       Tra theo NGHĨA TIẾNG VIỆT (khớp nguyên cụm từ nên không bị nhầm lẫn).
+       - Muốn thêm từ: thêm vào danh sách bên dưới, dạng  ['😀', 'từ 1|từ 2'].
+       - Muốn chỉnh riêng một từ: thêm cột "EMOJI" vào Google Sheet rồi điền biểu tượng. */
+    const EMOJI_LIST = [
+      // --- Người & gia đình ---
+      ['👨','bố|cha|ba của tôi|nam giới|đàn ông|ông'], ['👩','mẹ|má|phụ nữ|nữ giới|bà'], ['👦','con trai|em trai|cậu bé|bé trai|cậu'], ['👧','con gái|em gái|cô bé|bé gái'],
+      ['👶','em bé|trẻ sơ sinh|bé'], ['🧒','trẻ em|trẻ con|đứa trẻ|thiếu nhi|con'], ['👴','ông nội|ông ngoại|cụ ông|người già'], ['👵','bà nội|bà ngoại|cụ bà'],
+      ['👨‍👩‍👧','gia đình|nhà'], ['👫','bạn bè|bạn|bạn bè'], ['👨‍🏫','giáo viên|thầy giáo|cô giáo|thầy|thầy cô'], ['🧑‍🎓','học sinh|sinh viên|học viên'],
+      ['👨‍⚕️','bác sĩ'], ['👩‍⚕️','y tá'], ['👮','cảnh sát|công an'], ['👨‍🍳','đầu bếp|đầu bếp'], ['🧑‍✈️','phi công'], ['🧑‍🌾','nông dân'], ['🧑‍💼','nhân viên|nhân viên văn phòng|ông chủ|giám đốc|công nhân'],
+      ['🧑‍🎨','họa sĩ'], ['👨‍🚀','phi hành gia'], ['🤴','vua|hoàng đế'], ['👸','công chúa|hoàng hậu'], ['🧑‍🤝‍🧑','người|mọi người|người ta'], ['🙋','tôi|mình|tớ'], ['🫵','bạn|anh|chị|em'],
+      // --- Động vật ---
+      ['🐱','mèo'], ['🐶','chó|cún'], ['🐭','chuột'], ['🐮','bò|trâu'], ['🐄','bò sữa'], ['🐷','heo|lợn'], ['🐑','cừu|dê'], ['🐴','ngựa'], ['🐯','hổ|cọp'], ['🦁','sư tử'],
+      ['🐰','thỏ'], ['🐲','rồng'], ['🐍','rắn'], ['🐵','khỉ'], ['🐔','gà'], ['🐥','gà con'], ['🦆','vịt'], ['🐦','chim'], ['🕊️','chim bồ câu|bồ câu'], ['🐟','cá'], ['🐠','cá cảnh'],
+      ['🐘','voi'], ['🐼','gấu trúc'], ['🐻','gấu'], ['🦒','hươu cao cổ'], ['🐸','ếch'], ['🐢','rùa'], ['🦋','bướm|con bướm'], ['🐝','ong'], ['🐜','kiến'], ['🕷️','nhện'], ['🦟','muỗi'], ['🐌','ốc sên'],
+      ['🦀','cua'], ['🦐','tôm'], ['🐙','bạch tuộc'], ['🐬','cá heo'], ['🐳','cá voi'], ['🦈','cá mập'], ['🦅','đại bàng|diều hâu'], ['🦉','cú'], ['🐧','chim cánh cụt'], ['🐺','sói'], ['🦊','cáo'], ['🐪','lạc đà'],
+      // --- Đồ ăn & thức uống ---
+      ['🍚','cơm|bữa cơm|gạo'], ['🍜','mì|phở|mì sợi|bún|mì tôm|món mì'], ['🥟','sủi cảo|bánh bao nhân|há cảo'], ['🍞','bánh mì'], ['🥐','bánh sừng bò'], ['🍰','bánh ngọt|bánh kem|bánh gato'], ['🎂','bánh sinh nhật'], ['🥮','bánh trung thu'],
+      ['🍪','bánh quy'], ['🍫','sô cô la|sô-cô-la|chocolate'], ['🍬','kẹo'], ['🍦','kem|cây kem'], ['🥚','trứng|quả trứng'], ['🥩','thịt|thịt bò'], ['🍗','thịt gà|đùi gà'], ['🍖','thịt heo|thịt lợn|thịt nướng'],
+      ['🥬','rau|rau xanh|rau cải'], ['🥕','cà rốt'], ['🍅','cà chua'], ['🥔','khoai tây'], ['🍠','khoai lang'], ['🌽','ngô|bắp'], ['🥒','dưa chuột|dưa leo'], ['🧅','hành'], ['🧄','tỏi'], ['🌶️','ớt|cay'], ['🍄','nấm'], ['🥜','đậu phộng|lạc'],
+      ['🍎','táo|quả táo'], ['🍌','chuối'], ['🍊','cam|quýt'], ['🍋','chanh'], ['🍉','dưa hấu'], ['🍇','nho'], ['🍓','dâu tây|dâu'], ['🍑','đào|quả đào'], ['🍐','lê'], ['🍍','dừa|dứa|thơm'], ['🥭','xoài'], ['🥥','dừa'], ['🍒','anh đào|cherry'], ['🥝','kiwi'],
+      ['💧','nước|nước lọc'], ['🥛','sữa'], ['☕','cà phê|cafe'], ['🍵','trà|nước trà'], ['🧋','trà sữa'], ['🍺','bia'], ['🍷','rượu|rượu vang'], ['🥤','nước ngọt|đồ uống|thức uống|nước uống'], ['🧃','nước ép|nước trái cây'],
+      ['🍽️','bữa ăn|món ăn|thức ăn|đồ ăn|món'], ['🥢','đũa'], ['🥄','thìa|muỗng'], ['🍴','dao nĩa|dao|nĩa'], ['🥣','bát|chén|tô'], ['🍳','chảo|chiên trứng'], ['🧂','muối'], ['🍯','mật ong|mật'], ['🍕','pizza'], ['🍔','hamburger|bánh hamburger'], ['🍟','khoai tây chiên'],
+      // --- Cơ thể ---
+      ['👀','mắt|đôi mắt'], ['👂','tai|lỗ tai'], ['👃','mũi'], ['👄','miệng|môi'], ['🦷','răng'], ['👅','lưỡi'], ['✋','tay|bàn tay'], ['🦶','chân|bàn chân'], ['🧠','não|bộ não|đầu óc'], ['🦴','xương'], ['💪','cánh tay|sức khỏe|khỏe|mạnh|sức mạnh'],
+      ['❤️','tim|trái tim|yêu|tình yêu|yêu thương'], ['🩸','máu'], ['🤒','bệnh|ốm|sốt|bị ốm|đau ốm'], ['🤕','đau đầu|bị thương'], ['💊','thuốc|viên thuốc'], ['💉','tiêm|mũi tiêm'], ['🏥','bệnh viện'], ['😷','khẩu trang'],
+      // --- Quần áo & đồ dùng ---
+      ['👕','áo|áo phông|áo thun|quần áo'], ['👔','áo sơ mi|cà vạt'], ['👖','quần|quần dài|quần jean'], ['🩳','quần đùi|quần short'], ['👗','váy|đầm|váy đầm'], ['🧥','áo khoác'], ['🧣','khăn quàng|khăn'], ['🧤','găng tay'], ['🧦','tất|vớ'], ['👟','giày|giày thể thao'], ['👠','giày cao gót'], ['🥾','ủng|bốt'],
+      ['👒','mũ|nón'], ['🎩','mũ lễ'], ['👓','kính|kính mắt'], ['🕶️','kính râm|kính mát'], ['⌚','đồng hồ đeo tay'], ['💍','nhẫn'], ['👜','túi xách|túi'], ['🎒','cặp|cặp sách|ba lô|balo'], ['💼','cặp tài liệu|vali nhỏ'], ['🧳','vali|hành lý'], ['☂️','ô|dù|cái ô'],
+      // --- Đồ vật trong nhà ---
+      ['🏠','nhà|ngôi nhà|căn nhà|nhà cửa'], ['🚪','cửa|cửa ra vào|cửa chính'], ['🪟','cửa sổ'], ['🛏️','giường'], ['🛋️','ghế sofa|sofa|ghế sô pha'], ['🪑','ghế|cái ghế'], ['🚽','nhà vệ sinh|toilet|phòng vệ sinh'], ['🛁','bồn tắm|tắm'], ['🚿','vòi hoa sen|tắm vòi sen'], ['🪞','gương'],
+      ['🔑','chìa khóa'], ['🔒','khóa|ổ khóa'], ['💡','đèn|bóng đèn|đèn điện|ý tưởng'], ['🕯️','nến'], ['📺','tivi|ti vi|truyền hình|vô tuyến'], ['📻','radio|đài'], ['❄️','tủ lạnh|điều hòa|máy lạnh|lạnh'], ['🧺','giỏ|rổ'], ['🧹','chổi|quét nhà|dọn dẹp'], ['🗑️','thùng rác|rác'], ['🪥','bàn chải đánh răng|đánh răng'],
+      ['🧼','xà phòng|xà bông|rửa tay'], ['🛒','mua|mua sắm|xe đẩy|đi chợ|siêu thị'], ['🪣','xô|thùng'], ['🧴','sữa tắm|dầu gội|chai'], ['🪭','quạt|cái quạt|quạt tay'], ['⏰','đồng hồ báo thức|đồng hồ|báo thức|đồng hồ treo tường'],
+      // --- Đồ điện tử & học tập ---
+      ['📱','điện thoại|điện thoại di động|di động|điện thoại thông minh'], ['☎️','điện thoại bàn'], ['💻','máy tính|máy tính xách tay|laptop|máy vi tính|máy tính cá nhân'], ['🖥️','máy tính để bàn'], ['⌨️','bàn phím'], ['🖱️','chuột máy tính'], ['📷','máy ảnh|chụp ảnh|chụp hình'], ['📹','máy quay|quay phim'], ['🎧','tai nghe'], ['🎤','micro|hát|ca hát'],
+      ['📖','sách|quyển sách|đọc sách|cuốn sách|đọc'], ['📚','sách vở|học|học tập|học bài|thư viện'], ['📝','bài tập|ghi chép|viết|bài viết|ghi chú|bài thi|đề thi'], ['✏️','bút chì'], ['🖊️','bút|bút bi|cây bút'], ['📓','vở|quyển vở|sổ|quyển sổ|vở ghi'], ['📏','thước|thước kẻ|đo'], ['✂️','kéo|cắt'], ['📎','kẹp giấy|kẹp'], ['📄','giấy|tờ giấy|văn bản|tài liệu'],
+      ['🖼️','tranh|bức tranh|ảnh|bức ảnh'], ['🎨','vẽ|vẽ tranh|hội họa|màu sắc'], ['🗺️','bản đồ'], ['🔤','chữ|chữ cái|từ|từ vựng|chữ viết'], ['🈶','chữ hán|chữ trung quốc|hán tự'], ['✉️','thư|lá thư|phong bì|bức thư'], ['📧','email|thư điện tử|thư điện tử'], ['📦','bưu kiện|gói hàng|hộp|đồ gửi|gửi hàng'], ['📰','báo|tờ báo|tin tức|báo chí'], ['🎓','tốt nghiệp|đại học|bằng cấp'], ['🏫','trường|trường học|nhà trường|lớp học'],
+      // --- Địa điểm ---
+      ['🏢','công ty|tòa nhà|văn phòng|cơ quan'], ['🏪','cửa hàng|tiệm|quán|cửa hiệu'], ['🏬','trung tâm thương mại|cửa hàng bách hóa'], ['🏦','ngân hàng'], ['📮','bưu điện'], ['🏨','khách sạn'], ['🍴','nhà hàng|quán ăn|tiệm ăn'], ['☕','quán cà phê|tiệm cà phê'], ['🛫','sân bay|máy bay cất cánh'], ['🚉','ga|nhà ga|ga tàu'], ['🚏','trạm xe buýt|bến xe|trạm xe'],
+      ['🏞️','công viên|vườn|vườn hoa'], ['⛪','nhà thờ'], ['🛕','chùa|đền'], ['🏯','cung điện|lâu đài'], ['🧱','tường|bức tường|gạch'], ['🌉','cầu|cây cầu'], ['🛣️','đường|con đường|đường phố|đường cái|phố'], ['🏙️','thành phố|đô thị|thành thị'], ['🏘️','làng|thôn|nông thôn|làng quê'], ['🇨🇳','trung quốc'], ['🇻🇳','việt nam'], ['🌏','thế giới|đất nước|nước ngoài|quốc gia|châu á'],
+      // --- Phương tiện ---
+      ['🚗','xe hơi|ô tô|xe|xe ô tô|xe con|lái xe|ô-tô'], ['🚕','taxi|xe taxi'], ['🚌','xe buýt|xe bus|xe khách|xe buýt'], ['🚇','tàu điện ngầm|tàu điện|metro'], ['🚆','tàu hỏa|xe lửa|tàu|tàu cao tốc'], ['✈️','máy bay|chuyến bay|bay'], ['🚲','xe đạp|đạp xe'], ['🛵','xe máy|xe gắn máy|xe tay ga'], ['🚢','tàu thủy|thuyền lớn|tàu biển'], ['⛵','thuyền|thuyền buồm'], ['🚀','tên lửa|phi thuyền'], ['⛽','xăng|đổ xăng|trạm xăng'], ['🚦','đèn giao thông|đèn đỏ|đèn xanh|giao thông'],
+      // --- Thiên nhiên & thời tiết ---
+      ['☀️','mặt trời|nắng|trời nắng|ánh nắng'], ['🌙','mặt trăng|trăng|ánh trăng'], ['⭐','sao|ngôi sao|vì sao'], ['☁️','mây|đám mây|trời nhiều mây|âm u'], ['🌧️','mưa|trời mưa|cơn mưa'], ['⛈️','sấm|sấm sét|sét|giông bão'], ['❄️','tuyết|bông tuyết|trời tuyết'], ['💨','gió|trời gió|cơn gió'], ['🌈','cầu vồng'], ['🔥','lửa|ngọn lửa|nóng|trời nóng|cháy|nóng bức'], ['🥶','lạnh|trời lạnh|rét'], ['🌊','sóng|biển|đại dương|sông|nước biển'],
+      ['⛰️','núi|ngọn núi|đồi'], ['🌋','núi lửa'], ['🏝️','đảo|hòn đảo|bãi biển'], ['🏖️','bãi biển|bờ biển'], ['🌲','cây|cây cối|rừng|cây thông|cây xanh'], ['🌳','cây to|cây lớn|đại thụ'], ['🌸','hoa|bông hoa|hoa anh đào|hoa đào'], ['🌹','hoa hồng'], ['🌻','hoa hướng dương'], ['🌷','hoa tulip'], ['🍃','lá|lá cây|chiếc lá'], ['🌱','cỏ|cây non|mầm|hạt giống'], ['🌾','lúa|thóc|lúa gạo'], ['🪨','đá|hòn đá|tảng đá'],
+      ['🌍','trái đất|địa cầu|đất'], ['🌡️','nhiệt độ|độ|thời tiết'], ['🌤️','trời nắng đẹp|trời quang|trời đẹp'], ['🌅','buổi sáng sớm|bình minh|mặt trời mọc'], ['🌇','hoàng hôn|buổi chiều tối|mặt trời lặn'], ['🌃','ban đêm|đêm|buổi tối|buổi đêm|tối'],
+      // --- Thời gian ---
+      ['🕐','giờ|thời gian|một giờ|lúc'], ['📅','ngày|lịch|ngày tháng|tháng|năm|ngày tháng|hôm|hôm nay|ngày mai|hôm qua|tuần'], ['🌞','buổi sáng|sáng|buổi trưa|trưa|ban ngày'], ['🌆','buổi chiều|chiều'], ['🎆','năm mới|tết|tết nguyên đán|giao thừa'], ['🎊','lễ hội|lễ|ngày lễ|ngày hội'], ['🎂','sinh nhật'], ['⏳','thời gian trôi|chờ|đợi|chờ đợi'], ['🌱','mùa xuân|xuân'], ['🍉','mùa hè|hè'], ['🍂','mùa thu|thu'], ['⛄','mùa đông|đông'],
+      // --- Số đếm ---
+      ['0️⃣','không|số không'], ['1️⃣','một|số một'], ['2️⃣','hai|số hai'], ['3️⃣','ba|số ba'], ['4️⃣','bốn|số bốn'], ['5️⃣','năm|số năm'], ['6️⃣','sáu|số sáu'], ['7️⃣','bảy|số bảy'], ['8️⃣','tám|số tám'], ['9️⃣','chín|số chín'], ['🔟','mười|số mười'], ['💯','một trăm|trăm|hoàn hảo|điểm tuyệt đối'], ['💰','tiền|đồng tiền|tiền bạc|giàu|giàu có|tiền mặt|nhiều tiền'], ['💵','đô la|nhân dân tệ|tệ|đồng'], ['🏷️','giá|giá cả|giá tiền|giảm giá'], ['🧾','hóa đơn|thanh toán|tính tiền|trả tiền'], ['💳','thẻ|thẻ ngân hàng|thẻ tín dụng|quẹt thẻ'],
+      // --- Màu sắc ---
+      ['🔴','màu đỏ|đỏ'], ['🟠','màu cam'], ['🟡','màu vàng|vàng'], ['🟢','màu xanh lá|màu xanh lá cây|xanh lá'], ['🔵','màu xanh dương|xanh dương|màu xanh|xanh'], ['🟣','màu tím|tím'], ['⚪','màu trắng|trắng'], ['⚫','màu đen|đen'], ['🟤','màu nâu|nâu'], ['🌈','màu sắc|nhiều màu'],
+      // --- Thể thao & giải trí ---
+      ['⚽','bóng đá|đá bóng|quả bóng'], ['🏀','bóng rổ|chơi bóng rổ'], ['🏐','bóng chuyền'], ['🎾','quần vợt|tennis'], ['🏸','cầu lông|đánh cầu lông'], ['🏓','bóng bàn|đánh bóng bàn'], ['🏊','bơi|bơi lội'], ['🏃','chạy|chạy bộ'], ['🚶','đi bộ|đi|đi dạo'], ['🧘','yoga|thiền|tập yoga'], ['🏋️','tập gym|nâng tạ|tập thể dục|thể dục|tập luyện|rèn luyện'], ['🚴','đạp xe|đi xe đạp'], ['⛷️','trượt tuyết'], ['🎣','câu cá'], ['🏆','cúp|vô địch|thắng|giải thưởng|giải nhất|chiến thắng'], ['🥇','huy chương vàng|hạng nhất|nhất'],
+      ['🎵','nhạc|âm nhạc|bài hát|ca khúc|giai điệu'], ['🎶','nghe nhạc|bản nhạc'], ['🎸','đàn ghi ta|ghi-ta|guitar'], ['🎹','đàn piano|piano|đàn dương cầm'], ['🎻','đàn violin|violin|vĩ cầm'], ['🥁','trống|đánh trống'], ['💃','nhảy|nhảy múa|khiêu vũ|múa'], ['🎬','phim|điện ảnh|xem phim|bộ phim|phim ảnh'], ['🎭','kịch|diễn xuất|biểu diễn|diễn kịch'], ['🎮','trò chơi|chơi game|game|trò chơi điện tử'], ['🎲','chơi|xúc xắc|đồ chơi'], ['🎁','quà|quà tặng|tặng quà|món quà|tặng'], ['🎈','bóng bay'], ['🎉','chúc mừng|liên hoan|tiệc|bữa tiệc|vui mừng|ăn mừng'], ['🧳','du lịch|đi du lịch|chuyến du lịch'], ['⛺','cắm trại'], ['🎫','vé|vé xe|vé máy bay|vé vào cửa'], ['🧩','xếp hình|ghép hình'],
+      // --- Hành động ---
+      ['😴','ngủ|buồn ngủ|đi ngủ|ngủ trưa|giấc ngủ'], ['🥱','mệt|mệt mỏi|ngáp'], ['😋','ngon|ngon miệng|thèm'], ['🍽️','ăn|ăn cơm|dùng bữa|ăn uống'], ['🥤','uống|uống nước'], ['🗣️','nói|nói chuyện|phát biểu|nói tiếng|trò chuyện|giao tiếp'], ['👂','nghe|lắng nghe'], ['👀','nhìn|xem|nhìn thấy|thấy|trông|ngắm|quan sát'], ['✍️','viết chữ|chép|viết bài|ký tên'], ['🤔','suy nghĩ|nghĩ|nghĩ ngợi|ngẫm nghĩ|băn khoăn|hiểu|nhớ'], ['❓','hỏi|câu hỏi|vấn đề|thắc mắc|tại sao|vì sao|cái gì|gì'], ['💬','trả lời|nói chuyện|chat|tin nhắn|nhắn tin|bình luận'], ['📞','gọi điện|gọi điện thoại|điện thoại cho|alo|gọi'], ['🤝','giúp|giúp đỡ|hợp tác|bắt tay|làm quen|gặp|gặp gỡ|gặp mặt|hẹn'], ['👋','xin chào|chào|tạm biệt|chào hỏi|chào tạm biệt'], ['🙏','cảm ơn|xin|xin lỗi|làm ơn|mời|cầu xin|xin vui lòng'], ['😄','cười|vui|vui vẻ|vui mừng|hạnh phúc|cười vui'], ['😭','khóc|khóc lóc'], ['😢','buồn|buồn bã|đau buồn|thương tâm'], ['😠','giận|tức giận|giận dữ|bực|bực mình'], ['😨','sợ|sợ hãi|lo sợ|hoảng|hoảng sợ'], ['😳','xấu hổ|ngại|ngượng|ngại ngùng|bối rối'], ['😍','thích|yêu thích|mê|đẹp|xinh đẹp|xinh|đáng yêu'], ['🤗','ôm|ôm nhau|thân thiết|thân'], ['😎','ngầu|tuyệt|tuyệt vời|giỏi|xuất sắc'], ['👍','tốt|được|khen|khá tốt|không tồi|ổn|đồng ý|đúng|đúng rồi'], ['👎','kém|tệ|xấu|không tốt|dở|không được|phản đối'], ['✅','đúng|chính xác|xong|hoàn thành|làm xong'], ['❌','sai|không đúng|không|cấm|không phải|sai lầm'], ['⚠️','chú ý|cẩn thận|nguy hiểm|cảnh báo|coi chừng|lưu ý'],
+      ['🚪','vào|ra|mở cửa|đóng cửa|ra vào|cửa vào|cửa ra'], ['🔙','về|trở về|quay lại|trở lại|quay về|hồi|về nhà'], ['🏃‍♂️','vội|vội vàng|nhanh|nhanh chóng|nhanh lên'], ['🐢','chậm|chậm chạp|từ từ|chầm chậm'], ['⬆️','lên|trên|phía trên|bên trên|lên trên|tăng|đi lên|leo'], ['⬇️','xuống|dưới|phía dưới|bên dưới|xuống dưới|giảm|đi xuống'], ['⬅️','trái|bên trái|phía trái|rẽ trái'], ['➡️','phải|bên phải|phía phải|rẽ phải'], ['↔️','giữa|ở giữa|trung tâm|chính giữa'], ['🧭','phương hướng|hướng|phương|đông tây nam bắc|la bàn|phía bắc|phía nam|phía đông|phía tây'], ['📍','ở|địa chỉ|vị trí|chỗ|nơi|địa điểm|đây|đó|ở đây|ở đó|kia'], ['🔍','tìm|tìm kiếm|tìm hiểu|nghiên cứu|kiểm tra|điều tra|tra'],
+      ['🛠️','sửa|sửa chữa|làm|chế tạo|sản xuất|công cụ|dụng cụ'], ['🧑‍💻','làm việc|công việc|việc làm|đi làm|làm công|nghề nghiệp|nghề|công tác'], ['🧐','xem xét|nghiên cứu kỹ|suy xét|để ý'], ['🔔','chuông|tiếng chuông|thông báo|nhắc nhở|reo'], ['📢','thông báo|loa|tuyên bố|phát thanh|quảng cáo|tuyên truyền|kêu gọi'], ['🖐️','dừng|ngừng|dừng lại|thôi|đừng|chờ chút|cản'], ['🤲','cho|đưa|trao|cầm|nhận|nhận lấy|cho phép'], ['🧲','hút|thu hút|hấp dẫn'], ['🔨','đập|đóng|búa|cái búa'], ['⚖️','công bằng|pháp luật|luật|công lý|so sánh|cân|cân nặng'], ['🕵️','bí mật|điều tra viên|thám tử'], ['🏁','kết thúc|hết|cuối cùng|điểm cuối|đích|xuất phát|bắt đầu|bắt đầu|khởi đầu'], ['🔄','đổi|thay đổi|chuyển|chuyển đổi|đổi mới|lặp lại|nữa|lại'], ['🔁','lặp|lặp lại|ôn tập|ôn|luyện tập'],
+      // --- Tính chất ---
+      ['🐘','to|lớn|to lớn|khổng lồ|rất lớn'], ['🐜','nhỏ|bé nhỏ|nhỏ bé|bé tí|tí hon'], ['📈','nhiều|tăng lên|tăng trưởng|phát triển|nhiều hơn|đông'], ['📉','ít|giảm xuống|giảm sút|ít hơn|vắng|thưa'], ['🦒','cao|chiều cao|cao lớn'], ['🏘️','thấp|thấp bé|lùn'], ['🐇','nhanh|tốc độ|mau'], ['🧊','đá lạnh|băng|đông lạnh|nước đá|lạnh buốt|mát|mát mẻ'], ['🌶️','cay|món cay|vị cay'], ['🍋','chua|vị chua|chua chua'], ['🍭','ngọt|vị ngọt|ngọt ngào|đường'], ['🥬','tươi|tươi mới|xanh tươi|mới mẻ|mới'], ['🏚️','cũ|cũ kỹ|già|cổ|xưa|cổ xưa|lâu đời'], ['🧼','sạch|sạch sẽ|trong sạch|vệ sinh'], ['🗑️','bẩn|dơ|dơ bẩn|bẩn thỉu|kém vệ sinh'], ['🔇','yên tĩnh|im lặng|yên lặng|trật tự|lặng im|tĩnh lặng|yên'], ['🔊','ồn|ồn ào|to tiếng|ầm ĩ|náo nhiệt|ồn ào náo nhiệt|nhộn nhịp'], ['🧑‍🦯','khó|khó khăn|vất vả|gian khổ|gian nan'], ['😌','dễ|dễ dàng|đơn giản|thoải mái|nhẹ nhõm|thoải mái dễ chịu|thư giãn|dễ chịu|thảnh thơi|bình yên'], ['🎯','chính xác|mục tiêu|đúng đích|đích đến|nhắm|trúng|mục đích'], ['⭐','nổi tiếng|ngôi sao|nổi bật|xuất sắc|ưu tú|đặc biệt'], ['🌟','sáng|sáng sủa|sáng chói|rực rỡ|lấp lánh|tỏa sáng|sáng ngời'], ['🌑','tối|tối tăm|tối om|đen tối|u tối'], ['📏','dài|chiều dài|rất dài|dài dằng dặc'], ['⏱️','ngắn|ngắn ngủi|nhanh chóng|chốc lát|một chút|một lát|một lúc|giây|giây phút|phút'], ['⚖️','nặng|trọng lượng|nặng nề|khối lượng'], ['🪶','nhẹ|nhẹ nhàng|nhẹ nhõm|nhẹ tênh'], ['💎','quý|quý giá|đắt|đắt đỏ|đắt tiền|báu vật|châu báu|ngọc|bảo vật|kim cương|giá trị|vàng bạc|trân quý'], ['🏷️','rẻ|giá rẻ|rẻ tiền|bình dân|tiết kiệm|ưu đãi|khuyến mãi'], ['🚑','khẩn cấp|cấp cứu|cứu thương'], ['🧑‍🚒','cứu hỏa|lính cứu hỏa|chữa cháy|cứu hộ'],
+      // --- Khác ---
+      ['🔥','hỏa|nhiệt|lò|bếp|đốt'], ['💧','giọt nước|nước mắt|giọt|ướt|uống nước lọc'], ['⚡','điện|dòng điện|điện năng|sét đánh|tia chớp|chớp'], ['🌐','mạng|internet|mạng internet|trang web|website|mạng xã hội|trực tuyến|trên mạng|mạng lưới|online'], ['📶','wifi|sóng wifi|mạng không dây|tín hiệu'], ['🔋','pin|sạc|pin sạc|sạc pin|năng lượng'], ['🧪','thí nghiệm|hóa học|hóa chất|khoa học|thực nghiệm|sinh học'], ['🔬','kính hiển vi|vi khuẩn|nghiên cứu khoa học'], ['🔭','kính thiên văn|thiên văn|vũ trụ|không gian'], ['📐','toán|toán học|hình học|tính toán|phép tính|số học|đại số'], ['🌐','ngôn ngữ|tiếng|tiếng nước ngoài|ngoại ngữ|ngữ|tiếng anh|tiếng trung|tiếng việt|tiếng hán|tiếng nhật|tiếng hàn|hán ngữ|tiếng pháp'], ['🏛️','lịch sử|văn hóa|chính phủ|nhà nước|chính quyền|bảo tàng|di tích|cổ đại|văn minh|văn hóa truyền thống|truyền thống'], ['⚖️','tòa án|xét xử|quyền|quyền lợi|công lý|án|vụ án'], ['🪖','quân đội|bộ đội|lính|quân nhân|chiến tranh|chiến đấu|chiến sĩ|binh lính'], ['🕊️','hòa bình|bình an|thanh bình|yên bình'], ['🍀','may mắn|vận may|hên|điềm lành|chúc may mắn'], ['🧧','lì xì|phong bao lì xì|bao lì xì|tiền mừng tuổi|mừng tuổi'], ['🏮','đèn lồng|lồng đèn'], ['🧨','pháo|pháo hoa|pháo nổ|pháo tết|đốt pháo'], ['🎆','pháo hoa|bắn pháo hoa'], ['🥢','kiểu ăn|ăn bằng đũa|món ăn trung quốc'], ['🐼','quốc bảo|gấu trúc|bảo bối'], ['🏯','vạn lý trường thành|tử cấm thành|cung điện trung quốc'], ['🧧','may mắn tết|phúc|phước|phúc lộc|chữ phúc|hạnh phúc năm mới']
+    ];
+
+    const EMOJI_MAP = {};
+    EMOJI_LIST.forEach(([emoji, words]) => {
+      words.split('|').forEach(w => { w = w.trim().toLowerCase(); if (w && !(w in EMOJI_MAP)) EMOJI_MAP[w] = emoji; });
+    });
+
+    // Tách nghĩa tiếng Việt thành từng cụm ngắn rồi tra từ điển (khớp nguyên cụm, không khớp lỏng).
+    function findEmoji(meaning) {
+      const segs = String(meaning || '')
+        .toLowerCase()
+        .replace(/\([^)]*\)|\[[^\]]*\]/g, ' ')
+        .split(/[;,\/\n]/)
+        .map(s => s.replace(/^\s*(n|v|adj|adv|dt|đt|tt|pt)\.?\s+/i, '').replace(/\s+/g, ' ').trim())
+        .filter(Boolean)
+        .slice(0, 4);
+      for (const seg of segs) {
+        if (EMOJI_MAP[seg]) return EMOJI_MAP[seg];
+        const bare = seg.replace(/^(cái|con|chiếc|quả|trái|cây|người|một|các|những|việc|sự|bức|tấm|quyển|cuốn|bộ|bài|tờ|vị|đứa|bữa|món)\s+/, '');
+        if (bare !== seg && EMOJI_MAP[bare]) return EMOJI_MAP[bare];
       }
+      return '';
     }
+
+    // Một bộ lắng nghe chung: bấm nút loa thì phát âm, bấm chỗ khác thì lật thẻ
+    listEl.addEventListener('click', (e) => {
+      const sayBtn = e.target.closest('[data-say]');
+      if (sayBtn) { playAudio(sayBtn.dataset.say); return; }
+      const card = e.target.closest('.flip-card');
+      if (card) card.classList.toggle('flipped');
+    });
+
+    function playAudio(text) {
+      if (!text || !('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'zh-CN'; u.rate = 0.85;
+      window.speechSynthesis.speak(u);
+    }
+
     fetchData();
   </script>
 </body>
