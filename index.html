@@ -2,31 +2,27 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Thư Quán Hán Ngữ CoBi - Portal</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Lớp phủ làm mờ ảnh nền -->
+  <!-- Lớp phủ dịu mắt trên ảnh nền -->
   <div class="bg-blur"></div>
 
-  <!-- Khung giấy cổ chứa toàn bộ nội dung -->
-  <div class="app-shell">
-    
-    <!-- Họa tiết trang trí 4 góc -->
-    <div class="ornament corner-tl"></div>
-    <div class="ornament corner-tr"></div>
-    <div class="ornament corner-bl"></div>
-    <div class="ornament corner-br"></div>
-    
-    <!-- 1. THANH CÔNG CỤ TRÊN (CỐ ĐỊNH VĨNH CỬU) -->
+  <div class="app-shell" id="app-shell">
+
+    <!-- 1. THANH CÔNG CỤ TRÊN (CỐ ĐỊNH) -->
     <header class="topbar">
-      <div class="brand" id="btn-home" title="Về Trang Chủ">
-        <button id="menu-toggle" class="hamburger" style="display: none;">☰</button>
-        <div class="brand-seal">CoBi</div>
-        <div class="brand-text">
-          <strong>Thư Quán Hán Ngữ</strong>
-          <span>一朝入书馆，一生伴汉语</span>
+      <div class="brand-group">
+        <!-- Nút menu nằm NGOÀI .brand để bấm vào không bị nhảy về trang chủ -->
+        <button id="menu-toggle" class="hamburger" aria-label="Mở menu">☰</button>
+        <div class="brand" id="btn-home" title="Về Trang Chủ">
+          <div class="brand-seal">CoBi</div>
+          <div class="brand-text">
+            <strong>Thư Quán Hán Ngữ</strong>
+            <span>一朝入书馆，一生伴汉语</span>
+          </div>
         </div>
       </div>
       <nav class="main-nav">
@@ -36,26 +32,27 @@
       </nav>
     </header>
 
-    <!-- KHU VỰC CHÍNH (THAY ĐỔI THEO THAO TÁC) -->
+    <!-- KHU VỰC CHÍNH -->
     <div class="main-layout">
-      <!-- Thanh bên trái (Ẩn ở trang chủ, hiện khi chọn mục) -->
-      <aside class="sidebar" id="sidebar" style="display: none;">
+      <aside class="sidebar" id="sidebar">
         <h3 id="sidebar-title" class="sidebar-title">Tàng Thư Các</h3>
         <ul id="module-list" class="module-list"></ul>
       </aside>
 
-      <!-- Nội dung trung tâm (Iframe) -->
       <main class="content-area">
-        <iframe id="content-frame" src="home.html" frameborder="0"></iframe>
+        <iframe id="content-frame" src="home.html" title="Nội dung"></iframe>
       </main>
     </div>
 
-    <!-- 3. THÔNG TIN TRUNG TÂM (CỐ ĐỊNH VĨNH CỬU) -->
+    <!-- Lớp tối phía sau menu trên điện thoại (bấm để đóng menu) -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+    <!-- 3. CHÂN TRANG (CỐ ĐỊNH) -->
     <footer class="bottombar">
       <div class="footer-info">
-        <span>📍 <b>Địa chỉ:</b> K814 H83B/37 Trần Cao Vân, Thanh Khê, Đà Nẵng</span>
+        <span class="hide-sm">📍 <b>Địa chỉ:</b> K814 H83B/37 Trần Cao Vân, Thanh Khê, Đà Nẵng</span>
         <span>📞 <b>Liên hệ:</b> 0905 655 413</span>
-        <span>🌐 <b>Website:</b> hanngucobi.wordpress.com</span>
+        <span class="hide-sm">🌐 <b>Website:</b> hanngucobi.wordpress.com</span>
       </div>
       <div class="footer-copyright">
         © Một ngày nhập Thư Quán - Trọn đời hành Hán Ngữ.
