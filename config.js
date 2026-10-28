@@ -88,7 +88,7 @@ const COBI_DATA = {
   },
   "du-lac-hien": {
     title: "Du Lạc Trang Viên",
-    hanzi: "修习园",
+    hanzi: "游乐园",
     modules: [
       { id: "dlh-1", name: "Độc Tu Thất", desc: "Game cá nhân · Tự luyện", icon: "独", path: "./cobi-du-lac-hien/index.html" },
       { id: "dlh-2", name: "Tỉ Thí Đài", desc: "Game thi đua · Cùng lớp", icon: "擂", path: "./coming-soon.html?name=Tỉ%20Thí%20Đài" }
