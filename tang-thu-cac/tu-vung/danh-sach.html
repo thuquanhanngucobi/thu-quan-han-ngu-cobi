@@ -6,119 +6,107 @@
   <title>Danh Sách Từ Vựng</title>
   <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
     :root {
       --ink: #2b2622; --brown-dark: #4a3525; --gold-earth: #b38b4d;
       --blue-water: #1e3a5f; --blue-light: #e6edf2;
-      --paper: rgba(245, 238, 219, 0.95); --line: #d8c9ad;
+      --paper: rgba(250, 246, 235, 0.96); --line: #d8c9ad;
     }
+    * { box-sizing: border-box; }
 
-    html { background: transparent; }
+    html, body { background: transparent; }
     body {
-      font-family: "Noto Serif", serif; background: transparent;
-      margin: 0; padding: 20px 20px 60px; color: var(--ink);
+      font-family: "Noto Serif", serif; margin: 0; padding: 16px 16px 40px; color: var(--ink);
+      -webkit-overflow-scrolling: touch;
     }
     .container { max-width: 900px; margin: 0 auto; }
 
     /* THANH TÌM KIẾM & BỘ LỌC */
     .top-controls {
       position: sticky; top: 0; z-index: 10;
-      background: var(--paper);
-      -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px);
+      background: var(--paper); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
       border: 1px solid var(--gold-earth); padding: 16px; border-radius: 16px;
-      margin-bottom: 24px; display: flex; gap: 16px; align-items: center;
+      margin-bottom: 22px; display: flex; gap: 14px; align-items: center;
       box-shadow: 0 8px 20px rgba(0,0,0,0.06);
     }
     .search-box { flex: 1; min-width: 0; }
     .search-box input {
-      width: 100%; padding: 12px 20px; border-radius: 12px; border: 1px solid var(--line);
+      width: 100%; padding: 12px 18px; border-radius: 12px; border: 1px solid var(--line);
       font-family: inherit; font-size: 16px; outline: none; transition: 0.3s;
       background: #fdfbf7; color: var(--blue-water);
     }
     .search-box input:focus { border-color: var(--blue-water); box-shadow: 0 0 0 3px var(--blue-light); }
-
     .hsk-filter {
-      padding: 12px 20px; border-radius: 12px; border: 1px solid var(--line);
+      padding: 12px 16px; border-radius: 12px; border: 1px solid var(--line);
       background: white; color: var(--blue-water); font-weight: 700; font-size: 16px;
-      font-family: inherit; outline: none; cursor: pointer; max-width: 100%;
+      font-family: inherit; outline: none; cursor: pointer; max-width: 220px;
     }
 
     /* BẢNG TỪ VỰNG */
     .table-wrapper {
-      background: var(--paper);
-      border-radius: 16px;
-      border: 1px solid var(--gold-earth);
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      background: var(--paper); border-radius: 16px; border: 1px solid var(--gold-earth);
+      overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     }
     table { width: 100%; border-collapse: collapse; text-align: left; }
-    th {
-      background: var(--blue-water); color: white;
-      padding: 18px 20px; font-weight: 600; font-size: 16px; letter-spacing: 1px;
-    }
-    td {
-      padding: 16px 20px; border-bottom: 1px dashed var(--line);
-      vertical-align: middle; color: var(--brown-dark); font-size: 16px;
-    }
+    th { background: var(--blue-water); color: white; padding: 16px 20px; font-weight: 600; font-size: 16px; letter-spacing: 1px; }
+    td { padding: 14px 20px; border-bottom: 1px dashed var(--line); vertical-align: middle; color: var(--brown-dark); font-size: 16px; }
     tr:last-child td { border-bottom: none; }
-    tr:hover td { background: rgba(255,255,255,0.4); }
+    tr:hover td { background: rgba(255,255,255,0.45); }
 
-    /* Hán tự + nút loa nằm trong một khung riêng để <td> giữ nguyên là ô bảng */
-    .hanzi-wrap {
-      display: flex; align-items: center; gap: 15px;
-      font-family: "Ma Shan Zheng", cursive; font-size: 42px; color: var(--ink); line-height: 1.1;
-    }
+    .hanzi-wrap { display: flex; align-items: center; gap: 14px; }
+    .hanzi { font-family: "Ma Shan Zheng", cursive; font-size: 42px; color: var(--ink); line-height: 1; }
     .pinyin-cell { font-weight: 700; color: var(--blue-water); font-family: sans-serif; font-size: 20px; }
-    .empty-row { text-align: center; padding: 30px; }
 
     .audio-btn {
       background: white; border: 1px solid var(--blue-water); color: var(--blue-water);
       width: 38px; height: 38px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
-      cursor: pointer; font-size: 18px; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      flex-shrink: 0;
+      cursor: pointer; font-size: 18px; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.05); flex-shrink: 0;
     }
-    .audio-btn:hover { background: var(--blue-water); color: white; transform: scale(1.1); }
+    .audio-btn:hover { background: var(--blue-water); color: white; transform: scale(1.08); }
 
-    .status-msg { text-align: center; }
-    #loading { color: #fff; font-size: 18px; margin-top: 50px; background: rgba(0,0,0,0.5); padding: 12px 25px; border-radius: 12px; display: inline-block; }
+    .empty-row { text-align: center; padding: 30px !important; }
+    #loading { text-align: center; color: #fff; font-size: 18px; margin-top: 40px; background: rgba(0,0,0,0.5); padding: 12px 25px; border-radius: 12px; display: inline-block; }
 
-    /* ĐIỆN THOẠI: mỗi từ là một thẻ dọc, các dòng xếp chồng gọn gàng */
+    /* ===== ĐIỆN THOẠI: mỗi từ là một thẻ dọc, nhãn bên trái - nội dung bên phải ===== */
     @media (max-width: 700px) {
-      body { padding: 12px 12px 40px; }
-      .top-controls { flex-direction: column; align-items: stretch; gap: 10px; padding: 12px; }
-      .hsk-filter { width: 100%; }
+      body { padding: 10px 10px 30px; }
+      .top-controls { flex-direction: column; align-items: stretch; padding: 12px; gap: 10px; margin-bottom: 16px; }
+      .hsk-filter { max-width: none; width: 100%; }
 
-      table, tbody, tr, td { display: block; width: 100%; }
+      .table-wrapper { background: transparent; border: none; box-shadow: none; overflow: visible; }
+      table, thead, tbody, tr, td { display: block; width: 100%; }
       thead { display: none; }
 
-      tr { padding: 12px 6px; border-bottom: 1px dashed var(--line); }
-      tr:last-child { border-bottom: none; }
-      tr:hover td { background: transparent; }
-
-      td { border: none; padding: 5px 14px; font-size: 16px; }
-      td[data-label]::before {
-        content: attr(data-label);
-        display: block; margin-bottom: 2px;
-        font-weight: 600; font-size: 12px; letter-spacing: 0.5px;
-        color: var(--blue-water); opacity: 0.8;
+      tbody tr {
+        background: var(--paper); border: 1px solid var(--gold-earth); border-radius: 14px;
+        padding: 6px 14px; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
       }
-      /* Hán tự đã đủ rõ nên bỏ nhãn */
-      td.hanzi-cell::before { display: none; }
-      .hanzi-wrap { font-size: 38px; }
-      .pinyin-cell { font-size: 18px; }
-      .empty-row { padding: 24px 14px; }
+      td {
+        display: flex; align-items: center; gap: 12px;
+        padding: 10px 0; border-bottom: 1px dashed var(--line); min-height: 48px;
+      }
+      td:last-child { border-bottom: none; }
+      /* Nhãn là phần tử thường trong dòng (không còn position:absolute) nên chữ không thể đè nhau */
+      td::before {
+        content: attr(data-label); flex: 0 0 84px;
+        font-weight: 600; font-size: 13px; color: var(--blue-water);
+      }
+      td > .cell-val, td > .hanzi-wrap { flex: 1; min-width: 0; }
+      .hanzi { font-size: 38px; }
+      .pinyin-cell { font-size: 19px; }
+      .empty-row { display: block; text-align: center; }
+      .empty-row::before { content: none; }
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <div class="status-msg"><div id="loading">Đang tải danh sách từ vựng...</div></div>
+    <div style="text-align: center;"><div id="loading">Đang tải danh sách từ vựng...</div></div>
 
     <div id="app-content" style="display: none;">
       <div class="top-controls">
         <div class="search-box">
-          <input type="text" id="search-input" placeholder="Nhập Hán tự, Pinyin hoặc Nghĩa để tìm kiếm..." autocomplete="off">
+          <input type="text" id="search-input" placeholder="Nhập Hán tự, Pinyin hoặc Nghĩa để tìm kiếm...">
         </div>
         <select id="hsk-select" class="hsk-filter">
           <option value="all">Tất cả bài học</option>
@@ -140,55 +128,61 @@
     </div>
   </div>
 
-  <!-- Khi chạy trong khung, config.js của trang cha sẽ được dùng. Dòng dưới chỉ để mở trang này riêng lẻ
-       (đường dẫn tính từ tang-thu-cac/tu-vung/ ra thư mục gốc). Sai đường dẫn cũng không sao. -->
+  <!-- config.js có thì dùng link ở đó; không có (hoặc không tìm thấy) thì dùng link dự phòng bên dưới. Không bao giờ báo lỗi config. -->
   <script src="../../config.js"></script>
   <script>
-    const CFG = (function () {
-      if (window.cobiFetchSheet) return window;
-      try { if (window.parent && window.parent.cobiFetchSheet) return window.parent; } catch (e) {}
-      return null;
-    })();
+    const FALLBACK_API = 'https://script.google.com/macros/s/AKfycby1TyfXxZVmt2aoSIwOaNXxrrSmOXIHv-CVAU-B_9Xiv-Dxt4LyW2Yd1DSaJIOg4pfUIw/exec';
 
     let allVocab = [];
-    const loadingEl = document.getElementById('loading');
     const tbody = document.getElementById('table-body');
     const searchInput = document.getElementById('search-input');
     const hskSelect = document.getElementById('hsk-select');
+    const loadingEl = document.getElementById('loading');
 
-    function esc(s) {
-      return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+    // Chuẩn hóa tên cột: "Hán tự" / "HÁN TỰ" / "hantu" đều thành "hantu"
+    // => chạy được với cả code.gs cũ lẫn mới, không sợ gõ hoa/thường hay thừa khoảng trắng.
+    const normKey = (s) => String(s).toLowerCase().normalize('NFD')
+      .replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/[^a-z0-9]/g, '');
+    const normItem = (raw) => {
+      const o = {};
+      Object.keys(raw).forEach(k => { const nk = normKey(k); if (nk) o[nk] = raw[k] == null ? '' : String(raw[k]).trim(); });
+      return o;
+    };
+
+    async function loadVocab() {
+      const base = (typeof COBI_API_URL !== 'undefined') ? COBI_API_URL : FALLBACK_API;
+      const res = await fetch(base + '?action=getVocabHSK&t=' + Date.now());
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const json = await res.json();
+      if (!json.success) throw new Error(json.message || 'API báo lỗi');
+      return (json.data || []).map(normItem);
     }
 
+    const levelOf = (item) => item.hsk || item.capdo || item.baihoc || item.id || 'Khác';
+
     async function fetchList() {
-      if (!CFG) { loadingEl.textContent = 'Không tìm thấy config.js. Hãy mở trang qua trang chủ của Thư Quán.'; return; }
       try {
-        const rows = await CFG.cobiFetchSheet('getVocabHSK');
-        allVocab = rows.map(r => ({
-          level:   CFG.cobiPick(r, ['ID']) || 'Khác',
-          hanzi:   CFG.cobiPick(r, ['Hán tự', 'HANTU', 'TUVUNG']),
-          pinyin:  CFG.cobiPick(r, ['PINYIN']),
-          meaning: CFG.cobiPick(r, ['NGHIA', 'Nghĩa'])
-        })).filter(v => v.hanzi);
-
-        if (allVocab.length === 0) { loadingEl.textContent = 'Không tìm thấy dữ liệu ở cột "Hán tự".'; return; }
-
+        const data = await loadVocab();
+        allVocab = data.filter(item => item.hantu);
+        if (allVocab.length === 0) {
+          loadingEl.textContent = "Không tìm thấy dữ liệu ở cột 'Hán tự'.";
+          return;
+        }
         setupFilters();
         renderTable();
         loadingEl.style.display = 'none';
         document.getElementById('app-content').style.display = 'block';
       } catch (e) {
-        loadingEl.textContent = e.message || 'Lỗi tải dữ liệu.';
+        loadingEl.textContent = "Lỗi tải dữ liệu: " + e.message;
       }
     }
 
     function setupFilters() {
-      const levels = [...new Set(allVocab.map(v => v.level))]
-        .sort((a, b) => a.localeCompare(b, 'vi', { numeric: true }));
-      levels.forEach(level => {
+      [...new Set(allVocab.map(levelOf))].forEach(lv => {
         const option = document.createElement('option');
-        option.value = level;
-        option.textContent = level;
+        option.value = lv; option.textContent = lv;
         hskSelect.appendChild(option);
       });
       searchInput.addEventListener('input', renderTable);
@@ -197,38 +191,32 @@
 
     function renderTable() {
       const keyword = searchInput.value.toLowerCase().trim();
-      const levelFilter = hskSelect.value;
+      const lvFilter = hskSelect.value;
 
-      const filtered = allVocab.filter(v => {
-        const matchKeyword = !keyword ||
-          v.hanzi.toLowerCase().includes(keyword) ||
-          v.pinyin.toLowerCase().includes(keyword) ||
-          v.meaning.toLowerCase().includes(keyword);
-        const matchLevel = levelFilter === 'all' || v.level === levelFilter;
-        return matchKeyword && matchLevel;
+      const filtered = allVocab.filter(item => {
+        const text = (item.hantu + ' ' + (item.pinyin || '') + ' ' + (item.nghia || '')).toLowerCase();
+        return text.includes(keyword) && (lvFilter === 'all' || levelOf(item) === lvFilter);
       });
 
       if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="3" class="empty-row">Không tìm thấy từ vựng nào.</td></tr>';
+        tbody.innerHTML = `<tr><td colspan="3" class="empty-row">Không tìm thấy từ vựng nào.</td></tr>`;
         return;
       }
 
-      tbody.innerHTML = filtered.map(v => `
+      tbody.innerHTML = filtered.map(item => `
         <tr>
-          <td data-label="Hán Tự" class="hanzi-cell">
-            <div class="hanzi-wrap">
-              <span>${esc(v.hanzi)}</span>
-              <button class="audio-btn" type="button" data-audio="${esc(v.hanzi)}" aria-label="Nghe phát âm">🔊</button>
-            </div>
-          </td>
-          <td data-label="Pinyin" class="pinyin-cell">${esc(v.pinyin)}</td>
-          <td data-label="Nghĩa">${esc(v.meaning)}</td>
+          <td data-label="Hán Tự"><div class="hanzi-wrap">
+            <span class="hanzi">${esc(item.hantu)}</span>
+            <button class="audio-btn" data-say="${esc(item.hantu)}" aria-label="Phát âm">🔊</button>
+          </div></td>
+          <td data-label="Pinyin"><span class="cell-val pinyin-cell">${esc(item.pinyin || '')}</span></td>
+          <td data-label="Nghĩa"><span class="cell-val">${esc(item.nghia || '')}</span></td>
         </tr>`).join('');
     }
 
-    tbody.addEventListener('click', e => {
-      const btn = e.target.closest('[data-audio]');
-      if (btn) playAudio(btn.dataset.audio);
+    tbody.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-say]');
+      if (btn) playAudio(btn.dataset.say);
     });
 
     function playAudio(text) {
