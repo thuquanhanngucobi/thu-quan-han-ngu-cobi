@@ -37,12 +37,12 @@ async function cobiFetchData(action) {
    - cards       : ảnh đầu mỗi thẻ, ngang tỉ lệ 3:2, khoảng 900 x 600
    --------------------------------------------------------------------- */
 const COBI_IMAGES = {
-  background: '',   // <-- ẢNH NỀN TOÀN TRANG
+  background: './img/giaodien/nen.jpg',   // <-- ẢNH NỀN TOÀN TRANG
   logo: '',         // <-- LOGO TRÒN (góc trên bên trái)
   cards: {
-    'tang-thu-cac':   '',   // <-- ẢNH THẺ 1: Tàng Thư Các (phòng sách)
-    'du-lac-hien':    '',   // <-- ẢNH THẺ 2: Du Lạc Trang Viên (đình, hồ)
-    'khao-thi-duong': ''    // <-- ẢNH THẺ 3: Khảo Thí Đường (phòng thi)
+    'tang-thu-cac':   './img/giaodien/tangthucac.png',   // <-- ẢNH THẺ 1: Tàng Thư Các (phòng sách)
+    'du-lac-hien':    './img/giaodien/dulachien.png',   // <-- ẢNH THẺ 2: Du Lạc Trang Viên (đình, hồ)
+    'khao-thi-duong': './img/giaodien/.jpg'    // <-- ẢNH THẺ 3: Khảo Thí Đường (phòng thi)
   }
 };
 
