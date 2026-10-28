@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Thư Quán Hán Ngữ CoBi - Portal</title>
+  <meta name="theme-color" content="#1e3a5f">
+  <title>Thư Quán Hán Ngữ CoBi</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Lớp phủ dịu mắt trên ảnh nền -->
   <div class="bg-blur"></div>
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
-  <div class="app-shell" id="app-shell">
+  <div class="app-shell is-home" id="app-shell">
 
-    <!-- 1. THANH CÔNG CỤ TRÊN (CỐ ĐỊNH) -->
+    <!-- 1. THANH TRÊN -->
     <header class="topbar">
-      <div class="brand-group">
-        <!-- Nút menu nằm NGOÀI .brand để bấm vào không bị nhảy về trang chủ -->
+      <div class="topbar-left">
         <button id="menu-toggle" class="hamburger" aria-label="Mở menu">☰</button>
         <div class="brand" id="btn-home" title="Về Trang Chủ">
-          <div class="brand-seal">CoBi</div>
+          <div class="brand-seal" id="brand-seal"><span>CoBi</span></div>
           <div class="brand-text">
             <strong>Thư Quán Hán Ngữ</strong>
             <span>一朝入书馆，一生伴汉语</span>
@@ -26,13 +26,14 @@
         </div>
       </div>
       <nav class="main-nav">
+        <button class="nav-btn" data-target="home">Trang chủ</button>
         <button class="nav-btn" data-target="tang-thu-cac">Tàng Thư Các</button>
-        <button class="nav-btn" data-target="du-lac-hien">Du Lạc Hiên</button>
+        <button class="nav-btn" data-target="du-lac-hien">Du Lạc Trang Viên</button>
         <button class="nav-btn" data-target="khao-thi-duong">Khảo Thí Đường</button>
       </nav>
     </header>
 
-    <!-- KHU VỰC CHÍNH -->
+    <!-- 2. KHU VỰC CHÍNH -->
     <div class="main-layout">
       <aside class="sidebar" id="sidebar">
         <h3 id="sidebar-title" class="sidebar-title">Tàng Thư Các</h3>
@@ -44,15 +45,12 @@
       </main>
     </div>
 
-    <!-- Lớp tối phía sau menu trên điện thoại (bấm để đóng menu) -->
-    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
-
-    <!-- 3. CHÂN TRANG (CỐ ĐỊNH) -->
+    <!-- 3. CHÂN TRANG -->
     <footer class="bottombar">
       <div class="footer-info">
-        <span class="hide-sm">📍 <b>Địa chỉ:</b> K814 H83B/37 Trần Cao Vân, Thanh Khê, Đà Nẵng</span>
+        <span>📍 <b>Địa chỉ:</b> K814 H83B/37 Trần Cao Vân, Thanh Khê, Đà Nẵng</span>
         <span>📞 <b>Liên hệ:</b> 0905 655 413</span>
-        <span class="hide-sm">🌐 <b>Website:</b> hanngucobi.wordpress.com</span>
+        <span>🌐 <b>Website:</b> hanngucobi.wordpress.com</span>
       </div>
       <div class="footer-copyright">
         © Một ngày nhập Thư Quán - Trọn đời hành Hán Ngữ.

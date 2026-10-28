@@ -4,55 +4,181 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trang chủ</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Ma+Shan+Zheng&family=Noto+Serif:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Ma+Shan+Zheng&family=Noto+Serif:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
-    html { background: transparent; }
+    :root {
+      --ink: #2b2622; --brown-dark: #4a3525; --gold-earth: #b38b4d; --gold-soft: #d9c28f;
+      --blue-water: #1e3a5f; --blue-deep: #16304f; --line: #e2d6bd;
+      /* Hình núi vẽ sẵn, dùng khi bạn chưa gắn ảnh cho thẻ */
+      --mount: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 400' preserveAspectRatio='xMidYMax slice'%3E%3Cpath d='M0 250 L90 170 L170 230 L290 120 L400 230 L480 180 L600 250 L600 400 L0 400Z' fill='%23ffffff' fill-opacity='0.35'/%3E%3Cpath d='M0 300 L120 230 L240 290 L360 210 L480 290 L600 240 L600 400 L0 400Z' fill='%231e3a5f' fill-opacity='0.30'/%3E%3Cpath d='M0 350 L150 310 L300 345 L450 305 L600 340 L600 400 L0 400Z' fill='%231e3a5f' fill-opacity='0.45'/%3E%3C/svg%3E");
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: transparent; }
     body {
-      font-family: "Noto Serif", Georgia, serif;
-      margin: 0; padding: 20px;
-      background: transparent;
-      /* min-height thay cho height cố định: nội dung dài sẽ cuộn được, không bị cắt */
-      min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
+      font-family: "Noto Serif", Georgia, serif; color: var(--ink);
+      padding: 4px 4px 24px; overflow-y: auto; -webkit-overflow-scrolling: touch;
     }
-    .intro-box {
-      background: rgba(245, 238, 219, 0.88);
-      padding: 50px 60px;
-      border-radius: 60px;
-      border: 1px solid #b38b4d;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-      text-align: center;
-      max-width: 750px;
-      width: 100%;
-      -webkit-backdrop-filter: blur(5px);
-      backdrop-filter: blur(5px);
-    }
-    .hero-kicker { letter-spacing: 0.3em; color: #4a3525; font-size: 16px; margin-bottom: 15px; font-family: "Ma Shan Zheng", cursive; }
-    h1 { font-family: "Cormorant Garamond", serif; color: #1e3a5f; font-size: 50px; margin: 0; line-height: 1.15; }
-    h1 span { font-family: "Ma Shan Zheng", cursive; font-weight: normal; font-size: 60px; color: #1e3a5f; }
-    h2 { font-size: 24px; font-weight: 600; margin: 15px 0 25px; color: #4a3525; }
-    p { font-size: 18px; line-height: 1.8; color: #2b2622; margin: 0 auto 30px; }
-    .ornament-line { color: #b38b4d; font-size: 28px; letter-spacing: 0.5em; }
+    .wrap { max-width: 1240px; margin: 0 auto; }
 
-    @media (max-width: 600px) {
-      body { padding: 12px; align-items: flex-start; }
-      .intro-box { padding: 30px 22px; border-radius: 28px; }
-      h1 { font-size: 34px; }
-      h1 span { font-size: 40px; }
-      h2 { font-size: 19px; margin: 10px 0 18px; }
-      p { font-size: 16px; line-height: 1.7; margin-bottom: 20px; }
-      .ornament-line { font-size: 22px; }
+    /* ===== TIÊU ĐỀ ===== */
+    .hero { text-align: center; padding: 6px 10px 20px; }
+    .hero h1 {
+      font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 700;
+      font-size: clamp(34px, 5vw, 62px); line-height: 1.1; color: var(--blue-deep);
+      text-shadow: 0 2px 0 rgba(255,255,255,0.8);
+    }
+    .hero h1 .cobi { color: var(--gold-earth); }
+    .hero-sub {
+      margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 14px;
+      font-size: clamp(14px, 1.7vw, 19px); color: var(--brown-dark); letter-spacing: 1px;
+    }
+    .hero-sub::before, .hero-sub::after {
+      content: ""; width: clamp(30px, 6vw, 90px); height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-earth));
+    }
+    .hero-sub::after { transform: scaleX(-1); }
+    .hero-slogan { margin-top: 8px; font-family: "Ma Shan Zheng", cursive; font-size: clamp(16px, 2vw, 22px); color: var(--gold-earth); letter-spacing: 3px; }
+
+    /* ===== 3 THẺ CỔNG ===== */
+    .portals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; align-items: stretch; padding: 0 6px; }
+
+    .portal {
+      display: flex; flex-direction: column;
+      position: relative; border-radius: 16px; overflow: hidden;
+      background: rgba(252, 249, 241, 0.92);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      border: 1px solid var(--gold-earth);
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.55), 0 18px 40px rgba(30, 58, 95, 0.20);
+    }
+
+    /* Mái ngói cong */
+    .roof {
+      height: 40px; position: relative; z-index: 1;
+      background: linear-gradient(180deg, #2c5282, var(--blue-deep));
+      clip-path: polygon(0 100%, 3% 55%, 10% 38%, 28% 22%, 50% 0, 72% 22%, 90% 38%, 97% 55%, 100% 100%);
+    }
+    .roof::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--gold-earth); opacity: 0.9; }
+
+    .portal-top { position: relative; }
+    .art {
+      height: 200px; margin-top: -2px;
+      background-size: cover; background-position: center;
+      border-bottom: 3px solid var(--gold-earth);
+    }
+    /* Hình thay thế khi chưa có ảnh */
+    .art.fallback { background-image: var(--mount), linear-gradient(180deg, var(--sky-a), var(--sky-b)); background-size: cover; background-position: center bottom; }
+    .c1 .art.fallback { --sky-a: #e9dfc6; --sky-b: #c9b48a; }
+    .c2 .art.fallback { --sky-a: #dcebe9; --sky-b: #8fb7b3; }
+    .c3 .art.fallback { --sky-a: #e4e8ee; --sky-b: #9fb0c6; }
+
+    /* Huy hiệu tròn giữa thẻ */
+    .badge {
+      position: absolute; left: 50%; top: 14px; transform: translateX(-50%); z-index: 2;
+      width: 116px; height: 116px; border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+      background: radial-gradient(circle at 30% 25%, #fffdf7, #f3ead4);
+      border: 2px solid var(--gold-earth);
+      box-shadow: 0 0 0 5px rgba(255,255,255,0.75), 0 0 0 6px var(--gold-soft), 0 10px 24px rgba(30,58,95,0.30);
+    }
+    .badge .hz { font-family: "Ma Shan Zheng", cursive; font-size: 27px; line-height: 1; color: var(--blue-deep); letter-spacing: 1px; }
+    .badge .vn { margin-top: 6px; font-size: 11.5px; font-weight: 600; color: var(--brown-dark); padding: 0 6px; line-height: 1.2; }
+    .c2 .badge { background: radial-gradient(circle at 30% 25%, #2c5282, var(--blue-deep)); }
+    .c2 .badge .hz { color: #fff; }
+    .c2 .badge .vn { color: #e6edf5; }
+
+    /* Danh sách mục */
+    .items { list-style: none; padding: 16px 16px 18px; display: flex; flex-direction: column; justify-content: center; gap: 10px; flex: 1; }
+    .item {
+      width: 100%; display: flex; align-items: center; gap: 14px; text-align: left; cursor: pointer;
+      padding: 12px 16px 12px 12px; border-radius: 40px;
+      background: linear-gradient(180deg, #ffffff, #f6f1e4);
+      border: 1px solid var(--line); font-family: inherit; color: inherit;
+      box-shadow: 0 3px 8px rgba(30,58,95,0.07);
+      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+    }
+    .item:hover, .item:focus-visible { transform: translateY(-2px); border-color: var(--gold-earth); box-shadow: 0 8px 18px rgba(30,58,95,0.16); outline: none; }
+    .item .ico {
+      flex-shrink: 0; width: 46px; height: 46px; border-radius: 50%;
+      display: grid; place-items: center;
+      font-family: "Ma Shan Zheng", cursive; font-size: 24px; color: #fff;
+      background: radial-gradient(circle at 30% 25%, #2c5282, var(--blue-deep));
+      border: 2px solid var(--gold-soft);
+    }
+    .c3 .item .ico { background: radial-gradient(circle at 30% 25%, #6b5240, var(--brown-dark)); }
+    .item .txt { flex: 1; min-width: 0; }
+    .item .name { display: block; font-size: 16.5px; font-weight: 700; color: var(--blue-deep); line-height: 1.25; }
+    .item .desc { display: block; margin-top: 3px; font-size: 12.5px; color: #7a6a58; line-height: 1.3; }
+    .item .go { flex-shrink: 0; font-size: 22px; color: var(--blue-water); opacity: 0.7; }
+
+    .tagline { text-align: center; margin-top: 26px; color: var(--brown-dark); letter-spacing: 1px; font-size: 14px; }
+
+    /* ===== ĐIỆN THOẠI / MÁY TÍNH BẢNG ===== */
+    @media (max-width: 1000px) {
+      .portals { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; gap: 24px; }
+    }
+    @media (max-width: 520px) {
+      .hero { padding-bottom: 14px; }
+      .art { height: 170px; }
+      .badge { width: 104px; height: 104px; }
+      .badge .hz { font-size: 24px; }
+      .item .name { font-size: 15.5px; }
+      .item .ico { width: 42px; height: 42px; font-size: 22px; }
+      .tagline { font-size: 12.5px; }
     }
   </style>
 </head>
 <body>
-  <div class="intro-box">
-    <div class="hero-kicker">漢 · 書 · 語 · 學</div>
-    <h1>Thư Quán Hán Ngữ <span>CoBi</span></h1>
-    <h2>一朝入书馆，一生伴汉语</h2>
-    <p>Chào mừng bạn bước vào Thư Quán Hán Ngữ CoBi. Nơi đây không chỉ là hệ thống lưu trữ kiến thức, mà còn là không gian để bạn đắm mình vào vẻ đẹp của ngôn ngữ và văn hóa phương Đông. Hãy chọn một phân khu ở thanh công cụ phía trên để bắt đầu hành trình của mình.</p>
-    <div class="ornament-line">— ❖ —</div>
+  <div class="wrap">
+    <header class="hero">
+      <h1>Thư Quán Hán Ngữ <span class="cobi">CoBi</span></h1>
+      <div class="hero-sub">Tàng thư · Du lạc · Khảo thí</div>
+      <div class="hero-slogan">一朝入书馆，一生伴汉语</div>
+    </header>
+
+    <section class="portals" id="portals"></section>
+
+    <div class="tagline">Một hành trình · Ba trạm dừng · Vạn điều thú vị</div>
   </div>
+
+  <script src="config.js"></script>
+  <script>
+    const ORDER = ['tang-thu-cac', 'du-lac-hien', 'khao-thi-duong'];
+    const IMG = (typeof COBI_IMAGES !== 'undefined' && COBI_IMAGES.cards) ? COBI_IMAGES.cards : {};
+    const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+    document.getElementById('portals').innerHTML = ORDER.map((key, i) => {
+      const sec = COBI_DATA[key];
+      if (!sec) return '';
+      const art = IMG[key]
+        ? `<div class="art" style="background-image:url('${esc(IMG[key])}')"></div>`
+        : `<div class="art fallback"></div>`;
+      const items = sec.modules.filter(m => m.desc).map(m => `
+        <li>
+          <button class="item" data-key="${key}" data-id="${m.id}">
+            <span class="ico">${esc(m.icon || '书')}</span>
+            <span class="txt"><span class="name">${esc(m.name)}</span><span class="desc">${esc(m.desc)}</span></span>
+            <span class="go">›</span>
+          </button>
+        </li>`).join('');
+      return `
+        <article class="portal c${i + 1}">
+          <div class="portal-top">
+            <div class="roof"></div>
+            ${art}
+            <div class="badge"><span class="hz">${esc(sec.hanzi || '')}</span><span class="vn">${esc(sec.title)}</span></div>
+          </div>
+          <ul class="items">${items}</ul>
+        </article>`;
+    }).join('');
+
+    // Bấm một mục: nhờ trang cha (index.html) mở thanh bên và nội dung tương ứng
+    document.getElementById('portals').addEventListener('click', (e) => {
+      const btn = e.target.closest('.item');
+      if (!btn) return;
+      if (window.parent && window.parent !== window && typeof window.parent.cobiOpen === 'function') {
+        window.parent.cobiOpen(btn.dataset.key, btn.dataset.id);
+      }
+    });
+  </script>
 </body>
 </html>

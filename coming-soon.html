@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đang xây dựng</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Ma+Shan+Zheng&family=Noto+Serif:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; background: transparent; }
+    body { font-family: "Noto Serif", serif; display: grid; place-items: center; padding: 16px; overflow-y: auto; }
+    .box {
+      text-align: center; max-width: 520px; padding: 40px 30px; border-radius: 24px;
+      background: rgba(252, 249, 241, 0.92); border: 1px solid #b38b4d;
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.55), 0 18px 40px rgba(30,58,95,0.18);
+    }
+    .hz { font-family: "Ma Shan Zheng", cursive; font-size: 54px; color: #1e3a5f; letter-spacing: 6px; }
+    h1 { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 34px; color: #16304f; margin: 10px 0 8px; }
+    p { color: #4a3525; line-height: 1.7; font-size: 16px; }
+    .orn { color: #b38b4d; letter-spacing: 0.5em; margin-top: 14px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="hz">即将开启</div>
+    <h1 id="name">Sắp ra mắt</h1>
+    <p>Khu này đang được xây dựng. Mời bạn quay lại sau nhé!</p>
+    <div class="orn">— ❖ —</div>
+  </div>
+  <script>
+    const n = new URLSearchParams(location.search).get('name');
+    if (n) document.getElementById('name').textContent = n;
+  </script>
+</body>
+</html>
