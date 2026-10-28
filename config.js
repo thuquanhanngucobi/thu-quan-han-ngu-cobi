@@ -37,7 +37,7 @@ async function cobiFetchData(action) {
    - cards       : ảnh đầu mỗi thẻ, ngang tỉ lệ 3:2, khoảng 900 x 600
    --------------------------------------------------------------------- */
 const COBI_IMAGES = {
-  background: './img/giaodien/nen.jpg',   // <-- ẢNH NỀN TOÀN TRANG
+  background: './img/giaodien/nen.png',   // <-- ẢNH NỀN TOÀN TRANG
   logo: '',         // <-- LOGO TRÒN (góc trên bên trái)
   cards: {
     'tang-thu-cac':   './img/giaodien/tangthucac.png',   // <-- ẢNH THẺ 1: Tàng Thư Các (phòng sách)
