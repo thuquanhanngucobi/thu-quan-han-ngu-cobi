@@ -77,7 +77,9 @@ const COBI_DATA = {
         id: "ttc-skill", name: "Bí Kíp Luyện Công", desc: "Bài giảng · Hán tự · Kỹ năng nền tảng", icon: "功",
         subModules: [
           { id: "ttc-l1", name: "Quyển 1", path: "./tang-thu-cac/bai-giang/quyen-1/index.html" },
-          { id: "lec-b1", name: "Bài 1: Dòng chảy thời gian", path: "./tang-thu-cac/bai-giang/quyen-1/bai8-time.html" },
+          { id: "lec-b1", name: "Bài 8: Dòng chảy thời gian", path: "./tang-thu-cac/bai-giang/quyen-1/bai8-time.html" },
+           { id: "lec-b2", name: "Bài 9: Phương tiện giao thông", path: "./tang-thu-cac/bai-giang/quyen-1/bai9-ptgt.html" },
+           { id: "lec-b3", name: "Bài 10: Gia đình", path: "./tang-thu-cac/bai-giang/quyen-1/bai10-family.html" },
           { id: "ttc-l2", name: "Quyển 2", path: "./tang-thu-cac/bai-giang/quyen-2/index.html" },
           { id: "ttc-l3", name: "HSK 3", path: "./tang-thu-cac/bai-giang/hsk-3/index.html" }
         ]
