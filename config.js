@@ -42,7 +42,7 @@ const COBI_IMAGES = {
   cards: {
     'tang-thu-cac':   './img/giaodien/tangthucac.png',   // <-- ẢNH THẺ 1: Tàng Thư Các (phòng sách)
     'du-lac-hien':    './img/giaodien/dulachien.png',   // <-- ẢNH THẺ 2: Du Lạc Trang Viên (đình, hồ)
-    'khao-thi-duong': './img/giaodien/.jpg'    // <-- ẢNH THẺ 3: Khảo Thí Đường (phòng thi)
+    'khao-thi-duong': './img/giaodien/khaothiduong.jpg'    // <-- ẢNH THẺ 3: Khảo Thí Đường (phòng thi)
   }
 };
 
