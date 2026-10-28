@@ -115,7 +115,7 @@ button{font-family:inherit;color:inherit}
       <li>Đúng ngay lần đầu: <b>+1 🪙</b>. Sai: không được xu (ô đó sẽ không còn xu nữa) nhưng vẫn thử lại được.</li>
       <li>Điền đủ cây gia phả để lên bảng xếp hạng: nhiều xu hơn, nhanh hơn thì xếp trên.</li>
     </ol>
-    <div id="warnCfg" class="warn hidden">⚠️ Chưa cấu hình Firebase: bảng xếp hạng chỉ lưu trên máy này (chế độ thử).</div>
+    <div id="warnCfg" class="warn hidden">⚠️ Chế độ thử: bảng xếp hạng chỉ lưu trên máy này.</div>
   </div>
 </div>
 
@@ -165,19 +165,12 @@ button{font-family:inherit;color:inherit}
 
 <script type="module">
 /* =====================================================================
-   CẤU HÌNH FIREBASE: dán thông tin project Firebase của bạn vào đây
-   (giống hệt cấu hình của game cũ, dùng lại cùng project được).
-   Nếu để nguyên "YOUR_..." game vẫn chạy nhưng bảng xếp hạng chỉ lưu
-   trên máy (để thử).
+   CẤU HÌNH: dùng chung database Firebase với game chỉ đường.
+   Dữ liệu game này nằm ở nhánh riêng "familyTree", không lẫn với "cobi".
+   (Muốn bảng xếp hạng chỉ lưu trên máy để thử: đổi DB_URL thành "")
    ===================================================================== */
-const FIREBASE_CONFIG = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
-  projectId: "YOUR_PROJECT",
-  appId: "YOUR_APP_ID"
-};
-const DB_ROOT = "familyTree";   // nhánh dữ liệu riêng, không đụng game cũ
+const DB_URL  = "https://khuphocobi-ptgt-default-rtdb.firebaseio.com/";
+const DB_ROOT = "familyTree";
 
 /* ---------------------------- TỪ VỰNG ---------------------------- */
 const WORDS = [
@@ -243,7 +236,6 @@ function say(t) {
 }
 
 /* ----------------------- BACKEND (Firebase / local) ----------------------- */
-const hasCfg = !FIREBASE_CONFIG.apiKey.startsWith('YOUR');
 function localBackend() {
   const key = c => 'ft_lb_' + c;
   const read = c => { try { return JSON.parse(ls.get(key(c), '{}')); } catch (e) { return {}; } };
@@ -254,28 +246,33 @@ function localBackend() {
     subscribe: (c, cb) => { cb(Object.values(read(c))); const t = setInterval(() => cb(Object.values(read(c))), 2000); return () => clearInterval(t); }
   };
 }
+function restBackend() {
+  const base = DB_URL.replace(/\/$/, '') + '/' + DB_ROOT;
+  const warn = () => { const e = document.getElementById('bankHint'); if (e) e.textContent = '⚠️ Chưa lưu được điểm lên bảng xếp hạng'; };
+  return {
+    online: true,
+    newId: () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+    save: (c, id, data) => fetch(`${base}/${c}/${id}.json`, { method: 'PUT', body: JSON.stringify(data) })
+      .then(r => { if (!r.ok) warn(); }).catch(() => warn()),
+    subscribe: (c, cb) => {
+      let stop = false, last = null;
+      const poll = async () => {
+        if (stop) return;
+        try {
+          const r = await fetch(`${base}/${c}.json`);
+          if (r.ok) { const t = await r.text(); if (t !== last) { last = t; cb(Object.values(JSON.parse(t) || {})); } }
+        } catch (e) {}
+        setTimeout(poll, 2000);
+      };
+      poll();
+      return () => { stop = true; };
+    }
+  };
+}
+const hasCfg = !!DB_URL;
 let backendPromise = null;
 function getBackend() {
-  if (backendPromise) return backendPromise;
-  backendPromise = (async () => {
-    if (!hasCfg) return localBackend();
-    try {
-      const [{ initializeApp }, { getDatabase, ref, push, set, onValue }] = await Promise.all([
-        import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js'),
-        import('https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js')
-      ]);
-      const db = getDatabase(initializeApp(FIREBASE_CONFIG, 'familytree'));
-      return {
-        online: true,
-        newId: c => push(ref(db, `${DB_ROOT}/${c}`)).key,
-        save: (c, id, data) => set(ref(db, `${DB_ROOT}/${c}/${id}`), data).catch(e => console.warn('save lỗi', e)),
-        subscribe: (c, cb) => onValue(ref(db, `${DB_ROOT}/${c}`), s => cb(Object.values(s.val() || {})), e => console.warn('đọc lỗi', e))
-      };
-    } catch (e) {
-      console.warn('Không kết nối được Firebase, dùng chế độ máy này', e);
-      return localBackend();
-    }
-  })();
+  if (!backendPromise) backendPromise = Promise.resolve(hasCfg ? restBackend() : localBackend());
   return backendPromise;
 }
 
