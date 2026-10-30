@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     entry.arrow.style.transform = on ? 'rotate(180deg)' : 'rotate(0deg)';
   }
 
-  /* ---- Dựng thanh bên cho một phân khu ---- */
+  /* ---- Dựng thanh bên cho một phân khu (hỗ trợ nhiều cấp lồng nhau) ---- */
   function loadSidebar(key, targetId) {
     const data = COBI_DATA[key];
     if (!data) return;
@@ -63,26 +63,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const refs = {};   // id -> mục menu
 
     function openEntry(entry) {
-      if (entry.children) {            // mục có danh sách con: xổ ra rồi mở mục con đầu tiên
+      if (!entry) return;
+      if (entry.children) {            // nhóm: xổ ra rồi mở mục con đầu tiên
         setExpanded(entry, true);
-        openEntry(entry.children[0]);
+        for (let p = entry.parent; p; p = p.parent) setExpanded(p, true);
+        if (entry.children.length) openEntry(entry.children[0]);
         return;
       }
       clearActive();
       entry.el.classList.add('active-item');
-      if (entry.parent) setExpanded(entry.parent, true);
+      // xổ tất cả các nhóm cha
+      for (let p = entry.parent; p; p = p.parent) setExpanded(p, true);
       iframe.src = entry.path;
       if (isMobile()) closeSidebar();
     }
 
-    data.modules.forEach(mod => {
+    // Tạo một mục (đệ quy). depth 0 = cấp ngoài cùng.
+    function buildItem(item, parent, depth) {
       const li = document.createElement('li');
-      const entry = { el: li, path: mod.path };
-      refs[mod.id] = entry;
+      const entry = { el: li, path: item.path, parent: parent };
+      refs[item.id] = entry;
 
-      if (mod.subModules) {
-        li.className = 'module-item has-submenu';
-        li.innerHTML = '<div class="menu-title"><span>' + mod.name + '</span> <span class="arrow">▼</span></div>';
+      if (item.subModules) {
+        li.className = (depth === 0 ? 'module-item' : 'sub-item') + ' has-submenu';
+        li.innerHTML = '<div class="menu-title"><span>' + item.name + '</span> <span class="arrow">▼</span></div>';
 
         const ul = document.createElement('ul');
         ul.className = 'sub-menu';
@@ -91,28 +95,33 @@ document.addEventListener('DOMContentLoaded', () => {
         entry.arrow = li.querySelector('.arrow');
         entry.children = [];
 
-        mod.subModules.forEach(sub => {
-          const subLi = document.createElement('li');
-          subLi.className = 'sub-item';
-          subLi.textContent = sub.name;
-          const subEntry = { el: subLi, path: sub.path, parent: entry };
-          refs[sub.id] = subEntry;
-          entry.children.push(subEntry);
-          subLi.onclick = (e) => { e.stopPropagation(); openEntry(subEntry); };
-          ul.appendChild(subLi);
+        item.subModules.forEach(sub => {
+          const childLi = buildItem(sub, entry, depth + 1);
+          entry.children.push(refs[sub.id]);
+          ul.appendChild(childLi);
         });
 
         li.appendChild(ul);
-        li.querySelector('.menu-title').onclick = () => setExpanded(entry, ul.style.display !== 'block');
+        li.querySelector('.menu-title').onclick = (e) => {
+          e.stopPropagation();
+          setExpanded(entry, ul.style.display !== 'block');
+        };
+
+      } else if (depth === 0) {
+        li.className = 'module-item';
+        li.innerHTML = '<div class="menu-title"><span>' + item.name + '</span></div>';
+        li.onclick = () => openEntry(entry);
 
       } else {
-        li.className = 'module-item';
-        li.innerHTML = '<div class="menu-title"><span>' + mod.name + '</span></div>';
-        li.onclick = () => openEntry(entry);
+        li.className = 'sub-item';
+        li.textContent = item.name;
+        li.onclick = (e) => { e.stopPropagation(); openEntry(entry); };
       }
 
-      moduleList.appendChild(li);
-    });
+      return li;
+    }
+
+    data.modules.forEach(mod => moduleList.appendChild(buildItem(mod, null, 0)));
 
     // Mở mục được chỉ định (từ thẻ trang chủ) hoặc mục đầu tiên
     const first = data.modules[0];
