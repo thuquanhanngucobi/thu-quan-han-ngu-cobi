@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HSK3B Bài 8 – Bài tập bổ ngữ</title>
+<style>
+:root{
+  --bg:#faf6ef;--card:#ffffff;--ink:#2a2622;--muted:#6f675e;--line:#e6dccd;
+  --accent:#b83227;--accent-ink:#ffffff;--accent-soft:#f8e4e1;
+  --ok:#2e7d4f;--ok-soft:#e1f2e7;--bad:#b3261e;--bad-soft:#fbe4e2;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#171513;--card:#211e1b;--ink:#f1ebe3;--muted:#a89f94;--line:#3a352f;
+    --accent:#e2665a;--accent-ink:#1a0f0e;--accent-soft:#3a2321;
+    --ok:#6cc58c;--ok-soft:#1f3326;--bad:#f08a82;--bad-soft:#3b2220;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  line-height:1.6}
+#hsk3b-bai8{max-width:760px;margin:0 auto;padding:24px 16px 64px}
+#hsk3b-bai8 header{margin-bottom:20px}
+#hsk3b-bai8 h1{font-size:1.6rem;margin:0 0 6px}
+#hsk3b-bai8 .sub{color:var(--muted);margin:0}
+#hsk3b-bai8 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.tag{font-size:.78rem;padding:2px 10px;border-radius:99px;background:var(--accent-soft);color:var(--accent);border:1px solid transparent}
+.tag.lv{background:transparent;border-color:var(--line);color:var(--muted)}
+.section-title{font-size:1.05rem;margin:28px 0 10px;padding-left:10px;border-left:4px solid var(--accent)}
+.section-title small{color:var(--muted);font-weight:400;margin-left:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.card.ok{border-color:var(--ok)}
+.card.bad{border-color:var(--bad)}
+.qhead{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.qnum{font-weight:700;color:var(--accent)}
+.qtext{font-size:1.2rem;margin:4px 0 10px}
+.blank{display:inline-block;min-width:3.2em;border-bottom:2px solid var(--ink);margin:0 2px}
+.hint{color:var(--muted);font-size:.88rem;margin:0 0 8px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.opt{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:1.1rem}
+.opt:hover{border-color:var(--accent)}
+.opt input{accent-color:var(--accent)}
+.opt .k{color:var(--muted);font-size:.85rem}
+.opt.right{background:var(--ok-soft);border-color:var(--ok)}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.sub-item{margin:10px 0}
+.sub-item .line{font-size:1.2rem}
+select,input[type=text]{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+select{font-size:1.1rem}
+input[type=text]{width:100%;font-size:1.1rem;padding:8px 10px}
+select:focus,input[type=text]:focus{outline:2px solid var(--accent);outline-offset:1px}
+.sel-ok,.inp-ok{border-color:var(--ok)!important;background:var(--ok-soft)!important}
+.sel-bad,.inp-bad{border-color:var(--bad)!important;background:var(--bad-soft)!important}
+.pool,.built{display:flex;flex-wrap:wrap;gap:8px;min-height:46px;padding:8px;border-radius:10px}
+.built{border:2px dashed var(--line);margin-bottom:10px}
+.tok{font:inherit;font-size:1.15rem;padding:6px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.tok:hover:not(:disabled){border-color:var(--accent)}
+.tok:disabled{opacity:.3;cursor:default}
+.tok.in{background:var(--accent-soft);border-color:var(--accent)}
+.wrongsent{font-size:1.2rem;padding:8px 12px;border-radius:10px;background:var(--bad-soft);margin-bottom:10px}
+.vi{margin:0 0 4px;font-size:1rem}
+.fb{margin-top:12px;padding:10px 12px;border-radius:10px;font-size:.95rem}
+.fb.ok{background:var(--ok-soft);color:var(--ok)}
+.fb.bad{background:var(--bad-soft);color:var(--bad)}
+.fb b{font-weight:700}
+.fb .ex{color:var(--ink);display:block;margin-top:4px}
+.btn{font:inherit;font-weight:600;border:0;border-radius:10px;padding:10px 20px;cursor:pointer}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:4px 12px;font-size:.85rem;font-weight:500}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.result{margin-top:20px;padding:18px;border-radius:14px;background:var(--accent-soft);text-align:center}
+.result .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+footer{margin-top:32px;color:var(--muted);font-size:.8rem;text-align:center}
+</style>
+</head>
+<body>
+<div id="hsk3b-bai8">
+  <header>
+    <h1>HSK 3B – Bài 8: Bài tập bổ ngữ</h1>
+    <p class="sub">Bổ ngữ kết quả · khả năng · trạng thái · xu hướng. Làm hết 10 câu rồi bấm “Chấm bài”.</p>
+    <div class="tags">
+      <span class="tag">结果补语</span><span class="tag">可能补语</span>
+      <span class="tag">状态补语</span><span class="tag">趋向补语</span>
+    </div>
+  </header>
+  <main id="quiz"></main>
+  <div class="actions">
+    <button class="btn primary" id="btn-grade">Chấm bài</button>
+    <button class="btn ghost" id="btn-reset">Làm lại</button>
+  </div>
+  <div id="result"></div>
+  <footer>Gõ chữ Hán bằng bộ gõ pinyin. Dấu câu và khoảng trắng không ảnh hưởng kết quả chấm.</footer>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ===== DỮ LIỆU BÀI TẬP (giáo viên có thể sửa tại đây) ===== */
+  var SECTIONS = [
+    { title: '一、选择正确答案', sub: 'Chọn đáp án đúng', level: 'Dễ', items: [
+      { type: 'mc', topic: '结果补语', text: '作业我已经写____了,可以出去玩了。',
+        opts: ['完', '懂', '见', '错'], ans: 0,
+        exp: '写完 = viết xong. 完 là bổ ngữ kết quả, chỉ động tác đã hoàn thành.' },
+      { type: 'mc', topic: '状态补语', text: '他汉语说____很流利。',
+        opts: ['的', '得', '地', '了'], ans: 1,
+        exp: '说得很流利: động từ + 得 + bổ ngữ trạng thái (đánh giá mức độ, cách thức).' },
+      { type: 'mc', topic: '趋向补语', text: '老师走____教室,同学们都站了起来。',
+        opts: ['进', '进来', '进去', '起来'], ans: 0,
+        exp: '走进教室: 进 là bổ ngữ xu hướng đơn. Nếu thêm 来/去 thì tân ngữ nơi chốn đứng giữa: 走进教室来.' },
+      { type: 'mc', topic: '可能补语', text: '这个箱子太小了,放____这么多东西。',
+        opts: ['不下', '不到', '不好', '不见'], ans: 0,
+        exp: '放不下 = để không vừa. Phủ định của bổ ngữ khả năng: động từ + 不 + bổ ngữ.' }
+    ]},
+    { title: '二、选词填空', sub: 'Chọn từ điền vào chỗ trống', level: 'Trung bình', items: [
+      { type: 'fill', topic: '结果补语', bank: ['完', '见', '懂', '错', '到'],
+        hint: 'Từ cho sẵn: 完 / 见 / 懂 / 错 / 到. Mỗi từ chỉ dùng một lần, có 2 từ thừa.',
+        parts: [
+          { pre: '对不起,我走', post: '路了,所以来晚了。', ans: '错' },
+          { pre: '昨天我在超市看', post: '小李了,他说他下个月去中国。', ans: '见' },
+          { pre: '老师讲了两遍,我才听', post: '。', ans: '懂' }
+        ],
+        exp: '走错 (đi nhầm), 看见 (nhìn thấy), 听懂 (nghe hiểu). Từ thừa: 完, 到.' }
+    ]},
+    { title: '三、排序与改错', sub: 'Sắp xếp câu và sửa lỗi sai', level: 'Trung bình – Khó', items: [
+      { type: 'build', topic: '状态补语', level: 'Trung bình',
+        hint: 'Bấm vào các từ để ghép thành câu hoàn chỉnh.',
+        tokens: ['得', '汉字', '写', '她', '很漂亮'],
+        accept: ['她汉字写得很漂亮'],
+        exp: 'Có tân ngữ 汉字 thì đưa lên trước động từ: 她汉字写得很漂亮. (Cũng có thể lặp động từ: 她写汉字写得很漂亮.)' },
+      { type: 'build', topic: '趋向补语', level: 'Trung bình',
+        hint: 'Bấm vào các từ để ghép thành câu hoàn chỉnh.',
+        tokens: ['回', '她', '来', '家', '了'],
+        accept: ['她回家来了'],
+        exp: 'Tân ngữ nơi chốn 家 đứng giữa 回 và 来: 她回家来了.' },
+      { type: 'fix', topic: '状态补语', level: 'Khó',
+        hint: 'Tìm chỗ sai và viết lại cả câu cho đúng.',
+        wrong: '他说汉语得很好,老师常常表扬他。',
+        accept: ['他汉语说得很好老师常常表扬他', '他说汉语说得很好老师常常表扬他', '他汉语说得很好', '他说汉语说得很好'],
+        show: '他汉语说得很好,老师常常表扬他。 / 他说汉语说得很好,老师常常表扬他。',
+        exp: 'Khi có tân ngữ, phải lặp động từ (说汉语说得很好) hoặc đưa tân ngữ lên trước (汉语说得很好). Không nói 说汉语得很好.' },
+      { type: 'fix', topic: '可能补语', level: 'Khó',
+        hint: 'Tìm chỗ sai và viết lại cả câu cho đúng.',
+        wrong: '我听见不老师的话,请你再说一遍。',
+        accept: ['我听不见老师的话请你再说一遍', '我听不见老师的话'],
+        show: '我听不见老师的话,请你再说一遍。',
+        exp: 'Phủ định của bổ ngữ khả năng: động từ + 不 + bổ ngữ (听不见), không nói 听见不.' }
+    ]},
+    { title: '四、翻译', sub: 'Dịch sang tiếng Trung', level: 'Khó', items: [
+      { type: 'trans', topic: '综合', hint: 'Mỗi câu kiểm tra một loại bổ ngữ: khả năng, trạng thái, kết quả, xu hướng.',
+        parts: [
+          { vi: 'Thầy nói nhanh quá, em nghe không hiểu.',
+            accept: ['老师说得太快了我听不懂', '老师说得太快我听不懂', '老师说得太快了我听不懂了'],
+            show: '老师说得太快了,我听不懂。' },
+          { vi: 'Cô ấy hát rất hay.',
+            accept: ['她唱得很好听', '她唱得很好', '她歌唱得很好', '她歌唱得很好听', '她唱歌唱得很好', '她唱歌唱得很好听'],
+            show: '她唱得很好听。 / 她歌唱得很好。' },
+          { vi: 'Bài tập tôi làm xong rồi.',
+            accept: ['作业我做完了', '我作业做完了', '我做完作业了', '我做完了作业', '作业我写完了', '我写完作业了', '我写完了作业'],
+            show: '作业我做完了。' },
+          { vi: 'Anh ấy mang một cuốn sách đến.',
+            accept: ['他带来了一本书', '他带来一本书', '他带了一本书来', '他带一本书来', '他拿来了一本书', '他拿来一本书', '他拿了一本书来', '他拿一本书来'],
+            show: '他带来了一本书。 / 他拿来了一本书。' }
+        ],
+        exp: 'Lần lượt là: 听不懂 (khả năng), 唱得很好听 (trạng thái), 做完 (kết quả), 带来 (xu hướng). Có thể còn cách diễn đạt đúng khác, hãy nhờ giáo viên kiểm tra.' }
+    ]}
+  ];
+
+  /* ===== TIỆN ÍCH ===== */
+  function h(tag, props) {
+    var e = document.createElement(tag);
+    props = props || {};
+    Object.keys(props).forEach(function (k) {
+      if (props[k] == null) return;
+      if (k === 'class') e.className = props[k];
+      else if (k.indexOf('on') === 0) e.addEventListener(k.slice(2), props[k]);
+      else e.setAttribute(k, props[k]);
+    });
+    for (var i = 2; i < arguments.length; i++) {
+      var c = arguments[i];
+      if (c == null) continue;
+      e.append(c);
+    }
+    return e;
+  }
+  function norm(s) {
+    return String(s || '').normalize('NFKC').replace(/[\s,.!?;:、。,!?;:"'“”‘’()()]/g, '');
+  }
+  function shuffle(a) {
+    var r = a.slice();
+    for (var i = r.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = r[i]; r[i] = r[j]; r[j] = t;
+    }
+    return r;
+  }
+  function textWithBlank(t) {
+    var parts = t.split('____');
+    var box = h('div', { class: 'qtext' });
+    parts.forEach(function (p, i) {
+      box.append(p);
+      if (i < parts.length - 1) box.append(h('span', { class: 'blank' }, ' '));
+    });
+    return box;
+  }
+  function feedback(ok, head, body) {
+    return h('div', { class: 'fb ' + (ok ? 'ok' : 'bad') },
+      h('b', null, head), body ? h('span', { class: 'ex' }, body) : null);
+  }
+
+  /* ===== CÁC DẠNG CÂU HỎI ===== */
+  function mcQ(q, name) {
+    var chosen = -1, labels = [];
+    var opts = h('div', { class: 'opts' });
+    q.opts.forEach(function (o, i) {
+      var inp = h('input', { type: 'radio', name: name, onchange: function () { chosen = i; } });
+      var lb = h('label', { class: 'opt' }, inp, h('span', { class: 'k' }, 'ABCD'[i] + '.'), h('span', null, o));
+      labels.push(lb);
+      opts.append(lb);
+    });
+    return {
+      body: [textWithBlank(q.text), opts],
+      grade: function () {
+        labels.forEach(function (l) { l.classList.remove('right', 'wrong'); });
+        labels[q.ans].classList.add('right');
+        var ok = chosen === q.ans;
+        if (chosen >= 0 && !ok) labels[chosen].classList.add('wrong');
+        var head = ok ? '✓ Chính xác.' : (chosen < 0 ? '✗ Chưa trả lời. ' : '✗ Chưa đúng. ') + 'Đáp án: ' + 'ABCD'[q.ans] + '. ' + q.opts[q.ans];
+        return { got: ok ? 1 : 0, max: 1, fb: feedback(ok, head, q.exp) };
+      }
+    };
+  }
+
+  function fillQ(q) {
+    var sels = [], box = h('div');
+    if (q.hint) box.append(h('p', { class: 'hint' }, q.hint));
+    q.parts.forEach(function (p, i) {
+      var s = h('select', null, h('option', { value: '' }, '—'));
+      q.bank.forEach(function (w) { s.append(h('option', { value: w }, w)); });
+      sels.push(s);
+      box.append(h('div', { class: 'sub-item' }, h('span', { class: 'qnum' }, '(' + (i + 1) + ') '),
+        h('span', { class: 'line' }, p.pre), ' ', s, ' ', h('span', { class: 'line' }, p.post)));
+    });
+    return {
+      body: [box],
+      grade: function () {
+        var got = 0;
+        q.parts.forEach(function (p, i) {
+          var ok = sels[i].value === p.ans;
+          sels[i].classList.remove('sel-ok', 'sel-bad');
+          sels[i].classList.add(ok ? 'sel-ok' : 'sel-bad');
+          if (ok) got++;
+        });
+        var all = got === q.parts.length;
+        var ans = q.parts.map(function (p, i) { return '(' + (i + 1) + ') ' + p.ans; }).join('  ');
+        return { got: got, max: q.parts.length,
+          fb: feedback(all, all ? '✓ Chính xác.' : '✗ Đúng ' + got + '/' + q.parts.length + '. Đáp án: ' + ans, q.exp) };
+      }
+    };
+  }
+
+  function buildQ(q) {
+    var order = [], pool = shuffle(q.tokens.map(function (t, i) { return i; }));
+    var built = h('div', { class: 'built' }), poolBox = h('div', { class: 'pool' });
+    function render() {
+      built.textContent = ''; poolBox.textContent = '';
+      order.forEach(function (i, pos) {
+        built.append(h('button', { type: 'button', class: 'tok in', onclick: function () { order.splice(pos, 1); render(); } }, q.tokens[i]));
+      });
+      pool.forEach(function (i) {
+        poolBox.append(h('button', { type: 'button', class: 'tok', disabled: order.indexOf(i) >= 0 ? 'disabled' : null,
+          onclick: function () { if (order.indexOf(i) < 0) { order.push(i); render(); } } }, q.tokens[i]));
+      });
+    }
+    render();
+    return {
+      body: [h('p', { class: 'hint' }, q.hint), built, poolBox,
+        h('div', { style: 'margin-top:8px' }, h('button', { type: 'button', class: 'btn ghost small', onclick: function () { order = []; render(); } }, 'Xóa hết'))],
+      grade: function () {
+        var s = order.map(function (i) { return q.tokens[i]; }).join('');
+        var ok = q.accept.indexOf(norm(s)) >= 0;
+        var head = ok ? '✓ Chính xác.' : (s ? '✗ Chưa đúng. ' : '✗ Chưa trả lời. ') + 'Đáp án: ' + q.accept[0] + '。';
+        return { got: ok ? 1 : 0, max: 1, fb: feedback(ok, head, q.exp) };
+      }
+    };
+  }
+
+  function fixQ(q) {
+    var inp = h('input', { type: 'text', autocomplete: 'off', placeholder: 'Viết lại câu đúng…' });
+    return {
+      body: [h('p', { class: 'hint' }, q.hint), h('div', { class: 'wrongsent' }, q.wrong), inp],
+      grade: function () {
+        var v = norm(inp.value), ok = q.accept.indexOf(v) >= 0;
+        inp.classList.remove('inp-ok', 'inp-bad');
+        inp.classList.add(ok ? 'inp-ok' : 'inp-bad');
+        var head = ok ? '✓ Chính xác.' : (v ? '✗ Chưa đúng. ' : '✗ Chưa trả lời. ') + 'Đáp án: ' + q.show;
+        return { got: ok ? 1 : 0, max: 1, fb: feedback(ok, head, q.exp) };
+      }
+    };
+  }
+
+  function transQ(q) {
+    var inps = [], box = h('div');
+    if (q.hint) box.append(h('p', { class: 'hint' }, q.hint));
+    q.parts.forEach(function (p, i) {
+      var inp = h('input', { type: 'text', autocomplete: 'off', placeholder: '用中文写…' });
+      inps.push(inp);
+      box.append(h('div', { class: 'sub-item' }, h('p', { class: 'vi' }, h('span', { class: 'qnum' }, '(' + (i + 1) + ') '), p.vi), inp));
+    });
+    return {
+      body: [box],
+      grade: function () {
+        var got = 0, lines = [];
+        q.parts.forEach(function (p, i) {
+          var ok = p.accept.indexOf(norm(inps[i].value)) >= 0;
+          inps[i].classList.remove('inp-ok', 'inp-bad');
+          inps[i].classList.add(ok ? 'inp-ok' : 'inp-bad');
+          if (ok) got++; else lines.push('(' + (i + 1) + ') ' + p.show);
+        });
+        var all = got === q.parts.length;
+        var head = all ? '✓ Chính xác.' : '✗ Đúng ' + got + '/' + q.parts.length + '. Đáp án gợi ý: ' + lines.join('   ');
+        return { got: got, max: q.parts.length, fb: feedback(all, head, q.exp) };
+      }
+    };
+  }
+
+  var BUILDERS = { mc: mcQ, fill: fillQ, build: buildQ, fix: fixQ, trans: transQ };
+
+  /* ===== DỰNG TRANG ===== */
+  var quiz = document.getElementById('quiz');
+  var resultBox = document.getElementById('result');
+  var questions = [];
+
+  function init() {
+    quiz.textContent = '';
+    resultBox.textContent = '';
+    questions = [];
+    var n = 0;
+    SECTIONS.forEach(function (sec, si) {
+      quiz.append(h('h2', { class: 'section-title' }, sec.title, h('small', null, sec.sub)));
+      sec.items.forEach(function (q, qi) {
+        n++;
+        var built = BUILDERS[q.type](q, 'q' + si + '_' + qi);
+        var card = h('div', { class: 'card' },
+          h('div', { class: 'qhead' },
+            h('span', { class: 'qnum' }, '第 ' + n + ' 题'),
+            h('span', { class: 'tag' }, q.topic),
+            h('span', { class: 'tag lv' }, q.level || sec.level)));
+        built.body.forEach(function (b) { card.append(b); });
+        quiz.append(card);
+        questions.push({ card: card, built: built });
+      });
+    });
+  }
+
+  function gradeAll() {
+    var total = 0, count = 0;
+    questions.forEach(function (it) {
+      var old = it.card.querySelector('.fb');
+      if (old) old.remove();
+      var r = it.built.grade();
+      it.card.classList.remove('ok', 'bad');
+      it.card.classList.add(r.got === r.max ? 'ok' : 'bad');
+      it.card.append(r.fb);
+      total += r.got / r.max;
+      count++;
+    });
+    var score = Math.round(total * 10) / 10;
+    var msg = score >= 9 ? 'Xuất sắc!' : score >= 7 ? 'Khá tốt, ôn thêm các câu sai nhé.' : score >= 5 ? 'Cần ôn thêm bổ ngữ.' : 'Hãy xem lại bài rồi làm lại nhé.';
+    resultBox.textContent = '';
+    resultBox.append(h('div', { class: 'result' },
+      h('div', { class: 'big' }, score + ' / ' + count),
+      h('div', null, msg)));
+    resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  document.getElementById('btn-grade').addEventListener('click', gradeAll);
+  document.getElementById('btn-reset').addEventListener('click', function () {
+    init();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  init();
+})();
+</script>
+</body>
+</html>
