@@ -101,31 +101,31 @@ footer{margin-top:32px;color:var(--muted);font-size:.8rem;text-align:center}
 
   /* ===== DỮ LIỆU BÀI TẬP (giáo viên có thể sửa tại đây) ===== */
   var SECTIONS = [
-    { title: '一、选择正确答案', sub: 'Chọn đáp án đúng', level: 'Dễ', items: [
+    { title: '一、选择正确答案', sub: 'Chọn đáp án đúng', items: [
       { type: 'mc', topic: '结果补语', text: '作业我已经写____了,可以出去玩了。',
         opts: ['完', '懂', '见', '错'], ans: 0,
         exp: '写完 = viết xong. 完 là bổ ngữ kết quả, chỉ động tác đã hoàn thành.' },
       { type: 'mc', topic: '状态补语', text: '他汉语说____很流利。',
         opts: ['的', '得', '地', '了'], ans: 1,
         exp: '说得很流利: động từ + 得 + bổ ngữ trạng thái (đánh giá mức độ, cách thức).' },
-      { type: 'mc', topic: '趋向补语', text: '老师走____教室,同学们都站了起来。',
+      { type: 'mc', topic: '趋向补语', text: '老师走____教室来,同学们都站了起来。',
         opts: ['进', '进来', '进去', '起来'], ans: 0,
         exp: '走进教室: 进 là bổ ngữ xu hướng đơn. Nếu thêm 来/去 thì tân ngữ nơi chốn đứng giữa: 走进教室来.' },
       { type: 'mc', topic: '可能补语', text: '这个箱子太小了,放____这么多东西。',
         opts: ['不下', '不到', '不好', '不见'], ans: 0,
         exp: '放不下 = để không vừa. Phủ định của bổ ngữ khả năng: động từ + 不 + bổ ngữ.' }
     ]},
-    { title: '二、选词填空', sub: 'Chọn từ điền vào chỗ trống', level: 'Trung bình', items: [
-      { type: 'fill', topic: '结果补语', bank: ['完', '见', '懂', '错'],
-        hint: 'Từ cho sẵn: 完 / 见 / 懂 / 错 . Mỗi từ chỉ dùng một lần, có 2 từ thừa.',
+    { title: '二、选词填空', sub: 'Chọn từ điền vào chỗ trống', items: [
+      { type: 'fill', topic: '结果补语', bank: ['完', '见', '懂', '错', '对'],
+        hint: 'Từ cho sẵn: 完 / 见 / 懂 / 错 / 对. Mỗi từ chỉ dùng một lần, có 2 từ thừa.',
         parts: [
           { pre: '对不起,我走', post: '路了,所以来晚了。', ans: '错' },
           { pre: '昨天我在超市看', post: '小李了,他说他下个月去中国。', ans: '见' },
           { pre: '老师讲了两遍,我才听', post: '。', ans: '懂' }
         ],
-        exp: '走错 (đi nhầm), 看见 (nhìn thấy), 听懂 (nghe hiểu).  }
+        exp: '走错 (đi nhầm), 看见 (nhìn thấy), 听懂 (nghe hiểu). Từ thừa: 完, 对.' }
     ]},
-    { title: '三、排序与改错', sub: 'Sắp xếp câu và sửa lỗi sai', level: 'Trung bình – Khó', items: [
+    { title: '三、排序与改错', sub: 'Sắp xếp câu và sửa lỗi sai', items: [
       { type: 'build', topic: '状态补语', level: 'Trung bình',
         hint: 'Bấm vào các từ để ghép thành câu hoàn chỉnh.',
         tokens: ['得', '汉字', '写', '她', '很漂亮'],
@@ -149,15 +149,15 @@ footer{margin-top:32px;color:var(--muted);font-size:.8rem;text-align:center}
         show: '我听不见老师的话,请你再说一遍。',
         exp: 'Phủ định của bổ ngữ khả năng: động từ + 不 + bổ ngữ (听不见), không nói 听见不.' }
     ]},
-    { title: '四、翻译', sub: 'Dịch sang tiếng Trung', level: 'Khó', items: [
+    { title: '四、翻译', sub: 'Dịch sang tiếng Trung', items: [
       { type: 'trans', topic: '综合', hint: 'Mỗi câu kiểm tra một loại bổ ngữ: khả năng, trạng thái, kết quả, xu hướng.',
         parts: [
           { vi: 'Thầy nói nhanh quá, em nghe không hiểu.',
-            accept: ['老师说得太快了我没听懂','老师说得太快了我没听懂。'，'老师说得太快了，我没听懂。'],
-            show: '老师说得太快了,我没听懂。' },
+            accept: ['老师说得太快了我没听懂', '老师说得太快我没听懂'],
+            show: '老师说得太快了,我听不懂。' },
           { vi: 'Cô ấy hát rất hay.',
-            accept: ['她唱得很好听', '她唱得很好', '她唱歌唱得很好', '她唱歌唱得很好听'],
-            show: '她唱得很好听。 / 她歌唱得很好。/她唱歌唱得很好听。' },
+            accept: ['她唱得很好听', '她唱得很好', '她歌唱得很好', '她歌唱得很好听', '她唱歌唱得很好', '她唱歌唱得很好听'],
+            show: '她唱得很好听。 / 她歌唱得很好。' },
           { vi: 'Bài tập tôi làm xong rồi.',
             accept: ['作业我做完了', '我作业做完了', '我做完作业了', '我做完了作业', '作业我写完了', '我写完作业了', '我写完了作业'],
             show: '我做完作业了。' },
@@ -165,7 +165,7 @@ footer{margin-top:32px;color:var(--muted);font-size:.8rem;text-align:center}
             accept: ['他带来了一本书', '他带来一本书', '他带了一本书来', '他带一本书来', '他拿来了一本书', '他拿来一本书', '他拿了一本书来', '他拿一本书来'],
             show: '他带来了一本书。 / 他拿来了一本书。' }
         ],
-        exp: 'Lần lượt là: 听不懂 (khả năng), 唱得很好听 (trạng thái), 做完 (kết quả), 带来 (xu hướng). Có thể còn cách diễn đạt đúng khác, hãy nhờ giáo viên kiểm tra.' }
+        exp: 'Lần lượt là: 没听懂 (kết quả), 唱得很好听 (trạng thái), 做完 (kết quả), 带来 (xu hướng). Có thể còn cách diễn đạt đúng khác, hãy nhờ giáo viên kiểm tra.' }
     ]}
   ];
 
