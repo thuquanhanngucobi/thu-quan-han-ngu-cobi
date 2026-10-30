@@ -86,18 +86,32 @@ const COBI_DATA = {
       }
     ]
   },
-  "du-lac-hien": {
-    title: "Du Lạc Trang Viên",
-    hanzi: "游乐园",
-    modules: [
-      { id: "dlh-1", name: "Độc Tu Thất", desc: "Game cá nhân · Tự luyện", icon: "独",
-       subModules: [
-       { id: "dlh-11", name: "BÀI TẬP", path: "./cobi-dulactrangvien/baitap/bongu.html" },
-          { id: "lec-b1", name: "BÀI TẬP BỔ NGỮ", path: "./cobi-dulactrangvien/baitap/bongu.html" },
-       { id: "dlh-12", name: "GAME", path: "./cobi-dulactrangvien/baitap/bongu.html" },
-      { id: "dlh-2", name: "Tỉ Thí Đài", desc: "Game thi đua · Cùng lớp", icon: "擂", path: "./coming-soon.html?name=Tỉ%20Thí%20Đài" }
-    ]
-  },
+"du-lac-hien": {
+  title: "Du Lạc Trang Viên",
+  hanzi: "游乐园",
+  modules: [
+    {
+      id: "dlh-bt", name: "Độc Tu Thất · Bài Tập", desc: "Luyện từng dạng bài · Tự học", icon: "独",
+      subModules: [
+        { id: "dlh-bt-1", name: "Bổ ngữ", path: "./cobi-dulactrangvien/baitap/bongu.html" }
+        // { id: "dlh-bt-2", name: "Dạng bài khác", path: "./cobi-dulactrangvien/baitap/xxx.html" },
+      ]
+    },
+    {
+      id: "dlh-game", name: "Độc Tu Thất · Game", desc: "Game cá nhân · Tự luyện", icon: "戏",
+      subModules: [
+        { id: "dlh-game-1", name: "Game 1", path: "./coming-soon.html?name=Game%201" }
+        // { id: "dlh-game-2", name: "Game 2", path: "./cobi-dulactrangvien/game/xxx.html" },
+      ]
+    },
+    {
+      id: "dlh-tt", name: "Tỉ Thí Đài", desc: "Game thi đua · Cùng lớp", icon: "擂",
+      subModules: [
+        { id: "dlh-tt-1", name: "Game thi đua 1", path: "./coming-soon.html?name=Game%20thi%20đua%201" }
+      ]
+    }
+  ]
+},
   "khao-thi-duong": {
     title: "Khảo Thí Đường",
     hanzi: "考试堂",
