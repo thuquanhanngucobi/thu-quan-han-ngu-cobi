@@ -40,28 +40,34 @@
     .hero-slogan { margin-top: 8px; font-family: "Ma Shan Zheng", cursive; font-size: clamp(16px, 2vw, 22px); color: var(--gold-earth); letter-spacing: 3px; }
 
     /* ===== 3 THẺ CỔNG ===== */
-    .portals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; align-items: stretch; padding: 0 6px; }
+    .portals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; align-items: stretch; padding: 0 16px; }
 
     .portal {
-      display: flex; flex-direction: column;
-      position: relative; border-radius: 16px; overflow: hidden;
-      background: rgba(252, 249, 241, 0.92);
-      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-      border: 1px solid var(--gold-earth);
-      box-shadow: 0 0 0 4px rgba(255,255,255,0.55), 0 18px 40px rgba(30, 58, 95, 0.20);
+      display: flex; flex-direction: column; position: relative;
     }
 
-    /* Mái ngói cong: vẽ bằng SVG, có đường ngói và viền vàng */
+    /* Mái ngói: vươn ra ngoài khung thẻ, đầu mái cong, sống mái có đầu thú, đèn lồng vàng ở hai đầu */
     .roof {
-      height: 46px; position: relative; z-index: 1;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 56' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23356594'/%3E%3Cstop offset='1' stop-color='%2316304f'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0 56 C5 46 14 38 28 32 L72 17 C150 -2 250 -2 328 17 L372 32 C386 38 395 46 400 56 Z' fill='url(%23g)'/%3E%3Cpath d='M44 42 C150 24 250 24 356 42 M74 30 C160 13 240 13 326 30 M120 19 C180 8 220 8 280 19' fill='none' stroke='%23ffffff' stroke-opacity='0.22' stroke-width='1.2' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M0 54.5 L400 54.5' stroke='%23d9c28f' stroke-width='3' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
-      filter: drop-shadow(0 3px 3px rgba(22, 48, 79, 0.25));
+      position: relative; z-index: 3; pointer-events: none;
+      width: calc(100% + 30px); margin: 0 -15px -26px;
+      aspect-ratio: 480 / 96;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 96'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%235a8ab8'/%3E%3Cstop offset='0.38' stop-color='%232c5380'/%3E%3Cstop offset='1' stop-color='%2311284a'/%3E%3C/linearGradient%3E%3ClinearGradient id='gold' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23b38b4d'/%3E%3Cstop offset='0.5' stop-color='%23f3e3b4'/%3E%3Cstop offset='1' stop-color='%23b38b4d'/%3E%3C/linearGradient%3E%3CradialGradient id='lan' cx='0.4' cy='0.35' r='0.8'%3E%3Cstop offset='0' stop-color='%23fff3c8'/%3E%3Cstop offset='1' stop-color='%23d4a24a'/%3E%3C/radialGradient%3E%3CclipPath id='c'%3E%3Cpath d='M4 50 C9 64 28 73 58 76 L422 76 C452 73 471 64 476 50 C460 57 438 52 410 38 L392 24 L88 24 L70 38 C42 52 20 57 4 50 Z'/%3E%3C/clipPath%3E%3C/defs%3E%3Cpath d='M4 50 C9 64 28 73 58 76 L422 76 C452 73 471 64 476 50 C460 57 438 52 410 38 L392 24 L88 24 L70 38 C42 52 20 57 4 50 Z' fill='url(%23g)'/%3E%3Cg clip-path='url(%23c)' stroke='%23fff' stroke-opacity='0.17' stroke-width='0.9' fill='none'%3E%3Cpath d='M14 20 L-8.6 76 M27 20 L5.7 76 M40 20 L20.0 76 M53 20 L34.3 76 M66 20 L48.6 76 M79 20 L62.9 76 M92 20 L77.2 76 M105 20 L91.5 76 M118 20 L105.8 76 M131 20 L120.1 76 M144 20 L134.4 76 M157 20 L148.7 76 M170 20 L163.0 76 M183 20 L177.3 76 M196 20 L191.6 76 M209 20 L205.9 76 M222 20 L220.2 76 M235 20 L234.5 76 M248 20 L248.8 76 M261 20 L263.1 76 M274 20 L277.4 76 M287 20 L291.7 76 M300 20 L306.0 76 M313 20 L320.3 76 M326 20 L334.6 76 M339 20 L348.9 76 M352 20 L363.2 76 M365 20 L377.5 76 M378 20 L391.8 76 M391 20 L406.1 76 M404 20 L420.4 76 M417 20 L434.7 76 M430 20 L449.0 76 M443 20 L463.3 76 M456 20 L477.6 76 M469 20 L491.9 76 '/%3E%3Cpath d='M10 56 C100 47 380 47 470 56 M30 66 C120 58 360 58 450 66 M70 40 C150 36 330 36 410 40' stroke-opacity='0.16'/%3E%3C/g%3E%3Cpath d='M4 50 C20 57 42 52 70 38 L88 24 L392 24 L410 38 C438 52 460 57 476 50' fill='none' stroke='url(%23gold)' stroke-width='1.9'/%3E%3Cpath d='M4 50 C9 64 28 73 58 76 L422 76 C452 73 471 64 476 50' fill='none' stroke='url(%23gold)' stroke-width='1.9'/%3E%3Cpath d='M58 76 L422 76' stroke='url(%23gold)' stroke-width='3.2'/%3E%3Cg fill='%23ecd9a4' stroke='%23a98343' stroke-width='0.7'%3E%3Ccircle cx='70' cy='80' r='3.6'/%3E%3Ccircle cx='82' cy='80' r='3.6'/%3E%3Ccircle cx='94' cy='80' r='3.6'/%3E%3Ccircle cx='106' cy='80' r='3.6'/%3E%3Ccircle cx='118' cy='80' r='3.6'/%3E%3Ccircle cx='130' cy='80' r='3.6'/%3E%3Ccircle cx='142' cy='80' r='3.6'/%3E%3Ccircle cx='154' cy='80' r='3.6'/%3E%3Ccircle cx='166' cy='80' r='3.6'/%3E%3Ccircle cx='178' cy='80' r='3.6'/%3E%3Ccircle cx='190' cy='80' r='3.6'/%3E%3Ccircle cx='202' cy='80' r='3.6'/%3E%3Ccircle cx='214' cy='80' r='3.6'/%3E%3Ccircle cx='226' cy='80' r='3.6'/%3E%3Ccircle cx='238' cy='80' r='3.6'/%3E%3Ccircle cx='250' cy='80' r='3.6'/%3E%3Ccircle cx='262' cy='80' r='3.6'/%3E%3Ccircle cx='274' cy='80' r='3.6'/%3E%3Ccircle cx='286' cy='80' r='3.6'/%3E%3Ccircle cx='298' cy='80' r='3.6'/%3E%3Ccircle cx='310' cy='80' r='3.6'/%3E%3Ccircle cx='322' cy='80' r='3.6'/%3E%3Ccircle cx='334' cy='80' r='3.6'/%3E%3Ccircle cx='346' cy='80' r='3.6'/%3E%3Ccircle cx='358' cy='80' r='3.6'/%3E%3Ccircle cx='370' cy='80' r='3.6'/%3E%3Ccircle cx='382' cy='80' r='3.6'/%3E%3Ccircle cx='394' cy='80' r='3.6'/%3E%3Ccircle cx='406' cy='80' r='3.6'/%3E%3C/g%3E%3Crect x='82' y='12.5' width='316' height='11.5' rx='5.5' fill='%230f2441'/%3E%3Crect x='82' y='12.5' width='316' height='2.6' rx='1.3' fill='url(%23gold)'/%3E%3Cg fill='url(%23gold)' stroke='%238a6a35' stroke-width='0.8'%3E%3Ccircle cx='82' cy='18.3' r='7.2'/%3E%3Ccircle cx='398' cy='18.3' r='7.2'/%3E%3Cpath d='M75 19 C65 19 62 7 71 3 C71 10 77 12 84 12 Z'/%3E%3Cpath d='M405 19 C415 19 418 7 409 3 C409 10 403 12 396 12 Z'/%3E%3Cpath d='M240 1.5 C245 6 247 10 247 12.6 L233 12.6 C233 10 235 6 240 1.5 Z'/%3E%3C/g%3E%3Ccircle cx='82' cy='18.3' r='2.8' fill='%230f2441'/%3E%3Ccircle cx='398' cy='18.3' r='2.8' fill='%230f2441'/%3E%3Cpath d='M11 52 L11 66' stroke='%23b38b4d' stroke-width='1.2'/%3E%3Crect x='6' y='65.5' width='10' height='3.4' rx='1.2' fill='%2312294a' stroke='%23b38b4d' stroke-width='0.7'/%3E%3Cellipse cx='11' cy='77' rx='6.8' ry='8.6' fill='url(%23lan)' stroke='%23a98343' stroke-width='0.8'/%3E%3Cpath d='M8 69.5 C6 75 6 80 8 85 M14 69.5 C16 75 16 80 14 85' stroke='%23a98343' stroke-width='0.6' fill='none'/%3E%3Cpath d='M11 85.6 L11 91' stroke='%23b38b4d' stroke-width='1.1'/%3E%3Ccircle cx='11' cy='91.5' r='1.6' fill='%23d9b66b'/%3E%3Cpath d='M469 52 L469 66' stroke='%23b38b4d' stroke-width='1.2'/%3E%3Crect x='464' y='65.5' width='10' height='3.4' rx='1.2' fill='%2312294a' stroke='%23b38b4d' stroke-width='0.7'/%3E%3Cellipse cx='469' cy='77' rx='6.8' ry='8.6' fill='url(%23lan)' stroke='%23a98343' stroke-width='0.8'/%3E%3Cpath d='M466 69.5 C464 75 464 80 466 85 M472 69.5 C474 75 474 80 472 85' stroke='%23a98343' stroke-width='0.6' fill='none'/%3E%3Cpath d='M469 85.6 L469 91' stroke='%23b38b4d' stroke-width='1.1'/%3E%3Ccircle cx='469' cy='91.5' r='1.6' fill='%23d9b66b'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+      filter: drop-shadow(0 5px 4px rgba(22, 48, 79, 0.32));
+    }
+
+    /* Thân thẻ nằm dưới mái */
+    .portal-body {
+      flex: 1; display: flex; flex-direction: column; overflow: hidden;
+      background: rgba(252, 249, 241, 0.94);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      border: 1px solid var(--gold-earth); border-radius: 0 0 16px 16px;
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.55), 0 18px 40px rgba(30, 58, 95, 0.20);
     }
 
     .portal-top { position: relative; }
     .art {
       position: relative;
-      height: clamp(130px, 28vh, 215px); margin-top: -3px;
+      height: clamp(130px, 27vh, 205px);
       background-size: cover; background-position: center;
     }
     /* Lớp phủ: tối nhẹ ở trên cho huy hiệu nổi, mờ dần vào giấy ở dưới cho liền mạch */
@@ -78,7 +84,7 @@
 
     /* Huy hiệu tròn giữa thẻ */
     .badge {
-      position: absolute; left: 50%; top: 14px; transform: translateX(-50%); z-index: 2;
+      position: absolute; left: 50%; top: 4px; transform: translateX(-50%); z-index: 4;
       width: clamp(96px, 21vh, 116px); height: clamp(96px, 21vh, 116px); border-radius: 50%;
       display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
       background: radial-gradient(circle at 30% 25%, #fffdf7, #f3ead4);
@@ -132,7 +138,7 @@
     }
 
     @media (max-width: 1000px) {
-      .portals { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; gap: 24px; }
+      .portals { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; gap: 26px; padding: 0 20px; }
     }
     @media (max-width: 520px) {
       .hero { padding-bottom: 14px; }
@@ -158,7 +164,7 @@
     <div class="tagline">Một hành trình · Ba trạm dừng · Vạn điều thú vị</div>
   </div>
 
-  <script src="config.js"></script>
+  <script src="config.js?v=4"></script>
   <script>
     const ORDER = ['tang-thu-cac', 'du-lac-hien', 'khao-thi-duong'];
     const IMG = (typeof COBI_IMAGES !== 'undefined' && COBI_IMAGES.cards) ? COBI_IMAGES.cards : {};
@@ -180,12 +186,14 @@
         </li>`).join('');
       return `
         <article class="portal c${i + 1}">
-          <div class="portal-top">
-            <div class="roof"></div>
-            ${art}
-            <div class="badge"><span class="hz">${esc(sec.hanzi || '')}</span><span class="vn">${esc(sec.title)}</span></div>
+          <div class="roof"></div>
+          <div class="portal-body">
+            <div class="portal-top">
+              ${art}
+              <div class="badge"><span class="hz">${esc(sec.hanzi || '')}</span><span class="vn">${esc(sec.title)}</span></div>
+            </div>
+            <ul class="items">${items}</ul>
           </div>
-          <ul class="items">${items}</ul>
         </article>`;
     }).join('');
 
