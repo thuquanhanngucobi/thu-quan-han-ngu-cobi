@@ -90,7 +90,11 @@ const COBI_DATA = {
     title: "Du Lạc Trang Viên",
     hanzi: "游乐园",
     modules: [
-      { id: "dlh-1", name: "Độc Tu Thất", desc: "Game cá nhân · Tự luyện", icon: "独", path: "./cobi-dulactrangvien/baitap/bongu.html" },
+      { id: "dlh-1", name: "Độc Tu Thất", desc: "Game cá nhân · Tự luyện", icon: "独",
+       subModules: [
+       { id: "dlh-11", name: "BÀI TẬP", path: "./cobi-dulactrangvien/baitap/bongu.html" },
+          { id: "lec-b1", name: "BÀI TẬP BỔ NGỮ", path: "./cobi-dulactrangvien/baitap/bongu.html" },
+       { id: "dlh-12", name: "GAME", path: "./cobi-dulactrangvien/baitap/bongu.html" },
       { id: "dlh-2", name: "Tỉ Thí Đài", desc: "Game thi đua · Cùng lớp", icon: "擂", path: "./coming-soon.html?name=Tỉ%20Thí%20Đài" }
     ]
   },
