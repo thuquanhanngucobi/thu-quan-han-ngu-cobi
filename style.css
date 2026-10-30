@@ -208,3 +208,11 @@ iframe { width: 100%; height: 100%; display: block; border: none; background: tr
 @media (max-width: 380px) {
   .brand-text span { display: none; }
 }
+/* ============ MENU LỒNG NHIỀU CẤP ============ */
+.sub-item.has-submenu { padding: 0; cursor: default; background: transparent; }
+.sub-item.has-submenu:hover { background: transparent; }
+.sub-item.has-submenu > .menu-title {
+  padding: 11px 14px; font-weight: 600; cursor: pointer; border-radius: 8px; transition: 0.2s;
+}
+.sub-item.has-submenu > .menu-title:hover { color: var(--blue-water); background: rgba(255,255,255,0.7); }
+.sub-menu .sub-menu { margin: 2px 0 6px 12px; }
