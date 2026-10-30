@@ -94,7 +94,8 @@ const COBI_DATA = {
           {
             id: "dlh-bt", name: "1. Bài tập",
             subModules: [
-              { id: "dlh-bt-1", name: "Bổ ngữ", path: "./cobi-dulactrangvien/baitap/bongu.html" }
+              { id: "dlh-bt-1", name: "Bổ ngữ", path: "./cobi-dulactrangvien/baitap/bongu.html" },
+               { id: "dlh-bt-2", name: "Ôn Tập Test 1", path: "./cobi-dulactrangvien/baitap/test1.html" }
               // Thêm dạng bài tập mới ở đây, ví dụ:
               // { id: "dlh-bt-2", name: "Tên dạng bài", path: "./cobi-dulactrangvien/baitap/xxx.html" },
             ]
