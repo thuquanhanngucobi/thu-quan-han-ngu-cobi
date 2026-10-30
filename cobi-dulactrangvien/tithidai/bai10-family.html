@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>我的家 - Gia phả của tôi</title>
+<style>
+:root{--bg:#fffaf0;--ink:#1f2937;--blue:#2563eb;--blue-l:#dbeafe;--blue-b:#93c5fd;--org:#ea580c;--org-l:#ffedd5;--org-b:#fdba74;--grn:#16a34a;--grn-l:#dcfce7;--grn-b:#86efac;--line:#e5e7eb;--pur:#7c3aed;--pur-l:#ede9fe}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI","PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;touch-action:manipulation}
+button{font-family:inherit;color:inherit}
+.wrap{max-width:480px;margin:0 auto;padding:0 10px}
+.hidden{display:none!important}
+
+/* ---------- màn hình bắt đầu ---------- */
+#start{padding:28px 0 40px;text-align:center}
+#start h1{font-size:34px;margin:6px 0 2px}
+#start .sub{color:#6b7280;margin:0 0 18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;text-align:left;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.card label{display:block;font-size:13px;font-weight:600;margin:10px 0 4px}
+.card input{width:100%;font-size:17px;padding:10px 12px;border:2px solid var(--line);border-radius:10px;outline:none}
+.card input:focus{border-color:var(--pur)}
+.modes{display:flex;gap:8px;margin-top:4px}
+.modes button{flex:1;border:2px solid var(--line);background:#fff;border-radius:10px;padding:8px 6px;font-size:14px}
+.modes button.on{border-color:var(--pur);background:var(--pur-l);font-weight:700}
+.modes small{display:block;font-weight:400;color:#6b7280;font-size:11px}
+.btn{display:block;width:100%;border:0;border-radius:12px;padding:13px;font-size:18px;font-weight:700;color:#fff;background:var(--pur);margin-top:14px}
+.btn.alt{background:#fff;color:var(--pur);border:2px solid var(--pur)}
+.rules{font-size:13px;color:#4b5563;line-height:1.6;margin:12px 0 0;padding-left:18px}
+.warn{background:#fef3c7;border-radius:10px;padding:8px 10px;font-size:12px;margin-top:12px;color:#92400e}
+
+/* ---------- màn hình chơi ---------- */
+#game{padding-bottom:44vh}
+.top{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0;border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;gap:6px;align-items:center}
+.stat{flex:1;background:#fff;border:1px solid var(--line);border-radius:10px;padding:5px 4px;text-align:center;font-weight:700;font-size:15px;white-space:nowrap}
+.tbtn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:6px 8px;font-size:13px;font-weight:600}
+.legend{display:flex;justify-content:center;gap:12px;font-size:12px;margin:8px 0 2px;color:#4b5563}
+.dot{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.rtitle{text-align:center;font-size:12px;color:#6b7280;font-weight:600;margin:6px 0 4px}
+.conn{width:2px;height:10px;background:#cbd5e1;margin:2px auto}
+.row{display:grid;gap:5px}
+.slot{position:relative;min-height:84px;border-radius:12px;border:2px solid var(--line);background:#fff;padding:4px 2px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.15;cursor:pointer}
+.slot.n{background:var(--blue-l);border-color:var(--blue-b)}
+.slot.o{background:var(--org-l);border-color:var(--org-b)}
+.slot.m{background:var(--grn-l);border-color:var(--grn-b)}
+.slot .vi{font-size:12px;font-weight:700}
+.slot .zh{font-size:26px;font-weight:700;margin:2px 0}
+.slot .py{font-size:11px;color:#374151;min-height:12px}
+.slot .sub{font-size:9px;color:#6b7280}
+.slot.empty .zh{color:#9ca3af;font-weight:400}
+.slot.empty{border-style:dashed}
+.slot.sel{outline:3px solid var(--pur);outline-offset:1px}
+.slot.me{cursor:default;background:#fde68a;border-color:#f59e0b}
+.slot.me .zh{font-size:32px}
+.slot.got::after{content:"🪙";position:absolute;top:-6px;right:-4px;font-size:15px}
+.slot.nogot::after{content:"0";position:absolute;top:-6px;right:-4px;font-size:11px;background:#e5e7eb;border-radius:8px;padding:1px 6px;color:#6b7280}
+.slot.shake{animation:shake .35s;border-color:#ef4444!important;background:#fee2e2}
+.slot.pop{animation:pop .4s}
+.plus{position:absolute;top:-4px;left:50%;transform:translateX(-50%);font-weight:800;color:#b45309;pointer-events:none;animation:up .9s forwards;font-size:16px;z-index:3}
+.hard .sub{display:none}
+.nopy .py{display:none}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes pop{0%{transform:scale(.8)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
+@keyframes up{0%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,-34px)}}
+
+/* ---------- kho từ ---------- */
+#bank{position:fixed;left:0;right:0;bottom:0;z-index:6;background:#fff;border-top:2px solid var(--line);box-shadow:0 -4px 14px rgba(0,0,0,.08);max-height:42vh;overflow:auto;padding:8px 0 12px}
+#bank .hint{text-align:center;font-size:12px;color:#6b7280;margin-bottom:6px}
+#chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.chip{border:2px solid var(--line);border-radius:12px;background:#fff;padding:5px 10px;min-width:60px;text-align:center;line-height:1.15}
+.chip .zh{font-size:22px;font-weight:700;display:block}
+.chip .py{font-size:11px;color:#4b5563;display:block;min-height:12px}
+.chip.sel{border-color:var(--pur);background:var(--pur-l);transform:scale(1.07)}
+
+/* ---------- cửa sổ nổi ---------- */
+.modal{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:#fff;width:100%;max-width:480px;max-height:88vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px}
+.sheet h2{margin:0 0 8px;text-align:center}
+.big{font-size:42px;text-align:center}
+.res{display:flex;gap:8px;margin:10px 0}
+.res div{flex:1;text-align:center;background:#f9fafb;border-radius:12px;padding:8px;font-weight:800;font-size:20px}
+.res small{display:block;font-size:11px;font-weight:500;color:#6b7280}
+.lb{list-style:none;margin:8px 0;padding:0}
+.lb li{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;margin-bottom:5px;background:#f9fafb;font-size:15px}
+.lb li.me{background:var(--pur-l);font-weight:700}
+.lb .rk{width:30px;text-align:center;font-weight:800}
+.lb .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb .sc{font-weight:700;white-space:nowrap}
+.lb .tm{color:#6b7280;font-size:13px;min-width:46px;text-align:right}
+.empty-lb{text-align:center;color:#6b7280;padding:14px}
+</style>
+</head>
+<body>
+
+<!-- ============ MÀN HÌNH BẮT ĐẦU ============ -->
+<div id="start" class="wrap">
+  <div style="font-size:46px">👨‍👩‍👧‍👦</div>
+  <h1>我的家</h1>
+  <p class="sub">Gia phả của tôi · Wǒ de jiā</p>
+  <div class="card">
+    <label for="inName">Tên của bạn · 你的名字</label>
+    <input id="inName" maxlength="16" placeholder="Ví dụ: Lan" autocomplete="off">
+    <label for="inClass">Mã lớp · 班级代码 (giáo viên cho)</label>
+    <input id="inClass" maxlength="20" placeholder="lop1" autocomplete="off" autocapitalize="none">
+    <label>Chế độ · 难度</label>
+    <div class="modes">
+      <button type="button" id="mEasy" class="on">Dễ 容易<small>có pinyin + gợi ý</small></button>
+      <button type="button" id="mHard">Khó 困难<small>không pinyin</small></button>
+    </div>
+    <button class="btn" id="btnStart">开始 · Bắt đầu</button>
+    <button class="btn alt" id="btnBoard0">🏆 排行榜 · Xếp hạng</button>
+    <ol class="rules">
+      <li>Chạm một từ ở dưới, rồi chạm vào ô trống đúng vị trí (hoặc chạm ô trước, từ sau).<br>先点词语，再点空格。</li>
+      <li>Đúng ngay lần đầu: <b>+1 🪙</b>. Sai: không được xu (ô đó sẽ không còn xu nữa) nhưng vẫn thử lại được.</li>
+      <li>Điền đủ cây gia phả để lên bảng xếp hạng: nhiều xu hơn, nhanh hơn thì xếp trên.</li>
+    </ol>
+    <div id="warnCfg" class="warn hidden">⚠️ Chế độ thử: bảng xếp hạng chỉ lưu trên máy này.</div>
+  </div>
+</div>
+
+<!-- ============ MÀN HÌNH CHƠI ============ -->
+<div id="game" class="hidden">
+  <div class="top"><div class="wrap">
+    <div class="stat">🪙 <span id="sCoin">0</span></div>
+    <div class="stat">⏱ <span id="sTime">00:00</span></div>
+    <div class="stat"><span id="sProg">0/19</span></div>
+    <button class="tbtn" id="btnPy">拼音</button>
+    <button class="tbtn" id="btnBoard">🏆</button>
+  </div></div>
+  <div class="wrap">
+    <div class="legend">
+      <span><i class="dot" style="background:var(--blue-b)"></i>Bên nội 父亲这边</span>
+      <span><i class="dot" style="background:var(--org-b)"></i>Bên ngoại 母亲这边</span>
+    </div>
+    <div id="tree"></div>
+  </div>
+  <div id="bank"><div class="wrap">
+    <div class="hint" id="bankHint">Chạm một từ rồi chạm ô trống · 点词语再点空格</div>
+    <div id="chips"></div>
+  </div></div>
+</div>
+
+<!-- ============ BẢNG XẾP HẠNG ============ -->
+<div id="lbModal" class="modal hidden"><div class="sheet">
+  <h2>🏆 排行榜 · Bảng xếp hạng</h2>
+  <div id="lbClass" style="text-align:center;color:#6b7280;font-size:13px"></div>
+  <ol class="lb" id="lbList"></ol>
+  <button class="btn alt" id="lbClose">Đóng · 关闭</button>
+</div></div>
+
+<!-- ============ KẾT THÚC ============ -->
+<div id="endModal" class="modal hidden"><div class="sheet">
+  <div class="big">🎉</div>
+  <h2>做得好! Hoàn thành!</h2>
+  <div class="res">
+    <div><span id="eCoin">0</span><small>🪙 xu</small></div>
+    <div><span id="eTime">0</span><small>⏱ thời gian</small></div>
+    <div><span id="eRank">-</span><small>🏅 hạng</small></div>
+  </div>
+  <ol class="lb" id="endList"></ol>
+  <button class="btn" id="btnAgain">再玩一次 · Chơi lại</button>
+  <button class="btn alt" id="btnHome">Về trang đầu · 返回</button>
+</div></div>
+
+<script type="module">
+/* =====================================================================
+   CẤU HÌNH: dùng chung database Firebase với game chỉ đường.
+   Dữ liệu game này nằm ở nhánh riêng "familyTree", không lẫn với "cobi".
+   (Muốn bảng xếp hạng chỉ lưu trên máy để thử: đổi DB_URL thành "")
+   ===================================================================== */
+const DB_URL  = "https://khuphocobi-ptgt-default-rtdb.firebaseio.com/";
+const DB_ROOT = "familyTree";
+
+/* ---------------------------- TỪ VỰNG ---------------------------- */
+const WORDS = [
+  {id:'yeye',   zh:'爷爷', py:'yéye',    vi:'ông nội',  side:'n'},
+  {id:'nainai', zh:'奶奶', py:'nǎinai',  vi:'bà nội',   side:'n'},
+  {id:'waigong',zh:'外公', py:'wàigōng', vi:'ông ngoại',side:'o'},
+  {id:'waipo',  zh:'外婆', py:'wàipó',   vi:'bà ngoại', side:'o'},
+  {id:'bofu',   zh:'伯父', py:'bófù',    vi:'bác',      side:'n', sub:'anh của bố'},
+  {id:'shushu', zh:'叔叔', py:'shūshu',  vi:'chú',      side:'n', sub:'em trai của bố'},
+  {id:'gugu',   zh:'姑姑', py:'gūgu',    vi:'cô',       side:'n', sub:'chị/em gái của bố'},
+  {id:'jiujiu', zh:'舅舅', py:'jiùjiu',  vi:'cậu',      side:'o', sub:'anh/em trai của mẹ'},
+  {id:'yima',   zh:'姨妈', py:'yímā',    vi:'dì',       side:'o', sub:'chị/em gái của mẹ'},
+  {id:'baba',   zh:'爸爸', py:'bàba',    vi:'bố',       side:'n'},
+  {id:'mama',   zh:'妈妈', py:'māma',    vi:'mẹ',       side:'o'},
+  {id:'gege',   zh:'哥哥', py:'gēge',    vi:'anh trai', side:'m'},
+  {id:'jiejie', zh:'姐姐', py:'jiějie',  vi:'chị gái',  side:'m'},
+  {id:'didi',   zh:'弟弟', py:'dìdi',    vi:'em trai',  side:'m'},
+  {id:'meimei', zh:'妹妹', py:'mèimei',  vi:'em gái',   side:'m'},
+  {id:'zhangfu',zh:'丈夫', py:'zhàngfu', vi:'chồng',    side:'m'},
+  {id:'qizi',   zh:'妻子', py:'qīzi',    vi:'vợ',       side:'m'},
+  {id:'erzi',   zh:'儿子', py:'érzi',    vi:'con trai', side:'m'},
+  {id:'nver',   zh:'女儿', py:'nǚ\u2019ér', vi:'con gái', side:'m'}
+];
+const BY = Object.fromEntries(WORDS.map(w => [w.id, w]));
+const TOTAL = WORDS.length;
+
+const ROWS = [
+  {title:'Ông bà · 祖辈',                       ids:['yeye','nainai','waigong','waipo']},
+  {title:'Bác – chú – cô  |  cậu – dì · 长辈',  ids:['bofu','shushu','gugu','jiujiu','yima']},
+  {title:'Bố mẹ · 父母',                        ids:['baba','mama']},
+  {title:'Anh chị em · 兄弟姐妹',               ids:['gege','jiejie','me','didi','meimei']},
+  {title:'Chồng/vợ và con · 我的家庭',          ids:['zhangfu','qizi','erzi','nver']}
+];
+
+/* ------------------------- TIỆN ÍCH CHUNG ------------------------- */
+const $ = s => document.querySelector(s);
+const clean = s => (s || '').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 20) || 'lop1';
+const fmt = ms => { const s = Math.floor(ms / 1000); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); };
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const ls = { get(k, d) { try { return localStorage.getItem(k) ?? d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+
+/* ----------------------------- ÂM THANH ----------------------------- */
+let ac;
+function tone(f, d, type = 'sine', when = 0, vol = .15) {
+  try {
+    ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.type = type; o.frequency.value = f; o.connect(g); g.connect(ac.destination);
+    const t = ac.currentTime + when;
+    g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.001, t + d);
+    o.start(t); o.stop(t + d);
+  } catch (e) {}
+}
+const sOk = () => { tone(880, .12); tone(1320, .18, 'sine', .1); };
+const sBad = () => tone(160, .25, 'square', 0, .08);
+const sWin = () => [523, 659, 784, 1047].forEach((f, i) => tone(f, .25, 'sine', i * .12));
+let zhVoice = null;
+function loadVoice() { try { zhVoice = speechSynthesis.getVoices().find(v => /^zh/i.test(v.lang)) || null; } catch (e) {} }
+if ('speechSynthesis' in window) { loadVoice(); speechSynthesis.onvoiceschanged = loadVoice; }
+function say(t) {
+  if (!('speechSynthesis' in window)) return;
+  try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = 'zh-CN'; if (zhVoice) u.voice = zhVoice; u.rate = .8; speechSynthesis.speak(u); } catch (e) {}
+}
+
+/* ----------------------- BACKEND (Firebase / local) ----------------------- */
+function localBackend() {
+  const key = c => 'ft_lb_' + c;
+  const read = c => { try { return JSON.parse(ls.get(key(c), '{}')); } catch (e) { return {}; } };
+  return {
+    online: false,
+    newId: () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    save: (c, id, data) => { const o = read(c); o[id] = data; ls.set(key(c), JSON.stringify(o)); },
+    subscribe: (c, cb) => { cb(Object.values(read(c))); const t = setInterval(() => cb(Object.values(read(c))), 2000); return () => clearInterval(t); }
+  };
+}
+function restBackend() {
+  const base = DB_URL.replace(/\/$/, '') + '/' + DB_ROOT;
+  const warn = () => { const e = document.getElementById('bankHint'); if (e) e.textContent = '⚠️ Chưa lưu được điểm lên bảng xếp hạng'; };
+  return {
+    online: true,
+    newId: () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+    save: (c, id, data) => fetch(`${base}/${c}/${id}.json`, { method: 'PUT', body: JSON.stringify(data) })
+      .then(r => { if (!r.ok) warn(); }).catch(() => warn()),
+    subscribe: (c, cb) => {
+      let stop = false, last = null;
+      const poll = async () => {
+        if (stop) return;
+        try {
+          const r = await fetch(`${base}/${c}.json`);
+          if (r.ok) { const t = await r.text(); if (t !== last) { last = t; cb(Object.values(JSON.parse(t) || {})); } }
+        } catch (e) {}
+        setTimeout(poll, 2000);
+      };
+      poll();
+      return () => { stop = true; };
+    }
+  };
+}
+const hasCfg = !!DB_URL;
+let backendPromise = null;
+function getBackend() {
+  if (!backendPromise) backendPromise = Promise.resolve(hasCfg ? restBackend() : localBackend());
+  return backendPromise;
+}
+
+/* ----------------------------- BẢNG XẾP HẠNG ----------------------------- */
+function cmp(a, b) {               // âm = a xếp trên b
+  if (!!a.done !== !!b.done) return a.done ? -1 : 1;
+  if (a.done) return (b.coins - a.coins) || (a.timeMs - b.timeMs);
+  return (b.filled - a.filled) || (b.coins - a.coins);
+}
+function buildBoard(list) {
+  const best = new Map();
+  for (const p of list) {
+    if (!p || !p.name) continue;
+    const k = String(p.name).trim().toLowerCase();
+    const cur = best.get(k);
+    if (!cur || cmp(p, cur) < 0) best.set(k, p);
+  }
+  return [...best.values()].sort(cmp);
+}
+function renderBoard(ol, myName) {
+  ol.innerHTML = '';
+  const rows = buildBoard(G.lbData);
+  if (!rows.length) { const li = document.createElement('div'); li.className = 'empty-lb'; li.textContent = 'Chưa có ai. 还没有人。'; ol.appendChild(li); return; }
+  rows.forEach((p, i) => {
+    const li = document.createElement('li');
+    if (myName && String(p.name).trim().toLowerCase() === myName.trim().toLowerCase()) li.className = 'me';
+    const rk = document.createElement('span'); rk.className = 'rk';
+    rk.textContent = p.done ? (['🥇', '🥈', '🥉'][i] || String(i + 1)) : '…';
+    const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = p.name;
+    const sc = document.createElement('span'); sc.className = 'sc'; sc.textContent = '🪙 ' + p.coins;
+    const tm = document.createElement('span'); tm.className = 'tm';
+    tm.textContent = p.done ? fmt(p.timeMs) : `${p.filled}/${TOTAL}`;
+    li.append(rk, nm, sc, tm); ol.appendChild(li);
+  });
+}
+
+/* ------------------------------- TRẠNG THÁI ------------------------------- */
+const G = { lbData: [], unsub: null, be: null, name: '', cls: 'lop1', mode: 'easy', id: '' };
+let S = null, timer = null;
+
+function newState() {
+  return { filled: {}, failed: new Set(), coins: 0, word: null, slot: null, start: Date.now(), done: false, order: shuffle(WORDS.map(w => w.id)) };
+}
+const filledCount = () => Object.keys(S.filled).length;
+
+/* -------------------------------- VẼ GIAO DIỆN -------------------------------- */
+function buildTree() {
+  const tree = $('#tree'); tree.innerHTML = '';
+  ROWS.forEach((row, ri) => {
+    if (ri > 0) { const c = document.createElement('div'); c.className = 'conn'; tree.appendChild(c); }
+    const t = document.createElement('div'); t.className = 'rtitle'; t.textContent = row.title; tree.appendChild(t);
+    const g = document.createElement('div'); g.className = 'row'; g.style.gridTemplateColumns = `repeat(${row.ids.length},1fr)`;
+    row.ids.forEach(id => {
+      if (id === 'me') {
+        const m = document.createElement('div'); m.className = 'slot me';
+        m.innerHTML = '<span class="vi">tôi</span><span class="zh">我</span><span class="py">wǒ</span>';
+        g.appendChild(m); return;
+      }
+      const w = BY[id];
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'slot empty ' + w.side; b.dataset.id = id;
+      b.innerHTML = '<span class="vi"></span><span class="zh">？</span><span class="py"></span><span class="sub"></span>';
+      b.querySelector('.vi').textContent = w.vi;
+      b.querySelector('.sub').textContent = w.sub || '';
+      b.addEventListener('click', () => onSlot(id));
+      g.appendChild(b);
+    });
+    tree.appendChild(g);
+  });
+}
+const slotEl = id => document.querySelector(`.slot[data-id="${id}"]`);
+
+function renderBank() {
+  const box = $('#chips'); box.innerHTML = '';
+  S.order.filter(id => !S.filled[id]).forEach(id => {
+    const w = BY[id];
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip' + (S.word === id ? ' sel' : '');
+    const z = document.createElement('span'); z.className = 'zh'; z.textContent = w.zh;
+    const p = document.createElement('span'); p.className = 'py'; p.textContent = w.py;
+    b.append(z, p);
+    b.addEventListener('click', () => onWord(id));
+    box.appendChild(b);
+  });
+}
+function renderSel() {
+  document.querySelectorAll('.slot.sel').forEach(e => e.classList.remove('sel'));
+  if (S.slot) slotEl(S.slot)?.classList.add('sel');
+  renderBank();
+}
+function renderStats() {
+  $('#sCoin').textContent = S.coins;
+  $('#sProg').textContent = `${filledCount()}/${TOTAL}`;
+}
+
+/* --------------------------------- LUẬT CHƠI --------------------------------- */
+function onWord(id) {
+  if (S.done) return;
+  say(BY[id].zh);
+  S.word = (S.word === id) ? null : id;
+  if (S.word && S.slot) attempt(); else renderSel();
+}
+function onSlot(id) {
+  if (S.done) return;
+  if (S.filled[id]) { say(BY[id].zh); return; }
+  S.slot = (S.slot === id) ? null : id;
+  if (S.word && S.slot) attempt(); else renderSel();
+}
+function attempt() {
+  const w = S.word, s = S.slot;
+  S.word = S.slot = null;
+  const el = slotEl(s);
+  if (w === s) {
+    const gotCoin = !S.failed.has(s);
+    S.filled[s] = true;
+    if (gotCoin) S.coins++;
+    el.classList.remove('empty', 'sel', 'shake'); el.classList.add('filled', gotCoin ? 'got' : 'nogot', 'pop');
+    el.querySelector('.zh').textContent = BY[s].zh;
+    el.querySelector('.py').textContent = BY[s].py;
+    if (gotCoin) {
+      const p = document.createElement('div'); p.className = 'plus'; p.textContent = '+1 🪙'; el.appendChild(p);
+      setTimeout(() => p.remove(), 950);
+    }
+    sOk();
+    renderStats(); renderSel();
+    saveProgress(false);
+    if (filledCount() === TOTAL) finish();
+  } else {
+    S.failed.add(s);
+    el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
+    setTimeout(() => el.classList.remove('shake'), 400);
+    sBad(); try { navigator.vibrate && navigator.vibrate(80); } catch (e) {}
+    renderSel();
+  }
+}
+
+function saveProgress(done) {
+  const rec = { name: G.name, coins: S.coins, filled: filledCount(), total: TOTAL, done: !!done, t: Date.now() };
+  if (done) rec.timeMs = S.timeMs;
+  G.be.save(G.cls, G.id, rec);
+}
+function finish() {
+  S.done = true; clearInterval(timer);
+  S.timeMs = Date.now() - S.start;
+  $('#sTime').textContent = fmt(S.timeMs);
+  saveProgress(true);
+  sWin();
+  setTimeout(() => {
+    $('#eCoin').textContent = S.coins;
+    $('#eTime').textContent = fmt(S.timeMs);
+    const rows = buildBoard(G.lbData);
+    const idx = rows.findIndex(p => String(p.name).trim().toLowerCase() === G.name.trim().toLowerCase());
+    $('#eRank').textContent = idx >= 0 ? '#' + (idx + 1) : '-';
+    renderBoard($('#endList'), G.name);
+    $('#endModal').classList.remove('hidden');
+  }, 500);
+}
+
+/* --------------------------------- ĐIỀU KHIỂN --------------------------------- */
+async function startGame() {
+  const name = $('#inName').value.trim();
+  if (!name) { $('#inName').focus(); $('#inName').style.borderColor = '#ef4444'; return; }
+  G.name = name; G.cls = clean($('#inClass').value);
+  ls.set('ft_name', G.name); ls.set('ft_class', G.cls); ls.set('ft_mode', G.mode);
+  $('#btnStart').disabled = true;
+  G.be = await getBackend();
+  $('#btnStart').disabled = false;
+  G.id = G.be.newId(G.cls);
+  subscribeBoard();
+
+  document.body.classList.toggle('hard', G.mode === 'hard');
+  document.body.classList.toggle('nopy', G.mode === 'hard');
+  S = newState();
+  buildTree(); renderStats(); renderSel();
+  $('#sTime').textContent = '00:00';
+  clearInterval(timer);
+  timer = setInterval(() => { if (!S.done) $('#sTime').textContent = fmt(Date.now() - S.start); }, 250);
+  $('#start').classList.add('hidden'); $('#game').classList.remove('hidden');
+  $('#endModal').classList.add('hidden');
+  window.scrollTo(0, 0);
+  saveProgress(false);
+}
+function subscribeBoard() {
+  if (G.unsub) { try { G.unsub(); } catch (e) {} }
+  G.lbData = [];
+  G.unsub = G.be.subscribe(G.cls, list => {
+    G.lbData = list;
+    if (!$('#lbModal').classList.contains('hidden')) renderBoard($('#lbList'), G.name);
+    if (!$('#endModal').classList.contains('hidden')) renderBoard($('#endList'), G.name);
+  });
+}
+async function openBoard() {
+  if (!G.be) {                       // mở từ màn hình đầu, chưa vào chơi
+    G.cls = clean($('#inClass').value); G.name = $('#inName').value.trim();
+    G.be = await getBackend(); subscribeBoard();
+  }
+  $('#lbClass').textContent = 'Lớp / 班级: ' + G.cls;
+  renderBoard($('#lbList'), G.name);
+  $('#lbModal').classList.remove('hidden');
+}
+
+$('#mEasy').onclick = () => { G.mode = 'easy'; $('#mEasy').classList.add('on'); $('#mHard').classList.remove('on'); };
+$('#mHard').onclick = () => { G.mode = 'hard'; $('#mHard').classList.add('on'); $('#mEasy').classList.remove('on'); };
+$('#btnStart').onclick = startGame;
+$('#btnAgain').onclick = startGame;
+$('#btnHome').onclick = () => {
+  clearInterval(timer);
+  $('#endModal').classList.add('hidden'); $('#game').classList.add('hidden'); $('#start').classList.remove('hidden');
+};
+$('#btnBoard').onclick = openBoard;
+$('#btnBoard0').onclick = openBoard;
+$('#lbClose').onclick = () => $('#lbModal').classList.add('hidden');
+$('#btnPy').onclick = () => document.body.classList.toggle('nopy');
+$('#inName').addEventListener('input', e => e.target.style.borderColor = '');
+
+// khôi phục lựa chọn lần trước
+$('#inName').value = ls.get('ft_name', '');
+$('#inClass').value = ls.get('ft_class', '');
+if (ls.get('ft_mode', 'easy') === 'hard') $('#mHard').click();
+if (!hasCfg) $('#warnCfg').classList.remove('hidden');
+</script>
+</body>
+</html>
