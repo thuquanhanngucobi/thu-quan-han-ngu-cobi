@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ôn từ vựng tiếng Trung</title>
+<style>
+  :root{
+    --bg:#fdf6ec; --card:#fff; --ink:#2b2b2b; --muted:#7a7a7a;
+    --red:#c8372d; --red-dark:#a02a22; --line:#eadfce; --green:#2e9e5b; --greenbg:#e6f6ec;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    padding:16px 14px 60px;
+  }
+  .wrap{max-width:720px; margin:0 auto}
+  h1{font-size:20px; margin:4px 0 12px; color:var(--red); text-align:center}
+  .tabs{display:flex; gap:8px; margin-bottom:14px}
+  .tab{
+    flex:1; padding:12px; border-radius:12px; border:1px solid var(--line); background:#fff;
+    font:inherit; font-size:16px; font-weight:600; cursor:pointer; color:var(--muted);
+  }
+  .tab.active{background:var(--red); border-color:var(--red); color:#fff}
+  .panel{display:none}
+  .panel.active{display:block}
+  .toolbar{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; align-items:center}
+  button.btn, select{
+    font:inherit; font-size:15px; padding:8px 14px; border-radius:10px; cursor:pointer;
+    border:1px solid var(--line); background:#fff; color:var(--ink);
+  }
+  button.btn:hover{background:#fff3e6}
+  button.btn.primary{background:var(--red); color:#fff; border-color:var(--red)}
+  .count{margin-left:auto; color:var(--muted); font-size:14px}
+
+  /* ---------- Học từ: danh sách cuộn ---------- */
+  .item{
+    background:var(--card); border:1px solid var(--line); border-radius:16px;
+    padding:16px 18px; margin-bottom:12px; cursor:pointer; user-select:none;
+    box-shadow:0 3px 12px rgba(120,80,30,.06);
+  }
+  .item .top{display:flex; align-items:center; gap:14px}
+  .item .num{font-size:13px; color:var(--muted); min-width:24px}
+  .item .hz{font-size:38px; font-weight:600; letter-spacing:1px}
+  .item .py{font-size:20px; color:var(--red)}
+  .item .main{flex:1}
+  .item .arrow{color:var(--muted); font-size:13px}
+  .item.open .arrow{display:none}
+  .spk{
+    font-size:14px; padding:4px 10px; border-radius:99px; border:1px solid var(--line);
+    background:#fff; cursor:pointer;
+  }
+  .detail{display:none; margin-top:14px; padding-top:14px; border-top:1px dashed var(--line)}
+  .item.open .detail{display:block; animation:fade .2s}
+  @keyframes fade{from{opacity:0; transform:translateY(4px)}to{opacity:1; transform:none}}
+  .meaning{font-size:22px; font-weight:600}
+  .ex{margin-top:12px; background:#fff7f0; border-radius:12px; padding:10px 14px}
+  .ex .zh{font-size:22px}
+  .ex .expy{font-size:15px; color:var(--red); margin-top:2px}
+  .ex .spk{margin-top:8px}
+
+  /* ---------- Nối từ ---------- */
+  .game{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  .col{display:flex; flex-direction:column; gap:10px}
+  .opt{
+    background:#fff; border:2px solid var(--line); border-radius:14px; padding:12px 10px;
+    text-align:center; cursor:pointer; user-select:none; min-height:64px;
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    transition:background .15s, border-color .15s;
+  }
+  .opt:hover{background:#fff7f0}
+  .opt .hz{font-size:28px; font-weight:600}
+  .opt .py{font-size:15px; color:var(--red)}
+  .opt .vi{font-size:18px}
+  .opt.sel{border-color:var(--red); background:#fff0ee}
+  .opt.done{border-color:var(--green); background:var(--greenbg); cursor:default; opacity:.75}
+  .opt.wrong{border-color:var(--red); background:#fde2df; animation:shake .35s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .stats{display:flex; gap:16px; color:var(--muted); font-size:14px; margin-bottom:12px}
+  .stats b{color:var(--ink)}
+  .win{
+    display:none; text-align:center; background:var(--greenbg); border:1px solid var(--green);
+    border-radius:14px; padding:16px; margin-top:16px;
+  }
+  .win.show{display:block}
+  .win h2{margin:0 0 6px; color:var(--green); font-size:20px}
+  @media (max-width:480px){ .item .hz{font-size:32px} .opt .hz{font-size:24px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Ôn tập từ vựng tiếng Trung</h1>
+  <div class="tabs">
+    <button class="tab active" data-tab="learn">📖 Học từ</button>
+    <button class="tab" data-tab="match">🔗 Nối từ</button>
+  </div>
+
+  <!-- MỤC 1 -->
+  <div class="panel active" id="learn">
+    <div class="toolbar">
+      <button class="btn" onclick="toggleAll(true)">Mở tất cả</button>
+      <button class="btn" onclick="toggleAll(false)">Đóng tất cả</button>
+      <button class="btn" onclick="shuffleList()">🔀 Xáo trộn</button>
+      <button class="btn" onclick="resetList()">↺ Thứ tự gốc</button>
+      <span class="count" id="learnCount"></span>
+    </div>
+    <div id="list"></div>
+  </div>
+
+  <!-- MỤC 2 -->
+  <div class="panel" id="match">
+    <div class="toolbar">
+      <label>Số cặp mỗi vòng:
+        <select id="size" onchange="newGame()">
+          <option value="5">5</option>
+          <option value="8" selected>8</option>
+          <option value="10">10</option>
+          <option value="26">Tất cả</option>
+        </select>
+      </label>
+      <button class="btn" onclick="newGame()">🔀 Xáo trộn lại</button>
+    </div>
+    <div class="stats">
+      <div>Đã nối: <b id="sDone">0</b>/<b id="sTotal">0</b></div>
+      <div>Nối sai: <b id="sWrong">0</b></div>
+    </div>
+    <div class="game">
+      <div class="col" id="colL"></div>
+      <div class="col" id="colR"></div>
+    </div>
+    <div class="win" id="win">
+      <h2>🎉 Hoàn thành vòng này!</h2>
+      <div id="winText"></div>
+      <div style="margin-top:12px">
+        <button class="btn primary" onclick="nextRound()">Vòng tiếp theo →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ORIGINAL = [
+  {hz:"上面", py:"shàngmiàn", vi:"phía trên", ex:{zh:"书在桌子上面。", py:"Shū zài zhuōzi shàngmiàn."}},
+  {hz:"下面", py:"xiàmiàn", vi:"phía dưới", ex:{zh:"猫在椅子下面。", py:"Māo zài yǐzi xiàmiàn."}},
+  {hz:"睡觉", py:"shuìjiào", vi:"đi ngủ", ex:{zh:"我晚上十点睡觉。", py:"Wǒ wǎnshang shí diǎn shuìjiào."}},
+  {hz:"起床", py:"qǐchuáng", vi:"thức dậy", ex:{zh:"我早上六点起床。", py:"Wǒ zǎoshang liù diǎn qǐchuáng."}},
+  {hz:"点", py:"diǎn", vi:"giờ", ex:{zh:"现在几点?", py:"Xiànzài jǐ diǎn?"}},
+  {hz:"一点(儿)", py:"yìdiǎn(r)", vi:"một chút", ex:{zh:"我会说一点儿汉语。", py:"Wǒ huì shuō yìdiǎnr Hànyǔ."}},
+  {hz:"一些", py:"yìxiē", vi:"một vài", ex:{zh:"我有一些中国朋友。", py:"Wǒ yǒu yìxiē Zhōngguó péngyou."}},
+  {hz:"周末", py:"zhōumò", vi:"cuối tuần", ex:{zh:"周末你做什么?", py:"Zhōumò nǐ zuò shénme?"}},
+  {hz:"电脑", py:"diànnǎo", vi:"máy tính", ex:{zh:"我的电脑很好。", py:"Wǒ de diànnǎo hěn hǎo."}},
+  {hz:"电视", py:"diànshì", vi:"tivi", ex:{zh:"爸爸在看电视。", py:"Bàba zài kàn diànshì."}},
+  {hz:"天气", py:"tiānqì", vi:"thời tiết", ex:{zh:"今天天气很好。", py:"Jīntiān tiānqì hěn hǎo."}},
+  {hz:"热", py:"rè", vi:"nóng", ex:{zh:"今天很热。", py:"Jīntiān hěn rè."}},
+  {hz:"冷", py:"lěng", vi:"lạnh", ex:{zh:"北京很冷。", py:"Běijīng hěn lěng."}},
+  {hz:"下雨", py:"xiàyǔ", vi:"mưa rơi", ex:{zh:"下雨了,我不去学校。", py:"Xiàyǔ le, wǒ bú qù xuéxiào."}},
+  {hz:"下雪", py:"xiàxuě", vi:"tuyết rơi", ex:{zh:"北京下雪了。", py:"Běijīng xiàxuě le."}},
+  {hz:"饭店", py:"fàndiàn", vi:"nhà hàng", ex:{zh:"这个饭店很大。", py:"Zhège fàndiàn hěn dà."}},
+  {hz:"饭馆", py:"fànguǎn", vi:"quán ăn", ex:{zh:"我们去饭馆吃饭吧。", py:"Wǒmen qù fànguǎn chīfàn ba."}},
+  {hz:"说话", py:"shuōhuà", vi:"nói chuyện", ex:{zh:"请你不要说话。", py:"Qǐng nǐ búyào shuōhuà."}},
+  {hz:"打电话", py:"dǎ diànhuà", vi:"gọi điện thoại", ex:{zh:"我给妈妈打电话。", py:"Wǒ gěi māma dǎ diànhuà."}},
+  {hz:"听", py:"tīng", vi:"nghe", ex:{zh:"我听老师说。", py:"Wǒ tīng lǎoshī shuō."}},
+  {hz:"说", py:"shuō", vi:"nói", ex:{zh:"他会说汉语。", py:"Tā huì shuō Hànyǔ."}},
+  {hz:"读", py:"dú", vi:"đọc", ex:{zh:"请读这个字。", py:"Qǐng dú zhège zì."}},
+  {hz:"写", py:"xiě", vi:"viết", ex:{zh:"我会写汉字。", py:"Wǒ huì xiě Hànzì."}},
+  {hz:"桌子", py:"zhuōzi", vi:"cái bàn", ex:{zh:"桌子上有一本书。", py:"Zhuōzi shàng yǒu yì běn shū."}},
+  {hz:"椅子", py:"yǐzi", vi:"cái ghế", ex:{zh:"这把椅子很小。", py:"Zhè bǎ yǐzi hěn xiǎo."}},
+  {hz:"住", py:"zhù", vi:"sống, ở", ex:{zh:"我住在越南。", py:"Wǒ zhù zài Yuènán."}}
+];
+
+const $ = id => document.getElementById(id);
+function shuffled(a){
+  const b = a.slice();
+  for(let k=b.length-1;k>0;k--){
+    const j = Math.floor(Math.random()*(k+1));
+    [b[k],b[j]] = [b[j],b[k]];
+  }
+  return b;
+}
+function speak(text){
+  if(!("speechSynthesis" in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "zh-CN"; u.rate = 0.8;
+  speechSynthesis.speak(u);
+}
+
+/* ---------- Tabs ---------- */
+document.querySelectorAll(".tab").forEach(t=>{
+  t.onclick = ()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active", x===t));
+    document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active", p.id===t.dataset.tab));
+  };
+});
+
+/* ---------- Mục 1: Học từ ---------- */
+let words = ORIGINAL.slice();
+function renderList(){
+  const box = $("list");
+  box.innerHTML = "";
+  words.forEach((w, idx)=>{
+    const el = document.createElement("div");
+    el.className = "item";
+    el.innerHTML = `
+      <div class="top">
+        <div class="num">${idx+1}</div>
+        <div class="main">
+          <div class="hz">${w.hz}</div>
+          <div class="py">${w.py}</div>
+        </div>
+        <button class="spk" title="Nghe">🔊</button>
+        <div class="arrow">👆 bấm</div>
+      </div>
+      <div class="detail">
+        <div class="meaning">${w.vi}</div>
+        <div class="ex">
+          <div class="zh">${w.ex.zh}</div>
+          <div class="expy">${w.ex.py}</div>
+          <button class="spk">🔊 Nghe câu</button>
+        </div>
+      </div>`;
+    const btns = el.querySelectorAll(".spk");
+    btns[0].onclick = e=>{ e.stopPropagation(); speak(w.hz.replace(/\(儿\)/,"")); };
+    btns[1].onclick = e=>{ e.stopPropagation(); speak(w.ex.zh); };
+    el.onclick = ()=> el.classList.toggle("open");
+    box.appendChild(el);
+  });
+  $("learnCount").textContent = words.length + " từ";
+}
+function toggleAll(open){
+  document.querySelectorAll("#list .item").forEach(el=>el.classList.toggle("open", open));
+}
+function shuffleList(){ words = shuffled(ORIGINAL); renderList(); window.scrollTo({top:0}); }
+function resetList(){ words = ORIGINAL.slice(); renderList(); window.scrollTo({top:0}); }
+
+/* ---------- Mục 2: Nối từ ---------- */
+let order = [], round = 0, selL = null, selR = null, done = 0, wrong = 0, total = 0;
+
+function newGame(){
+  order = shuffled(ORIGINAL);
+  round = 0;
+  startRound();
+}
+function nextRound(){
+  const size = parseInt($("size").value);
+  round++;
+  if(round*size >= order.length){ order = shuffled(ORIGINAL); round = 0; }
+  startRound();
+}
+function startRound(){
+  const size = parseInt($("size").value);
+  const batch = order.slice(round*size, round*size + size);
+  total = batch.length; done = 0; wrong = 0; selL = selR = null;
+  $("win").classList.remove("show");
+  const left = shuffled(batch), right = shuffled(batch);
+  const L = $("colL"), R = $("colR");
+  L.innerHTML = ""; R.innerHTML = "";
+  left.forEach(w=>{
+    const d = document.createElement("div");
+    d.className = "opt";
+    d.dataset.key = w.hz;
+    d.innerHTML = `<div class="hz">${w.hz}</div><div class="py">${w.py}</div>`;
+    d.onclick = ()=> pick("L", d);
+    L.appendChild(d);
+  });
+  right.forEach(w=>{
+    const d = document.createElement("div");
+    d.className = "opt";
+    d.dataset.key = w.hz;
+    d.innerHTML = `<div class="vi">${w.vi}</div>`;
+    d.onclick = ()=> pick("R", d);
+    R.appendChild(d);
+  });
+  updateStats();
+}
+function updateStats(){
+  $("sDone").textContent = done;
+  $("sTotal").textContent = total;
+  $("sWrong").textContent = wrong;
+}
+function pick(side, el){
+  if(el.classList.contains("done")) return;
+  if(side==="L"){
+    if(selL) selL.classList.remove("sel");
+    selL = el; el.classList.add("sel");
+  } else {
+    if(selR) selR.classList.remove("sel");
+    selR = el; el.classList.add("sel");
+  }
+  if(selL && selR) check();
+}
+function check(){
+  const a = selL, b = selR;
+  selL = selR = null;
+  a.classList.remove("sel"); b.classList.remove("sel");
+  if(a.dataset.key === b.dataset.key){
+    a.classList.add("done"); b.classList.add("done");
+    done++; updateStats();
+    if(done === total){
+      $("winText").textContent = wrong === 0
+        ? "Tuyệt vời, không nối sai lần nào!"
+        : "Số lần nối sai: " + wrong;
+      $("win").classList.add("show");
+      $("win").scrollIntoView({behavior:"smooth", block:"center"});
+    }
+  } else {
+    wrong++; updateStats();
+    a.classList.add("wrong"); b.classList.add("wrong");
+    setTimeout(()=>{ a.classList.remove("wrong"); b.classList.remove("wrong"); }, 400);
+  }
+}
+
+renderList();
+newGame();
+</script>
+</body>
+</html>
