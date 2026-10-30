@@ -25,10 +25,6 @@ async function cobiFetchData(action) {
 /* ---------------------------------------------------------------------
    PHẦN 2. GẮN ẢNH TẠI ĐÂY
    ---------------------------------------------------------------------
-   Cách làm: tạo thư mục  images  ở thư mục gốc GitHub, tải ảnh lên đó,
-   rồi dán đường dẫn vào giữa 2 dấu nháy ' ' bên dưới.
-   Ví dụ:   background: './images/nen-thuy-mac.jpg',
-
    Để trống '' = dùng hình vẽ thủy mặc có sẵn của web (không bị lỗi).
 
    KÍCH THƯỚC ẢNH GỢI Ý:
@@ -40,23 +36,23 @@ const COBI_IMAGES = {
   background: './img/giaodien/nen.png',   // <-- ẢNH NỀN TOÀN TRANG
   logo: '',         // <-- LOGO TRÒN (góc trên bên trái)
   cards: {
-    'tang-thu-cac':   './img/giaodien/tangthucac.png',   // <-- ẢNH THẺ 1: Tàng Thư Các (phòng sách)
-    'du-lac-hien':    './img/giaodien/dulachien.png',   // <-- ẢNH THẺ 2: Du Lạc Trang Viên (đình, hồ)
-    'khao-thi-duong': './img/giaodien/khaothiduong.jpg'    // <-- ẢNH THẺ 3: Khảo Thí Đường (phòng thi)
+    'tang-thu-cac':   './img/giaodien/tangthucac.png',
+    'du-lac-hien':    './img/giaodien/dulachien.png',
+    'khao-thi-duong': './img/giaodien/khaothiduong.jpg'
   }
 };
 
 
 /* ---------------------------------------------------------------------
    PHẦN 3. MENU
-   - title / hanzi : tên tiếng Việt và chữ Hán của phân khu
-   - modules       : các mục trong phân khu
-       name, desc, icon (1 chữ Hán trong vòng tròn), path (trang sẽ mở)
-       subModules : danh sách xổ xuống (nếu có)
-   - Mục KHÔNG có "desc" (như Giới thiệu) chỉ hiện ở thanh bên, không hiện ở thẻ trang chủ.
+   - Hỗ trợ lồng NHIỀU CẤP: subModules có thể chứa subModules.
+   - Mỗi "id" phải DUY NHẤT trong toàn file.
+   - Mục KHÔNG có "desc" chỉ hiện ở thanh bên, không hiện ở thẻ trang chủ.
    - Trang chưa làm xong: dùng ./coming-soon.html?name=Tên%20Trang
    --------------------------------------------------------------------- */
 const COBI_DATA = {
+
+  /* ===================== TÀNG THƯ CÁC ===================== */
   "tang-thu-cac": {
     title: "Tàng Thư Các",
     hanzi: "藏书阁",
@@ -78,57 +74,58 @@ const COBI_DATA = {
         subModules: [
           { id: "ttc-l1", name: "Quyển 1", path: "./tang-thu-cac/bai-giang/quyen-1/index.html" },
           { id: "lec-b1", name: "Bài 8: Dòng chảy thời gian", path: "./tang-thu-cac/bai-giang/quyen-1/bai8-time.html" },
-           { id: "lec-b2", name: "Bài 9: Phương tiện giao thông", path: "./tang-thu-cac/bai-giang/quyen-1/bai9-ptgt.html" },
-           { id: "lec-b3", name: "Bài 10: Gia đình", path: "./tang-thu-cac/bai-giang/quyen-1/bai10-family.html" },
+          { id: "lec-b2", name: "Bài 9: Phương tiện giao thông", path: "./tang-thu-cac/bai-giang/quyen-1/bai9-ptgt.html" },
+          { id: "lec-b3", name: "Bài 10: Gia đình", path: "./tang-thu-cac/bai-giang/quyen-1/bai10-family.html" },
           { id: "ttc-l2", name: "Quyển 2", path: "./tang-thu-cac/bai-giang/quyen-2/index.html" },
           { id: "ttc-l3", name: "HSK 3", path: "./tang-thu-cac/bai-giang/hsk-3/index.html" }
         ]
       }
     ]
   },
-"du-lac-hien": {
-  title: "Du Lạc Trang Viên",
-  hanzi: "游乐园",
-  modules: [
-    {
-      id: "dlh-dts", name: "Độc Tu Thất", desc: "Game cá nhân · Tự luyện", icon: "独",
-      subModules: [
-        {
-          id: "dlh-bt", name: "1. Bài tập",
-          subModules: [
-            { id: "dlh-bt-1", name: "Bổ ngữ", path: "./cobi-dulactrangvien/baitap/bongu.html" }
-          ]
-        },
-        {
-          id: "dlh-game", name: "2. Game",
-          subModules: [
-            { id: "dlh-game-1", name: "Game 1", path: "./coming-soon.html?name=Game%201" }
-          ]
-        }
-      ]
-    },
-    {
-      id: "dlh-tt", name: "Tỉ Thí Đài", desc: "Game thi đua · Cùng lớp", icon: "擂",
-      subModules: [
-        { id: "dlh-tt-1", name: "Game thi đua 1", path: "./coming-soon.html?name=Game%20thi%20đua%201" }
-      ]
-    }
-  ]
-},
-    {
-      id: "dlh-tt", name: "Tỉ Thí Đài", desc: "Game thi đua · Cùng lớp", icon: "擂",
-      subModules: [
-        { id: "dlh-tt-1", name: "Game thi đua 1", path: "./coming-soon.html?name=Game%20thi%20đua%201" }
-      ]
-    }
-  ]
-},
+
+  /* ===================== DU LẠC TRANG VIÊN ===================== */
+  "du-lac-hien": {
+    title: "Du Lạc Trang Viên",
+    hanzi: "游乐园",
+    modules: [
+      {
+        id: "dlh-dts", name: "Độc Tu Thất", desc: "Bài tập · Game cá nhân · Tự luyện", icon: "独",
+        subModules: [
+          {
+            id: "dlh-bt", name: "1. Bài tập",
+            subModules: [
+              { id: "dlh-bt-1", name: "Bổ ngữ", path: "./cobi-dulactrangvien/baitap/bongu.html" }
+              // Thêm dạng bài tập mới ở đây, ví dụ:
+              // { id: "dlh-bt-2", name: "Tên dạng bài", path: "./cobi-dulactrangvien/baitap/xxx.html" },
+            ]
+          },
+          {
+            id: "dlh-game", name: "2. Game",
+            subModules: [
+              { id: "dlh-game-1", name: "Game 1", path: "./coming-soon.html?name=Game%201" }
+              // Thêm game mới ở đây, ví dụ:
+              // { id: "dlh-game-2", name: "Tên game", path: "./cobi-dulactrangvien/game/xxx.html" },
+            ]
+          }
+        ]
+      },
+      {
+        id: "dlh-tt", name: "Tỉ Thí Đài", desc: "Game thi đua · Cùng lớp", icon: "擂",
+        subModules: [
+          { id: "dlh-tt-1", name: "Game thi đua 1", path: "./coming-soon.html?name=Game%20thi%20%C4%91ua%201" }
+          // Thêm game tỉ thí mới ở đây
+        ]
+      }
+    ]
+  },
+
+  /* ===================== KHẢO THÍ ĐƯỜNG ===================== */
   "khao-thi-duong": {
     title: "Khảo Thí Đường",
     hanzi: "考试堂",
     modules: [
       { id: "ktd-1", name: "Luyện Khảo Viện", desc: "Luyện dạng bài · Củng cố kỹ năng", icon: "练", path: "./cobi-khao-thi-duong/index.html" },
-      { id: "ktd-2", name: "Mô Khảo Viện", desc: "Thi thử toàn đề · Đánh giá năng lực", icon: "模", path: "./coming-soon.html?name=Mô%20Khảo%20Viện" }
+      { id: "ktd-2", name: "Mô Khảo Viện", desc: "Thi thử toàn đề · Đánh giá năng lực", icon: "模", path: "./coming-soon.html?name=M%C3%B4%20Kh%E1%BA%A3o%20Vi%E1%BB%87n" }
     ]
   }
 };
