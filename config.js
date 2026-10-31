@@ -115,7 +115,8 @@ const COBI_DATA = {
         id: "dlh-tt", name: "Tỉ Thí Đài", desc: "Game thi đua · Cùng lớp", icon: "擂",
         subModules: [
           { id: "dlh-tt-1", name: "Khu Phố CoBi", path: "./cobi-dulactrangvien/tithidai/bai9-ptgt.html" },
-          { id: "dlh-tt-2", name: "Cây Gia Đình", path: "./cobi-dulactrangvien/tithidai/bai10-family.html" }
+          { id: "dlh-tt-2", name: "Cây Gia Đình", path: "./cobi-dulactrangvien/tithidai/bai10-family.html" },
+          { id: "dlh-tt-3", name: "Xin Chào Thư Chủ", path: "./cobi-dulactrangvien/tithidai/thuquan/index.html" } 
           // Thêm game tỉ thí mới ở đây
         ]
       }
