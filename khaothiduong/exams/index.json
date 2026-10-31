@@ -1,0 +1,17 @@
+{
+  "exams": [
+    {
+      "id": "hsk1-h11008",
+      "level": 1,
+      "version": "2.0",
+      "title": "Đề thi thử HSK 1 · H11008",
+      "code": "H11008",
+      "durationMin": 40,
+      "questions": 40,
+      "auto": 40,
+      "manual": 0,
+      "order": 0,
+      "path": "exams/hsk1/h11008/"
+    }
+  ]
+}
