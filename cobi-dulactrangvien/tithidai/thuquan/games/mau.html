@@ -1,0 +1,5 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Game mẫu</title><style>body{font:16px/1.5 'Noto Serif',serif;background:#F7F1DE;color:#2B3A42;padding:20px;text-align:center}button{padding:12px 20px;font:700 16px inherit;border:2px solid #1F4A63;background:#1F4A63;color:#F7F1DE;border-radius:8px;cursor:pointer}</style></head><body>
+<h2>Game mẫu (chỉ để thử đường báo điểm)</h2><p>Kéo chọn điểm rồi bấm gửi. Game thật sẽ tự tính điểm rồi gọi đúng dòng lệnh này.</p>
+<input id="s" type="range" min="0" max="100" value="80" oninput="v.textContent=this.value"> <b id="v">80</b><br><br>
+<button onclick="parent.postMessage({type:'cobi-score',score:+s.value},location.origin)">Hoàn thành, gửi điểm</button></body></html>
