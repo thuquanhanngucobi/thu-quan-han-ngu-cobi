@@ -128,7 +128,7 @@ const COBI_DATA = {
     hanzi: "考试堂",
     modules: [
       { id: "ktd-1", name: "Luyện Khảo Viện", desc: "Luyện dạng bài · Củng cố kỹ năng", icon: "练", path: "./cobi-khao-thi-duong/index.html" },
-      { id: "ktd-2", name: "Mô Khảo Viện", desc: "Thi thử toàn đề · Đánh giá năng lực", icon: "模", path: "./coming-soon.html?name=M%C3%B4%20Kh%E1%BA%A3o%20Vi%E1%BB%87n" }
+      { id: "ktd-2", name: "Mô Khảo Viện", desc: "Thi thử toàn đề · Đánh giá năng lực", icon: "模", path: "./khaothiduong/index.html" }
     ]
   }
 };
