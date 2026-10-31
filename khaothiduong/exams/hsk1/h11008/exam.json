@@ -1,0 +1,574 @@
+{
+  "code": "H11008",
+  "level": 1,
+  "version": "2.0",
+  "title": "Đề thi thử HSK 1 · H11008",
+  "durationMin": 40,
+  "pointsPerQuestion": 5,
+  "passScore": 120,
+  "showAnswers": true,
+  "sections": [
+    {
+      "id": "listening",
+      "title": "一、听力",
+      "subtitle": "Nghe",
+      "audio": "audio.mp3",
+      "parts": [
+        {
+          "title": "第一部分",
+          "range": "第 1–5 题",
+          "type": "truefalse",
+          "instruction": "Nghe và xem ảnh. Nếu nội dung nghe được khớp với ảnh, chọn ✓; nếu không khớp, chọn ×.",
+          "questions": [
+            {
+              "n": 1,
+              "answer": "F",
+              "image": "img/l01.jpg"
+            },
+            {
+              "n": 2,
+              "answer": "T",
+              "image": "img/l02.jpg"
+            },
+            {
+              "n": 3,
+              "answer": "F",
+              "image": "img/l03.jpg"
+            },
+            {
+              "n": 4,
+              "answer": "T",
+              "image": "img/l04.jpg"
+            },
+            {
+              "n": 5,
+              "answer": "T",
+              "image": "img/l05.jpg"
+            }
+          ]
+        },
+        {
+          "title": "第二部分",
+          "range": "第 6–10 题",
+          "type": "choice",
+          "instruction": "Nghe và chọn bức ảnh phù hợp (A, B hoặc C).",
+          "questions": [
+            {
+              "n": 6,
+              "answer": "A",
+              "options": [
+                {
+                  "key": "A",
+                  "image": "img/l06_a.jpg"
+                },
+                {
+                  "key": "B",
+                  "image": "img/l06_b.jpg"
+                },
+                {
+                  "key": "C",
+                  "image": "img/l06_c.jpg"
+                }
+              ]
+            },
+            {
+              "n": 7,
+              "answer": "C",
+              "options": [
+                {
+                  "key": "A",
+                  "image": "img/l07_a.jpg"
+                },
+                {
+                  "key": "B",
+                  "image": "img/l07_b.jpg"
+                },
+                {
+                  "key": "C",
+                  "image": "img/l07_c.jpg"
+                }
+              ]
+            },
+            {
+              "n": 8,
+              "answer": "C",
+              "options": [
+                {
+                  "key": "A",
+                  "image": "img/l08_a.jpg"
+                },
+                {
+                  "key": "B",
+                  "image": "img/l08_b.jpg"
+                },
+                {
+                  "key": "C",
+                  "image": "img/l08_c.jpg"
+                }
+              ]
+            },
+            {
+              "n": 9,
+              "answer": "A",
+              "options": [
+                {
+                  "key": "A",
+                  "image": "img/l09_a.jpg"
+                },
+                {
+                  "key": "B",
+                  "image": "img/l09_b.jpg"
+                },
+                {
+                  "key": "C",
+                  "image": "img/l09_c.jpg"
+                }
+              ]
+            },
+            {
+              "n": 10,
+              "answer": "B",
+              "options": [
+                {
+                  "key": "A",
+                  "image": "img/l10_a.jpg"
+                },
+                {
+                  "key": "B",
+                  "image": "img/l10_b.jpg"
+                },
+                {
+                  "key": "C",
+                  "image": "img/l10_c.jpg"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "第三部分",
+          "range": "第 11–15 题",
+          "type": "matching",
+          "instruction": "Nghe hội thoại và chọn bức ảnh phù hợp trong A–F (mỗi ảnh chỉ dùng một lần).",
+          "options": [
+            {
+              "key": "A",
+              "image": "img/l3_a.jpg"
+            },
+            {
+              "key": "B",
+              "image": "img/l3_b.jpg"
+            },
+            {
+              "key": "C",
+              "image": "img/l3_c.jpg"
+            },
+            {
+              "key": "D",
+              "image": "img/l3_d.jpg"
+            },
+            {
+              "key": "E",
+              "image": "img/l3_e.jpg"
+            },
+            {
+              "key": "F",
+              "image": "img/l3_f.jpg"
+            }
+          ],
+          "questions": [
+            {
+              "n": 11,
+              "answer": "F"
+            },
+            {
+              "n": 12,
+              "answer": "E"
+            },
+            {
+              "n": 13,
+              "answer": "D"
+            },
+            {
+              "n": 14,
+              "answer": "B"
+            },
+            {
+              "n": 15,
+              "answer": "A"
+            }
+          ]
+        },
+        {
+          "title": "第四部分",
+          "range": "第 16–20 题",
+          "type": "choice",
+          "instruction": "Nghe câu hỏi và chọn đáp án đúng (A, B hoặc C).",
+          "questions": [
+            {
+              "n": 16,
+              "answer": "B",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "很高",
+                  "pinyin": "hěn gāo"
+                },
+                {
+                  "key": "B",
+                  "text": "很漂亮",
+                  "pinyin": "hěn piàoliang"
+                },
+                {
+                  "key": "C",
+                  "text": "喜欢看书",
+                  "pinyin": "xǐhuan kàn shū"
+                }
+              ]
+            },
+            {
+              "n": 17,
+              "answer": "C",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "买东西",
+                  "pinyin": "mǎi dōngxi"
+                },
+                {
+                  "key": "B",
+                  "text": "看电视",
+                  "pinyin": "kàn diànshì"
+                },
+                {
+                  "key": "C",
+                  "text": "打电话",
+                  "pinyin": "dǎ diànhuà"
+                }
+              ]
+            },
+            {
+              "n": 18,
+              "answer": "B",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "今天",
+                  "pinyin": "jīntiān"
+                },
+                {
+                  "key": "B",
+                  "text": "明天",
+                  "pinyin": "míngtiān"
+                },
+                {
+                  "key": "C",
+                  "text": "上星期",
+                  "pinyin": "shàng xīngqī"
+                }
+              ]
+            },
+            {
+              "n": 19,
+              "answer": "A",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "5 块",
+                  "pinyin": "kuài"
+                },
+                {
+                  "key": "B",
+                  "text": "6 块",
+                  "pinyin": "kuài"
+                },
+                {
+                  "key": "C",
+                  "text": "10 块",
+                  "pinyin": "kuài"
+                }
+              ]
+            },
+            {
+              "n": 20,
+              "answer": "C",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "中国",
+                  "pinyin": "Zhōngguó"
+                },
+                {
+                  "key": "B",
+                  "text": "老师家",
+                  "pinyin": "lǎoshī jiā"
+                },
+                {
+                  "key": "C",
+                  "text": "饭馆儿",
+                  "pinyin": "fànguǎnr"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reading",
+      "title": "二、阅读",
+      "subtitle": "Đọc",
+      "parts": [
+        {
+          "title": "第一部分",
+          "range": "第 21–25 题",
+          "type": "truefalse",
+          "instruction": "Xem ảnh và từ bên cạnh. Nếu từ khớp với ảnh, chọn ✓; nếu không khớp, chọn ×.",
+          "questions": [
+            {
+              "n": 21,
+              "answer": "T",
+              "image": "img/r21.jpg",
+              "prompt": "请",
+              "pinyin": "qǐng"
+            },
+            {
+              "n": 22,
+              "answer": "F",
+              "image": "img/r22.jpg",
+              "prompt": "儿子",
+              "pinyin": "érzi"
+            },
+            {
+              "n": 23,
+              "answer": "F",
+              "image": "img/r23.jpg",
+              "prompt": "出租车",
+              "pinyin": "chūzūchē"
+            },
+            {
+              "n": 24,
+              "answer": "T",
+              "image": "img/r24.jpg",
+              "prompt": "说话",
+              "pinyin": "shuōhuà"
+            },
+            {
+              "n": 25,
+              "answer": "F",
+              "image": "img/r25.jpg",
+              "prompt": "再见",
+              "pinyin": "zàijiàn"
+            }
+          ]
+        },
+        {
+          "title": "第二部分",
+          "range": "第 26–30 题",
+          "type": "matching",
+          "instruction": "Chọn bức ảnh phù hợp với câu (A–F).",
+          "options": [
+            {
+              "key": "A",
+              "image": "img/r2_a.jpg"
+            },
+            {
+              "key": "B",
+              "image": "img/r2_b.jpg"
+            },
+            {
+              "key": "C",
+              "image": "img/r2_c.jpg"
+            },
+            {
+              "key": "D",
+              "image": "img/r2_d.jpg"
+            },
+            {
+              "key": "E",
+              "image": "img/r2_e.jpg"
+            },
+            {
+              "key": "F",
+              "image": "img/r2_f.jpg"
+            }
+          ],
+          "questions": [
+            {
+              "n": 26,
+              "answer": "C",
+              "prompt": "我们今天吃米饭怎么样？",
+              "pinyin": "Wǒmen jīntiān chī mǐfàn zěnmeyàng?"
+            },
+            {
+              "n": 27,
+              "answer": "D",
+              "prompt": "你看，年、月、日不能写在这儿。",
+              "pinyin": "Nǐ kàn, nián, yuè, rì bù néng xiě zài zhèr."
+            },
+            {
+              "n": 28,
+              "answer": "B",
+              "prompt": "她听见有学生在后面叫她。",
+              "pinyin": "Tā tīngjiàn yǒu xuésheng zài hòumiàn jiào tā."
+            },
+            {
+              "n": 29,
+              "answer": "F",
+              "prompt": "小狗，那里面有什么？",
+              "pinyin": "Xiǎogǒu, nà lǐmiàn yǒu shénme?"
+            },
+            {
+              "n": 30,
+              "answer": "A",
+              "prompt": "他想学习开飞机。",
+              "pinyin": "Tā xiǎng xuéxí kāi fēijī."
+            }
+          ]
+        },
+        {
+          "title": "第三部分",
+          "range": "第 31–35 题",
+          "type": "matching",
+          "instruction": "Chọn câu trả lời phù hợp với câu hỏi (A–F).",
+          "example": "你喝水吗？ → F 好的，谢谢！",
+          "options": [
+            {
+              "key": "A",
+              "text": "我的同学。",
+              "pinyin": "Wǒ de tóngxué."
+            },
+            {
+              "key": "B",
+              "text": "桌子下面。",
+              "pinyin": "Zhuōzi xiàmiàn."
+            },
+            {
+              "key": "C",
+              "text": "8 点。",
+              "pinyin": "diǎn."
+            },
+            {
+              "key": "D",
+              "text": "很漂亮。",
+              "pinyin": "Hěn piàoliang."
+            },
+            {
+              "key": "E",
+              "text": "很多。",
+              "pinyin": "Hěn duō."
+            },
+            {
+              "key": "F",
+              "text": "好的，谢谢！",
+              "pinyin": "Hǎo de, xièxie!"
+            }
+          ],
+          "questions": [
+            {
+              "n": 31,
+              "answer": "E",
+              "prompt": "你会写多少个汉字？",
+              "pinyin": "Nǐ huì xiě duōshao ge Hànzì?"
+            },
+            {
+              "n": 32,
+              "answer": "B",
+              "prompt": "妈，我的猫去哪儿了？",
+              "pinyin": "Mā, wǒ de māo qù nǎr le?"
+            },
+            {
+              "n": 33,
+              "answer": "C",
+              "prompt": "你什么时候回来？",
+              "pinyin": "Nǐ shénme shíhou huílái?"
+            },
+            {
+              "n": 34,
+              "answer": "D",
+              "prompt": "这个衣服怎么样？",
+              "pinyin": "Zhège yīfu zěnmeyàng?"
+            },
+            {
+              "n": 35,
+              "answer": "A",
+              "prompt": "买椅子的那个人是谁？",
+              "pinyin": "Mǎi yǐzi de nà ge rén shì shéi?"
+            }
+          ]
+        },
+        {
+          "title": "第四部分",
+          "range": "第 36–40 题",
+          "type": "matching",
+          "instruction": "Chọn từ thích hợp điền vào chỗ trống (A–F).",
+          "example": "你叫什么（ D ）？",
+          "options": [
+            {
+              "key": "A",
+              "text": "怎么",
+              "pinyin": "zěnme"
+            },
+            {
+              "key": "B",
+              "text": "爱",
+              "pinyin": "ài"
+            },
+            {
+              "key": "C",
+              "text": "读",
+              "pinyin": "dú"
+            },
+            {
+              "key": "D",
+              "text": "名字",
+              "pinyin": "míngzi"
+            },
+            {
+              "key": "E",
+              "text": "工作",
+              "pinyin": "gōngzuò"
+            },
+            {
+              "key": "F",
+              "text": "朋友",
+              "pinyin": "péngyou"
+            }
+          ],
+          "questions": [
+            {
+              "n": 36,
+              "answer": "E",
+              "prompt": "他的女儿现在在火车站（　　）。",
+              "pinyin": "Tā de nǚ’ér xiànzài zài huǒchēzhàn."
+            },
+            {
+              "n": 37,
+              "answer": "C",
+              "prompt": "这几本书你都（　　）了？",
+              "pinyin": "Zhè jǐ běn shū nǐ dōu        le?"
+            },
+            {
+              "n": 38,
+              "answer": "B",
+              "prompt": "爸爸（　　）吃苹果。",
+              "pinyin": "Bàba        chī píngguǒ."
+            },
+            {
+              "n": 39,
+              "answer": "F",
+              "prompt": "女：你和你（　　）中午住哪里？\n男：我们住 209。",
+              "pinyin": "Nǐ hé nǐ        zhōngwǔ zhù nǎlǐ?\nWǒmen zhù 209."
+            },
+            {
+              "n": 40,
+              "answer": "A",
+              "prompt": "男：你昨天（　　）没去看电影？\n女：对不起，昨天我去看医生了。",
+              "pinyin": "Nǐ zuótiān        méi qù kàn diànyǐng?\nDuìbuqǐ, zuótiān wǒ qù kàn yīshēng le."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
