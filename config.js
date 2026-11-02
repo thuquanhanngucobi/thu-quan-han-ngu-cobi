@@ -103,9 +103,7 @@ const COBI_DATA = {
           {
             id: "dlh-game", name: "2. Game",
             subModules: [
-              { id: "dlh-game-1", name: "Khu Phố CoBi", path: "./cobi-dulactrangvien/doctuthat/bai9-ptgt.html" },
-              { id: "dlh-game-2", name: "Cây Gia Đình", path: "./cobi-dulactrangvien/doctuthat/bai10-family.html" },
-              { id: "dlh-game-3", name: "Bắn Máy Bay", path: "./cobi-dulactrangvien/doctuthat/may-bay.html" }
+              { id: "dlh-game-1", name: "Bắn Máy Bay", path: "./cobi-dulactrangvien/doctuthat/may-bay.html" }
               // Thêm game mới ở đây, ví dụ:
               // { id: "dlh-game-2", name: "Tên game", path: "./cobi-dulactrangvien/game/xxx.html" },
             ]
