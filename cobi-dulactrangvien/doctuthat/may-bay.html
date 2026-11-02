@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phi Đội Từ Vựng</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Ma+Shan+Zheng&family=Noto+Serif:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #2b2622; --brown-dark: #4a3525; --gold-earth: #b38b4d; --gold-soft: #d9c28f;
+      --blue-water: #1e3a5f; --blue-deep: #16304f; --line: #e2d6bd;
+      --paper: rgba(252, 249, 241, 0.94);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; background: transparent; }
+    body { font-family: "Noto Serif", Georgia, serif; color: var(--ink); overflow: hidden; }
+
+    .screen { display: none; height: 100%; }
+    .screen.active { display: flex; }
+
+    /* ===== KHUNG GIẤY DÙNG CHUNG ===== */
+    .panel-wrap { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px; display: flex; }
+    .panel {
+      margin: auto; width: 100%; max-width: 760px; padding: 28px 28px 30px; border-radius: 18px;
+      background: var(--paper); border: 1px solid var(--gold-earth);
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.5), 0 18px 40px rgba(30,58,95,0.18);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    .panel h1 { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 36px; color: var(--blue-deep); text-align: center; line-height: 1.1; }
+    .panel .sub { text-align: center; color: var(--brown-dark); margin: 8px 0 22px; font-size: 15px; }
+    .hz-deco { text-align: center; font-family: "Ma Shan Zheng", cursive; color: var(--gold-earth); font-size: 20px; letter-spacing: 4px; margin-bottom: 4px; }
+
+    .btn {
+      font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer; padding: 12px 22px;
+      border-radius: 30px; border: 1px solid var(--blue-water); background: var(--blue-water); color: #fff;
+      transition: transform .15s, box-shadow .15s, background .15s;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(30,58,95,.25); }
+    .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn.ghost { background: #fff; color: var(--blue-water); }
+    .btn.gold { background: linear-gradient(180deg, #d9b66b, #b38b4d); border-color: #8a6a35; color: #2b1f10; }
+    .btn.wide { width: 100%; }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 18px; }
+    .back { background: none; border: none; color: var(--blue-water); font-family: inherit; font-size: 14px; cursor: pointer; margin-bottom: 8px; padding: 4px 0; }
+    .back:hover { text-decoration: underline; }
+
+    .err { margin-top: 14px; padding: 10px 14px; border-radius: 10px; background: #fff3d6; border: 1px solid var(--gold-earth); color: var(--brown-dark); font-size: 14px; display: none; }
+    .err.show { display: block; }
+
+    /* Thẻ lớn chọn vai trò / mức độ */
+    .choice-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .choice {
+      text-align: center; cursor: pointer; padding: 20px 14px; border-radius: 16px; font-family: inherit; color: inherit;
+      background: linear-gradient(180deg, #fff, #f6f1e4); border: 2px solid var(--line);
+      transition: transform .15s, border-color .15s, box-shadow .15s;
+    }
+    .choice:hover { transform: translateY(-2px); border-color: var(--gold-earth); }
+    .choice.sel { border-color: var(--blue-water); box-shadow: 0 0 0 3px rgba(30,58,95,.15); background: #eef3f8; }
+    .choice .em { font-size: 40px; display: block; }
+    .choice b { display: block; margin-top: 6px; font-size: 18px; color: var(--blue-deep); }
+    .choice small { display: block; margin-top: 4px; color: #7a6a58; font-size: 13px; line-height: 1.4; }
+
+    /* Danh sách bài */
+    .lesson-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; max-height: 52vh; overflow-y: auto; padding: 4px; }
+    .lesson-btn { cursor: pointer; font-family: inherit; padding: 14px 10px; border-radius: 14px; border: 1px solid var(--line); background: linear-gradient(180deg, #fff, #f6f1e4); color: var(--blue-deep); font-weight: 700; font-size: 15px; transition: .15s; }
+    .lesson-btn:hover { border-color: var(--gold-earth); transform: translateY(-2px); box-shadow: 0 6px 14px rgba(30,58,95,.12); }
+    .lesson-btn small { display: block; margin-top: 4px; font-weight: 400; color: #7a6a58; font-size: 12.5px; }
+
+    label.f { display: block; font-weight: 600; color: var(--brown-dark); margin: 14px 0 6px; font-size: 14px; }
+    input.t { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--line); font-family: inherit; font-size: 17px; background: #fdfbf7; color: var(--blue-deep); outline: none; }
+    input.t:focus { border-color: var(--blue-water); box-shadow: 0 0 0 3px #e6edf2; }
+
+    /* Phòng chờ */
+    .code-big { text-align: center; font-size: 64px; letter-spacing: 12px; font-weight: 700; color: var(--blue-deep); font-family: "Cormorant Garamond", serif; margin: 6px 0; padding-left: 12px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; min-height: 40px; }
+    .chip { padding: 6px 14px; border-radius: 20px; background: #fff; border: 1px solid var(--gold-soft); color: var(--blue-deep); font-weight: 600; font-size: 14px; }
+    .chip.me { background: var(--blue-water); color: #fff; border-color: var(--blue-water); }
+
+    /* Bảng xếp hạng */
+    table.board { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 16px; }
+    table.board th { background: var(--blue-water); color: #fff; padding: 10px 12px; text-align: left; font-size: 14px; }
+    table.board td { padding: 10px 12px; border-bottom: 1px dashed var(--line); color: var(--brown-dark); }
+    table.board tr.me td { background: #eef3f8; font-weight: 700; color: var(--blue-deep); }
+    table.board td.rk { width: 56px; font-size: 20px; }
+    table.board td.sc { font-weight: 700; text-align: right; color: var(--blue-deep); }
+    table.board th:last-child { text-align: right; }
+    .board-wrap { max-height: 46vh; overflow-y: auto; border-radius: 12px; border: 1px solid var(--line); }
+
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 14px 0; }
+    .stat { text-align: center; padding: 12px 6px; border-radius: 14px; background: #fff; border: 1px solid var(--line); }
+    .stat b { display: block; font-size: 28px; color: var(--blue-deep); }
+    .stat span { font-size: 13px; color: #7a6a58; }
+    .review { margin-top: 10px; max-height: 24vh; overflow-y: auto; border-radius: 12px; border: 1px solid var(--line); background: #fff; }
+    .review div { display: flex; gap: 12px; align-items: baseline; padding: 8px 14px; border-bottom: 1px dashed var(--line); font-size: 14px; }
+    .review .h { font-family: "Ma Shan Zheng", cursive; font-size: 26px; color: var(--ink); }
+    .review .p { color: var(--blue-water); font-weight: 700; font-family: sans-serif; }
+
+    /* ===== MÀN HÌNH GAME ===== */
+    #scr-game { flex-direction: column; background: #dfeaf1; border-radius: 14px; overflow: hidden; position: relative; }
+    .hud { flex-shrink: 0; display: flex; align-items: center; gap: 12px; padding: 8px 14px; background: rgba(252,249,241,.96); border-bottom: 1px solid var(--gold-soft); z-index: 3; }
+    .hud .score { font-size: 24px; font-weight: 700; color: var(--blue-deep); min-width: 110px; }
+    .hud .score small { font-size: 12px; color: #7a6a58; font-weight: 400; margin-right: 4px; }
+    .hud .score.neg { color: #7a4a14; }
+    .hud .prog { flex: 1; font-size: 13px; color: var(--brown-dark); text-align: center; }
+    .hud .bar { height: 6px; border-radius: 4px; background: #e6dcc5; margin-top: 4px; overflow: hidden; }
+    .hud .bar i { display: block; height: 100%; width: 0; background: var(--blue-water); transition: width .2s linear; }
+    .hud .bar i.warn { background: var(--gold-earth); }
+    .badge-lv { padding: 4px 12px; border-radius: 14px; font-size: 12.5px; font-weight: 700; background: #fff; border: 1px solid var(--gold-earth); color: var(--brown-dark); white-space: nowrap; }
+    .icon-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--gold-soft); background: #fff; cursor: pointer; font-size: 16px; }
+    .stage { position: relative; flex: 1; min-height: 0; }
+    #cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+    .meaning-card {
+      position: absolute; left: 12px; bottom: 12px; max-width: min(46%, 380px); z-index: 2;
+      padding: 12px 18px; border-radius: 16px; background: rgba(252,249,241,.95); border: 2px solid var(--gold-earth);
+      box-shadow: 0 8px 20px rgba(22,48,79,.25);
+    }
+    .meaning-card small { display: block; font-size: 11.5px; color: #7a6a58; letter-spacing: 1px; text-transform: uppercase; }
+    .meaning-card b { display: block; font-size: 24px; line-height: 1.25; color: var(--blue-deep); margin: 2px 0; word-break: break-word; }
+    .meaning-card .hint { font-size: 13px; color: var(--brown-dark); min-height: 1.2em; }
+    .toast { position: absolute; left: 50%; top: 14%; transform: translateX(-50%); z-index: 3; padding: 8px 18px; border-radius: 22px; background: rgba(22,48,79,.92); color: #fff; font-weight: 700; font-size: 16px; opacity: 0; transition: opacity .2s; pointer-events: none; white-space: nowrap; max-width: 92%; overflow: hidden; text-overflow: ellipsis; }
+    .toast.show { opacity: 1; }
+    .countdown { position: absolute; inset: 0; z-index: 4; display: none; align-items: center; justify-content: center; flex-direction: column; background: rgba(22,48,79,.55); color: #fff; font-family: "Cormorant Garamond", serif; font-size: 110px; font-weight: 700; text-align: center; }
+    .countdown small { font-family: "Noto Serif", serif; font-size: 18px; font-weight: 400; }
+    .countdown.show { display: flex; }
+
+    .inputbar { flex-shrink: 0; display: flex; gap: 10px; padding: 10px 14px; background: rgba(252,249,241,.97); border-top: 1px solid var(--gold-soft); z-index: 3; }
+    .inputbar input { flex: 1; min-width: 0; padding: 12px 16px; border-radius: 14px; border: 2px solid var(--line); font-family: "Noto Serif", serif; font-size: 22px; color: var(--blue-deep); background: #fff; outline: none; text-align: center; }
+    .inputbar input:focus { border-color: var(--blue-water); box-shadow: 0 0 0 3px #e6edf2; }
+    .inputbar input.shake { animation: shk .3s; border-color: var(--gold-earth); }
+    @keyframes shk { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+    @media (max-width: 640px) {
+      .panel { padding: 20px 16px 22px; }
+      .panel h1 { font-size: 30px; }
+      .choice-grid { gap: 10px; }
+      .choice { padding: 14px 8px; }
+      .choice .em { font-size: 32px; }
+      .code-big { font-size: 48px; letter-spacing: 8px; }
+      .hud { gap: 8px; padding: 6px 10px; }
+      .hud .score { font-size: 20px; min-width: 84px; }
+      .badge-lv { display: none; }
+      .meaning-card { right: 12px; max-width: none; padding: 8px 14px; }
+      .meaning-card b { font-size: 20px; }
+      .stats { gap: 6px; }
+      .countdown { font-size: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 0. ĐANG TẢI -->
+  <section class="screen active" id="scr-loading"><div class="panel-wrap"><div class="panel">
+    <div class="hz-deco">飞机 · 词汇</div>
+    <h1>Phi Đội Từ Vựng</h1>
+    <p class="sub" id="loading-text">Đang nạp kho từ vựng...</p>
+    <div class="row"><button class="btn ghost" id="btn-retry" style="display:none">Thử lại</button></div>
+  </div></div></section>
+
+  <!-- 1. VAI TRÒ (chỉ chế độ team) -->
+  <section class="screen" id="scr-role"><div class="panel-wrap"><div class="panel">
+    <div class="hz-deco">擂台 · 比赛</div>
+    <h1>Tỉ Thí Đài</h1>
+    <p class="sub">Cả lớp cùng bay, cùng ghi điểm. Bạn là ai?</p>
+    <div class="choice-grid">
+      <button class="choice" id="role-teacher"><span class="em">👩‍🏫</span><b>Giáo viên</b><small>Tạo phòng, chờ lớp vào rồi bấm bắt đầu</small></button>
+      <button class="choice" id="role-student"><span class="em">🎓</span><b>Học viên</b><small>Nhập mã phòng của giáo viên để vào chơi</small></button>
+    </div>
+  </div></div></section>
+
+  <!-- 2. CHỌN BÀI -->
+  <section class="screen" id="scr-lesson"><div class="panel-wrap"><div class="panel">
+    <button class="back" id="lesson-back" style="display:none">‹ Quay lại</button>
+    <div class="hz-deco">选 · 课</div>
+    <h1>Chọn bài học</h1>
+    <p class="sub" id="lesson-sub">Bấm vào một bài để lấy bộ từ vựng của bài đó.</p>
+    <div class="lesson-grid" id="lesson-grid"></div>
+  </div></div></section>
+
+  <!-- 3. THIẾT LẬP -->
+  <section class="screen" id="scr-setup"><div class="panel-wrap"><div class="panel">
+    <button class="back" id="setup-back">‹ Chọn bài khác</button>
+    <div class="hz-deco">开 · 始</div>
+    <h1 id="setup-title">Bài 1</h1>
+    <p class="sub" id="setup-sub"></p>
+    <div class="choice-grid">
+      <button class="choice sel" data-level="easy"><span class="em">🕊️</span><b>Dễ</b><small>Không giới hạn thời gian.<br>Cứ từ từ nhớ và gõ.</small></button>
+      <button class="choice" data-level="hard"><span class="em">⚡</span><b>Khó</b><small>Có giới hạn thời gian.<br>Máy bay địch lao xuống, gõ nhanh lên!</small></button>
+    </div>
+    <div id="pin-box" style="display:none">
+      <label class="f" for="pin">Mật khẩu giáo viên</label>
+      <input class="t" id="pin" type="password" placeholder="Mật khẩu để tạo phòng" autocomplete="off">
+    </div>
+    <div class="err" id="setup-err"></div>
+    <div class="row"><button class="btn gold wide" id="btn-go">✈ Bắt đầu bay!</button></div>
+  </div></div></section>
+
+  <!-- 4. HỌC VIÊN VÀO PHÒNG -->
+  <section class="screen" id="scr-join"><div class="panel-wrap"><div class="panel">
+    <button class="back" id="join-back">‹ Quay lại</button>
+    <div class="hz-deco">入 · 房</div>
+    <h1>Vào phòng chơi</h1>
+    <p class="sub">Nhập mã 4 số trên bảng của giáo viên và tên của bạn.</p>
+    <label class="f" for="join-code">Mã phòng</label>
+    <input class="t" id="join-code" inputmode="numeric" maxlength="4" placeholder="VD: 4821" autocomplete="off">
+    <label class="f" for="join-name">Tên của bạn</label>
+    <input class="t" id="join-name" maxlength="20" placeholder="VD: Minh Anh" autocomplete="off">
+    <div class="err" id="join-err"></div>
+    <div class="row"><button class="btn gold wide" id="btn-join">Vào phòng</button></div>
+  </div></div></section>
+
+  <!-- 5. PHÒNG CHỜ -->
+  <section class="screen" id="scr-lobby"><div class="panel-wrap"><div class="panel">
+    <div class="hz-deco">等 · 待</div>
+    <h1 id="lobby-title">Phòng chờ</h1>
+    <p class="sub" id="lobby-sub"></p>
+    <div class="code-big" id="lobby-code">----</div>
+    <p class="sub" id="lobby-count" style="margin:4px 0 0"></p>
+    <div class="chips" id="lobby-chips"></div>
+    <div class="err" id="lobby-err"></div>
+    <div class="row" id="lobby-teacher-row" style="display:none">
+      <button class="btn gold" id="btn-start">▶ Bắt đầu cho cả lớp</button>
+      <button class="btn ghost" id="btn-cancel-room">Hủy phòng</button>
+    </div>
+    <div class="row" id="lobby-student-row" style="display:none">
+      <button class="btn ghost" id="btn-leave">Rời phòng</button>
+    </div>
+  </div></div></section>
+
+  <!-- 6. GIÁO VIÊN XEM TRỰC TIẾP -->
+  <section class="screen" id="scr-live"><div class="panel-wrap"><div class="panel">
+    <div class="hz-deco" id="live-deco">实 · 时</div>
+    <h1 id="live-title">Bảng xếp hạng trực tiếp</h1>
+    <p class="sub" id="live-sub"></p>
+    <div class="board-wrap"><table class="board"><thead><tr><th>Hạng</th><th>Học viên</th><th>Tiến độ</th><th>Điểm</th></tr></thead><tbody id="live-body"></tbody></table></div>
+    <div class="row">
+      <button class="btn gold" id="btn-end-room">Kết thúc buổi và chốt xếp hạng</button>
+      <button class="btn ghost" id="btn-new-room" style="display:none">Tạo phòng mới</button>
+    </div>
+  </div></div></section>
+
+  <!-- 7. MÀN CHƠI -->
+  <section class="screen" id="scr-game">
+    <div class="hud">
+      <div class="score" id="hud-score"><small>ĐIỂM</small><span id="score-val">0</span></div>
+      <div class="prog"><span id="hud-prog">0 / 0</span><span id="hud-rank"></span><div class="bar"><i id="hud-bar"></i></div></div>
+      <div class="badge-lv" id="hud-level">Dễ</div>
+      <button class="icon-btn" id="btn-mute" title="Bật/tắt âm thanh">🔊</button>
+      <button class="icon-btn" id="btn-quit" title="Thoát">✕</button>
+    </div>
+    <div class="stage" id="stage">
+      <canvas id="cv"></canvas>
+      <div class="toast" id="toast"></div>
+      <div class="meaning-card">
+        <small>Nghĩa tiếng Việt · gõ Hán tự</small>
+        <b id="mean-text">...</b>
+        <div class="hint" id="mean-hint"></div>
+      </div>
+      <div class="countdown" id="countdown"></div>
+    </div>
+    <form class="inputbar" id="ans-form" autocomplete="off">
+      <input id="ans" type="text" lang="zh-CN" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Gõ Hán tự rồi Enter...">
+      <button class="btn gold" type="submit">Bắn!</button>
+    </form>
+  </section>
+
+  <!-- 8. KẾT QUẢ -->
+  <section class="screen" id="scr-result"><div class="panel-wrap"><div class="panel">
+    <div class="hz-deco">成 · 绩</div>
+    <h1 id="res-title">Kết quả</h1>
+    <p class="sub" id="res-sub"></p>
+    <div class="stats">
+      <div class="stat"><b id="res-score">0</b><span>Điểm</span></div>
+      <div class="stat"><b id="res-ok">0</b><span>Từ đúng</span></div>
+      <div class="stat"><b id="res-bad">0</b><span>Lần sai / hết giờ</span></div>
+    </div>
+    <div id="res-board-box" style="display:none">
+      <p class="sub" id="res-board-sub" style="margin:6px 0 0"></p>
+      <div class="board-wrap"><table class="board"><thead><tr><th>Hạng</th><th>Học viên</th><th>Tiến độ</th><th>Điểm</th></tr></thead><tbody id="res-body"></tbody></table></div>
+    </div>
+    <div id="res-review-box" style="display:none">
+      <p class="sub" style="margin:14px 0 4px"><b>Những từ cần ôn lại</b></p>
+      <div class="review" id="res-review"></div>
+    </div>
+    <div class="row" id="res-actions"></div>
+  </div></div></section>
+
+  <script src="../config.js?v=4"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    /* ================= CẤU HÌNH GAME (có thể chỉnh) ================= */
+    const MAX_WORDS      = 30;   // số từ tối đa trong một ván (bài dài hơn sẽ bốc ngẫu nhiên)
+    const SCORE_RIGHT    = 2;    // đúng: cộng
+    const SCORE_WRONG    = -1;   // sai hoặc hết giờ: trừ
+    const HARD_BASE_SEC  = 6;    // chế độ KHÓ: thời gian cơ bản cho mỗi từ (giây)
+    const HARD_PER_CHAR  = 2.2;  // cộng thêm cho mỗi chữ Hán
+    const HARD_MAX_SEC   = 16;   // thời gian tối đa cho một từ
+    const PUSH_EVERY_MS  = 3500; // team: bao lâu gửi điểm lên bảng một lần
+    const POLL_MS        = 2500; // team: bao lâu hỏi phòng một lần
+
+    const FALLBACK_API = 'https://script.google.com/macros/s/AKfycby1TyfXxZVmt2aoSIwOaNXxrrSmOXIHv-CVAU-B_9Xiv-Dxt4LyW2Yd1DSaJIOg4pfUIw/exec';
+    const API_BASE = (typeof COBI_API_URL !== 'undefined') ? COBI_API_URL : FALLBACK_API;
+    const MODE = new URLSearchParams(location.search).get('mode') === 'team' ? 'team' : 'solo';
+
+    const $ = (id) => document.getElementById(id);
+    const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+    function show(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
+      if (id === 'scr-game') { resizeCanvas(); }
+    }
+    function showErr(id, msg) { const e = $(id); e.textContent = msg || ''; e.classList.toggle('show', !!msg); }
+
+    /* ================= ÂM THANH ================= */
+    let muted = false;
+    try { muted = localStorage.getItem('cobi_game_muted') === '1'; } catch (e) {}
+    let actx = null;
+    function audio() { if (!actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } return actx; }
+    function tone(f1, f2, dur, type, vol) {
+      if (muted) return; const a = audio(); if (!a) return;
+      const o = a.createOscillator(), g = a.createGain();
+      o.type = type || 'sine'; o.frequency.setValueAtTime(f1, a.currentTime);
+      o.frequency.exponentialRampToValueAtTime(Math.max(30, f2), a.currentTime + dur);
+      g.gain.setValueAtTime(vol || 0.12, a.currentTime); g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + dur);
+      o.connect(g); g.connect(a.destination); o.start(); o.stop(a.currentTime + dur);
+    }
+    function boom() {
+      if (muted) return; const a = audio(); if (!a) return;
+      const len = a.sampleRate * 0.45, buf = a.createBuffer(1, len, a.sampleRate), d = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.2);
+      const s = a.createBufferSource(), g = a.createGain(); s.buffer = buf; g.gain.value = 0.28; s.connect(g); g.connect(a.destination); s.start();
+    }
+    const sfx = {
+      shoot: () => tone(900, 260, 0.18, 'sawtooth', 0.07),
+      hit:   () => { boom(); tone(660, 990, 0.25, 'triangle', 0.08); },
+      wrong: () => tone(180, 110, 0.22, 'square', 0.07),
+      crash: () => { boom(); tone(200, 60, 0.4, 'sawtooth', 0.1); },
+      tick:  () => tone(520, 520, 0.08, 'sine', 0.06),
+      go:    () => tone(520, 1040, 0.3, 'triangle', 0.1)
+    };
+    function speak(text) {
+      if (muted || !text || !('speechSynthesis' in window)) return;
+      try { window.speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.lang = 'zh-CN'; u.rate = 0.85; window.speechSynthesis.speak(u); } catch (e) {}
+    }
+    function paintMute() { $('btn-mute').textContent = muted ? '🔇' : '🔊'; }
+    $('btn-mute').onclick = () => { muted = !muted; try { localStorage.setItem('cobi_game_muted', muted ? '1' : '0'); } catch (e) {} paintMute(); $('ans').focus(); };
+    paintMute();
+
+    /* ================= DỮ LIỆU TỪ VỰNG ================= */
+    const normKey = (s) => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/[^a-z0-9]/g, '');
+    const normItem = (raw) => { const o = {}; Object.keys(raw).forEach(k => { const nk = normKey(k); if (nk) o[nk] = raw[k] == null ? '' : String(raw[k]).trim(); }); return o; };
+
+    let LESSONS = [];   // [{name, words:[{hantu,pinyin,nghia}]}]
+
+    async function loadVocab() {
+      const res = await fetch(API_BASE + '?action=getVocabLesson&t=' + Date.now());
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const json = await res.json();
+      if (!json.success) throw new Error(json.message || 'API báo lỗi');
+      const map = new Map();
+      (json.data || []).map(normItem).forEach(it => {
+        const hantu = it.hantu || it.tuvung || '';
+        if (!hantu || !it.nghia) return;
+        const lesson = it.baihoc || 'Tất cả';
+        if (!map.has(lesson)) map.set(lesson, new Map());
+        if (!map.get(lesson).has(hantu)) map.get(lesson).set(hantu, { hantu, pinyin: it.pinyin || '', nghia: it.nghia });
+      });
+      LESSONS = [...map.entries()].map(([name, m]) => ({ name, words: [...m.values()] })).filter(l => l.words.length > 0);
+      if (!LESSONS.length) throw new Error("Chưa có từ vựng nào (cần cột 'Hán tự' và 'Nghĩa' trong tab TV THEO BÀI).");
+    }
+
+    function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+    function seededWords(lessonName, seed) {
+      const l = LESSONS.find(x => x.name === lessonName); if (!l) return [];
+      const rnd = mulberry32(seed >>> 0 || 1), arr = l.words.slice();
+      for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
+      return arr.slice(0, MAX_WORDS);
+    }
+
+    /* Đáp án: bỏ khoảng trắng và dấu câu; từ có nhiều cách viết "A/B" thì đúng cả hai */
+    const strip = (s) => String(s).replace(/[\s　，。、,.!?！？;；:：'"“”‘’]/g, '');
+    const answersOf = (h) => String(h).split(/[\/|、;；]/).map(x => strip(x.replace(/[（(][^）)]*[）)]/g, ''))).filter(Boolean);
+
+    /* ================= MÁY CHỦ (TEAM) ================= */
+    async function api(action, params) {
+      const q = new URLSearchParams(Object.assign({ action }, params || {}, { t: Date.now() }));
+      const res = await fetch(API_BASE + '?' + q.toString());
+      const json = await res.json();
+      if (!json.success) throw new Error(json.message || 'Lỗi máy chủ');
+      return json;
+    }
+
+    /* ================= ĐIỀU HƯỚNG ================= */
+    const S = { lesson: '', level: 'easy', role: 'solo', code: '', pid: '', name: '', pin: '', seed: 0, poll: null };
+    function stopPoll() { if (S.poll) { clearInterval(S.poll); S.poll = null; } }
+    function startPoll(fn, ms) { stopPoll(); S.poll = setInterval(() => { fn().catch(() => {}); }, ms); }
+
+    function renderLessons() {
+      $('lesson-grid').innerHTML = LESSONS.map((l, i) =>
+        `<button class="lesson-btn" data-i="${i}">${esc(l.name)}<small>${l.words.length} từ</small></button>`).join('');
+    }
+    $('lesson-grid').addEventListener('click', (e) => {
+      const b = e.target.closest('.lesson-btn'); if (!b) return;
+      const l = LESSONS[+b.dataset.i]; S.lesson = l.name; S.level = 'easy';
+      document.querySelectorAll('#scr-setup .choice').forEach(x => x.classList.toggle('sel', x.dataset.level === 'easy'));
+      $('setup-title').textContent = l.name;
+      const n = Math.min(l.words.length, MAX_WORDS);
+      $('setup-sub').textContent = `Ván này có ${n} từ` + (l.words.length > MAX_WORDS ? ` (bốc ngẫu nhiên từ ${l.words.length} từ của bài)` : '') + '. Chọn mức độ:';
+      $('pin-box').style.display = S.role === 'teacher' ? 'block' : 'none';
+      $('btn-go').textContent = S.role === 'teacher' ? '🏯 Tạo phòng' : '✈ Bắt đầu bay!';
+      showErr('setup-err', '');
+      show('scr-setup');
+    });
+    document.querySelectorAll('#scr-setup .choice').forEach(c => c.onclick = () => {
+      document.querySelectorAll('#scr-setup .choice').forEach(x => x.classList.toggle('sel', x === c));
+      S.level = c.dataset.level;
+    });
+    $('setup-back').onclick = () => show('scr-lesson');
+    $('lesson-back').onclick = () => show('scr-role');
+
+    function enterStart() {
+      if (MODE === 'team') { show('scr-role'); }
+      else { S.role = 'solo'; $('lesson-back').style.display = 'none'; renderLessons(); show('scr-lesson'); }
+    }
+
+    /* --- Team: chọn vai --- */
+    $('role-teacher').onclick = () => { S.role = 'teacher'; $('lesson-back').style.display = ''; $('lesson-sub').textContent = 'Chọn bài cả lớp sẽ chơi.'; renderLessons(); show('scr-lesson'); };
+    $('role-student').onclick = () => { S.role = 'student'; showErr('join-err', ''); show('scr-join'); setTimeout(() => $('join-code').focus(), 50); };
+    $('join-back').onclick = () => show('scr-role');
+
+    /* --- Nút bắt đầu ở màn thiết lập --- */
+    $('btn-go').onclick = async () => {
+      if (S.role === 'solo') {
+        startGame({ words: seededWords(S.lesson, Math.floor(Math.random() * 1e9)), level: S.level, team: false });
+        return;
+      }
+      // Giáo viên tạo phòng
+      const pin = $('pin').value.trim();
+      if (!pin) return showErr('setup-err', 'Hãy nhập mật khẩu giáo viên.');
+      const btn = $('btn-go'); btn.disabled = true; showErr('setup-err', '');
+      try {
+        const st = await api('gameCreate', { pin, lesson: S.lesson, level: S.level });
+        S.pin = pin; S.code = st.room.code; S.seed = st.room.seed;
+        openTeacherLobby(st);
+      } catch (e) { showErr('setup-err', e.message); }
+      btn.disabled = false;
+    };
+
+    /* --- Giáo viên: phòng chờ --- */
+    function chips(players, meId) { return players.length ? players.map(p => `<span class="chip ${p.id === meId ? 'me' : ''}">${esc(p.name)}</span>`).join('') : '<span class="sub" style="margin:0">Chưa có ai vào phòng...</span>'; }
+
+    function openTeacherLobby(st) {
+      $('lobby-title').textContent = 'Phòng của giáo viên';
+      $('lobby-sub').textContent = `${S.lesson} · Mức độ: ${S.level === 'hard' ? 'Khó' : 'Dễ'}. Học viên vào Tỉ Thí Đài, chọn "Học viên" rồi nhập mã:`;
+      $('lobby-code').textContent = S.code;
+      $('lobby-teacher-row').style.display = 'flex'; $('lobby-student-row').style.display = 'none';
+      showErr('lobby-err', ''); paintLobby(st); show('scr-lobby');
+      startPoll(async () => { const s = await api('gameState', { code: S.code }); paintLobby(s); }, POLL_MS);
+    }
+    function paintLobby(st) {
+      $('lobby-count').textContent = `${st.players.length} học viên đã vào phòng`;
+      $('lobby-chips').innerHTML = chips(st.players, S.pid);
+      $('btn-start').disabled = st.players.length < 1;
+    }
+    $('btn-start').onclick = async () => {
+      $('btn-start').disabled = true;
+      try { const st = await api('gameStart', { code: S.code, pin: S.pin }); stopPoll(); openLive(st); }
+      catch (e) { showErr('lobby-err', e.message); $('btn-start').disabled = false; }
+    };
+    $('btn-cancel-room').onclick = async () => {
+      if (!confirm('Hủy phòng này?')) return;
+      try { await api('gameEnd', { code: S.code, pin: S.pin }); } catch (e) {}
+      stopPoll(); S.code = ''; show('scr-role');
+    };
+
+    /* --- Giáo viên: bảng xếp hạng trực tiếp --- */
+    const MEDAL = ['🥇', '🥈', '🥉'];
+    function boardRows(players, meId, total) {
+      return players.map((p, i) => `<tr class="${p.id === meId ? 'me' : ''}"><td class="rk">${MEDAL[i] || (i + 1)}</td><td>${esc(p.name)}</td><td>${p.done ? '✔ Xong' : '✈ Đang bay'}</td><td class="sc">${p.score}</td></tr>`).join('')
+        || '<tr><td colspan="4" style="text-align:center">Chưa có dữ liệu</td></tr>';
+    }
+    function openLive(st) {
+      $('live-deco').textContent = '实 · 时'; $('live-title').textContent = 'Bảng xếp hạng trực tiếp';
+      $('btn-end-room').style.display = ''; $('btn-new-room').style.display = 'none';
+      paintLive(st); show('scr-live');
+      startPoll(async () => { const s = await api('gameState', { code: S.code }); paintLive(s); }, 3000);
+    }
+    function paintLive(st) {
+      $('live-body').innerHTML = boardRows(st.players, '');
+      const done = st.players.filter(p => p.done).length;
+      if (st.room.status === 'ended') {
+        stopPoll();
+        $('live-deco').textContent = '成 · 绩'; $('live-title').textContent = 'Xếp hạng cuối buổi';
+        $('live-sub').textContent = `${st.players.length} học viên · phòng ${S.code} đã kết thúc. Điểm được lưu trong tab GAME_NGUOICHOI của Google Sheet.`;
+        $('btn-end-room').style.display = 'none'; $('btn-new-room').style.display = '';
+      } else {
+        $('live-sub').textContent = `Phòng ${S.code} · ${done}/${st.players.length} học viên đã xong. Bảng tự cập nhật.`;
+      }
+    }
+    $('btn-end-room').onclick = async () => {
+      if (!confirm('Kết thúc buổi và chốt xếp hạng ngay bây giờ?')) return;
+      try { const st = await api('gameEnd', { code: S.code, pin: S.pin }); paintLive(st); } catch (e) { alert(e.message); }
+    };
+    $('btn-new-room').onclick = () => { stopPoll(); S.code = ''; renderLessons(); show('scr-lesson'); };
+
+    /* --- Học viên: vào phòng --- */
+    $('btn-join').onclick = async () => {
+      const code = $('join-code').value.trim(), name = $('join-name').value.trim();
+      if (!/^\d{4}$/.test(code)) return showErr('join-err', 'Mã phòng gồm 4 chữ số.');
+      if (!name) return showErr('join-err', 'Bạn chưa nhập tên.');
+      const btn = $('btn-join'); btn.disabled = true; showErr('join-err', '');
+      try {
+        const st = await api('gameJoin', { code, name });
+        S.code = code; S.pid = st.pid; S.name = st.name; S.lesson = st.room.lesson; S.level = st.room.level; S.seed = st.room.seed;
+        if (!LESSONS.find(l => l.name === S.lesson)) throw new Error(`Không tìm thấy bài "${S.lesson}" trong kho từ vựng.`);
+        openStudentLobby(st);
+      } catch (e) { showErr('join-err', e.message); }
+      btn.disabled = false;
+    };
+    $('join-code').addEventListener('keydown', e => { if (e.key === 'Enter') $('join-name').focus(); });
+    $('join-name').addEventListener('keydown', e => { if (e.key === 'Enter') $('btn-join').click(); });
+
+    function openStudentLobby(st) {
+      $('lobby-title').textContent = `Chào ${S.name}!`;
+      $('lobby-sub').textContent = `${S.lesson} · Mức độ: ${S.level === 'hard' ? 'Khó' : 'Dễ'}. Đang chờ giáo viên bấm bắt đầu...`;
+      $('lobby-code').textContent = S.code;
+      $('lobby-teacher-row').style.display = 'none'; $('lobby-student-row').style.display = 'flex';
+      showErr('lobby-err', ''); paintLobby(st); $('btn-start').disabled = false; show('scr-lobby');
+      startPoll(async () => {
+        const s = await api('gameState', { code: S.code }); paintLobby(s);
+        if (s.room.status === 'playing') { stopPoll(); beginTeamGame(s); }
+        else if (s.room.status === 'ended') { stopPoll(); openTeamResult(null, s); }
+      }, POLL_MS);
+    }
+    $('btn-leave').onclick = () => { stopPoll(); S.code = ''; S.pid = ''; show('scr-role'); };
+
+    async function beginTeamGame(st) {
+      const offset = st.serverNow - Date.now();
+      const startLocal = st.room.startAt - offset;
+      const words = seededWords(S.lesson, S.seed);
+      show('scr-game');
+      G.team = true; paintHud();
+      $('mean-text').textContent = '...'; $('mean-hint').textContent = '';
+      const cd = $('countdown'); cd.classList.add('show');
+      let last = -1;
+      while (true) {
+        const left = startLocal - Date.now();
+        if (left <= 0) break;
+        const n = Math.ceil(left / 1000);
+        if (n !== last) { last = n; cd.innerHTML = n > 3 ? `<small>Chuẩn bị bay cùng cả lớp</small>…` : String(n); if (n <= 3) sfx.tick(); }
+        await sleep(100);
+      }
+      cd.innerHTML = 'Bay!'; sfx.go(); await sleep(500); cd.classList.remove('show');
+      startGame({ words, level: S.level, team: true });
+    }
+
+    /* ================= GAME ================= */
+    const cv = $('cv'), ctx = cv.getContext('2d');
+    let CW = 600, CH = 400, DPR = 1, SC = 1;
+    function resizeCanvas() {
+      const r = $('stage').getBoundingClientRect(); if (r.width < 10) return;
+      DPR = Math.min(2, window.devicePixelRatio || 1); CW = r.width; CH = Math.max(120, r.height);
+      cv.width = Math.round(CW * DPR); cv.height = Math.round(CH * DPR); ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      SC = Math.max(0.55, Math.min(1.15, Math.min(CW / 700, CH / 430)));
+    }
+    new ResizeObserver(resizeCanvas).observe($('stage'));
+    // Trên màn hình hẹp, thẻ nghĩa nằm ngang đáy nên máy bay phải bay phía trên nó
+    function groundY() {
+      if (CW >= 640) return CH;
+      const c = document.querySelector('.meaning-card');
+      return CH - (c ? c.offsetHeight + 14 : 0);
+    }
+
+    const G = {
+      running: false, team: false, level: 'easy', words: [], i: 0, score: 0, ok: 0, bad: 0, review: new Map(),
+      cur: null, ans: [], wrong: 0, locked: false, enemy: null, bullets: [], parts: [], floats: [], clouds: [],
+      px: 300, t: 0, last: 0, elapsed: 0, limit: 0, shake: 0, nextIn: -1, finished: false, pushTimer: null, dirty: false, rank: ''
+    };
+
+    function initClouds() {
+      G.clouds = [];
+      for (let k = 0; k < 9; k++) G.clouds.push({ x: Math.random(), y: Math.random(), s: 0.6 + Math.random() * 0.9, sp: 14 + Math.random() * 22 });
+    }
+
+    function startGame(opts) {
+      Object.assign(G, { running: true, team: !!opts.team, level: opts.level, words: opts.words, i: 0, score: 0, ok: 0, bad: 0, review: new Map(),
+        cur: null, wrong: 0, locked: false, enemy: null, bullets: [], parts: [], floats: [], px: CW / 2, t: 0, elapsed: 0, limit: 0,
+        shake: 0, nextIn: -1, finished: false, dirty: true, rank: '' });
+      initClouds(); show('scr-game'); resizeCanvas();
+      $('countdown').classList.remove('show');
+      $('hud-level').textContent = G.level === 'hard' ? 'Khó ⚡' : 'Dễ 🕊️';
+      paintHud(); nextWord();
+      G.last = performance.now(); requestAnimationFrame(frame);
+      if (G.team) { clearInterval(G.pushTimer); G.pushTimer = setInterval(pushScore, PUSH_EVERY_MS); }
+      setTimeout(() => $('ans').focus(), 100);
+    }
+
+    function paintHud() {
+      $('score-val').textContent = G.score;
+      $('hud-score').classList.toggle('neg', G.score < 0);
+      $('hud-prog').textContent = `Từ ${Math.min(G.i + 1, G.words.length)} / ${G.words.length}` + (G.rank ? ' · ' + G.rank : '');
+    }
+    function toast(msg, ms) { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), ms || 1200); }
+
+    function nextWord() {
+      if (G.i >= G.words.length) return finish();
+      const w = G.words[G.i]; G.cur = w; G.ans = answersOf(w.hantu); G.wrong = 0; G.locked = false; G.nextIn = -1;
+      G.enemy = { x: CW / 2, base: CW * (0.3 + 0.4 * Math.random()), y: -70 * SC, ph: Math.random() * 6, t: 0 };
+      G.elapsed = 0;
+      G.limit = G.level === 'hard' ? Math.min(HARD_MAX_SEC, HARD_BASE_SEC + HARD_PER_CHAR * Math.max(1, [...strip(w.hantu)].length)) : 0;
+      $('mean-text').textContent = w.nghia;
+      $('mean-hint').textContent = `(${[...(G.ans[0] || '')].length} chữ Hán)`;
+      $('ans').value = ''; $('hud-bar').style.width = '0'; $('hud-bar').classList.remove('warn');
+      paintHud(); $('ans').focus();
+    }
+
+    function addReview(w) { G.review.set(w.hantu, w); }
+
+    function fire() {
+      const e = G.enemy; if (!e) return;
+      G.bullets.push({ x: G.px, y: groundY() - 70 * SC, tx: e });
+      sfx.shoot();
+    }
+
+    function onCorrect() {
+      if (G.locked || !G.cur) return; G.locked = true;
+      $('ans').value = ''; fire();
+    }
+    function onWrong() {
+      G.score += SCORE_WRONG; G.wrong++; G.bad++; G.dirty = true; addReview(G.cur);
+      G.shake = 0.25; sfx.wrong();
+      G.floats.push({ x: G.enemy ? G.enemy.x : CW / 2, y: G.enemy ? G.enemy.y + 40 * SC : CH / 2, text: String(SCORE_WRONG), color: '#7a4a14', life: 1 });
+      if (G.wrong >= 2) $('mean-hint').textContent = `Gợi ý: ${G.cur.pinyin || '(chưa có pinyin)'}`;
+      const a = $('ans'); a.classList.remove('shake'); void a.offsetWidth; a.classList.add('shake'); a.select();
+      paintHud();
+    }
+    function onTimeout() {
+      if (G.locked) return; G.locked = true;
+      G.score += SCORE_WRONG; G.bad++; G.dirty = true; addReview(G.cur);
+      const e = G.enemy; explode(e.x, e.y, 26, true); G.enemy = null; G.shake = 0.5; sfx.crash();
+      toast(`Hết giờ! Đáp án: ${G.cur.hantu}  ${G.cur.pinyin || ''}`, 1800);
+      G.floats.push({ x: CW / 2, y: CH * 0.55, text: String(SCORE_WRONG), color: '#7a4a14', life: 1.2 });
+      G.nextIn = 1.8; paintHud();
+    }
+
+    /* --- Nhập đáp án (có xử lý bộ gõ tiếng Trung) --- */
+    let composing = false;
+    const ans = $('ans');
+    ans.addEventListener('compositionstart', () => { composing = true; });
+    ans.addEventListener('compositionend', () => { composing = false; checkLive(); });
+    ans.addEventListener('input', () => { if (!composing) checkLive(); });
+    function checkLive() { if (!G.running || G.locked || !G.cur) return; const v = strip(ans.value); if (v && G.ans.includes(v)) onCorrect(); }
+    $('ans-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!G.running || G.locked || !G.cur || composing) return;
+      const v = strip(ans.value); if (!v) return;
+      if (G.ans.includes(v)) onCorrect(); else onWrong();
+    });
+
+    /* --- Vòng lặp --- */
+    function frame(ts) {
+      if (!G.running) return;
+      const dt = Math.min(0.05, (ts - G.last) / 1000); G.last = ts;
+      update(dt); draw();
+      requestAnimationFrame(frame);
+    }
+
+    function update(dt) {
+      G.t += dt;
+      G.clouds.forEach(c => { c.y += (c.sp * dt) / CH; if (c.y > 1.15) { c.y = -0.15; c.x = Math.random(); } });
+      if (G.shake > 0) G.shake -= dt;
+
+      const e = G.enemy;
+      if (e) {
+        e.t += dt;
+        e.x = e.base + Math.sin(e.t * 1.1 + e.ph) * CW * 0.16;
+        if (!G.locked) {
+          if (G.level === 'hard') {
+            G.elapsed += dt; const p = Math.min(1, G.elapsed / G.limit);
+            e.y = -70 * SC + p * (groundY() - 120 * SC + 70 * SC);
+            const bar = $('hud-bar'); bar.style.width = (p * 100).toFixed(1) + '%'; bar.classList.toggle('warn', p > 0.7);
+            if (p >= 1) onTimeout();
+          } else {
+            const ty = Math.max(70 * SC, CH * 0.24); e.y += (ty - e.y) * Math.min(1, dt * 2.2);
+          }
+        }
+        G.px += (e.x - G.px) * Math.min(1, dt * 4);
+      }
+      G.px = Math.max(30, Math.min(CW - 30, G.px));
+
+      // đạn đuổi theo mục tiêu
+      for (let k = G.bullets.length - 1; k >= 0; k--) {
+        const b = G.bullets[k], t = b.tx;
+        const dx = t.x - b.x, dy = t.y - b.y, d = Math.hypot(dx, dy), sp = 1250 * dt;
+        if (d <= sp + 16 * SC) {
+          G.bullets.splice(k, 1);
+          explode(t.x, t.y, 30, false); sfx.hit();
+          G.enemy = null; G.score += SCORE_RIGHT; G.ok++; G.dirty = true; G.shake = 0.18;
+          G.floats.push({ x: t.x, y: t.y, text: '+' + SCORE_RIGHT, color: '#1e3a5f', life: 1.1 });
+          toast(`${G.cur.hantu}  ${G.cur.pinyin || ''}`, 1100); speak(G.cur.hantu);
+          G.nextIn = 1.0; paintHud();
+        } else { b.x += dx / d * sp; b.y += dy / d * sp; }
+      }
+
+      if (G.nextIn >= 0) { G.nextIn -= dt; if (G.nextIn < 0) { G.i++; nextWord(); } }
+
+      for (let k = G.parts.length - 1; k >= 0; k--) { const p = G.parts[k]; p.life -= dt; if (p.life <= 0) { G.parts.splice(k, 1); continue; } p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 120 * dt; }
+      for (let k = G.floats.length - 1; k >= 0; k--) { const f = G.floats[k]; f.life -= dt; f.y -= 40 * dt; if (f.life <= 0) G.floats.splice(k, 1); }
+    }
+
+    function explode(x, y, n, dark) {
+      const cols = dark ? ['#4a3525', '#6b5240', '#d9c28f', '#2b2622'] : ['#fff6d6', '#f3d27a', '#d9b66b', '#ffffff', '#9fc3dd'];
+      for (let k = 0; k < n; k++) {
+        const a = Math.random() * 6.283, s = (60 + Math.random() * 240) * SC;
+        G.parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: 0.5 + Math.random() * 0.6, max: 1.1, r: (2 + Math.random() * 4) * SC, c: cols[k % cols.length] });
+      }
+      G.parts.push({ x, y, vx: 0, vy: 0, life: 0.35, max: 0.35, r: 10 * SC, c: '#ffffff', ring: true });
+    }
+
+    /* --- Vẽ --- */
+    function jet(x, y, s, down, body, wing, accent, flame) {
+      ctx.save(); ctx.translate(x, y); if (down) ctx.rotate(Math.PI); ctx.scale(s, s);
+      if (flame) { ctx.fillStyle = 'rgba(255,190,80,.9)'; ctx.beginPath(); ctx.moveTo(-.07, .9); ctx.lineTo(0, 1.25 + Math.random() * .25); ctx.lineTo(.07, .9); ctx.fill(); }
+      ctx.fillStyle = wing;
+      [1, -1].forEach(m => {
+        ctx.beginPath(); ctx.moveTo(.1 * m, -.2); ctx.lineTo(1 * m, .5); ctx.lineTo(1 * m, .68); ctx.lineTo(.1 * m, .4); ctx.closePath(); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(.08 * m, .55); ctx.lineTo(.42 * m, .9); ctx.lineTo(.42 * m, 1); ctx.lineTo(.07 * m, .84); ctx.closePath(); ctx.fill();
+      });
+      ctx.fillStyle = body; ctx.beginPath(); ctx.moveTo(0, -1.05); ctx.quadraticCurveTo(.2, -.5, .15, .55); ctx.lineTo(.07, .9); ctx.lineTo(-.07, .9); ctx.lineTo(-.15, .55); ctx.quadraticCurveTo(-.2, -.5, 0, -1.05); ctx.fill();
+      ctx.fillStyle = accent; ctx.fillRect(-.15, .12, .3, .07); ctx.fillRect(-.14, .3, .28, .05);
+      ctx.fillStyle = 'rgba(255,255,255,.88)'; ctx.beginPath(); ctx.ellipse(0, -.38, .07, .2, 0, 0, 6.283); ctx.fill();
+      ctx.restore();
+    }
+
+    function draw() {
+      ctx.save();
+      if (G.shake > 0) ctx.translate((Math.random() - .5) * 8 * G.shake * 4, (Math.random() - .5) * 8 * G.shake * 4);
+      // nền trời
+      const g = ctx.createLinearGradient(0, 0, 0, CH); g.addColorStop(0, '#b9d3e4'); g.addColorStop(0.6, '#e4eef2'); g.addColorStop(1, '#f3ead4');
+      ctx.fillStyle = g; ctx.fillRect(-10, -10, CW + 20, CH + 20);
+      // núi xa
+      ctx.fillStyle = 'rgba(30,58,95,.10)'; ctx.beginPath(); ctx.moveTo(0, CH);
+      for (let x = 0; x <= CW; x += 40) ctx.lineTo(x, CH - 40 * SC - Math.abs(Math.sin(x * .013)) * 70 * SC); ctx.lineTo(CW, CH); ctx.fill();
+      // mây
+      G.clouds.forEach(c => {
+        const cx = c.x * CW, cy = c.y * CH, r = 28 * c.s * SC; ctx.fillStyle = 'rgba(255,255,255,.7)';
+        [[0, 0, 1], [-1.1, .25, .75], [1.1, .25, .8], [.4, -.4, .7]].forEach(([ox, oy, k]) => { ctx.beginPath(); ctx.arc(cx + ox * r, cy + oy * r, r * k, 0, 6.283); ctx.fill(); });
+      });
+
+      // máy bay địch + vòng ngắm
+      const e = G.enemy;
+      if (e) {
+        const s = 30 * SC;
+        ctx.save(); ctx.translate(e.x, e.y); ctx.rotate(G.t * 0.8); ctx.strokeStyle = 'rgba(179,139,77,.9)'; ctx.lineWidth = 2; ctx.setLineDash([8, 8]);
+        ctx.beginPath(); ctx.arc(0, 0, s * 1.5, 0, 6.283); ctx.stroke(); ctx.restore();
+        jet(e.x, e.y, s, true, '#4a3525', '#6b5240', '#d9c28f', false);
+      }
+      // máy bay ta
+      jet(G.px, groundY() - 52 * SC, 30 * SC, false, '#1e3a5f', '#2c5282', '#d9c28f', true);
+
+      // đạn
+      G.bullets.forEach(b => {
+        ctx.strokeStyle = 'rgba(255,214,120,.55)'; ctx.lineWidth = 4 * SC; ctx.beginPath(); ctx.moveTo(b.x, b.y); ctx.lineTo(b.x - (b.tx.x - b.x) * 0.05, b.y - (b.tx.y - b.y) * 0.05 + 22 * SC); ctx.stroke();
+        ctx.fillStyle = '#fff7d6'; ctx.beginPath(); ctx.arc(b.x, b.y, 5 * SC, 0, 6.283); ctx.fill();
+      });
+      // nổ
+      G.parts.forEach(p => {
+        ctx.globalAlpha = Math.max(0, p.life / p.max);
+        if (p.ring) { ctx.strokeStyle = p.c; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(p.x, p.y, p.r + (1 - p.life / p.max) * 70 * SC, 0, 6.283); ctx.stroke(); }
+        else { ctx.fillStyle = p.c; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill(); }
+      });
+      ctx.globalAlpha = 1;
+      // điểm bay
+      ctx.font = `700 ${Math.round(26 * SC + 4)}px "Noto Serif", serif`; ctx.textAlign = 'center';
+      G.floats.forEach(f => { ctx.globalAlpha = Math.min(1, f.life * 1.4); ctx.fillStyle = f.color; ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.lineWidth = 4; ctx.strokeText(f.text, f.x, f.y); ctx.fillText(f.text, f.x, f.y); });
+      ctx.globalAlpha = 1;
+      ctx.restore();
+    }
+
+    /* --- Kết thúc ván --- */
+    async function finish() {
+      if (G.finished) return; G.finished = true; G.running = false; clearInterval(G.pushTimer);
+      $('toast').classList.remove('show');
+      const reviewList = [...G.review.values()];
+      if (!G.team) return openSoloResult(reviewList);
+      let st = null;
+      try { st = await api('gameScore', { code: S.code, pid: S.pid, score: G.score, done: 1 }); } catch (e) {
+        try { await sleep(1200); st = await api('gameScore', { code: S.code, pid: S.pid, score: G.score, done: 1 }); } catch (e2) {}
+      }
+      openTeamResult(reviewList, st);
+    }
+
+    async function pushScore() {
+      if (!G.running || G.finished) return;
+      try {
+        const st = await api('gameScore', { code: S.code, pid: S.pid, score: G.score, done: 0 });
+        const idx = st.players.findIndex(p => p.id === S.pid);
+        if (idx >= 0) { G.rank = `Hạng ${idx + 1}/${st.players.length}`; paintHud(); }
+        if (st.room.status === 'ended' && !G.finished) { toast('Giáo viên đã kết thúc ván!', 1500); setTimeout(finish, 600); }
+      } catch (e) {}
+    }
+
+    function reviewHtml(list) {
+      return list.map(w => `<div><span class="h">${esc(w.hantu)}</span><span class="p">${esc(w.pinyin || '')}</span><span>${esc(w.nghia)}</span></div>`).join('');
+    }
+    function fillStats(list) {
+      $('res-score').textContent = G.score; $('res-ok').textContent = `${G.ok}/${G.words.length}`; $('res-bad').textContent = G.bad;
+      $('res-review-box').style.display = list && list.length ? 'block' : 'none';
+      $('res-review').innerHTML = list ? reviewHtml(list) : '';
+    }
+
+    function openSoloResult(list) {
+      const pct = G.words.length ? Math.round(G.ok / G.words.length * 100) : 0;
+      $('res-title').textContent = G.score >= G.words.length * 1.5 ? 'Phi công xuất sắc! 🎖️' : (G.score >= 0 ? 'Hoàn thành chuyến bay!' : 'Cần luyện thêm nhé!');
+      $('res-sub').textContent = `${S.lesson} · ${S.level === 'hard' ? 'Khó' : 'Dễ'} · đúng ${pct}% số từ.`;
+      fillStats(list); $('res-board-box').style.display = 'none';
+      $('res-actions').innerHTML = '<button class="btn gold" id="r-again">✈ Bay lại bài này</button><button class="btn ghost" id="r-other">Chọn bài khác</button>';
+      $('r-again').onclick = () => startGame({ words: seededWords(S.lesson, Math.floor(Math.random() * 1e9)), level: S.level, team: false });
+      $('r-other').onclick = () => show('scr-lesson');
+      show('scr-result');
+    }
+
+    function openTeamResult(list, st) {
+      stopPoll();
+      $('res-title').textContent = 'Bảng xếp hạng'; $('res-sub').textContent = `Phòng ${S.code} · ${S.lesson} · ${S.level === 'hard' ? 'Khó' : 'Dễ'}`;
+      if (list) fillStats(list); else { $('res-score').textContent = '-'; $('res-ok').textContent = '-'; $('res-bad').textContent = '-'; $('res-review-box').style.display = 'none'; }
+      $('res-board-box').style.display = 'block';
+      $('res-actions').innerHTML = '<button class="btn ghost" id="r-exit">Thoát phòng</button>';
+      $('r-exit').onclick = () => { stopPoll(); S.code = ''; S.pid = ''; show('scr-role'); };
+      const paint = (s) => {
+        if (!s) return;
+        $('res-body').innerHTML = boardRows(s.players, S.pid);
+        const done = s.players.filter(p => p.done).length;
+        $('res-board-sub').textContent = s.room.status === 'ended' ? '🏁 Cuối buổi · xếp hạng chung cuộc' : `Đang chờ các bạn khác... (${done}/${s.players.length} đã xong). Bảng tự cập nhật.`;
+        if (s.room.status === 'ended') stopPoll();
+      };
+      paint(st); show('scr-result');
+      startPoll(async () => paint(await api('gameState', { code: S.code })), 3000);
+    }
+
+    /* --- Thoát giữa chừng --- */
+    $('btn-quit').onclick = () => {
+      if (!G.running) return;
+      if (!confirm(G.team ? 'Kết thúc lượt chơi của bạn ở đây?' : 'Thoát khỏi ván này?')) return;
+      if (G.team) finish(); else { G.running = false; show('scr-lesson'); }
+    };
+    // Chạm vào màn chơi thì tự đưa con trỏ vào ô gõ
+    $('stage').addEventListener('pointerdown', () => { if (G.running) $('ans').focus(); });
+
+    /* ================= KHỞI ĐỘNG ================= */
+    async function boot() {
+      $('btn-retry').style.display = 'none'; $('loading-text').textContent = 'Đang nạp kho từ vựng...';
+      try { await loadVocab(); enterStart(); }
+      catch (e) { $('loading-text').textContent = 'Lỗi tải từ vựng: ' + e.message; $('btn-retry').style.display = ''; }
+    }
+    $('btn-retry').onclick = boot;
+    if (MODE === 'team') $('scr-loading').querySelector('h1').textContent = 'Tỉ Thí Đài';
+    boot();
+  })();
+  </script>
+</body>
+</html>
