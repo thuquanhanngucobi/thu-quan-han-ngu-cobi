@@ -1,0 +1,230 @@
+{
+ "_ghichu": "File mẫu để tham khảo cấu trúc. Đổi tên thành hsk3.json (và sửa nội dung) khi làm đề thật; web không đọc file này.",
+ "exams": [
+  {
+   "code": "MAU-3.0",
+   "level": 3,
+   "version": "3.0",
+   "title": "Đề mẫu HSK 3 (hệ 3.0) – đủ các loại câu hỏi",
+   "durationMin": 60,
+   "pointsPerQuestion": 5,
+   "passScore": 120,
+   "showAnswers": true,
+   "sections": [
+    {
+     "id": "listening",
+     "title": "听力",
+     "subtitle": "Nghe",
+     "audio": "audio.mp3",
+     "parts": [
+      {
+       "title": "第一部分",
+       "range": "第 1–2 题",
+       "type": "choice",
+       "instruction": "Nghe và chọn đáp án đúng.",
+       "questions": [
+        {
+         "n": 1,
+         "answer": "B",
+         "options": [
+          {
+           "key": "A",
+           "text": "图书馆",
+           "pinyin": "túshūguǎn"
+          },
+          {
+           "key": "B",
+           "text": "超市",
+           "pinyin": "chāoshì"
+          },
+          {
+           "key": "C",
+           "text": "学校",
+           "pinyin": "xuéxiào"
+          }
+         ]
+        },
+        {
+         "n": 2,
+         "answer": "C",
+         "prompt": "他们在做什么？",
+         "options": [
+          {
+           "key": "A",
+           "text": "吃饭"
+          },
+          {
+           "key": "B",
+           "text": "看电影"
+          },
+          {
+           "key": "C",
+           "text": "等人"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "reading",
+     "title": "阅读",
+     "subtitle": "Đọc",
+     "parts": [
+      {
+       "title": "第一部分",
+       "range": "第 3–4 题",
+       "type": "truefalse",
+       "instruction": "Đọc câu và chọn ✓ (đúng) hoặc × (sai) so với đoạn văn.",
+       "passage": {
+        "text": "我家有四口人：爸爸、妈妈、哥哥和我。我们住在河内。"
+       },
+       "questions": [
+        {
+         "n": 3,
+         "prompt": "他有一个姐姐。",
+         "answer": "F"
+        },
+        {
+         "n": 4,
+         "prompt": "他们住在河内。",
+         "answer": "T"
+        }
+       ]
+      },
+      {
+       "title": "第二部分",
+       "range": "第 5–6 题",
+       "type": "matching",
+       "instruction": "Chọn từ điền vào chỗ trống.",
+       "options": [
+        {
+         "key": "A",
+         "text": "已经",
+         "pinyin": "yǐjīng"
+        },
+        {
+         "key": "B",
+         "text": "但是",
+         "pinyin": "dànshì"
+        },
+        {
+         "key": "C",
+         "text": "因为",
+         "pinyin": "yīnwèi"
+        }
+       ],
+       "questions": [
+        {
+         "n": 5,
+         "prompt": "他（　　）走了。",
+         "answer": "A"
+        },
+        {
+         "n": 6,
+         "prompt": "我想去，（　　）没有时间。",
+         "answer": "B"
+        }
+       ]
+      },
+      {
+       "title": "第三部分",
+       "range": "第 7–8 题",
+       "type": "ordering",
+       "instruction": "Bấm các cụm từ theo thứ tự để tạo thành câu đúng. (answer = thứ tự chỉ số của items, tính từ 0)",
+       "questions": [
+        {
+         "n": 7,
+         "items": [
+          "我",
+          "学习",
+          "汉语",
+          "喜欢"
+         ],
+         "answer": [
+          0,
+          3,
+          1,
+          2
+         ]
+        },
+        {
+         "n": 8,
+         "items": [
+          "在",
+          "他",
+          "图书馆",
+          "看书"
+         ],
+         "answer": [
+          1,
+          0,
+          2,
+          3
+         ]
+        }
+       ]
+      },
+      {
+       "title": "第四部分",
+       "range": "第 9 题",
+       "type": "short",
+       "instruction": "Điền chữ Hán vào chỗ trống. (answer có thể là 1 chuỗi hoặc mảng nhiều đáp án chấp nhận)",
+       "questions": [
+        {
+         "n": 9,
+         "prompt": "我喜欢吃（　　）。（nhập từ 水果 hoặc 苹果）",
+         "answer": [
+          "水果",
+          "苹果"
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "writing",
+     "title": "书写",
+     "subtitle": "Viết",
+     "parts": [
+      {
+       "title": "第一部分",
+       "range": "第 10 题",
+       "type": "essay",
+       "instruction": "Đặt câu với từ cho sẵn. (Không có answer → giáo viên chấm tay, bài làm gửi vào cột Phần tự luận)",
+       "questions": [
+        {
+         "n": 10,
+         "prompt": "用“因为…所以…”造句。",
+         "keywords": [
+          "因为",
+          "所以"
+         ],
+         "rows": 3,
+         "minChars": 10
+        }
+       ]
+      },
+      {
+       "title": "第二部分",
+       "range": "第 11 题",
+       "type": "essay",
+       "instruction": "Viết một đoạn văn ngắn.",
+       "questions": [
+        {
+         "n": 11,
+         "prompt": "请写一段话介绍你的家人（60字左右）。",
+         "rows": 8,
+         "minChars": 60
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "id": "mau-3-0"
+  }
+ ]
+}

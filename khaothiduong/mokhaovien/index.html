@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Mô Khảo Viện – Thi thử HSK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Ma+Shan+Zheng&family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+SC:wght@400;600;700&display=swap">
+<style>
+/* =====================================================================
+   MÔ KHẢO VIỆN – giao diện (nền trong suốt để nằm trong khung giữa của web chính)
+   ===================================================================== */
+:root{
+  --card:#fbf6e8; --ink:#1d2a38; --muted:#5d6b78; --line:#d8cba8;
+  --blue:#1e3f66; --blue-d:#142c4a; --sea:#2f6f94; --teal:#4a8a9a; --mist:#cfdde0;
+  --gold:#a98440; --ok:#2c7a6b; --bad:#6a4a8c;
+  --f-title:"Cormorant Garamond","Noto Serif","Noto Serif SC",serif;
+  --f-body:"Noto Serif","Noto Serif SC","Songti SC","SimSun",serif;
+  --f-brush:"Ma Shan Zheng","KaiTi","STKaiti","Noto Serif SC",serif; /* CHỈ dùng cho dòng thuần chữ Hán (không có dấu tiếng Việt) */
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; padding:18px 20px 40px; background:transparent; color:var(--ink); font-family:var(--f-body); line-height:1.65}
+h1,h2,h3{font-family:var(--f-title); font-variant-numeric:lining-nums; font-feature-settings:"lnum" 1; color:var(--blue-d); line-height:1.2; margin:0}
+a{color:var(--blue)} button{font:inherit; cursor:pointer}
+#app{max-width:980px; margin:0 auto}
+.d{font-family:var(--f-body); font-weight:700}
+
+/* khung hai nét */
+.panel,.level-card,.exam-card,.part,.summary{position:relative; background:rgba(251,246,232,.93); border:1px solid var(--line); border-radius:10px;
+  box-shadow:0 6px 18px rgba(30,63,102,.08), inset 0 0 0 4px var(--card), inset 0 0 0 5px var(--line)}
+.panel{padding:22px 26px; margin-bottom:18px}
+
+/* tiêu đề khu vực */
+.hero{text-align:center; padding:6px 0 4px}
+.hero .kicker{letter-spacing:.6em; color:var(--sea); font-size:.9rem; margin-bottom:4px}
+.hero h1{font-size:clamp(2rem,6vw,3.2rem); font-weight:600}
+.hero .slogan{font-family:var(--f-brush); font-size:1.5rem; color:var(--blue-d); letter-spacing:.12em; margin:2px 0}
+.hero p{color:var(--muted); margin:2px 0 0}
+.orn{display:flex; align-items:center; justify-content:center; gap:14px; margin:14px auto 20px; color:var(--gold)}
+.orn::before,.orn::after{content:""; width:60px; height:1px; background:currentColor}
+.orn i{width:9px; height:9px; transform:rotate(45deg); background:currentColor}
+
+/* thẻ cấp độ */
+.levels{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:18px}
+.level-card{display:flex; flex-direction:column; align-items:center; text-align:center; padding:22px 18px 20px; text-decoration:none; color:inherit; transition:.25s transform,.25s box-shadow}
+.level-card:hover{transform:translateY(-4px); box-shadow:0 12px 26px rgba(30,63,102,.18), inset 0 0 0 4px var(--card), inset 0 0 0 5px var(--blue)}
+.level-card .num{font-family:var(--f-brush); font-size:3.6rem; line-height:1; color:var(--blue); text-shadow:2px 2px 0 rgba(169,132,64,.25)}
+.level-card h3{font-size:1.5rem; margin:4px 0 0}
+.level-card .zh{color:var(--sea); letter-spacing:.2em; font-size:.9rem}
+.level-card p{color:var(--muted); font-size:.88rem; margin:8px 0 12px; min-height:2.8em}
+.pill{font-size:.82rem; color:var(--blue); background:rgba(47,111,148,.1); padding:2px 12px; border-radius:999px}
+.level-card .pill{margin-bottom:12px}
+
+.btn{display:inline-block; border:0; border-radius:8px; padding:9px 22px; font-weight:700; text-decoration:none; transition:.2s}
+.btn.sm{padding:5px 14px; font-size:.9rem}
+.btn-primary{background:var(--blue); color:#fff; box-shadow:0 3px 0 var(--blue-d)}
+.btn-primary:hover{background:var(--sea)}
+.btn-ghost{background:rgba(255,255,255,.7); color:var(--blue); border:1px solid var(--blue)}
+.btn-ghost:hover{background:var(--mist)}
+
+/* danh sách đề */
+.crumb{color:var(--muted); font-size:.9rem; margin-bottom:6px}
+.crumb a{color:var(--sea); text-decoration:none}
+.page-head{display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px}
+.page-head h2{font-size:2.2rem}
+.page-head small{font-size:1rem; color:var(--sea); margin-left:10px; font-weight:400; font-family:var(--f-body)}
+.page-head small .zh{font-family:var(--f-brush); font-size:1.5rem; margin-right:6px}
+.filters{display:flex; gap:8px}
+.filters button{border:1px solid var(--line); background:var(--card); border-radius:999px; padding:4px 14px; color:var(--blue)}
+.filters button.on{background:var(--blue); color:#fff; border-color:var(--blue)}
+.exam-list{display:grid; gap:12px}
+.exam-card{display:flex; align-items:center; justify-content:space-between; gap:14px; padding:16px 22px; flex-wrap:wrap}
+.exam-card h3{font-size:1.25rem}
+.meta{display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; font-size:.82rem}
+.tag{background:rgba(47,111,148,.1); color:var(--blue); border-radius:6px; padding:1px 10px}
+.tag.v3{background:rgba(74,138,154,.18); color:#235a66}
+.tag.best{background:rgba(44,122,107,.14); color:var(--ok)}
+.empty{text-align:center; color:var(--muted); padding:34px 10px}
+.empty .zh{font-family:var(--f-brush); font-size:2.2rem; color:var(--sea)}
+.error-box{border-left:5px solid var(--bad)}
+.error-box h3{margin-bottom:6px}
+.error-box code{background:rgba(207,221,224,.5); padding:1px 6px; border-radius:4px; font-size:.9em; word-break:break-all}
+
+/* làm bài */
+.form label{display:block; margin:12px 0; font-weight:600}
+.form input[type=text]{display:block; width:100%; margin-top:5px; padding:10px 12px; border:1px solid var(--line); border-radius:8px; font:inherit; background:#fffdf6}
+.form input:focus,textarea:focus,input.short:focus{outline:2px solid var(--sea); border-color:var(--sea)}
+.info{padding-left:20px; color:#34475a}
+.examhead{position:sticky; top:0; z-index:20; display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:8px 14px; margin:0 -4px 12px;
+  background:rgba(246,238,219,.94); backdrop-filter:blur(6px); border:1px solid var(--line); border-radius:10px; box-shadow:0 4px 12px rgba(30,63,102,.1)}
+.examhead .eh-title{font-weight:700; color:var(--blue-d); flex:1; min-width:120px}
+.examhead .progress{color:var(--muted); font-size:.9rem}
+#timer{white-space:nowrap; font-variant-numeric:tabular-nums; font-weight:700; color:#fff; background:var(--blue); padding:3px 14px; border-radius:999px}
+#timer.warn{background:#fff; color:var(--bad); outline:2px solid var(--bad)}
+.tabs{display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap}
+.tabs button{flex:1; min-width:130px; padding:9px; border:1px solid var(--line); background:var(--card); border-radius:8px; font-weight:700; color:var(--blue)}
+.tabs button.on{background:var(--blue); color:#fff; border-color:var(--blue)}
+.qnav{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px}
+.qnav a{cursor:pointer; display:inline-flex; width:30px; height:30px; align-items:center; justify-content:center; border:1px solid var(--line); border-radius:6px; background:var(--card); color:var(--muted); text-decoration:none; font-size:.82rem}
+.qnav a.done{background:var(--blue); color:#fff; border-color:var(--blue)}
+.part{padding:18px 22px; margin-bottom:18px}
+.part h3{font-size:1.4rem; margin-bottom:4px}
+.note{color:var(--muted); margin:0 0 10px}
+.passage{background:rgba(207,221,224,.35); border-left:4px solid var(--teal); padding:10px 14px; margin:8px 0 12px; white-space:pre-line; font-size:1.12rem; border-radius:0 8px 8px 0}
+audio{width:100%; margin:4px 0 12px}
+.audio-miss{color:var(--bad); font-size:.88rem; margin:-6px 0 10px}
+.q{padding:12px 0; border-top:1px dashed var(--line); scroll-margin-top:80px}
+.q:first-of-type{border-top:0}
+.q .num{display:inline-block; min-width:2.4em; font-weight:700; color:var(--blue); font-size:1.08rem}
+.q .zh{font-size:1.4rem; white-space:pre-line}
+.q .py{color:var(--muted); font-size:.92rem; white-space:pre-line; margin-left:2.4em}
+.q .body{margin-left:2.4em}
+.pic{max-width:100%; max-height:200px; border-radius:6px; display:block; margin:6px 0; background:#fff}
+.pic.miss{display:flex; align-items:center; justify-content:center; width:150px; height:90px; border:2px dashed var(--line); color:var(--muted); font-size:.72rem; text-align:center; padding:6px}
+.opts{display:flex; flex-wrap:wrap; gap:10px; margin-top:8px}
+.opt{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; min-width:54px; padding:7px 16px; border:2px solid var(--line); background:#fffdf6; border-radius:8px; font-size:1.12rem; color:var(--ink); transition:.15s}
+.opt:hover{border-color:var(--sea)}
+.opt.on{background:var(--blue); color:#fff; border-color:var(--blue)}
+.opt .k{font-weight:700; margin-right:6px}
+.opt .opy{font-size:.72rem; opacity:.75}
+.opt.img{padding:8px; min-width:140px; flex:1 1 140px; max-width:230px}
+.opt.img .pic{max-height:115px; margin:0 auto 4px}
+.opt.row{flex-direction:row; gap:6px}
+.bank{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin:10px 0 14px}
+.bank .item{border:1px dashed var(--teal); border-radius:8px; padding:8px; text-align:center; background:rgba(255,255,255,.5)}
+.bank .item b{display:block; color:var(--blue); font-size:1.08rem}
+.bank .item .pic{margin:0 auto; max-height:105px}
+.bank .item small{display:block; color:var(--muted)}
+.chips{display:flex; flex-wrap:wrap; gap:8px; margin:8px 0}
+.chip{border:1px solid var(--sea); background:#fffdf6; color:var(--blue); border-radius:8px; padding:3px 14px; font-size:1.18rem}
+.chip.used{opacity:.3}
+.ans-line{min-height:46px; border:2px dashed var(--teal); border-radius:8px; padding:6px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; background:rgba(207,221,224,.25)}
+.ans-line .chip{background:var(--blue); color:#fff}
+input.short{width:100%; max-width:420px; padding:9px; border:1px solid var(--line); border-radius:8px; font:inherit; font-size:1.18rem; background:#fffdf6}
+textarea{width:100%; min-height:120px; padding:11px; border:1px solid var(--line); border-radius:8px; font:inherit; font-size:1.12rem; background:#fffdf6; resize:vertical}
+.count{font-size:.8rem; color:var(--muted); text-align:right}
+.kw{display:flex; gap:6px; flex-wrap:wrap; margin:6px 0; align-items:center}
+.kw span{background:rgba(74,138,154,.18); color:#235a66; border-radius:6px; padding:0 10px}
+.bar{display:flex; justify-content:center; gap:10px; margin:20px 0 6px}
+
+/* kết quả */
+.summary{padding:22px 26px; margin-bottom:18px}
+.score-big{font-size:3rem; font-weight:700; color:var(--blue); line-height:1.15}
+.pass{color:var(--ok); font-weight:700} .fail{color:var(--bad); font-weight:700}
+.sendstat{margin:10px 0; padding:8px 14px; border-radius:8px; background:rgba(207,221,224,.4); display:inline-block}
+.sendstat.ok{background:rgba(44,122,107,.14); color:var(--ok)}
+.sendstat.err{background:rgba(106,74,140,.12); color:var(--bad)}
+.actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+table.res{width:100%; border-collapse:collapse; margin-top:8px}
+table.res th,table.res td{padding:6px 8px; border-bottom:1px solid var(--line); text-align:center}
+table.res th{color:var(--muted); font-weight:600}
+table.res td.l{text-align:left}
+td.good{color:var(--ok); font-weight:700} td.badc{color:var(--bad); font-weight:700}
+
+@media (max-width:600px){
+  body{padding:12px 10px 30px}
+  .panel,.part,.summary{padding:14px 14px}
+  .q .body,.q .py{margin-left:0}
+}
+@media print{.examhead,.actions,.bar{display:none}}
+</style>
+</head>
+<body>
+<div id="app"><p style="text-align:center;color:#5d6b78">Đang tải…</p></div>
+
+<script>
+/* =====================================================================
+   CẤU HÌNH – chỉ có 1 dòng cần sửa
+   ===================================================================== */
+// Dán link Web App Google Apps Script (đuôi /exec) nhận kết quả bài thi vào đây.
+// Để trống: học viên vẫn làm và xem điểm bình thường, chỉ là kết quả không gửi về Google Sheet.
+const SCRIPT_URL = '';
+
+/* =====================================================================
+   DỮ LIỆU: mỗi cấp 1 file  hsk1.json … hsk6.json  (thêm đề = thêm 1 khối vào mảng "exams")
+   Ảnh: img/hsk1/…   ·   Nghe: audio/hsk1/…   (trong file JSON chỉ ghi tên file)
+   ===================================================================== */
+const LEVELS = [
+  { n: 1, zh: '一', cn: '一级', name: 'Sơ cấp nhập môn', desc: 'Làm quen chữ Hán, câu giao tiếp đơn giản nhất hằng ngày.' },
+  { n: 2, zh: '二', cn: '二级', name: 'Sơ cấp', desc: 'Trao đổi về những chủ đề quen thuộc: gia đình, mua sắm, thời gian.' },
+  { n: 3, zh: '三', cn: '三级', name: 'Trung cấp I', desc: 'Giao tiếp cơ bản trong học tập, công việc và đời sống.' },
+  { n: 4, zh: '四', cn: '四级', name: 'Trung cấp II', desc: 'Trao đổi trôi chảy nhiều chủ đề, đọc hiểu văn bản ngắn.' },
+  { n: 5, zh: '五', cn: '五级', name: 'Cao cấp I', desc: 'Đọc báo, xem phim, viết đoạn văn mạch lạc.' },
+  { n: 6, zh: '六', cn: '六级', name: 'Cao cấp II', desc: 'Hiểu thông tin phức tạp, diễn đạt thành đoạn dài, chặt chẽ.' }
+];
+
+/* ---------- Tiện ích ---------- */
+function h(tag, props, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(props || {})) {
+    if (v == null || v === false) continue;
+    if (k === 'class') e.className = v;
+    else if (k === 'text') e.textContent = v;
+    else if (k.startsWith('on') && typeof v === 'function') e.addEventListener(k.slice(2), v);
+    else if (k === 'dataset') Object.assign(e.dataset, v);
+    else e.setAttribute(k, v === true ? '' : v);
+  }
+  kids.flat(Infinity).forEach(c => { if (c != null && c !== false) e.append(c.nodeType ? c : document.createTextNode(String(c))); });
+  return e;
+}
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+  del(k) { try { localStorage.removeItem(k); } catch (e) {} }
+};
+const app = document.getElementById('app');
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const isUrl = p => /^(https?:|data:|\/|\.\/)/.test(p);
+const imgUrl = (lv, p) => !p ? '' : isUrl(p) || p.includes('/') ? p : `img/hsk${lv}/${p}`;
+const audioUrl = (lv, p) => !p ? '' : isUrl(p) || p.includes('/') ? p : `audio/hsk${lv}/${p}`;
+
+function errorPanel() {
+  const local = location.protocol === 'file:';
+  return h('div', { class: 'panel error-box' }, h('h3', { text: 'Không đọc được dữ liệu đề thi' }),
+    local ? h('p', {}, 'Bạn đang mở file trực tiếp từ máy tính (', h('code', { text: 'file://' }), '). Trình duyệt chặn việc đọc file đề theo cách này – hãy mở qua địa chỉ web của Thư Quán.')
+          : h('p', {}, 'Không tải được file dữ liệu của cấp này. Kiểm tra file ', h('code', { text: 'hsk?.json' }), ' đã được upload vào thư mục khaothiduong chưa và có đúng cú pháp JSON không.'));
+}
+
+/* ---------- Nạp dữ liệu một cấp ---------- */
+const levelCache = {};
+async function getLevel(n) {
+  if (levelCache[n]) return levelCache[n];
+  let res;
+  try {
+    const r = await fetch(`hsk${n}.json`, { cache: 'no-cache' });
+    if (r.status === 404) res = { exams: [], missing: true };
+    else if (!r.ok) res = { exams: [], error: true };
+    else {
+      const j = await r.json();
+      const exams = (j.exams || []).filter(e => e && e.sections);
+      exams.forEach(e => { e.id = String(e.id || e.code || e.title).toLowerCase().replace(/[^a-z0-9_-]+/g, '-'); e.level = n; });
+      res = { exams };
+    }
+  } catch (e) { console.warn(`hsk${n}.json`, e); res = { exams: [], error: true }; }
+  return (levelCache[n] = res);
+}
+const countQ = e => e.sections.reduce((a, s) => a + s.parts.reduce((b, p) => b + p.questions.length, 0), 0);
+
+/* =====================================================================
+   ĐIỀU HƯỚNG (hash):  #  →  #hsk1  →  #hsk1/ma-de
+   ===================================================================== */
+let cleanup = null;
+function route() {
+  if (cleanup) { cleanup(); cleanup = null; }
+  window.scrollTo({ top: 0 });
+  const parts = decodeURIComponent(location.hash.replace(/^#\/?/, '')).split('/');
+  const m = /^hsk([1-6])$/i.exec(parts[0]);
+  if (!m) return viewLevels();
+  return parts[1] ? viewExam(+m[1], parts[1]) : viewList(+m[1]);
+}
+window.addEventListener('hashchange', route);
+
+const hero = () => h('div', { class: 'hero' },
+  h('div', { class: 'kicker', text: '模 · 考 · 院' }),
+  h('h1', { text: 'Mô Khảo Viện' }),
+  h('div', { class: 'slogan', text: '一场考试，一次成长' }),
+  h('p', { text: 'Thi thử HSK toàn đề · Chấm điểm tức thì · Giáo viên nhận kết quả chi tiết' }),
+  h('div', { class: 'orn' }, h('i')));
+
+/* ---------- Màn 1: chọn cấp ---------- */
+async function viewLevels() {
+  const pills = {};
+  app.replaceChildren(hero(), h('div', { class: 'levels' }, LEVELS.map(l => {
+    pills[l.n] = h('span', { class: 'pill', text: '…' });
+    return h('a', { class: 'level-card', href: `#hsk${l.n}` },
+      h('div', { class: 'num', text: l.zh }),
+      h('h3', {}, 'HSK ', h('span', { class: 'd', text: l.n })),
+      h('div', { class: 'zh', text: l.cn }),
+      h('p', { text: `${l.name}. ${l.desc}` }),
+      pills[l.n],
+      h('span', { class: 'btn btn-primary', text: 'Vào luyện thi' }));
+  })));
+  const all = await Promise.all(LEVELS.map(l => getLevel(l.n)));
+  const bad = all.find(r => r.error);
+  LEVELS.forEach((l, i) => { pills[l.n].textContent = all[i].error ? '—' : all[i].exams.length ? `${all[i].exams.length} đề` : 'Sắp ra mắt'; });
+  if (bad && all.every(r => r.error)) app.insertBefore(errorPanel(), app.children[1]);
+}
+
+/* ---------- Màn 2: danh sách đề của một cấp ---------- */
+async function viewList(n) {
+  const L = LEVELS[n - 1];
+  app.replaceChildren(h('p', { class: 'note', text: 'Đang tải…' }));
+  const data = await getLevel(n);
+  const versions = [...new Set(data.exams.map(e => String(e.version || '2.0')))].sort();
+  let filter = 'all';
+  const list = h('div', { class: 'exam-list' });
+  const filters = h('div', { class: 'filters' });
+  const card = e => {
+    const best = store.get(`cobi:best:hsk${n}:${e.id}`);
+    return h('div', { class: 'exam-card' },
+      h('div', {}, h('h3', { text: e.title }),
+        h('div', { class: 'meta' },
+          h('span', { class: 'tag' + (String(e.version) === '3.0' ? ' v3' : ''), text: `Hệ ${e.version || '2.0'}` }),
+          h('span', { class: 'tag', text: `${countQ(e)} câu` }),
+          e.durationMin ? h('span', { class: 'tag', text: `${e.durationMin} phút` }) : null,
+          best ? h('span', { class: 'tag best', text: `Điểm cao nhất: ${best.score}/${best.max}` }) : null)),
+      h('a', { class: 'btn btn-primary', href: `#hsk${n}/${encodeURIComponent(e.id)}`, text: 'Làm bài' }));
+  };
+  const draw = () => {
+    if (data.error) { list.replaceChildren(errorPanel()); return; }
+    const items = data.exams.filter(e => filter === 'all' || String(e.version || '2.0') === filter);
+    list.replaceChildren(...(items.length ? items.map(card) : [h('div', { class: 'panel empty' }, h('div', { class: 'zh', text: '敬请期待' }), h('div', { text: 'Chưa có đề cho mục này – sắp ra mắt.' }))]));
+    filters.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.f === filter));
+  };
+  if (versions.length > 1) [['all', 'Tất cả'], ...versions.map(v => [v, `Hệ ${v}`])].forEach(([f, t]) =>
+    filters.append(h('button', { type: 'button', dataset: { f }, onclick: () => { filter = f; draw(); } }, t)));
+  app.replaceChildren(
+    h('div', { class: 'crumb' }, h('a', { href: '#', text: 'Mô Khảo Viện' }), ' › ', `HSK ${n}`),
+    h('div', { class: 'page-head' }, h('h2', {}, 'HSK ', h('span', { class: 'd', text: n }), h('small', {}, h('span', { class: 'zh', text: L.cn }), L.name)), filters),
+    list);
+  draw();
+}
+
+/* =====================================================================
+   Màn 3: LÀM BÀI
+   Loại câu hỏi: truefalse · choice · matching · ordering · short · essay
+   ===================================================================== */
+async function viewExam(level, id) {
+  app.replaceChildren(h('p', { class: 'note', text: 'Đang tải đề…' }));
+  const data = await getLevel(level);
+  if (data.error) return app.replaceChildren(errorPanel());
+  const exam = data.exams.find(e => e.id === id);
+  if (!exam) return app.replaceChildren(h('div', { class: 'panel empty' }, h('div', { class: 'zh', text: '抱歉' }), h('p', { text: 'Không tìm thấy đề thi này.' }), h('a', { class: 'btn btn-primary', href: `#hsk${level}`, text: `Các đề HSK ${level}` })));
+
+  const KEY = `hsk${level}:${exam.id}`;
+  const IMG = p => imgUrl(level, p), AUD = p => audioUrl(level, p);
+
+  // Chuẩn hoá: đánh số câu, gắn tham chiếu part/section
+  let counter = 0; const Q = [];
+  exam.sections.forEach((sec, si) => sec.parts.forEach(part => part.questions.forEach(q => {
+    q.n = q.n != null ? q.n : ++counter; counter = Math.max(counter, q.n);
+    q._sec = si; q._part = part; q._type = q.type || part.type || 'choice';
+    Q.push(q);
+  })));
+  const total = Q.length;
+  const isAuto = q => q._type !== 'essay' && q.answer != null && q.answer !== '';
+  const pts = q => q.points ?? q._part.points ?? exam.pointsPerQuestion ?? 1;
+  const opts = q => q.options || q._part.options || [];
+
+  /* ---- trạng thái ---- */
+  const RUN = 'cobi:run:' + KEY;
+  let run = store.get(RUN);
+  if (run && run.startAt && Date.now() - run.startAt > ((exam.durationMin || 180) * 60 + 3600) * 1000) { store.del(RUN); run = null; } // bỏ bài dở quá cũ
+  let answers = (run && run.answers) || {};
+  let student = (run && run.student) || store.get('cobi:student') || { name: '', cls: '' };
+  let startAt = (run && run.startAt) || 0;
+  let activeTab = 0, timerId = null, inProgress = false, submitted = false;
+  const persist = () => store.set(RUN, { student, startAt, answers });
+  const answered = n => { const v = answers[n]; return v != null && v !== '' && !(Array.isArray(v) && !v.length); };
+  const beforeUnload = e => { if (inProgress) { e.preventDefault(); e.returnValue = ''; } };
+  window.addEventListener('beforeunload', beforeUnload);
+  cleanup = () => { clearInterval(timerId); window.removeEventListener('beforeunload', beforeUnload); };
+
+  /* ---- phần tử nhỏ ---- */
+  function pic(src) {
+    const img = h('img', { class: 'pic', src: IMG(src), alt: '', loading: 'lazy' });
+    img.addEventListener('error', () => img.replaceWith(h('div', { class: 'pic miss', text: 'Chưa có ảnh: ' + src })));
+    return img;
+  }
+  function audioEl(src) {
+    const wrap = h('div'); const a = h('audio', { controls: true, preload: 'metadata', src: AUD(src) });
+    a.addEventListener('error', () => wrap.append(h('div', { class: 'audio-miss', text: 'Chưa có file nghe: ' + src })));
+    wrap.prepend(a); return wrap;
+  }
+  function setAnswer(q, v) {
+    const empty = v == null || v === '' || (Array.isArray(v) && !v.length);
+    if (empty) delete answers[q.n]; else answers[q.n] = v;
+    persist(); refreshProgress();
+  }
+
+  /* ---- điều khiển theo loại câu ---- */
+  function choiceControl(q, list, compact) {
+    const box = h('div', { class: 'opts' });
+    const sync = () => box.querySelectorAll('.opt').forEach(b => b.classList.toggle('on', answers[q.n] === b.dataset.v));
+    list.forEach(o => {
+      const k = o.key; let inner;
+      if (compact) inner = [k];
+      else if (o.image) inner = [pic(o.image), h('span', { class: 'k', text: k })];
+      else inner = [h('span', { class: 'k', text: k }), h('span', {}, o.pinyin ? h('div', { class: 'opy', text: o.pinyin }) : null, o.text || '')];
+      box.append(h('button', { type: 'button', dataset: { v: k }, class: 'opt' + (o.image && !compact ? ' img' : (!compact ? ' row' : '')),
+        onclick: () => { setAnswer(q, answers[q.n] === k ? null : k); sync(); } }, inner));
+    });
+    sync(); return box;
+  }
+  function tfBox(q) {
+    const box = h('div', { class: 'opts' });
+    const sync = () => box.querySelectorAll('.opt').forEach(b => b.classList.toggle('on', answers[q.n] === b.dataset.v));
+    [['T', '✓'], ['F', '×']].forEach(([v, t]) => box.append(h('button', { type: 'button', class: 'opt', dataset: { v }, onclick: () => { setAnswer(q, answers[q.n] === v ? null : v); sync(); } }, t)));
+    sync(); return box;
+  }
+  function orderingControl(q) {
+    const wrap = h('div');
+    const draw = () => {
+      const cur = answers[q.n] || [];
+      const pool = h('div', { class: 'chips' }, q.items.map((t, i) => h('button', { type: 'button', class: 'chip' + (cur.includes(i) ? ' used' : ''), disabled: cur.includes(i),
+        onclick: () => { setAnswer(q, [...(answers[q.n] || []), i]); draw(); } }, t)));
+      const line = h('div', { class: 'ans-line' }, cur.length ? cur.map((i, pos) => h('button', { type: 'button', class: 'chip', title: 'Bấm để bỏ',
+        onclick: () => { const a = [...answers[q.n]]; a.splice(pos, 1); setAnswer(q, a); draw(); } }, q.items[i])) : h('span', { class: 'note', text: 'Bấm các từ/cụm từ theo đúng thứ tự…' }));
+      wrap.replaceChildren(pool, line, h('button', { type: 'button', class: 'btn btn-ghost sm', style: 'margin-top:8px', onclick: () => { setAnswer(q, null); draw(); } }, 'Xếp lại'));
+    };
+    draw(); return wrap;
+  }
+  const shortControl = q => h('input', { class: 'short', type: 'text', autocomplete: 'off', value: answers[q.n] || '', placeholder: q.placeholder || 'Nhập đáp án…',
+    oninput: e => setAnswer(q, e.target.value.trim() ? e.target.value : null) });
+  function essayControl(q) {
+    const cnt = h('div', { class: 'count' });
+    const upd = v => { cnt.textContent = `${[...v].length} ký tự` + (q.minChars ? ` (gợi ý tối thiểu ${q.minChars})` : ''); };
+    const ta = h('textarea', { placeholder: q.placeholder || 'Viết bài làm của bạn ở đây…', rows: q.rows || 4,
+      oninput: e => { setAnswer(q, e.target.value.trim() ? e.target.value : null); upd(e.target.value); } });
+    ta.value = answers[q.n] || ''; upd(ta.value);
+    return h('div', {}, ta, cnt);
+  }
+  function renderQ(q) {
+    const t = q._type;
+    const wrap = h('div', { class: 'q', id: 'q' + q.n });
+    wrap.append(h('div', {}, h('span', { class: 'num', text: q.n + '.' }), q.prompt ? h('span', { class: 'zh', text: q.prompt }) : null));
+    if (q.pinyin) wrap.append(h('div', { class: 'py', text: q.pinyin }));
+    const body = h('div', { class: 'body' });
+    if (q.image) body.append(pic(q.image));
+    if (q.audio) body.append(audioEl(q.audio));
+    if (q.keywords && q.keywords.length) body.append(h('div', { class: 'kw' }, 'Từ gợi ý: ', q.keywords.map(k => h('span', { text: k }))));
+    if (t === 'truefalse') body.append(tfBox(q));
+    else if (t === 'matching') body.append(choiceControl(q, opts(q), true));
+    else if (t === 'choice') body.append(choiceControl(q, opts(q), false));
+    else if (t === 'ordering') body.append(orderingControl(q));
+    else if (t === 'short') body.append(shortControl(q));
+    else if (t === 'essay') body.append(essayControl(q));
+    else body.append(h('div', { class: 'note', text: 'Loại câu hỏi chưa được hỗ trợ: ' + t }));
+    wrap.append(body); return wrap;
+  }
+  function renderPart(part) {
+    const box = h('div', { class: 'part' });
+    box.append(h('h3', {}, (part.title || '') + (part.range ? ' · ' + part.range : '')));
+    if (part.instruction) box.append(h('p', { class: 'note', text: part.instruction }));
+    if (part.example) box.append(h('p', { class: 'note', text: 'Ví dụ: ' + part.example }));
+    if (part.audio) box.append(audioEl(part.audio));
+    if (part.passage) {
+      const p = part.passage;
+      if (p.image) box.append(pic(p.image));
+      if (p.audio) box.append(audioEl(p.audio));
+      if (p.text) box.append(h('div', { class: 'passage', text: p.text }));
+    }
+    if (part.type === 'matching' && part.options) box.append(h('div', { class: 'bank' }, part.options.map(o => h('div', { class: 'item' },
+      h('b', { text: o.key }), o.image ? pic(o.image) : null, o.pinyin ? h('small', { text: o.pinyin }) : null, o.text ? h('div', { text: o.text }) : null))));
+    part.questions.forEach(q => box.append(renderQ(q)));
+    return box;
+  }
+
+  /* ---- màn hình làm bài ---- */
+  const progressEl = h('div', { class: 'progress' });
+  const timerEl = h('div', { id: 'timer' });
+  const qnavEl = h('div', { class: 'qnav' });
+  const contentEl = h('div');
+  const tabsEl = h('div', { class: 'tabs' });
+  function refreshProgress() {
+    progressEl.textContent = `Đã làm ${Q.filter(q => answered(q.n)).length}/${total}`;
+    qnavEl.querySelectorAll('a').forEach(a => a.classList.toggle('done', answered(Number(a.dataset.n))));
+  }
+  function renderTab() {
+    const sec = exam.sections[activeTab];
+    contentEl.replaceChildren();
+    if (sec.audio) contentEl.append(audioEl(sec.audio));
+    sec.parts.forEach(p => contentEl.append(renderPart(p)));
+    qnavEl.replaceChildren(...Q.filter(q => q._sec === activeTab).map(q => h('a', { dataset: { n: q.n }, text: q.n,
+      onclick: ev => { ev.preventDefault(); document.getElementById('q' + q.n)?.scrollIntoView({ behavior: 'smooth' }); } })));
+    tabsEl.querySelectorAll('button').forEach((b, i) => b.classList.toggle('on', i === activeTab));
+    refreshProgress(); window.scrollTo({ top: 0 });
+  }
+  function startExam() {
+    inProgress = true;
+    if (!startAt) startAt = Date.now();
+    store.set('cobi:student', student); persist();
+    tabsEl.replaceChildren(...exam.sections.map((s, i) => h('button', { type: 'button', onclick: () => { activeTab = i; renderTab(); } }, s.title + (s.subtitle ? ' · ' + s.subtitle : ''))));
+    app.replaceChildren(
+      h('div', { class: 'examhead' }, h('div', { class: 'eh-title', text: exam.code || exam.title }), progressEl, exam.durationMin ? timerEl : '',
+        h('button', { class: 'btn btn-primary sm', type: 'button', onclick: onSubmitClick }, 'Nộp bài')),
+      exam.sections.length > 1 ? tabsEl : '', qnavEl, contentEl,
+      h('div', { class: 'bar' }, h('button', { class: 'btn btn-primary', type: 'button', onclick: onSubmitClick }, 'Nộp bài')));
+    renderTab();
+    if (exam.durationMin) {
+      const tick = () => {
+        const left = Math.max(0, Math.round((startAt + exam.durationMin * 60000 - Date.now()) / 1000));
+        timerEl.textContent = `${String(Math.floor(left / 60)).padStart(2, '0')}:${String(left % 60).padStart(2, '0')}`;
+        timerEl.classList.toggle('warn', left <= 300);
+        if (left === 0) { clearInterval(timerId); submit(true); }
+      };
+      tick(); timerId = setInterval(tick, 1000);
+    }
+  }
+  function showStart() {
+    const nameIn = h('input', { type: 'text', placeholder: 'Nguyễn Văn A', autocomplete: 'name', value: student.name });
+    const clsIn = h('input', { type: 'text', placeholder: 'VD: HSK1-A', value: student.cls });
+    const resuming = !!(startAt || Object.keys(answers).length);
+    const go = () => {
+      const name = nameIn.value.trim();
+      if (!name) { alert('Vui lòng nhập họ và tên.'); nameIn.focus(); return; }
+      student = { name, cls: clsIn.value.trim() }; startExam();
+    };
+    const hasAudio = exam.sections.some(s => s.audio || s.parts.some(p => p.audio || p.questions.some(q => q.audio)));
+    app.replaceChildren(
+      h('div', { class: 'crumb' }, h('a', { href: '#', text: 'Mô Khảo Viện' }), ' › ', h('a', { href: `#hsk${level}`, text: `HSK ${level}` }), ' › ', exam.code || exam.title),
+      h('div', { class: 'panel form' }, h('h2', { text: exam.title }),
+        h('ul', { class: 'info' },
+          h('li', {}, 'Số câu: ', h('b', { text: total }), ` · Hệ ${exam.version || '2.0'}`),
+          exam.durationMin ? h('li', {}, 'Thời gian: ', h('b', { text: exam.durationMin + ' phút' }), ' (hết giờ hệ thống tự nộp bài)') : null,
+          h('li', { text: 'Có thể chuyển qua lại giữa các phần trước khi nộp. Bài làm được lưu tạm nếu lỡ tải lại trang.' }),
+          hasAudio ? h('li', { text: 'Hãy đeo tai nghe để làm phần Nghe.' }) : null,
+          Q.some(q => !isAuto(q)) ? h('li', { text: 'Đề có phần tự luận: giáo viên chấm riêng, điểm hiển thị chỉ gồm phần tự động.' }) : null),
+        h('label', {}, 'Họ và tên', nameIn), h('label', {}, 'Lớp (không bắt buộc)', clsIn),
+        h('div', { class: 'actions' },
+          h('button', { class: 'btn btn-primary', type: 'button', onclick: go }, resuming ? 'Tiếp tục làm bài' : 'Bắt đầu làm bài'),
+          resuming ? h('button', { class: 'btn btn-ghost', type: 'button', onclick: () => { store.del(RUN); route(); } }, 'Làm lại từ đầu') : null)));
+  }
+
+  /* ---- chấm điểm ---- */
+  const norm = s => String(s).normalize('NFKC').replace(/[\s\p{P}\p{S}]/gu, '').toLowerCase();
+  function isRight(q, v) {
+    if (v == null) return false;
+    if (q._type === 'ordering') return Array.isArray(v) && v.length === q.answer.length && v.every((x, i) => x === q.answer[i]);
+    if (q._type === 'short') return [].concat(q.answer).map(norm).includes(norm(v));
+    return v === q.answer;
+  }
+  function fmt(q, v) {
+    if (v == null || v === '' || (Array.isArray(v) && !v.length)) return '(bỏ trống)';
+    const t = q._type;
+    if (t === 'truefalse') return v === 'T' ? '✓' : '×';
+    if (t === 'ordering') return v.map(i => q.items[i]).join(' ');
+    if (t === 'choice' || t === 'matching') { const o = opts(q).find(x => x.key === v); return o && o.text ? `${v} (${o.text})` : String(v); }
+    return String(v);
+  }
+  function brief(q, max) {
+    let s = (q.prompt || '').replace(/\s+/g, ' ').trim();
+    if (!s && q._type === 'ordering') s = q.items.join(' / ');
+    if (!s) s = q.image ? '(hình)' : (q.audio || exam.sections[q._sec].audio || q._part.audio) ? '(nghe)' : '';
+    return s.length > max ? s.slice(0, max) + '…' : s;
+  }
+  function grade() {
+    let score = 0, max = 0, correct = 0, auto = 0;
+    const wrong = [], essays = [], per = exam.sections.map(() => ({ c: 0, t: 0 }));
+    Q.forEach(q => {
+      const v = answers[q.n];
+      if (isAuto(q)) {
+        auto++; max += pts(q); per[q._sec].t++;
+        if (isRight(q, v)) { score += pts(q); correct++; per[q._sec].c++; }
+        else wrong.push({ n: q.n, part: q._part.title || '', q: brief(q, 60), chosen: fmt(q, v), answer: fmt(q, q.answer) });
+      } else {
+        let prompt = brief(q, 300);
+        if (q.keywords && q.keywords.length) prompt += ` [từ gợi ý: ${q.keywords.join(', ')}]`;
+        essays.push({ n: q.n, part: q._part.title || '', q: prompt, answer: answered(q.n) ? fmt(q, v) : '(bỏ trống)' });
+      }
+    });
+    return { score, max, correct, auto, wrong, essays, per };
+  }
+  function onSubmitClick() {
+    const left = total - Q.filter(q => answered(q.n)).length;
+    if (left > 0 && !confirm(`Bạn còn ${left} câu chưa làm. Vẫn nộp bài?`)) return;
+    submit(false);
+  }
+
+  /* ---- nộp bài & gửi về Google Sheet ---- */
+  async function send(payload) {
+    if (!SCRIPT_URL) return 'nourl';
+    for (let i = 0; i < 2; i++) {
+      try {
+        const r = await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
+        const j = await r.json(); if (j && j.ok) return 'ok';
+      } catch (e) { /* thử lại; script chống ghi trùng theo sid */ }
+      await sleep(1500);
+    }
+    return 'err';
+  }
+  function submit(auto) {
+    if (submitted) return;
+    submitted = true; inProgress = false; clearInterval(timerId);
+    const g = grade();
+    const durationSec = Math.min(Math.round((Date.now() - startAt) / 1000), exam.durationMin ? exam.durationMin * 60 : 1e9);
+    const sid = crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2);
+    const payload = { sid, level, version: exam.version || '2.0', examId: KEY, code: exam.code || '', title: exam.title,
+      name: student.name, cls: student.cls, submittedAt: new Date().toISOString(), durationSec,
+      score: g.score, max: g.max, correct: g.correct, autoCount: g.auto, totalQuestions: total, wrong: g.wrong, essays: g.essays, autoSubmitted: !!auto };
+    store.del(RUN);
+    const bk = 'cobi:best:' + KEY, best = store.get(bk);
+    if (g.max && (!best || g.score > best.score)) store.set(bk, { score: g.score, max: g.max });
+    renderResult(g, payload, auto);
+  }
+  function renderResult(g, payload, auto) {
+    const pass = exam.passScore != null && !g.essays.length;
+    const statEl = h('div', { class: 'sendstat', text: '⏳ Đang gửi kết quả cho giáo viên…' });
+    const retry = h('button', { class: 'btn btn-ghost', type: 'button', style: 'display:none', onclick: () => doSend() }, 'Gửi lại kết quả');
+    async function doSend() {
+      retry.style.display = 'none'; statEl.className = 'sendstat'; statEl.textContent = '⏳ Đang gửi kết quả cho giáo viên…';
+      const r = await send(payload);
+      if (r === 'ok') { statEl.className = 'sendstat ok'; statEl.textContent = '✔ Đã gửi kết quả cho giáo viên.'; }
+      else if (r === 'nourl') { statEl.className = 'sendstat err'; statEl.textContent = 'ℹ Chưa cấu hình nơi nhận kết quả (SCRIPT_URL) nên kết quả chưa được gửi cho giáo viên.'; }
+      else { statEl.className = 'sendstat err'; statEl.textContent = '⚠ Chưa gửi được kết quả. Hãy kiểm tra mạng rồi bấm "Gửi lại" (đừng đóng trang).'; retry.style.display = ''; }
+    }
+    const showAns = exam.showAnswers !== false;
+    app.replaceChildren(
+      h('div', { class: 'summary' }, h('h2', { text: 'Kết quả bài làm' }),
+        h('p', {}, h('b', { text: student.name }), student.cls ? ' · ' + student.cls : '', ' · ', exam.code || exam.title, auto ? ' · (hết giờ, hệ thống tự nộp)' : ''),
+        h('div', { class: 'score-big', text: g.max ? `${g.score} / ${g.max}` : 'Chờ chấm' }),
+        pass ? h('p', { class: g.score >= exam.passScore ? 'pass' : 'fail', text: g.score >= exam.passScore ? `ĐẠT (mốc ${exam.passScore})` : `CHƯA ĐẠT (mốc ${exam.passScore})` }) : null,
+        h('p', {}, `Đúng ${g.correct}/${g.auto} câu chấm tự động`,
+          exam.sections.length > 1 ? ' · ' + exam.sections.map((s, i) => `${s.subtitle || s.title}: ${g.per[i].c}/${g.per[i].t}`).join(' · ') : '',
+          ` · Thời gian làm: ${Math.floor(payload.durationSec / 60)} phút ${payload.durationSec % 60} giây`),
+        g.essays.length ? h('p', { class: 'note', text: `Có ${g.essays.length} câu tự luận – giáo viên sẽ chấm và nhận xét riêng.` }) : null,
+        statEl,
+        h('div', { class: 'actions' }, retry,
+          h('button', { class: 'btn btn-primary', type: 'button', onclick: () => route() }, 'Làm lại đề này'),
+          h('a', { class: 'btn btn-ghost', href: `#hsk${level}`, text: `Các đề HSK ${level}` }),
+          h('button', { class: 'btn btn-ghost', type: 'button', onclick: () => window.print() }, 'In / Lưu PDF'))),
+      g.wrong.length ? h('div', { class: 'summary' }, h('h3', { text: `Câu làm sai (${g.wrong.length})` }),
+        h('table', { class: 'res' },
+          h('thead', {}, h('tr', {}, ['Câu', 'Nội dung', 'Bạn chọn', ...(showAns ? ['Đáp án'] : [])].map(t => h('th', { text: t })))),
+          h('tbody', {}, g.wrong.map(w => h('tr', {}, h('td', { text: w.n }), h('td', { class: 'l', text: w.q }), h('td', { class: 'badc', text: w.chosen }), showAns ? h('td', { class: 'good', text: w.answer }) : null)))))
+        : (g.auto ? h('div', { class: 'summary' }, h('h3', { text: 'Tuyệt vời! Không sai câu nào 🎉' })) : null));
+    window.scrollTo({ top: 0 });
+    doSend();
+  }
+
+  showStart();
+}
+
+route();
+</script>
+</body>
+</html>
