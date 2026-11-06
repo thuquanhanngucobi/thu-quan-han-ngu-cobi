@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Một Ngày Của Tôi – 我的一天</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Noto+Serif:wght@400;700&display=swap">
+<style>
+:root{--bg:#f6efdc;--card:#fffaf0;--ink:#2b2a33;--navy:#1f3a5f;--btn:#1f3a5f;--gold:#b8893b;--ok:#2e7d4f;--bad:#b3392f;--line:#e4d5b0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17181f;--card:#242632;--ink:#ece7da;--navy:#a9c1e8;--btn:#3b5c8f;--line:#3a3d4d;--ok:#6fcf97;--bad:#ff8a80}}
+:root[data-theme="dark"]{--bg:#17181f;--card:#242632;--ink:#ece7da;--navy:#a9c1e8;--btn:#3b5c8f;--line:#3a3d4d;--ok:#6fcf97;--bad:#ff8a80}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Noto Serif","Noto Serif SC","Songti SC",Georgia,serif}
+.w{max-width:560px;margin:auto;padding:12px}
+h1{font-family:"Cormorant Garamond",Georgia,serif;color:var(--navy);font-size:30px;margin:6px 0;text-align:center}
+.card{background:var(--card);border:1px solid var(--gold);border-radius:14px;padding:14px;margin:10px 0}
+.b{font:inherit;background:var(--btn);color:#fff;border:0;border-radius:10px;padding:10px 16px;font-weight:700;cursor:pointer;margin:4px 4px 4px 0}
+.b.g{background:transparent;color:var(--navy);border:1px solid var(--gold)}
+input[type=text],select{width:100%;box-sizing:border-box;font:inherit;font-size:20px;padding:10px;margin:6px 0;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+select{font-size:16px}
+.top{display:flex;justify-content:space-between;align-items:center;color:var(--navy)}
+.bar{height:6px;background:var(--line);border-radius:4px;margin:4px 0}.bar i{display:block;height:100%;width:0;background:var(--gold);border-radius:4px;transition:width .4s}
+.scene{position:relative;height:140px;border-radius:12px;overflow:hidden;display:flex;align-items:flex-end;justify-content:space-between;padding:0 22px 8px;font-size:60px;transition:background .8s}
+#sk{position:absolute;top:8px;right:14px;font-size:34px}.ch{display:inline-block;transition:transform .9s,opacity .9s}.ch.go{transform:translateX(110px);opacity:.15}
+.row{display:flex;gap:12px;align-items:center;margin-top:10px}
+.clk{width:104px;flex:none;color:var(--ink)}
+.chip{display:inline-block;margin:3px;padding:3px 9px;border:1px solid var(--gold);border-radius:8px;cursor:pointer;text-align:center;font-size:18px}.chip small{display:block;font-size:11px;opacity:.8}
+.msg{min-height:1.6em;margin:8px 0;font-weight:700}.msg.no{color:var(--bad)}.msg.yes{color:var(--ok)}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}.sh{animation:sh .3s}
+summary{cursor:pointer;color:var(--navy);font-weight:700}
+li{margin:4px 0}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body><div class="w">
+<h1>Một Ngày Của Tôi <span lang="zh">我的一天</span></h1>
+
+<div id="s0" class="card">
+<p>Chào Lữ Khách! Hãy sống trọn một ngày bằng tiếng Trung. Mỗi câu phải <b>gõ đúng giờ và đúng ngữ pháp</b> thì nhân vật mới đi tiếp. Gõ sai thì xem lại kiến thức rồi gõ lại. Đồng hồ bấm giờ chạy từ lúc bạn bấm Bắt đầu: ai hoàn thành nhanh nhất sẽ đứng đầu bảng xếp hạng của lớp.</p>
+<input id="nm" type="text" placeholder="Tên của bạn" maxlength="30">
+<select id="rl"><option value="s">Vai: học sinh (đi CoBi书馆)</option><option value="w">Vai: người đi làm (đi CoBi公司)</option></select>
+
+<button class="b" id="go">Bắt đầu</button>
+<p style="font-size:14px">Giờ luôn là bội số của 5 phút. Bạn nói được bằng 点・分・半・刻・差, cách nào đúng cũng được chấp nhận. Giờ phải viết bằng <b>chữ Hán hoặc pinyin</b> (ví dụ 七点一刻 hoặc qi dian yi ke); gõ chữ số như 7:15 hay 7点15分 sẽ không được chấp nhận. Gợi ý cấp 2 (câu mẫu) bị cộng 30 giây.</p>
+</div>
+
+<div id="s1" hidden>
+<div class="top"><b id="sn"></b><b>⏱ <span id="tm">00:00</span></b></div>
+<div class="bar"><i id="pg"></i></div>
+<div class="card">
+<div class="scene" id="sc"><span id="sk"></span><span class="ch" id="ch"></span><span id="pl"></span></div>
+<div class="row"><div id="ck"></div><p id="tx" style="margin:0"></p></div>
+<div id="ip">
+<input id="in" type="text" lang="zh" autocomplete="off" autocapitalize="off" placeholder="Gõ câu tiếng Trung…">
+<button class="b" id="ok">Kiểm tra</button><button class="b g" id="hb">Gợi ý</button>
+<div id="hs"></div></div>
+<div id="cc" hidden><button class="b" data-b="h">🏠 Về nhà</button><button class="b" data-b="o">🎈 Đi chơi</button></div>
+<p id="ms" class="msg"></p>
+</div>
+<details class="card"><summary>Xem lại kiến thức (đồng hồ vẫn chạy)</summary>
+<ul>
+<li><b>Giờ:</b> 点 = giờ, 分 = phút, 半 = rưỡi. 7:47 → 七点四十七分. 7:05 → 七点零五分. 2:00 đọc là <b>两点</b>.</li>
+<li><b>Công thức:</b> 我 + (buổi) + giờ + động từ. Giờ đứng <b>trước</b> động từ: 我七点起床.</li>
+<li><b>Buổi:</b> 早上, 上午, 中午, 下午, 晚上 (đặt trước giờ).</li><li><b>刻:</b> 一刻 = 15 phút, 三刻 = 45 phút (七点三刻 = 7:45). <b>差:</b> 差 + số phút + giờ sau (差十分八点 = 7:50, 差一刻八点 = 7:45).</li><li><b>Đi học / đi làm:</b> 去学校, 上课, 上班, 去公司. <b>Tan:</b> 放学, 下课, 下班.</li>
+<li><b>Phương tiện:</b> 我坐公共汽车去… / 我骑自行车去… / 我走路去…</li>
+<li><b>Đi cùng ai:</b> 我和朋友去… (和 + người đứng trước 去).</li>
+</ul></details>
+</div>
+
+<div id="s2" class="card" hidden></div>
+</div>
+<script>
+const $=s=>document.querySelector(s),r=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const D={一:1,二:2,两:2,三:3,四:4,五:5,六:6,七:7,八:8,九:9};
+const nn=s=>{if(/^\d+$/.test(s))return+s;s=s.replace(/[零〇]/g,'');if(!s)return 0;const m=s.match(/^([一二两三四五六七八九])?十([一二三四五六七八九])?$/);if(m)return(m[1]?D[m[1]]:1)*10+(m[2]?D[m[2]]:0);return D[s]??NaN};
+const cn=n=>n<10?'零一二三四五六七八九'[n]:n<20?'十'+(n%10?cn(n%10):''):cn(n/10|0)+'十'+(n%10?cn(n%10):'');
+const TR=/([零〇一二两三四五六七八九十\d]+)点(半|一刻|三刻|整|[零〇一二三四五六七八九十\d]+分?)?/;
+const CH=/差(一刻|[零〇一二三四五六七八九十\d]+分?)([零〇一二两三四五六七八九十\d]+)点/;const per=h=>h<5?'凌晨':h<9?'早上':h<12?'上午':h<14?'中午':h<18?'下午':'晚上';
+const tstr=t=>{const h=Math.floor(t/60)%24,m=t%60,H=h%12||12;return per(h)+(H==2?'两':cn(H))+'点'+(m==0?'':m==30?'半':m<10?'零'+cn(m)+'分':cn(m)+'分')};
+const dig=t=>(Math.floor(t/60)%12||12)+':'+String(t%60).padStart(2,'0');
+const fmt=s=>String(s/60|0).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+const smp=st=>st.s.replace('{T}',st.t!=null?tstr(st.t):'');
+function clk(h,m){let a=(h%12+m/60)*30,b=m*6,n='';for(let i=1;i<=12;i++){const t=i*Math.PI/6;n+=`<text x="${(50+36*Math.sin(t)).toFixed(1)}" y="${(53.5-36*Math.cos(t)).toFixed(1)}" text-anchor="middle" font-size="9" fill="currentColor">${i}</text>`}
+return `<svg viewBox="0 0 100 100" class="clk"><circle cx="50" cy="50" r="47" fill="var(--card)" stroke="var(--gold)" stroke-width="3"/>${n}<line x1="50" y1="50" x2="50" y2="29" stroke="currentColor" stroke-width="4" stroke-linecap="round" transform="rotate(${a} 50 50)"/><line x1="50" y1="50" x2="50" y2="17" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round" transform="rotate(${b} 50 50)"/><circle cx="50" cy="50" r="3" fill="var(--gold)"/></svg>`}
+
+let role,T,ST,i,cur,errs,pen,t0,tm,hint,dia,name,busy,fin;
+const slp=(t,tx)=>({p:'🌙',t,tx,re:/睡觉/,bad:'Hãy nói: 睡觉 (đi ngủ).',w:[['睡觉','shuìjiào'],['点','diǎn'],['分','fēn']],s:'我{T}睡觉。'});
+function mk(){const S=role=='s';return[
+{p:'🛏️',t:T.wake,tx:'Sáng sớm, bạn còn nằm trên giường. Nhìn đồng hồ rồi nói bạn thức dậy lúc mấy giờ.',re:/起床/,bad:'Hãy nói về việc thức dậy: 起床.',w:[['起床','qǐchuáng'],['点','diǎn'],['分','fēn'],['半','bàn']],s:'我{T}起床。'},
+{p:'🚿',tx:'Bạn bước vào nhà vệ sinh. Nói bạn đánh răng, rửa mặt.',re:/刷牙|洗脸/,bad:'Hãy nói: 刷牙 (đánh răng) hoặc 洗脸 (rửa mặt).',w:[['刷牙','shuā yá'],['洗脸','xǐ liǎn']],s:'我刷牙、洗脸。'},
+{p:'🍚',tx:'Bạn ra bếp, ngồi vào bàn ăn. Nói bạn đi ăn sáng.',re:/吃(早饭|早餐)/,bad:'Hãy nói: 吃早饭 (ăn sáng).',w:[['吃','chī'],['早饭','zǎofàn']],s:'我吃早饭。'},
+{p:'🚪',t:T.leave,tx:'Nhìn đồng hồ treo tường: mấy giờ bạn '+(S?'đi học?':'đi làm?'),re:/学校|上学|上课|上班|公司/,bad:'Hãy nói đi học / đi làm: 去学校, 上课, 上班 hoặc 去公司.',w:[['去学校','qù xuéxiào'],['上课','shàng kè'],['上班','shàng bān'],['去公司','qù gōngsī'],['点','diǎn']],s:S?'我{T}去上学。':'我{T}去上班。'},
+{p:S?'🏫':'🏢',tx:'Bạn ra đường. Nói bạn đi bằng phương tiện gì đến '+(S?'CoBi书馆 (trường).':'CoBi公司 (công ty).'),
+x:s=>{const i=s.search(/坐|骑|开|走路/),q=s.indexOf('去');if(q<0)return'Chưa có 去 (đi đến). Công thức: 坐 + phương tiện + 去 + nơi.';if(i<0)return'Chưa nói đi bằng gì: 坐公共汽车 / 骑自行车 / 走路…';if(i>q)return'Phương tiện đứng TRƯỚC 去: 我坐公共汽车去…';if(!/cobi|学校|书馆|公司|上班|上课|上学|shuguan|gongsi/i.test(s))return'Chưa nói đến đâu. Hãy đi đến '+(S?'CoBi书馆 / 学校.':'CoBi公司.');return null},
+w:[['坐','zuò'],['公共汽车','gōnggòng qìchē'],['骑自行车','qí zìxíngchē'],['走路','zǒu lù'],['去','qù'],[S?'CoBi书馆':'CoBi公司',S?'CoBi shūguǎn':'CoBi gōngsī']],s:S?'我坐公共汽车去CoBi书馆。':'我坐公共汽车去CoBi公司。'},
+{p:'🍜',t:T.lunch,tx:'Buổi trưa, nhìn đồng hồ trên bàn '+(S?'học':'làm việc')+': mấy giờ bạn ăn trưa?',re:/吃(午饭|午餐|饭)/,bad:'Hãy nói: 吃午饭 (ăn trưa).',w:[['吃午饭','chī wǔfàn'],['中午','zhōngwǔ'],['点','diǎn']],s:'我{T}吃午饭。'},
+{p:'🌇',t:T.off,tx:'Buổi chiều, nhìn đồng hồ: mấy giờ bạn '+(S?'tan học?':'tan làm?'),re:/放学|下课|下班/,bad:'Hãy nói: 放学 / 下课 (tan học) hoặc 下班 (tan làm).',w:[[S?'放学':'下班',S?'fàngxué':'xiàbān'],['下课','xià kè'],['下午','xiàwǔ'],['点','diǎn']],s:S?'我{T}放学。':'我{T}下班。'},
+{c:1,p:'🌆',tx:(S?'Tan học':'Tan làm')+' rồi! Tối nay bạn muốn làm gì?'}]}
+function mb(b){const S=role=='s',wk={p:S?'📚':'💻',tx:S?'Nói bạn làm bài tập.':'Nói bạn làm việc (còn việc tối nay).',re:S?/作业/:/工作/,bad:S?'Hãy nói: 做作业.':'Hãy nói: 工作.',w:[S?['做作业','zuò zuòyè']:['工作','gōngzuò']],s:S?'我做作业。':'我工作。'};
+return b=='h'?[
+{p:'🍳',tx:'Bạn về đến nhà. Nói bạn nấu cơm.',re:/做(晚)?饭|煮饭/,bad:'Hãy nói: 做饭 (nấu cơm).',w:[['回家','huí jiā'],['做饭','zuò fàn']],s:'我回家做饭。'},
+{p:'🍲',tx:'Cơm chín rồi! Nói bạn ăn cơm tối.',re:/吃(晚饭|晚餐|饭)/,bad:'Hãy nói: 吃晚饭.',w:[['吃晚饭','chī wǎnfàn']],s:'我吃晚饭。'},
+{p:'🛁',tx:'Nói bạn đi tắm.',re:/洗澡/,bad:'Hãy nói: 洗澡 (tắm).',w:[['洗澡','xǐzǎo']],s:'我洗澡。'},
+wk,slp(T.sleep,'Bạn đánh răng xong và lên giường. Nhìn đồng hồ đầu giường: mấy giờ bạn đi ngủ?')]
+:[
+{p:'🏙️',tx:'Bạn đi chơi! Nói bạn đi cùng ai và đi đâu.',x:s=>{const a=s.indexOf('和'),q=s.indexOf('去');if(q<0)return'Chưa nói đi đâu: 去 + nơi chốn.';if(a<0)return'Chưa nói đi cùng ai: 和 + người. Công thức: 我和___去___.';if(a>q)return'和 + người phải đứng TRƯỚC 去: 我和朋友去…';if(s.length-q<2)return'Sau 去 hãy nói đi đâu (nơi chốn).';return null},w:[['和','hé'],['朋友','péngyou'],['同学','tóngxué'],['去','qù'],['电影院','diànyǐngyuàn'],['公园','gōngyuán'],['商店','shāngdiàn'],['饭馆','fànguǎn']],s:'我和朋友去电影院。'},
+{p:'🎈',tx:'Bạn đã đến nơi. Nói hai người làm gì ở đó (bắt đầu bằng 我们).',re:/^我们.{2,}/,bad:'Hãy bắt đầu bằng 我们 rồi nói làm gì: 我们看电影。',w:[['我们','wǒmen'],['看电影','kàn diànyǐng'],['吃饭','chī fàn'],['买东西','mǎi dōngxi'],['散步','sàn bù'],['喝咖啡','hē kāfēi']],s:'我们看电影。'},
+{p:'🏠',t:T.ret,tx:'Trời tối rồi, bạn về đến cửa nhà. Nhìn đồng hồ: mấy giờ bạn về nhà?',re:/回家/,bad:'Hãy nói: 回家 (về nhà).',w:[['回家','huí jiā'],['晚上','wǎnshang'],['点','diǎn']],s:'我{T}回家。'},
+wk,slp(T.so,'Bạn đánh răng xong và lên giường. Nhìn đồng hồ đầu giường: mấy giờ bạn đi ngủ?')]}
+
+const SY=['liang','ling','dian','zheng','jiu','liu','san','shi','ban','fen','cha','ke','yi','er','si','wu','qi','ba'],PM={liang:'两',ling:'零',dian:'点',zheng:'整',jiu:'九',liu:'六',san:'三',shi:'十',ban:'半',fen:'分',cha:'差',ke:'刻',yi:'一',er:'二',si:'四',wu:'五',qi:'七',ba:'八'};
+const cv=t=>t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[A-Za-z]+/g,w=>{let o='',u=w.toLowerCase();while(u){const k=SY.find(x=>u.startsWith(x));if(!k)return w;o+=PM[k];u=u.slice(k.length)}return o});
+function chk(st,raw){
+if(st.t!=null&&/\d/.test(raw))return{e:'Giờ phải viết bằng chữ Hán hoặc pinyin, không dùng chữ số. Ví dụ: 七点一刻 hoặc qi dian yi ke.'};const s=cv(raw).replace(/[\s，。,.！!？?、；;]/g,'');
+if(!s)return{e:'Hãy gõ câu trả lời trước nhé.'};
+let soft='';
+if(st.t!=null){
+if(/个点/.test(s))return{e:'Nói giờ dùng 点, không thêm 个: 八点, không phải 八个点.'};
+const c=s.match(CH),m=c||s.match(TR);
+if(!m)return{e:'Câu chưa nói lúc mấy giờ. Công thức: 我 + giờ + động từ.'};
+const g=m[2],X=c?(c[1]=='一刻'?15:nn(c[1].replace('分',''))):0,H=c?nn(c[2])-1:nn(m[1]),M=c?60-X:!g?0:g=='半'?30:g=='一刻'?15:g=='三刻'?45:g=='整'?0:nn(g.replace('分','')),h=Math.floor(st.t/60)%24,bd=isNaN(H)||isNaN(M);
+if(bd||(H+12)%12!=h%12||M!=st.t%60)return{e:`Đồng hồ đang chỉ ${dig(st.t)}, nhưng câu của bạn đọc là ${bd?'một giờ không hợp lệ':H+':'+String(M).padStart(2,'0')}. Nhìn lại kim giờ và kim phút nhé.`};
+if(h%12==2&&/(^|[^十])二点/.test(s))soft=' Lưu ý: 2:00 đọc là 两点, không đọc 二点.';
+const vi=s.search(st.re);
+if(vi<0)return{e:st.bad};
+if(m.index>vi)return{e:'Trong tiếng Trung, giờ đứng TRƯỚC động từ: 我七点起床, không phải 我起床七点.'};
+}else if(st.re&&!st.re.test(s))return{e:st.bad};
+if(st.x){const e=st.x(s);if(e)return{e}}
+return{soft}}
+
+function start(){name=$('#nm').value.trim()||'Lữ Khách';role=$('#rl').value;const p5=true;
+const rt=(a,b)=>{let t=r(a,b);if(p5)t=Math.round(t/5)*5;else if(t%30==0)t++;return t};
+T={};T.wake=rt(330,470);T.leave=rt(T.wake+40,T.wake+90);T.lunch=rt(670,770);T.off=rt(980,1090);T.ret=rt(1170,1290);T.sleep=rt(1290,1430);T.so=Math.min(rt(T.ret+50,T.ret+110),1430);
+ST=mk();i=0;errs=0;pen=0;dia=[];fin=0;cur=T.wake;t0=Date.now();
+$('#s0').hidden=true;$('#s1').hidden=false;
+tm=setInterval(()=>{$('#tm').textContent=fmt(Math.floor((Date.now()-t0)/1000)+pen)},250);render()}
+function render(){const st=ST[i];hint=0;busy=0;$('#hs').innerHTML='';$('#ms').textContent='';$('#ms').className='msg';$('#in').value='';
+$('#pg').style.width=(i/13*100)+'%';$('#sn').textContent='Màn '+(i+1)+'/13';
+if(st.t!=null)cur=st.t;
+const sky=cur<450?'#f3c9a5,#fbe9d4':cur<960?'#bfe3f5,#f6f1de':cur<1110?'#f6b36b,#fbdcae':'#243b6b,#4c5f93';
+$('#sc').style.background='linear-gradient(180deg,'+sky+')';$('#sk').textContent=cur<450?'🌅':cur<690?'🌤️':cur<840?'☀️':cur<1020?'⛅':cur<1110?'🌇':'🌙';
+$('#pl').textContent=st.p;$('#ch').textContent=role=='s'?'🧑‍🎓':'🧑‍💼';$('#ch').classList.remove('go');
+$('#ck').innerHTML=st.t!=null?clk(Math.floor(st.t/60)%24,st.t%60):'';
+$('#tx').textContent=st.tx;
+$('#ip').hidden=!!st.c;$('#cc').hidden=!st.c;
+if(!st.c)$('#in').focus()}
+function ok(){if(busy)return;const st=ST[i],v=$('#in').value,x=chk(st,v),m=$('#ms');
+if(x.e){errs++;m.textContent='❌ '+x.e;m.className='msg no';const n=$('#in');n.classList.remove('sh');void n.offsetWidth;n.classList.add('sh');return}
+busy=1;dia.push(cv(v.trim()));m.textContent='✅ Chính xác!'+(x.soft||'');m.className='msg yes';$('#ch').classList.add('go');
+setTimeout(()=>{i++;render()},x.soft?2200:1100)}
+$('#ok').onclick=ok;$('#in').onkeydown=e=>{if(e.key=='Enter')ok()};$('#go').onclick=start;
+$('#hb').onclick=()=>{const st=ST[i];hint++;let h='';
+if(hint==1||hint==2){h='<p>'+(st.t!=null?'🕐 Đồng hồ đang chỉ <b>'+dig(st.t)+'</b>.<br>':'')+'Bấm từ để ghép câu:</p>'+(st.t!=null?[...new Map(st.w.concat([['半','bàn'],['刻','kè'],['差','chà']]).map(x=>[x[0],x])).values()]:st.w).map(([a,b])=>`<span class="chip" data-h="${a}">${a}<small>${b}</small></span>`).join('')}
+if(hint>=2){if(!st.pen){pen+=30;st.pen=1}h+='<p>Câu mẫu (+30 giây): <b>'+smp(st)+'</b></p>'}
+$('#hs').innerHTML=h};
+$('#hs').onclick=e=>{const c=e.target.closest('.chip');if(c)$('#in').value+=c.dataset.h};
+$('#cc').onclick=e=>{const b=e.target.dataset.b;if(!b)return;ST=ST.concat(mb(b));dia.push(b=='h'?'(Tôi chọn về nhà.)':'(Tôi chọn đi chơi.)');i++;render()};
+function end(){clearInterval(tm);const s=Math.floor((Date.now()-t0)/1000)+pen,d=dia.filter(x=>!/^\(/.test(x)).join(' ');
+$('#s1').hidden=true;const e=$('#s2');e.hidden=false;
+e.innerHTML=`<h1>Một ngày đã trọn vẹn! 🎉</h1><p style="text-align:center;font-size:44px;margin:4px;color:var(--navy)"><b>${fmt(s)}</b></p><p style="text-align:center">Tổng thời gian của <b>${name}</b> (đã gồm +${pen} giây gợi ý) · Gõ sai: <b>${errs}</b> lần</p><p><b>Nhật ký một ngày của bạn:</b></p><p lang="zh" style="font-size:18px">${d}</p><button class="b" id="cp">Sao chép nhật ký</button><button class="b g" onclick="location.reload()">Chơi lại</button><p style="font-size:14px">📸 Hãy chụp màn hình này gửi cho giáo viên để được xếp hạng.</p>`;
+$('#cp').onclick=()=>{try{navigator.clipboard.writeText(d);$('#cp').textContent='Đã sao chép'}catch(x){}}}
+const _r=render;render=function(){if(i>=ST.length&&!fin){fin=1;end();return}_r()};
+</script></body></html>
