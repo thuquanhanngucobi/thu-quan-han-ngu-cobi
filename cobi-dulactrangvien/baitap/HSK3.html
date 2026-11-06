@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bài tập ngữ pháp tiếng Trung</title>
+<style>
+:root{--bg:#faf6ef;--card:#fff;--ink:#2a2622;--muted:#6f675e;--line:#e6dccd;--accent:#b83227;--ai:#fff;--soft:#f8e4e1;--ok:#2e7d4f;--oks:#e1f2e7;--bad:#b3261e;--bads:#fbe4e2;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171513;--card:#211e1b;--ink:#f1ebe3;--muted:#a89f94;--line:#3a352f;--accent:#e2665a;--ai:#1a0f0e;--soft:#3a2321;--ok:#6cc58c;--oks:#1f3326;--bad:#f08a82;--bads:#3b2220}}
+:root[data-theme="dark"]{--bg:#171513;--card:#211e1b;--ink:#f1ebe3;--muted:#a89f94;--line:#3a352f;--accent:#e2665a;--ai:#1a0f0e;--soft:#3a2321;--ok:#6cc58c;--oks:#1f3326;--bad:#f08a82;--bads:#3b2220}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:760px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:1.5rem;margin:6px 0}
+.sub{color:var(--muted);margin:0 0 14px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag{font-size:.78rem;padding:2px 10px;border-radius:99px;background:var(--soft);color:var(--accent)}
+.tag.lv{background:transparent;border:1px solid var(--line);color:var(--muted)}
+.set{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;color:var(--ink);font:inherit;cursor:pointer}
+.set b{font-size:1.15rem}.meta{color:var(--muted);font-size:.85rem}
+.back{background:none;border:0;color:var(--accent);font:inherit;cursor:pointer;padding:8px 0}
+input[type=search]{width:100%;padding:12px 14px;margin-bottom:14px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit}
+.st{font-size:1.05rem;margin:26px 0 10px;padding-left:10px;border-left:4px solid var(--accent)}
+.st small{color:var(--muted);font-weight:400;margin-left:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.card.ok{border-color:var(--ok)}.card.bad{border-color:var(--bad)}
+.qh{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.qn{font-weight:700;color:var(--accent)}
+.qt{font-size:1.2rem;margin:4px 0 10px}
+.blank{display:inline-block;min-width:3.2em;border-bottom:2px solid var(--ink)}
+.hint{color:var(--muted);font-size:.88rem;margin:0 0 8px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}
+.opt{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:1.1rem}
+.opt:hover{border-color:var(--accent)}.opt input{accent-color:var(--accent)}.opt .k{color:var(--muted);font-size:.85rem}
+.opt.right{background:var(--oks);border-color:var(--ok)}.opt.wrong{background:var(--bads);border-color:var(--bad)}
+.si{margin:10px 0}.si .ln{font-size:1.2rem}
+select,input[type=text]{font:inherit;font-size:1.1rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+input[type=text]{width:100%;padding:8px 10px}
+.sok{border-color:var(--ok)!important;background:var(--oks)!important}.sbad{border-color:var(--bad)!important;background:var(--bads)!important}
+.pool,.built{display:flex;flex-wrap:wrap;gap:8px;min-height:46px;padding:8px;border-radius:10px}
+.built{border:2px dashed var(--line);margin-bottom:10px}
+.tok{font:inherit;font-size:1.15rem;padding:6px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.tok:disabled{opacity:.3}.tok.in{background:var(--soft);border-color:var(--accent)}
+.ws{font-size:1.2rem;padding:8px 12px;border-radius:10px;background:var(--bads);margin-bottom:10px}
+.fb{margin-top:12px;padding:10px 12px;border-radius:10px;font-size:.95rem}
+.fb.ok{background:var(--oks);color:var(--ok)}.fb.bad{background:var(--bads);color:var(--bad)}
+.fb .ex{color:var(--ink);display:block;margin-top:4px}
+.btn{font:inherit;font-weight:600;border:0;border-radius:10px;padding:10px 20px;cursor:pointer;background:var(--accent);color:var(--ai)}
+.btn.g{background:transparent;color:var(--ink);border:1px solid var(--line)}.btn.s{padding:4px 12px;font-size:.85rem;font-weight:500}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.res{margin-top:20px;padding:18px;border-radius:14px;background:var(--soft);text-align:center}
+.res .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+.note{color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+/* ===== KHO DỮ LIỆU: thêm bài mới = thêm 1 khối vào SETS ===== */
+/* Bài trắc nghiệm đơn giản: mk({id,level,name,instr,words,rows:[[câu, đáp án (số thứ tự từ 0), giải thích]]}) */
+const mk=d=>({id:d.id,level:d.level,name:d.name,title:d.instr,sub:d.name,sections:[{title:d.instr,sub:'',items:d.rows.map(r=>({type:'mc',text:r[0],opts:d.words,ans:r[1],exp:r[2]}))}]});
+const SETS=[
+{id:"hsk3-bonguu",level:"HSK3",name:"Bổ ngữ",title:"HSK 3B – Bài 8: Bài tập bổ ngữ",sub:"Bổ ngữ kết quả · khả năng · trạng thái · xu hướng.",
+ tags:["结果补语","可能补语","状态补语","趋向补语"],sections:[
+ {title:"一、选择正确答案",sub:"Chọn đáp án đúng",items:[
+  {type:"mc",topic:"结果补语",text:"作业我已经写____了,可以出去玩了。",opts:["完","懂","见","错"],ans:0,exp:"写完 = viết xong. 完 là bổ ngữ kết quả, chỉ động tác đã hoàn thành."},
+  {type:"mc",topic:"状态补语",text:"他汉语说____很流利。",opts:["的","得","地","了"],ans:1,exp:"说得很流利: động từ + 得 + bổ ngữ trạng thái (đánh giá mức độ, cách thức)."},
+  {type:"mc",topic:"趋向补语",text:"老师走____教室来,同学们都站了起来。",opts:["进","进来","进去","起来"],ans:0,exp:"走进教室: 进 là bổ ngữ xu hướng đơn. Nếu thêm 来/去 thì tân ngữ nơi chốn đứng giữa: 走进教室来."},
+  {type:"mc",topic:"可能补语",text:"这个箱子太小了,放____这么多东西。",opts:["不下","不到","不好","不见"],ans:0,exp:"放不下 = để không vừa. Phủ định của bổ ngữ khả năng: động từ + 不 + bổ ngữ."}]},
+ {title:"二、选词填空",sub:"Chọn từ điền vào chỗ trống",items:[
+  {type:"fill",topic:"结果补语",bank:["完","见","懂","错","对"],hint:"Từ cho sẵn: 完 / 见 / 懂 / 错 / 对. Mỗi từ chỉ dùng một lần, có 2 từ thừa.",
+   parts:[{pre:"对不起,我走",post:"路了,所以来晚了。",ans:"错"},{pre:"昨天我在超市看",post:"小李了,他说他下个月去中国。",ans:"见"},{pre:"老师讲了两遍,我才听",post:"。",ans:"懂"}],
+   exp:"走错 (đi nhầm), 看见 (nhìn thấy), 听懂 (nghe hiểu). Từ thừa: 完, 对."}]},
+ {title:"三、排序与改错",sub:"Sắp xếp câu và sửa lỗi sai",items:[
+  {type:"build",topic:"状态补语",level:"Trung bình",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["得","汉字","写","她","很漂亮"],accept:["她汉字写得很漂亮"],exp:"Có tân ngữ 汉字 thì đưa lên trước động từ: 她汉字写得很漂亮. (Cũng có thể lặp động từ: 她写汉字写得很漂亮.)"},
+  {type:"build",topic:"趋向补语",level:"Trung bình",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["回","她","来","家","了"],accept:["她回家来了"],exp:"Tân ngữ nơi chốn 家 đứng giữa 回 và 来: 她回家来了."},
+  {type:"fix",topic:"状态补语",level:"Khó",hint:"Tìm chỗ sai và viết lại cả câu cho đúng.",wrong:"他说汉语得很好,老师常常表扬他。",accept:["他汉语说得很好老师常常表扬他","他说汉语说得很好老师常常表扬他","他汉语说得很好","他说汉语说得很好"],show:"他汉语说得很好,老师常常表扬他。 / 他说汉语说得很好,老师常常表扬他。",exp:"Khi có tân ngữ, phải lặp động từ (说汉语说得很好) hoặc đưa tân ngữ lên trước (汉语说得很好). Không nói 说汉语得很好."},
+  {type:"fix",topic:"可能补语",level:"Khó",hint:"Tìm chỗ sai và viết lại cả câu cho đúng.",wrong:"我听见不老师的话,请你再说一遍。",accept:["我听不见老师的话请你再说一遍","我听不见老师的话"],show:"我听不见老师的话,请你再说一遍。",exp:"Phủ định của bổ ngữ khả năng: động từ + 不 + bổ ngữ (听不见), không nói 听见不."}]},
+ {title:"四、翻译",sub:"Dịch sang tiếng Trung",items:[
+  {type:"trans",topic:"综合",hint:"Mỗi câu kiểm tra một loại bổ ngữ: khả năng, trạng thái, kết quả, xu hướng.",parts:[
+   {vi:"Thầy nói nhanh quá, em nghe không hiểu.",accept:["老师说得太快了我没听懂","老师说得太快我没听懂"],show:"老师说得太快了,我听不懂。"},
+   {vi:"Cô ấy hát rất hay.",accept:["她唱得很好听","她唱得很好","她歌唱得很好","她歌唱得很好听","她唱歌唱得很好","她唱歌唱得很好听"],show:"她唱得很好听。 / 她歌唱得很好。"},
+   {vi:"Bài tập tôi làm xong rồi.",accept:["作业我做完了","我作业做完了","我做完作业了","我做完了作业","作业我写完了","我写完作业了","我写完了作业"],show:"我做完作业了。"},
+   {vi:"Anh ấy mang một cuốn sách đến.",accept:["他带来了一本书","他带来一本书","他带了一本书来","他带一本书来","他拿来了一本书","他拿来一本书","他拿了一本书来","他拿一本书来"],show:"他带来了一本书。 / 他拿来了一本书。"}],
+   exp:"Lần lượt là: 没听懂 (kết quả), 唱得很好听 (trạng thái), 做完 (kết quả), 带来 (xu hướng). Có thể còn cách diễn đạt đúng khác, hãy nhờ giáo viên kiểm tra."}]}
+]},
+mk({id:"hsk3-shoudao-shoudao-dedao",level:"HSK3",name:"Phân biệt 收到 / 受到 / 得到",instr:"Chọn từ thích hợp",words:["得到","收到","受到"],rows:[
+ ["我昨天____了一封朋友寄来的信。",1,"收到信 = thư được gửi đến và tiếp nhận → 收到."],
+ ["通过努力,他终于____了大家的认可。",0,"得到认可 = có được sự công nhận."],
+ ["他的身体____了严重的伤害。",2,"受到伤害 = chịu tổn thương."],
+ ["这次活动让我____了很多启发。",0,"得到启发 = có được sự gợi mở, cảm hứng."],
+ ["学生应该____老师的尊重。",2,"受到尊重 là cách kết hợp rất tự nhiên."],
+ ["公司已经____了客户的投诉。",1,"收到投诉 = tiếp nhận đơn/khiếu nại."]]}),
+mk({id:"hsk3-shouda-shoudao",level:"HSK3",name:"Phân biệt 收到 / 受到",instr:"Chọn 收到 hoặc 受到",words:["收到","受到"],rows:[
+ ["我昨天____了一封朋友的邮件。",0,"邮件 là email được tiếp nhận → 收到."],
+ ["他的身体____了严重的伤害。",1,"受到伤害 là sự tổn thương mà chủ thể phải chịu → 受到."],
+ ["这部电影____了很多观众的欢迎。",1,"受到欢迎 là kết hợp cố định, nghĩa là được khán giả đón nhận."],
+ ["我已经____了学校的录取通知书。",0,"通知书 là văn bản được nhận → 收到."],
+ ["孩子应该____父母和老师的尊重。",1,"受到尊重 = được tôn trọng."]]})
+];
+/* ===== BỘ MÁY LÀM BÀI (dùng chung, không cần sửa khi thêm bài) ===== */
+const app=document.getElementById('app'),go=x=>{location.hash=x};
+const levels=[...new Set(SETS.map(s=>s.level))];
+function h(t,p){const e=document.createElement(t);p=p||{};for(const k in p){if(p[k]==null)continue;if(k==='class')e.className=p[k];else if(k.startsWith('on'))e.addEventListener(k.slice(2),p[k]);else e.setAttribute(k,p[k])}
+ for(let i=2;i<arguments.length;i++){const c=arguments[i];if(c!=null)e.append(c)}return e}
+const norm=s=>String(s||'').normalize('NFKC').replace(/[\s,.!?;:、。,!?;:"'“”‘’()()]/g,'');
+const shuffle=a=>{const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r};
+const fb=(ok,head,body)=>h('div',{class:'fb '+(ok?'ok':'bad')},h('b',null,head),body?h('span',{class:'ex'},body):null);
+const blankText=t=>{const b=h('div',{class:'qt'});t.split('____').forEach((p,i,a)=>{b.append(p);if(i<a.length-1)b.append(h('span',{class:'blank'},' '))});return b};
+const T={
+mc(q,nm){let c=-1;const ls=[],o=h('div',{class:'opts'});
+ q.opts.forEach((x,i)=>{const l=h('label',{class:'opt'},h('input',{type:'radio',name:nm,onchange:()=>{c=i}}),h('span',{class:'k'},'ABCD'[i]+'.'),h('span',null,x));ls.push(l);o.append(l)});
+ return{body:[blankText(q.text),o],grade(){ls.forEach(l=>l.classList.remove('right','wrong'));ls[q.ans].classList.add('right');const ok=c===q.ans;if(c>=0&&!ok)ls[c].classList.add('wrong');
+  return{got:+ok,max:1,fb:fb(ok,ok?'✓ Chính xác.':(c<0?'✗ Chưa trả lời. ':'✗ Chưa đúng. ')+'Đáp án: '+'ABCD'[q.ans]+'. '+q.opts[q.ans],q.exp)}}}},
+fill(q){const ss=[],b=h('div');if(q.hint)b.append(h('p',{class:'hint'},q.hint));
+ q.parts.forEach((p,i)=>{const s=h('select',null,h('option',{value:''},'—'));q.bank.forEach(w=>s.append(h('option',{value:w},w)));ss.push(s);
+  b.append(h('div',{class:'si'},h('span',{class:'qn'},'('+(i+1)+') '),h('span',{class:'ln'},p.pre),' ',s,' ',h('span',{class:'ln'},p.post)))});
+ return{body:[b],grade(){let g=0;q.parts.forEach((p,i)=>{const ok=ss[i].value===p.ans;ss[i].classList.remove('sok','sbad');ss[i].classList.add(ok?'sok':'sbad');if(ok)g++});
+  const all=g===q.parts.length;return{got:g,max:q.parts.length,fb:fb(all,all?'✓ Chính xác.':'✗ Đúng '+g+'/'+q.parts.length+'. Đáp án: '+q.parts.map((p,i)=>'('+(i+1)+') '+p.ans).join('  '),q.exp)}}}},
+build(q){let order=[];const pool=shuffle(q.tokens.map((t,i)=>i)),bt=h('div',{class:'built'}),pb=h('div',{class:'pool'});
+ const r=()=>{bt.textContent='';pb.textContent='';order.forEach((i,pos)=>bt.append(h('button',{type:'button',class:'tok in',onclick:()=>{order.splice(pos,1);r()}},q.tokens[i])));
+  pool.forEach(i=>pb.append(h('button',{type:'button',class:'tok',disabled:order.includes(i)?'disabled':null,onclick:()=>{if(!order.includes(i)){order.push(i);r()}}},q.tokens[i])))};r();
+ return{body:[h('p',{class:'hint'},q.hint),bt,pb,h('div',{style:'margin-top:8px'},h('button',{type:'button',class:'btn g s',onclick:()=>{order=[];r()}},'Xóa hết'))],
+  grade(){const s=order.map(i=>q.tokens[i]).join(''),ok=q.accept.includes(norm(s));return{got:+ok,max:1,fb:fb(ok,ok?'✓ Chính xác.':(s?'✗ Chưa đúng. ':'✗ Chưa trả lời. ')+'Đáp án: '+q.accept[0]+'。',q.exp)}}}},
+fix(q){const i=h('input',{type:'text',autocomplete:'off',placeholder:'Viết lại câu đúng…'});
+ return{body:[h('p',{class:'hint'},q.hint),h('div',{class:'ws'},q.wrong),i],grade(){const v=norm(i.value),ok=q.accept.includes(v);i.classList.remove('sok','sbad');i.classList.add(ok?'sok':'sbad');
+  return{got:+ok,max:1,fb:fb(ok,ok?'✓ Chính xác.':(v?'✗ Chưa đúng. ':'✗ Chưa trả lời. ')+'Đáp án: '+q.show,q.exp)}}}},
+trans(q){const is=[],b=h('div');if(q.hint)b.append(h('p',{class:'hint'},q.hint));
+ q.parts.forEach((p,i)=>{const x=h('input',{type:'text',autocomplete:'off',placeholder:'用中文写…'});is.push(x);b.append(h('div',{class:'si'},h('p',{style:'margin:0 0 4px'},h('span',{class:'qn'},'('+(i+1)+') '),p.vi),x))});
+ return{body:[b],grade(){let g=0;const ln=[];q.parts.forEach((p,i)=>{const ok=p.accept.includes(norm(is[i].value));is[i].classList.remove('sok','sbad');is[i].classList.add(ok?'sok':'sbad');if(ok)g++;else ln.push('('+(i+1)+') '+p.show)});
+  const all=g===q.parts.length;return{got:g,max:q.parts.length,fb:fb(all,all?'✓ Chính xác.':'✗ Đúng '+g+'/'+q.parts.length+'. Đáp án gợi ý: '+ln.join('   '),q.exp)}}}}
+};
+function levelsView(){app.innerHTML='';app.append(h('h1',null,'Bài tập ngữ pháp tiếng Trung'),h('p',{class:'sub'},'Chọn cấp độ để xem danh sách bài tập.'),
+ ...levels.map(l=>h('button',{class:'set',onclick:()=>go('lv-'+l.toLowerCase())},h('b',null,l),h('div',{class:'meta'},SETS.filter(s=>s.level===l).length+' bài tập'))))}
+function listView(l){app.innerHTML='';const ls=h('div'),kw=h('input',{type:'search',placeholder:'Tìm bài tập…'});
+ const d=()=>{ls.textContent='';const k=kw.value.toLowerCase(),a=SETS.filter(s=>s.level===l&&s.name.toLowerCase().includes(k));
+  if(!a.length)ls.append(h('p',{class:'note'},'Không tìm thấy bài tập.'));a.forEach(s=>ls.append(h('button',{class:'set',onclick:()=>go(s.id)},h('b',null,s.name))))};
+ kw.oninput=d;d();app.append(h('button',{class:'back',onclick:()=>go('')},'← Cấp độ'),h('h1',null,l+' – Bài tập'),h('p',{class:'sub'},'Bấm vào tên bài tập để làm.'),kw,ls)}
+function quizView(s){app.innerHTML='';const qs=[],res=h('div'),box=h('div');
+ const init=()=>{box.textContent='';res.textContent='';qs.length=0;let n=0;
+  s.sections.forEach((sec,si)=>{box.append(h('h2',{class:'st'},sec.title,sec.sub?h('small',null,sec.sub):null));
+   sec.items.forEach((q,qi)=>{n++;const b=T[q.type](q,'q'+si+'_'+qi),c=h('div',{class:'card'},h('div',{class:'qh'},h('span',{class:'qn'},'第 '+n+' 题'),q.topic?h('span',{class:'tag'},q.topic):null,q.level?h('span',{class:'tag lv'},q.level):null));
+    b.body.forEach(x=>c.append(x));box.append(c);qs.push({c,b})})})};
+ const grade=()=>{let t=0;qs.forEach(it=>{const o=it.c.querySelector('.fb');if(o)o.remove();const r=it.b.grade();it.c.classList.remove('ok','bad');it.c.classList.add(r.got===r.max?'ok':'bad');it.c.append(r.fb);t+=r.got/r.max});
+  const sc=Math.round(t*10)/10,p=sc/qs.length;res.textContent='';res.append(h('div',{class:'res'},h('div',{class:'big'},sc+' / '+qs.length),h('div',null,p>=.9?'Xuất sắc!':p>=.7?'Khá tốt, ôn thêm các câu sai nhé.':p>=.5?'Cần ôn thêm.':'Hãy xem lại bài rồi làm lại nhé.')));res.scrollIntoView({behavior:'smooth',block:'center'})};
+ init();
+ app.append(h('button',{class:'back',onclick:()=>go('lv-'+s.level.toLowerCase())},'← '+s.level+' – Bài tập'),h('h1',null,s.title),h('p',{class:'sub'},s.sub),
+  s.tags?h('div',{class:'tags'},...s.tags.map(t=>h('span',{class:'tag'},t))):null,box,
+  h('div',{class:'acts'},h('button',{class:'btn',onclick:grade},'Chấm bài'),h('button',{class:'btn g',onclick:()=>{init();scrollTo(0,0)}},'Làm lại')),res)}
+function route(){const x=location.hash.slice(1),s=SETS.find(a=>a.id===x),l=levels.find(a=>'lv-'+a.toLowerCase()===x);s?quizView(s):l?listView(l):levelsView();scrollTo(0,0)}
+addEventListener('hashchange',route);route();
+</script>
+</body>
+</html>
