@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Bài tập ngữ pháp tiếng Trung</title>
 <style>
-:root{--bg:#faf6ef;--card:#fff;--ink:#2a2622;--muted:#6f675e;--line:#e6dccd;--accent:#b83227;--ai:#fff;--soft:#f8e4e1;--ok:#2e7d4f;--oks:#e1f2e7;--bad:#b3261e;--bads:#fbe4e2;
+:root{--bg:#faf6ef;--card:#fff;--ink:#2a2622;--muted:#6f675e;--line:#e6dccd;--accent:#1f3a5f;--ai:#fff;--soft:#e3eaf4;--ok:#2e7d4f;--oks:#e1f2e7;--bad:#9a6700;--bads:#fbf0d3;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171513;--card:#211e1b;--ink:#f1ebe3;--muted:#a89f94;--line:#3a352f;--accent:#e2665a;--ai:#1a0f0e;--soft:#3a2321;--ok:#6cc58c;--oks:#1f3326;--bad:#f08a82;--bads:#3b2220}}
-:root[data-theme="dark"]{--bg:#171513;--card:#211e1b;--ink:#f1ebe3;--muted:#a89f94;--line:#3a352f;--accent:#e2665a;--ai:#1a0f0e;--soft:#3a2321;--ok:#6cc58c;--oks:#1f3326;--bad:#f08a82;--bads:#3b2220}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171513;--card:#211e1b;--ink:#f1ebe3;--muted:#a89f94;--line:#3a352f;--accent:#8fb4e8;--ai:#0e1a2b;--soft:#1f2c40;--ok:#6cc58c;--oks:#1f3326;--bad:#e8b84a;--bads:#3a3015}}
+:root[data-theme="dark"]{--bg:#171513;--card:#211e1b;--ink:#f1ebe3;--muted:#a89f94;--line:#3a352f;--accent:#8fb4e8;--ai:#0e1a2b;--soft:#1f2c40;--ok:#6cc58c;--oks:#1f3326;--bad:#e8b84a;--bads:#3a3015}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif}
@@ -53,6 +53,7 @@ input[type=text]{width:100%;padding:8px 10px}
 .res{margin-top:20px;padding:18px;border-radius:14px;background:var(--soft);text-align:center}
 .res .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
 .note{color:var(--muted);font-size:.9rem}
+.rc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 16px;margin:12px 0}.rc summary{cursor:pointer;font-weight:600}.rc h3{font-size:1rem;margin:14px 0 6px;color:var(--accent)}.rc table{width:100%;border-collapse:collapse;font-size:.95rem}.rc td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}.rc td.zh{font-size:1.05rem}
 </style>
 </head>
 <body>
@@ -86,19 +87,80 @@ const SETS=[
    {vi:"Anh ấy mang một cuốn sách đến.",accept:["他带来了一本书","他带来一本书","他带了一本书来","他带一本书来","他拿来了一本书","他拿来一本书","他拿了一本书来","他拿一本书来"],show:"他带来了一本书。 / 他拿来了一本书。"}],
    exp:"Lần lượt là: 没听懂 (kết quả), 唱得很好听 (trạng thái), 做完 (kết quả), 带来 (xu hướng). Có thể còn cách diễn đạt đúng khác, hãy nhờ giáo viên kiểm tra."}]}
 ]},
+{id:"hsk3-sosanh",level:"HSK3",name:"So sánh 比较句",title:"HSK 3 – So sánh 比较句",sub:"So sánh hơn (比), so sánh bằng (跟……一样), so sánh thua (没有 / 不如). Làm hết các bài rồi bấm “Chấm bài”.",
+ tags:["比","跟……一样","没有 / 不如"],
+ recap:[
+  {t:"1. So sánh hơn – 比",rows:[["A + 比 + B + tính từ","今天比昨天冷。"],["A + 比 + B + 更/还 + tính từ","他比我更认真。"],["A + 比 + B + tính từ + 一点儿","今天比昨天暖和一点儿。"],["A + 比 + B + tính từ + 得多/多了","他比我高得多。"],["A + 比 + B + động từ + 得 + tính từ","他比我跑得快。 / 他跑得比我快。"],["A + 比 + B + tính từ + số lượng","他比我大三岁。"]],notes:["Câu 比 không dùng 很、非常 trước tính từ.","Không đặt 不 / 没有 trực tiếp trước tính từ để tạo so sánh hơn."]},
+  {t:"2. So sánh bằng – 跟……一样",rows:[["A + 跟/和 + B + 一样 + tính từ","我跟他一样高。"],["A + 跟/和 + B + 一样 + động từ + tân ngữ","我跟他一样喜欢中文。"],["A + 跟/和 + B + 不一样","我的想法跟他不一样。"]]},
+  {t:"3. So sánh thua – 没有 / 不如",rows:[["A + 没有 + B + 那么/这么 + tính từ","我没有他那么高。"],["A + 不如 + B + tính từ","我不如他认真。"],["A + 不如 + B","这个手机不如那个手机。"]],notes:["A 比 B 高: A cao hơn B. A 没有 B 高: A không cao bằng B. A 不如 B 高: A kém B về chiều cao."]}
+ ],
+ sections:[
+ {title:"一、选择正确答案",sub:"Chọn từ hoặc cấu trúc thích hợp",items:[
+  {type:"mc",text:"我觉得今天____昨天冷。",opts:["跟","比","没有","一样"],ans:1,exp:"今天比昨天冷: Hôm nay lạnh hơn hôm qua."},
+  {type:"mc",text:"妹妹____我一样喜欢唱歌。",opts:["比","没有","跟","不如"],ans:2,exp:"跟……一样 là cấu trúc so sánh bằng."},
+  {type:"mc",text:"这个苹果没有那个苹果____甜。",opts:["比","那么","一样","更"],ans:1,exp:"没有……那么……: không … bằng …"},
+  {type:"mc",text:"他每天都学习中文,所以中文说得____我好。",opts:["跟","一样","比","没有"],ans:2,exp:"说得比我好: nói tốt hơn tôi. Vế trước nói anh ấy chăm học nên giỏi hơn, vì vậy không dùng 没有."},
+  {type:"mc",text:"我的房间____你的房间大,我的房间比较小。",opts:["比","没有","跟","一样"],ans:1,exp:"没有……大: không to bằng."},
+  {type:"mc",text:"今天的天气比昨天____多了。",opts:["好","很好","更好","好了"],ans:0,exp:"好多了: tính từ + 多了 = hơn nhiều. Không thêm 很/更 trước tính từ."},
+  {type:"mc",text:"这个问题不如那个问题____。",opts:["简单","很简单","简单得","简单了"],ans:0,exp:"不如……简单: không đơn giản bằng. Sau 不如 + B không dùng 很."},
+  {type:"mc",text:"我跟哥哥____高,但是我比他胖一点儿。",opts:["比","一样","没有","不如"],ans:1,exp:"跟哥哥一样高: cao bằng anh trai."},
+  {type:"mc",text:"这件衣服比那件衣服贵____。",opts:["三十块钱","三十块钱了","很三十块钱","得三十块钱"],ans:0,exp:"Số lượng chênh lệch đứng cuối câu: 贵三十块钱 = đắt hơn 30 tệ."},
+  {type:"mc",text:"他比我跑得____快。",opts:["很","更","非常","最"],ans:1,exp:"他比我跑得更快: 更 biểu thị mức độ cao hơn, đứng trước 快. Không nói 他比我更跑得快."}]},
+ {title:"二、选词填空",sub:"Điền từ thích hợp",items:[
+  {type:"fill",bank:["比","跟","一样","没有","那么","不如","一点儿","得多"],hint:"Từ cho sẵn: 比 / 跟 / 一样 / 没有 / 那么 / 不如 / 一点儿 / 得多. Mỗi từ có thể dùng một hoặc nhiều lần.",
+   parts:[
+    {pre:"今天15度,昨天10度,今天的天气",ans:"比",post:"昨天暖和。"},
+    {pre:"我",ans:"跟",mid:"妈妈",ans2:"一样",post:"喜欢做饭。"},
+    {pre:"这个箱子",ans:"没有",post:"那个箱子那么重,我可以自己拿。"},
+    {pre:"弟弟",ans:"没有",post:"哥哥那么高。"},
+    {pre:"我觉得,这本书",ans:["不如","没有"],post:"那本书有意思,我更想看那本。"},
+    {pre:"我的汉语水平比去年好",ans:"一点儿",post:",只进步了一点点。"},
+    {pre:"这次考试比上次难",ans:"得多",post:",很多同学都没及格。"},
+    {pre:"他",ans:"跟",post:"我一样,每天早上六点起床。"},
+    {pre:"这家饭店的菜",ans:["不如","没有"],post:"那家饭店好吃,所以我们去那家吧。"},
+    {pre:"上海的冬天",ans:"没有",post:"北京那么冷。"}],
+   exp:"比 = hơn; 跟……一样 = bằng; 没有……那么 / 不如 = thua. Câu 5 và 9 dùng 不如 hoặc 没有 đều đúng. Câu có 那么 thì dùng 没有."}]},
+ {title:"三、排序",sub:"Sắp xếp các từ thành câu đúng",items:[
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["比","我","他","高","一点儿"],accept:["我比他高一点儿","他比我高一点儿"],exp:"A + 比 + B + tính từ + 一点儿: 我比他高一点儿."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["一样","跟","妈妈","我","忙"],accept:["我跟妈妈一样忙","妈妈跟我一样忙"],exp:"A + 跟 + B + 一样 + tính từ: 我跟妈妈一样忙."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["那么","没有","今天","昨天","热"],accept:["今天没有昨天那么热","昨天没有今天那么热"],exp:"A + 没有 + B + 那么 + tính từ: 今天没有昨天那么热."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["他","比","我","更","喜欢","唱歌"],accept:["他比我更喜欢唱歌","我比他更喜欢唱歌"],exp:"A + 比 + B + 更 + động từ tâm lý: 他比我更喜欢唱歌."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["得多","这次","上次","考试","比","难"],accept:["这次考试比上次难得多","上次考试比这次难得多"],exp:"得多 đứng sau tính từ: 这次考试比上次难得多."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["不如","哥哥","我","认真"],accept:["我不如哥哥认真","哥哥不如我认真"],exp:"A + 不如 + B + tính từ: 我不如哥哥认真."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["三岁","比","弟弟","姐姐","大"],accept:["姐姐比弟弟大三岁"],exp:"Số lượng chênh lệch đứng cuối: 姐姐比弟弟大三岁."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["跟","不一样","我的","你的","想法"],accept:["我的想法跟你的不一样","你的想法跟我的不一样"],exp:"A + 跟 + B + 不一样: 我的想法跟你的不一样."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["跑得","比","快","我","他"],accept:["他跑得比我快","我跑得比他快","他比我跑得快","我比他跑得快"],exp:"Hai cách đều đúng: 他比我跑得快 / 他跑得比我快."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["她","唱歌","跟","我","一样","好听"],accept:["她唱歌跟我一样好听","我唱歌跟她一样好听"],exp:"Có tân ngữ 唱歌 thì đặt trước cụm so sánh: 她唱歌跟我一样好听."}]},
+ {title:"四、找出并修改错误",sub:"Tìm và sửa lỗi sai",items:[
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"今天比昨天很冷。",accept:["今天比昨天冷","今天比昨天更冷","今天比昨天冷一点儿","今天比昨天冷得多","今天比昨天冷多了"],show:"今天比昨天冷。",exp:"Câu 比 không dùng 很 trước tính từ."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"我比他没有高。",accept:["我没有他高","我没有他那么高","我不如他高","他比我高"],show:"我没有他高。 / 我没有他那么高。",exp:"Không dùng 比 cùng với 没有. So sánh thua: A + 没有 + B + tính từ."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"妹妹跟我比一样大。",accept:["妹妹跟我一样大","妹妹和我一样大"],show:"妹妹跟我一样大。",exp:"So sánh bằng dùng 跟……一样, không thêm 比."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"这个房间没有那个房间一样大。",accept:["这个房间没有那个房间大","这个房间没有那个房间那么大","这个房间不如那个房间大"],show:"这个房间没有那个房间大。 / 这个房间没有那个房间那么大。",exp:"没有 đi với 那么 + tính từ (hoặc tính từ), không dùng 一样."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"他比我高三岁。",accept:["他比我大三岁"],show:"他比我大三岁。",exp:"Nói tuổi dùng 大 (hoặc 小), 高 dùng để nói chiều cao."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"我比哥哥喜欢中文。",accept:["我比哥哥更喜欢中文","我比哥哥还喜欢中文"],show:"我比哥哥更喜欢中文。",exp:"So sánh mức độ yêu thích: 比 + B + 更/还 + 喜欢."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"这本书比那本书非常有意思。",accept:["这本书比那本书有意思得多","这本书比那本书更有意思","这本书比那本书有意思多了","这本书比那本书有意思"],show:"这本书比那本书有意思得多。",exp:"Không dùng 非常/很 trong câu 比. Muốn nhấn mạnh dùng 得多, 多了 hoặc 更."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"他没有我那么不忙。",accept:["他没有我那么忙","他没有我忙"],show:"他没有我那么忙。",exp:"Không thêm 不 trước 忙. 没有……那么忙 = ít bận hơn tôi."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"这件衣服比那件衣服贵多得。",accept:["这件衣服比那件衣服贵得多","这件衣服比那件衣服贵多了"],show:"这件衣服比那件衣服贵得多。",exp:"得多 đứng sau tính từ: 贵得多 (hoặc 贵多了)."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"我的汉语水平跟去年一样比好。",accept:["我的汉语水平比去年好","我的汉语水平跟去年一样好"],show:"我的汉语水平比去年好。 / 我的汉语水平跟去年一样好。",exp:"Không kết hợp 比 với 跟……一样. Tùy ý: 比去年好 (tốt hơn) hoặc 跟去年一样好 (giống năm ngoái)."}]},
+ {title:"五、改写句子",sub:"Viết lại câu, nghĩa không đổi",items:[
+  {type:"rewrite",hint:"Viết phần còn thiếu sau dấu →.",parts:[
+   {src:"今天很冷,昨天不太冷。",pre:"今天比昨天",accept:["冷","冷一点儿","更冷","冷得多","冷多了"]},
+   {src:"小明一米七,小华一米七。",pre:"小明跟小华",accept:["一样高"]},
+   {src:"我没有哥哥那么高。",pre:"哥哥",accept:["比我高"]},
+   {src:"这本书比那本书有意思。",pre:"那本书",accept:["没有这本书有意思","没有这本书那么有意思","不如这本书有意思"]},
+   {src:"我的手机和你的手机一样新。",pre:"我的手机",accept:["跟你的手机一样新","和你的手机一样新","跟你的一样新"]},
+   {src:"妹妹比我小两岁。",pre:"我",accept:["比妹妹大两岁"]},
+   {src:"他跑得比我快。",pre:"我跑得",accept:["没有他快","没有他那么快","不如他快"]},
+   {src:"这个房间不如那个房间大。",pre:"这个房间没有那个房间",accept:["大","那么大"]}],
+   exp:"Chuyển đổi: A 比 B … ↔ B 没有/不如 A …; 跟……一样 = bằng nhau. Lưu ý 大 chỉ tuổi, 高 chỉ chiều cao."}]}
+ ]},
 mk({id:"hsk3-shoudao-shoudao-dedao",level:"HSK3",name:"Phân biệt 收到 / 受到 / 得到",instr:"Chọn từ thích hợp",words:["得到","收到","受到"],rows:[
  ["我昨天____了一封朋友寄来的信。",1,"收到信 = thư được gửi đến và tiếp nhận → 收到."],
  ["通过努力,他终于____了大家的认可。",0,"得到认可 = có được sự công nhận."],
  ["他的身体____了严重的伤害。",2,"受到伤害 = chịu tổn thương."],
  ["这次活动让我____了很多启发。",0,"得到启发 = có được sự gợi mở, cảm hứng."],
  ["学生应该____老师的尊重。",2,"受到尊重 là cách kết hợp rất tự nhiên."],
- ["公司已经____了客户的投诉。",1,"收到投诉 = tiếp nhận đơn/khiếu nại."]]}),
-mk({id:"hsk3-shouda-shoudao",level:"HSK3",name:"Phân biệt 收到 / 受到",instr:"Chọn 收到 hoặc 受到",words:["收到","受到"],rows:[
- ["我昨天____了一封朋友的邮件。",0,"邮件 là email được tiếp nhận → 收到."],
- ["他的身体____了严重的伤害。",1,"受到伤害 là sự tổn thương mà chủ thể phải chịu → 受到."],
- ["这部电影____了很多观众的欢迎。",1,"受到欢迎 là kết hợp cố định, nghĩa là được khán giả đón nhận."],
- ["我已经____了学校的录取通知书。",0,"通知书 là văn bản được nhận → 收到."],
- ["孩子应该____父母和老师的尊重。",1,"受到尊重 = được tôn trọng."]]})
+ ["公司已经____了客户的投诉。",1,"收到投诉 = tiếp nhận đơn/khiếu nại."]]})
 ];
 /* ===== BỘ MÁY LÀM BÀI (dùng chung, không cần sửa khi thêm bài) ===== */
 const app=document.getElementById('app'),go=x=>{location.hash=x};
@@ -114,11 +176,13 @@ mc(q,nm){let c=-1;const ls=[],o=h('div',{class:'opts'});
  q.opts.forEach((x,i)=>{const l=h('label',{class:'opt'},h('input',{type:'radio',name:nm,onchange:()=>{c=i}}),h('span',{class:'k'},'ABCD'[i]+'.'),h('span',null,x));ls.push(l);o.append(l)});
  return{body:[blankText(q.text),o],grade(){ls.forEach(l=>l.classList.remove('right','wrong'));ls[q.ans].classList.add('right');const ok=c===q.ans;if(c>=0&&!ok)ls[c].classList.add('wrong');
   return{got:+ok,max:1,fb:fb(ok,ok?'✓ Chính xác.':(c<0?'✗ Chưa trả lời. ':'✗ Chưa đúng. ')+'Đáp án: '+'ABCD'[q.ans]+'. '+q.opts[q.ans],q.exp)}}}},
-fill(q){const ss=[],b=h('div');if(q.hint)b.append(h('p',{class:'hint'},q.hint));
- q.parts.forEach((p,i)=>{const s=h('select',null,h('option',{value:''},'—'));q.bank.forEach(w=>s.append(h('option',{value:w},w)));ss.push(s);
-  b.append(h('div',{class:'si'},h('span',{class:'qn'},'('+(i+1)+') '),h('span',{class:'ln'},p.pre),' ',s,' ',h('span',{class:'ln'},p.post)))});
- return{body:[b],grade(){let g=0;q.parts.forEach((p,i)=>{const ok=ss[i].value===p.ans;ss[i].classList.remove('sok','sbad');ss[i].classList.add(ok?'sok':'sbad');if(ok)g++});
-  const all=g===q.parts.length;return{got:g,max:q.parts.length,fb:fb(all,all?'✓ Chính xác.':'✗ Đúng '+g+'/'+q.parts.length+'. Đáp án: '+q.parts.map((p,i)=>'('+(i+1)+') '+p.ans).join('  '),q.exp)}}}},
+fill(q){const bs=[],b=h('div');if(q.hint)b.append(h('p',{class:'hint'},q.hint));
+ const mkSel=()=>{const s=h('select',null,h('option',{value:''},'—'));q.bank.forEach(w=>s.append(h('option',{value:w},w)));return s};
+ q.parts.forEach((p,i)=>{const s=mkSel(),row=h('div',{class:'si'},h('span',{class:'qn'},(i+1)+'. '),h('span',{class:'ln'},p.pre),' ',s,' ');bs.push([s,p.ans]);
+  if(p.mid!==undefined){const s2=mkSel();bs.push([s2,p.ans2]);row.append(h('span',{class:'ln'},p.mid),' ',s2,' ')}
+  row.append(h('span',{class:'ln'},p.post));b.append(row)});
+ return{body:[b],grade(){let g=0;bs.forEach(([s,a])=>{const ok=[].concat(a).includes(s.value);s.classList.remove('sok','sbad');s.classList.add(ok?'sok':'sbad');if(ok)g++});
+  const all=g===bs.length;return{got:g,max:bs.length,fb:fb(all,all?'✓ Chính xác.':'✗ Đúng '+g+'/'+bs.length+'. Đáp án: '+q.parts.map((p,i)=>(i+1)+'. '+[].concat(p.ans).join('/')+(p.mid!==undefined?' + '+[].concat(p.ans2).join('/'):'')).join('   '),q.exp)}}}},
 build(q){let order=[];const pool=shuffle(q.tokens.map((t,i)=>i)),bt=h('div',{class:'built'}),pb=h('div',{class:'pool'});
  const r=()=>{bt.textContent='';pb.textContent='';order.forEach((i,pos)=>bt.append(h('button',{type:'button',class:'tok in',onclick:()=>{order.splice(pos,1);r()}},q.tokens[i])));
   pool.forEach(i=>pb.append(h('button',{type:'button',class:'tok',disabled:order.includes(i)?'disabled':null,onclick:()=>{if(!order.includes(i)){order.push(i);r()}}},q.tokens[i])))};r();
@@ -130,8 +194,14 @@ fix(q){const i=h('input',{type:'text',autocomplete:'off',placeholder:'Viết l�
 trans(q){const is=[],b=h('div');if(q.hint)b.append(h('p',{class:'hint'},q.hint));
  q.parts.forEach((p,i)=>{const x=h('input',{type:'text',autocomplete:'off',placeholder:'用中文写…'});is.push(x);b.append(h('div',{class:'si'},h('p',{style:'margin:0 0 4px'},h('span',{class:'qn'},'('+(i+1)+') '),p.vi),x))});
  return{body:[b],grade(){let g=0;const ln=[];q.parts.forEach((p,i)=>{const ok=p.accept.includes(norm(is[i].value));is[i].classList.remove('sok','sbad');is[i].classList.add(ok?'sok':'sbad');if(ok)g++;else ln.push('('+(i+1)+') '+p.show)});
+  const all=g===q.parts.length;return{got:g,max:q.parts.length,fb:fb(all,all?'✓ Chính xác.':'✗ Đúng '+g+'/'+q.parts.length+'. Đáp án gợi ý: '+ln.join('   '),q.exp)}}}},
+rewrite(q){const is=[],b=h('div');if(q.hint)b.append(h('p',{class:'hint'},q.hint));
+ q.parts.forEach((p,i)=>{const x=h('input',{type:'text',autocomplete:'off',placeholder:'…',style:'flex:1;min-width:140px;width:auto'});is.push(x);
+  b.append(h('div',{class:'si'},h('p',{style:'margin:0 0 4px'},h('span',{class:'qn'},(i+1)+'. '),p.src),h('div',{style:'display:flex;gap:6px;align-items:center;flex-wrap:wrap'},'→ ',h('span',{class:'ln'},p.pre),x)))});
+ return{body:[b],grade(){let g=0;const ln=[];q.parts.forEach((p,i)=>{let v=norm(is[i].value);const pn=norm(p.pre);if(pn&&v.startsWith(pn))v=v.slice(pn.length);const ok=p.accept.map(norm).includes(v);is[i].classList.remove('sok','sbad');is[i].classList.add(ok?'sok':'sbad');if(ok)g++;else ln.push((i+1)+'. '+p.pre+p.accept[0])});
   const all=g===q.parts.length;return{got:g,max:q.parts.length,fb:fb(all,all?'✓ Chính xác.':'✗ Đúng '+g+'/'+q.parts.length+'. Đáp án gợi ý: '+ln.join('   '),q.exp)}}}}
 };
+const recapEl=r=>h('details',{class:'rc'},h('summary',null,'📖 Kiến thức cần nhớ'),...r.map(g=>h('div',null,h('h3',null,g.t),h('table',null,...g.rows.map(x=>h('tr',null,h('td',null,x[0]),h('td',{class:'zh'},x[1])))),...(g.notes||[]).map(n=>h('p',{class:'note'},'• '+n)))));
 function levelsView(){app.innerHTML='';app.append(h('h1',null,'Bài tập ngữ pháp tiếng Trung'),h('p',{class:'sub'},'Chọn cấp độ để xem danh sách bài tập.'),
  ...levels.map(l=>h('button',{class:'set',onclick:()=>go('lv-'+l.toLowerCase())},h('b',null,l),h('div',{class:'meta'},SETS.filter(s=>s.level===l).length+' bài tập'))))}
 function listView(l){app.innerHTML='';const ls=h('div'),kw=h('input',{type:'search',placeholder:'Tìm bài tập…'});
@@ -147,7 +217,7 @@ function quizView(s){app.innerHTML='';const qs=[],res=h('div'),box=h('div');
   const sc=Math.round(t*10)/10,p=sc/qs.length;res.textContent='';res.append(h('div',{class:'res'},h('div',{class:'big'},sc+' / '+qs.length),h('div',null,p>=.9?'Xuất sắc!':p>=.7?'Khá tốt, ôn thêm các câu sai nhé.':p>=.5?'Cần ôn thêm.':'Hãy xem lại bài rồi làm lại nhé.')));res.scrollIntoView({behavior:'smooth',block:'center'})};
  init();
  app.append(h('button',{class:'back',onclick:()=>go('lv-'+s.level.toLowerCase())},'← '+s.level+' – Bài tập'),h('h1',null,s.title),h('p',{class:'sub'},s.sub),
-  s.tags?h('div',{class:'tags'},...s.tags.map(t=>h('span',{class:'tag'},t))):null,box,
+  s.tags?h('div',{class:'tags'},...s.tags.map(t=>h('span',{class:'tag'},t))):null,s.recap?recapEl(s.recap):null,box,
   h('div',{class:'acts'},h('button',{class:'btn',onclick:grade},'Chấm bài'),h('button',{class:'btn g',onclick:()=>{init();scrollTo(0,0)}},'Làm lại')),res)}
 function route(){const x=location.hash.slice(1),s=SETS.find(a=>a.id===x),l=levels.find(a=>'lv-'+a.toLowerCase()===x);s?quizView(s):l?listView(l):levelsView();scrollTo(0,0)}
 addEventListener('hashchange',route);route();
