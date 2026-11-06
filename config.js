@@ -77,6 +77,7 @@ const COBI_DATA = {
           { id: "lec-b2", name: "Bài 9: Phương tiện giao thông", path: "./tang-thu-cac/bai-giang/quyen-1/bai9-ptgt.html" },
           { id: "lec-b3", name: "Bài 10: Gia đình", path: "./tang-thu-cac/bai-giang/quyen-1/bai10-family.html" },
           { id: "ttc-l2", name: "Quyển 2", path: "./tang-thu-cac/bai-giang/quyen-2/index.html" },
+           { id: "lec-b1", name: "Dòng chảy thời gian", path: "./tang-thu-cac/bai-giang/quyen-1/time2.html" },
           { id: "ttc-l3", name: "HSK 3", path: "./tang-thu-cac/bai-giang/hsk-3/index.html" }
         ]
       }
@@ -103,7 +104,8 @@ const COBI_DATA = {
           {
             id: "dlh-game", name: "2. Game",
             subModules: [
-              { id: "dlh-game-1", name: "Bắn Máy Bay", path: "./cobi-dulactrangvien/doctuthat/may-bay.html" }
+              { id: "dlh-game-1", name: "Bắn Máy Bay", path: "./cobi-dulactrangvien/doctuthat/may-bay.html" },
+               { id: "dlh-game-2", name: "Một Ngày Của Tôi", path: "./cobi-dulactrangvien/doctuthat/gametime.html" }
               // Thêm game mới ở đây, ví dụ:
               // { id: "dlh-game-2", name: "Tên game", path: "./cobi-dulactrangvien/game/xxx.html" },
             ]
