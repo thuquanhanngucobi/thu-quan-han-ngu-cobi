@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dòng Chảy Thời Gian – 时间表达</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Noto+Serif:wght@400;700&display=swap">
+<style>
+:root{--bg:#f6efdc;--card:#fffaf0;--ink:#2b2a33;--navy:#1f3a5f;--btn:#1f3a5f;--gold:#b8893b;--ok:#2e7d4f;--bad:#b3392f;--line:#e4d5b0;--c1:#c0504d;--c2:#2f7ec0;--c3:#3a9b6a;--c4:#d98b1f;--c5:#8a5bb5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17181f;--card:#242632;--ink:#ece7da;--navy:#a9c1e8;--btn:#3b5c8f;--line:#3a3d4d;--ok:#6fcf97;--bad:#ff8a80}}
+:root[data-theme="dark"]{--bg:#17181f;--card:#242632;--ink:#ece7da;--navy:#a9c1e8;--btn:#3b5c8f;--line:#3a3d4d;--ok:#6fcf97;--bad:#ff8a80}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 "Noto Serif","Noto Serif SC","Songti SC",Georgia,serif}
+.w{max-width:600px;margin:auto;padding:12px}
+h1{font-family:"Cormorant Garamond",Georgia,serif;color:var(--navy);font-size:30px;margin:6px 0;text-align:center}
+.sub{text-align:center;margin:0 0 8px;color:var(--gold);font-weight:700}
+nav{display:flex;gap:6px;margin:8px 0}
+nav button{flex:1;font:inherit;font-weight:700;padding:9px 4px;border:1px solid var(--gold);background:transparent;color:var(--navy);border-radius:10px;cursor:pointer}
+nav button.on{background:var(--btn);color:#fff}
+.card,details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0}
+details{border-left:6px solid var(--k)}
+.c1{--k:var(--c1)}.c2{--k:var(--c2)}.c3{--k:var(--c3)}.c4{--k:var(--c4)}.c5{--k:var(--c5)}
+summary{cursor:pointer;font-weight:700;color:var(--navy);font-size:18px}
+.b,.op{font:inherit;border-radius:10px;padding:10px 14px;cursor:pointer;margin:4px 4px 4px 0}
+.b{background:var(--btn);color:#fff;border:0;font-weight:700}.b.g{background:transparent;color:var(--navy);border:1px solid var(--gold)}
+.op{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:2px solid var(--line);font-size:18px}
+.op.ok{border-color:var(--ok);background:rgba(46,125,79,.15)}.op.no{border-color:var(--bad);background:rgba(179,57,47,.15)}
+.chp{display:inline-block;width:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}td,th{border:1px solid var(--line);padding:5px 7px;text-align:left}
+.f{text-align:center;font-size:20px;font-weight:700;color:var(--navy);background:var(--bg);border-radius:8px;padding:6px;margin:8px 0}
+.rm{background:var(--bg);border-radius:8px;padding:8px 10px;margin-top:10px;font-size:15px}
+.note{font-size:14px;opacity:.85}
+.tl{display:flex;gap:4px;flex-wrap:wrap}.tl button{flex:1;min-width:56px;font:inherit;font-size:18px;padding:8px 2px;border:1px solid var(--gold);background:var(--bg);color:var(--ink);border-radius:8px;cursor:pointer}
+.tl button.t{background:var(--c1);color:#fff}
+.two{display:flex;gap:8px}.two>div{flex:1;border:1px solid var(--line);border-radius:10px;padding:8px;text-align:center}
+.big{font-size:26px;text-align:center;margin:10px 0}
+.clk{width:130px;color:var(--ink)}
+.h1{color:var(--c1)}.h2{color:var(--c2)}.h3{color:var(--c3)}.h4{color:var(--c4)}.h5{color:var(--c5)}.hl b{font-weight:700}
+.yes{color:var(--ok);font-weight:700}.no{color:var(--bad);font-weight:700}
+.gc{display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer;border:1px solid var(--gold);border-radius:12px;padding:12px;margin:8px 0;background:var(--card);width:100%;font:inherit;color:var(--ink);text-align:left}
+.sp{font:inherit;background:none;border:1px solid var(--line);border-radius:8px;cursor:pointer}
+input[type=range]{width:100%}.vc{text-align:center;background:var(--bg);border-radius:10px;padding:8px;margin-top:8px}.tl button.on{background:var(--btn);color:#fff}.op.sel{border-color:var(--gold);background:rgba(184,137,59,.22)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><div class="w">
+<h1>Dòng Chảy Thời Gian</h1><p class="sub" lang="zh">时间表达 · Bí Kíp Luyện Công</p>
+<nav><button data-t="k" class="on">Tâm Pháp</button><button data-t="g">Luyện Công</button><button data-t="t">Cạm Bẫy</button></nav>
+
+<section id="k">
+<p>Mục tiêu cuối: nói được một ngày của bạn, ví dụ <b lang="zh">我每天早上六点半起床，七点吃早饭。</b> Có 5 nhánh kiến thức, mỗi nhánh một màu. Bấm vào từng nhánh để mở.</p>
+
+<details class="c1" open><summary>① 日期 · Ngày tháng</summary>
+<p>Chọn một trục, rồi kéo thanh trượt từ quá khứ sang tương lai (<b>今天</b> là tâm của trục Ngày):</p>
+<div class="tl" id="ax"></div><input type="range" id="sl" min="0" max="6" value="3" aria-label="Kéo trục thời gian"><div id="ir" style="text-align:center;margin:6px 0"></div><div class="vc" id="vc"></div><div id="tl" hidden></div><span id="tlr" hidden></span>
+<table lang="zh"><tr><th></th><th>Trước</th><th>Nay</th><th>Sau</th></tr>
+<tr><td>年</td><td>去年</td><td>今年</td><td>明年</td></tr><tr><td>月</td><td>上个月</td><td>这个月</td><td>下个月</td></tr><tr><td>星期</td><td>上星期</td><td>这星期</td><td>下星期</td></tr></table>
+<p class="f" lang="zh">年 → 月 → 号 → 星期</p>
+<p>Hôm nay: <b id="td" lang="zh"></b> <button class="sp" id="tdb">🔊</button></p>
+<p class="note">号 dùng khi nói, 日 hay gặp trong văn viết. 星期日 = 星期天.</p>
+<div class="rm"><b>Ghi nhớ:</b> thứ tự là năm, tháng, ngày, thứ. 前天/昨天/今天/明天/后天 là 5 mốc quanh hôm nay. Hỏi: 今天几月几号？今天星期几？</div></details>
+
+<details class="c2"><summary>② 时刻 · Giờ trên đồng hồ</summary>
+<p>Kéo thanh trượt để xem cách đọc:</p>
+<div style="text-align:center" id="cx"></div>
+<input type="range" id="hh" min="1" max="12" value="7" aria-label="Giờ"><input type="range" id="mm" min="0" max="55" step="5" value="45" aria-label="Phút">
+<div id="cr"></div><p class="note">Kéo kim để xem mọi cách nói của cùng một giờ. Bấm vào từng cách nói để nghe.</p>
+<table><tr><td lang="zh">点 diǎn</td><td>giờ</td><td lang="zh">分 fēn</td><td>phút</td><td lang="zh">半 bàn</td><td>rưỡi</td></tr></table>
+<table lang="zh"><tr><td>早上 sáng sớm</td><td>早上六点</td></tr><tr><td>上午 buổi sáng</td><td>上午九点</td></tr><tr><td>中午 trưa</td><td>中午十二点</td></tr><tr><td>下午 chiều</td><td>下午三点</td></tr><tr><td>晚上 tối</td><td>晚上八点</td></tr></table>
+<p class="f" lang="zh">buổi + 几点几分</p>
+
+<div class="rm"><b>Ghi nhớ:</b> 2:00 đọc là <b lang="zh">两点</b>, không đọc 二点. Phút dưới 10 thêm 零: 七点零五分. Không nói 八个点. Hỏi giờ: 现在几点？</div></details>
+
+<details class="c4"><summary>③ 刻 và 差 · Cách nói giờ mở rộng</summary>
+<p>Khi đã thạo 点・分・半, hãy học thêm hai cách nói rất hay gặp trong giao tiếp. Dùng đồng hồ ở mục ② để xem một giờ có bao nhiêu cách nói.</p>
+<p class="f" lang="zh">刻 kè = 15 phút</p>
+<table lang="zh"><tr><td>一刻</td><td>15 phút</td><td>七点一刻 = 7:15</td></tr><tr><td>半</td><td>30 phút</td><td>七点半 = 7:30</td></tr><tr><td>三刻</td><td>45 phút</td><td>七点三刻 = 7:45</td></tr></table>
+<p class="note">Chỉ có 一刻 và 三刻 (30 phút đã có 半). Không nói 四刻.</p>
+<p class="f" lang="zh">差 + <span class="h4">số phút</span> + <span class="h1">giờ sau</span></p>
+<p>差 chà = kém. Dùng khi sắp đến giờ tròn kế tiếp: kém mấy phút nữa thì đến giờ đó.</p>
+<table lang="zh"><tr><th>Giờ</th><th>Cách nói</th><th>Cách tính</th></tr><tr><td>7:55</td><td>差五分八点</td><td>kém 5 phút 8 giờ</td></tr><tr><td>8:50</td><td>差十分九点</td><td>kém 10 phút 9 giờ</td></tr><tr><td>9:45</td><td>差一刻十点<br>差十五分十点</td><td>kém 15 phút = 一刻</td></tr><tr><td>11:40</td><td>差二十分十二点</td><td>kém 20 phút 12 giờ</td></tr></table>
+<p class="f" lang="zh">Đổi: phút = 60 − số sau 差 · giờ = giờ sau − 1</p>
+<p class="note">Giờ đứng sau 差 là GIỜ SAU. 差五分八点 là 7:55, không phải 8:05. Thường dùng 差 khi phút lớn hơn 30.</p>
+<div class="rm"><b>Ghi nhớ:</b> 7:45 có 4 cách nói: 七点四十五分 · 七点三刻 · 差十五分八点 · 差一刻八点. Mọi cách đều đúng, hãy nghe được cả bốn.</div></details>
+
+<details class="c3"><summary>④ 时间段 · Khoảng thời gian</summary>
+<div class="two"><div><b class="h3" lang="zh">八点</b><br>Mốc giờ<br><small>hỏi 几点</small></div><div><b class="h3" lang="zh">两个小时</b><br>Thời lượng<br><small>hỏi 多久 / 多长时间</small></div></div>
+<p lang="zh">我<b class="h3">八点</b>上课。→ Tôi học lúc 8 giờ.<br>我上<b class="h3">两个小时</b>的课。→ Tôi học trong 2 tiếng.</p>
+<table lang="zh"><tr><td>半个小时</td><td>30 phút</td></tr><tr><td>一个半小时</td><td>1 tiếng 30 phút</td></tr><tr><td>两个半小时</td><td>2 tiếng 30 phút</td></tr><tr><td>三天 · 两个星期 · 一个月</td><td>3 ngày · 2 tuần · 1 tháng</td></tr></table>
+<p class="f" lang="zh">从 A 到 B</p><p lang="zh">我每天从早上八点工作到下午五点。</p>
+<p class="f" lang="zh">S + V + 了 + <span class="h3">thời lượng</span> + O</p><p lang="zh">我学了<b class="h3">两个小时</b>汉语。</p>
+<div class="rm"><b>Ghi nhớ:</b> mốc giờ trả lời 几点, thời lượng trả lời 多久. Chỉ cần nhớ cấu trúc cơ bản ở trên, không phải cứ có thời gian là dùng 了.</div></details>
+
+
+<details class="c5"><summary>⑤ Vị trí thời gian trong câu</summary>
+<p>Bấm lần lượt từng khối để ghép câu:</p>
+<div id="bl"></div><p class="big" lang="zh" id="bs">…</p>
+<p class="f" lang="zh">S + ngày + buổi + giờ + hành động</p>
+<p lang="zh">明天，我去学校。(đưa thời gian lên đầu câu cũng được)</p>
+<div class="rm"><b>Ghi nhớ:</b> thời gian đứng <b>trước</b> động từ. Đây là công thức giúp sắp xếp thông tin, trọng tâm câu có thể làm đổi vị trí. Ví dụ 我星期一下午三点在图书馆学习.</div></details>
+</section>
+
+<section id="g" hidden>
+<div id="gl"><p>Chọn một trò. Chơi không tính giờ, sai sẽ có giải thích ngay.</p></div>
+<div id="ga" hidden><p><b id="gp"></b></p><div id="gq" class="card"></div><div id="fb"></div></div>
+</section>
+
+<section id="t" hidden>
+<p>Những lỗi người học HSK2 hay mắc:</p>
+<table lang="zh"><tr><th>Sai</th><th>Đúng</th><th>Vì sao</th></tr>
+<tr><td class="no">八个点</td><td class="yes">八点</td><td>Nói giờ dùng 点</td></tr>
+<tr><td class="no">我起床七点</td><td class="yes">我七点起床</td><td>Giờ đứng trước động từ</td></tr>
+<tr><td class="no">星期五号</td><td class="yes">星期五 / 五号</td><td>Thứ và ngày là hai cách gọi</td></tr>
+<tr><td class="no">一个半小时钟</td><td class="yes">一个半小时</td><td>Thời lượng không thêm 钟</td></tr>
+<tr><td class="no">明天昨天</td><td class="yes">明天 / 昨天</td><td>Không ghép hai mốc đối lập</td></tr>
+<tr><td class="no">我每天七点起床了</td><td class="yes">我每天七点起床</td><td>Thói quen không dùng 了</td></tr><tr><td class="no">七点四刻</td><td class="yes">七点三刻</td><td>Chỉ có 一刻 và 三刻</td></tr><tr><td class="no">差八点十分</td><td class="yes">差十分八点</td><td>差 + số phút + giờ sau</td></tr></table>
+<p><button class="b" id="toerr">Luyện trò Tìm lỗi</button></p>
+</section>
+<script>
+const $=s=>document.querySelector(s),r=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),sh=a=>[...a].sort(()=>Math.random()-.5);
+const P={零:'líng',一:'yī',二:'èr',两:'liǎng',三:'sān',四:'sì',五:'wǔ',六:'liù',七:'qī',八:'bā',九:'jiǔ',十:'shí',点:'diǎn',分:'fēn',半:'bàn',刻:'kè',差:'chà',整:'zhěng'};
+const cn=n=>n<10?'零一二三四五六七八九'[n]:n<20?'十'+(n%10?cn(n%10):''):cn(n/10|0)+'十'+(n%10?cn(n%10):'');
+const hr=h=>{h=h%12||12;return h==2?'两':cn(h)};
+const F=(h,m)=>{const a=[],mm=m<10?'零'+cn(m)+'分':cn(m)+'分',n=h%12+1;a.push(['Chuẩn',hr(h)+'点'+(m?mm:'')]);if(m==30)a.push(['Dùng 半',hr(h)+'点半']);if(m==15||m==45)a.push(['Dùng 刻',hr(h)+'点'+(m==15?'一':'三')+'刻']);if(m>30){a.push(['Dùng 差','差'+cn(60-m)+'分'+hr(n)+'点']);if(m==45)a.push(['Dùng 差','差一刻'+hr(n)+'点'])}return a};
+const rd=(h,m)=>F(h,m)[0][1];
+const py=s=>[...s].map(c=>P[c]||c).join(' ');
+const sp=t=>{try{const u=new SpeechSynthesisUtterance(t);u.lang='zh-CN';speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}};
+function clk(h,m){let a=(h%12+m/60)*30,b=m*6,n='';for(let i=1;i<=12;i++){const t=i*Math.PI/6;n+=`<text x="${(50+36*Math.sin(t)).toFixed(1)}" y="${(53.5-36*Math.cos(t)).toFixed(1)}" text-anchor="middle" font-size="9" fill="currentColor">${i}</text>`}
+return `<svg viewBox="0 0 100 100" class="clk"><circle cx="50" cy="50" r="47" fill="var(--card)" stroke="var(--gold)" stroke-width="3"/>${n}<line x1="50" y1="50" x2="50" y2="29" stroke="currentColor" stroke-width="4" stroke-linecap="round" transform="rotate(${a} 50 50)"/><line x1="50" y1="50" x2="50" y2="17" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round" transform="rotate(${b} 50 50)"/><circle cx="50" cy="50" r="3" fill="var(--gold)"/></svg>`}
+/* tabs */
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>tab(b.dataset.t));
+function tab(t){['k','g','t'].forEach(x=>$('#'+x).hidden=x!=t);document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==t));if(t=='g')list();scrollTo(0,0)}
+/* kiến thức */
+const TL=[['前天','Hôm kia'],['昨天','Hôm qua'],['今天','Hôm nay'],['明天','Ngày mai'],['后天','Ngày kia']];
+$('#tl').innerHTML=TL.map(([a,b],i)=>`<button lang="zh" data-i="${i}" class="${i==2?'t':''}">${a}</button>`).join('');
+$('#tl').onclick=e=>{const i=e.target.dataset.i;if(i==null)return;$('#tlr').textContent=TL[i][0]+' = '+TL[i][1]+(i<2?' (quá khứ)':i>2?' (tương lai)':' (tâm của trục)');sp(TL[i][0])};
+const AX={'Năm':['两年前|liǎng nián qián|2 năm trước','前年|qiánnián|năm kia','去年|qùnián|năm ngoái','今年|jīnnián|năm nay','明年|míngnián|sang năm','后年|hòunián|năm sau nữa','两年后|liǎng nián hòu|2 năm sau'],'Tháng':['两个月前|liǎng gè yuè qián|2 tháng trước','上上个月|shàng shàng gè yuè|tháng trước nữa','上个月|shàng gè yuè|tháng trước','这个月|zhè gè yuè|tháng này','下个月|xià gè yuè|tháng sau','下下个月|xià xià gè yuè|tháng sau nữa','两个月后|liǎng gè yuè hòu|2 tháng sau'],'Tuần':['上上个星期|shàng shàng gè xīngqī|tuần trước nữa','上个星期|shàng gè xīngqī|tuần trước','这个星期|zhè gè xīngqī|tuần này','下个星期|xià gè xīngqī|tuần sau','下下个星期|xià xià gè xīngqī|tuần sau nữa'],'Ngày':['两天前|liǎng tiān qián|2 ngày trước','前天|qiántiān|hôm kia','昨天|zuótiān|hôm qua','今天|jīntiān|hôm nay','明天|míngtiān|ngày mai','后天|hòutiān|ngày kia','两天后|liǎng tiān hòu|2 ngày sau'],'Thứ':['星期一|xīngqīyī|thứ Hai','星期二|xīngqīèr|thứ Ba','星期三|xīngqīsān|thứ Tư','星期四|xīngqīsì|thứ Năm','星期五|xīngqīwǔ|thứ Sáu','星期六|xīngqīliù|thứ Bảy','星期日|xīngqīrì|Chủ nhật (星期天)'],'Buổi':['早上|zǎoshang|sáng sớm','上午|shàngwǔ|buổi sáng','中午|zhōngwǔ|buổi trưa','下午|xiàwǔ|buổi chiều','晚上|wǎnshang|buổi tối','半夜|bànyè|nửa đêm']};
+let ak;
+const EG7=['🥚','🥚','🐣','🐥','🐤','🐔','🐓'],EG5=['🥚','🐣','🐥','🐔','🐓'],BU=['🌅','🌤️','☀️','🌇','🌙','🌌'];
+const ic=(k,i)=>k=='Buổi'?BU[i]:k=='Thứ'?'📅':AX[k].length==5?EG5[i]:EG7[i];
+function axr(){const i=+$('#sl').value,[z,p,v,im]=AX[ak][i].split('|');$('#ir').innerHTML=AX[ak].map((_,j)=>`<span style="margin:0 3px;opacity:${j==i?1:.35};font-size:${j==i?30:20}px">${ic(ak,j)}</span>`).join('')+(ak=='Buổi'||ak=='Thứ'?'':'<br><small>quá khứ ◄ ► tương lai</small>');const big=im?`<img src="${im}" alt="" style="width:96px;height:96px;object-fit:cover;border-radius:12px">`:`<div style="font-size:54px;line-height:1.1">${ic(ak,i)}</div>`;$('#vc').innerHTML=big+`<b class="big" lang="zh" style="font-size:34px">${z}</b><br>${p}<br><b>${v}</b> <button class="sp" data-z="${z}">🔊</button>`}
+function axs(k){ak=k;const L=AX[k],s=$('#sl');s.max=L.length-1;s.value=(k=='Thứ'||k=='Buổi')?0:Math.floor(L.length/2);$('#ax').innerHTML=Object.keys(AX).map(x=>`<button class="${x==k?'on':''}" data-k="${x}">${x}</button>`).join('');axr()}
+$('#ax').onclick=e=>{const k=e.target.dataset.k;if(k)axs(k)};$('#sl').oninput=axr;$('#vc').onclick=e=>{const z=e.target.dataset.z;if(z)sp(z)};axs('Ngày');
+const d=new Date();$('#td').textContent=`${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}号 星期${'日一二三四五六'[d.getDay()]}`;$('#tdb').onclick=()=>sp($('#td').textContent);
+function cx(){const h=+$('#hh').value,m=+$('#mm').value;$('#cx').innerHTML=clk(h,m);$('#cr').innerHTML='<p class="big" style="margin:4px">'+h+':'+String(m).padStart(2,'0')+'</p>'+F(h,m).map(([l,s])=>`<button class="op" lang="zh" data-s="${s}"><small lang="vi">${l}</small> ${s}<br><small>${py(s)}</small></button>`).join('')}
+function cxOld(){const h=+$('#hh').value,m=+$('#mm').value,t=rd(h,m);$('#cx').innerHTML=clk(h,m);$('#cr').innerHTML=t+'<br><small style="font-size:14px">'+py(t)+' · '+h+':'+String(m).padStart(2,'0')+'</small>';cx.t=t}
+$('#hh').oninput=$('#mm').oninput=cx;cx();$('#cr').onclick=e=>{const b=e.target.closest('button');if(b)sp(b.dataset.s)};
+const BL=['我','明天','上午','八点','去学校'];let bp=[];
+$('#bl').innerHTML=BL.map((w,i)=>`<button class="b g" lang="zh" data-i="${i}">${w}</button>`).join('')+'<button class="b g" id="br">↺</button>';
+$('#bl').onclick=e=>{if(e.target.id=='br'){bp=[];$('#bs').textContent='…';return}const i=e.target.dataset.i;if(i==null)return;bp.push(BL[i]);$('#bs').textContent=bp.join('')+(bp.length==5?'。':'…');if(bp.length==5)sp(bp.join(''))};
+$('#toerr').onclick=()=>{tab('g');open('err')};
+/* game */
+const MS=[0,0,30,30,15,45,5,10,20,25,40,50,7,12,38,53];
+const MS5=[0,5,10,15,20,25,30,35,40,45,50,55],allF=(h,m)=>F(h,m).map(x=>x[1]),dg=(h,m)=>h+':'+String(m).padStart(2,'0'),pk=a=>a[r(0,a.length-1)];
+function qClock(){return Array.from({length:14},()=>{const h=r(1,12),m=pk(MS5),v=allF(h,m),a=pk(v),o=new Set([a]);if(m>30)o.add('差'+cn(60-m)+'分'+hr(h)+'点');if(m==15)o.add(hr(h)+'点三刻');for(let g=0;o.size<4&&g<60;g++){const c=pk(allF(r(1,12),pk(MS5)));if(!v.includes(c))o.add(c)}return{h:clk(h,m)+'<p class="big" style="font-size:18px">Đồng hồ chỉ mấy giờ? Chọn một cách nói đúng.</p>',o:sh(o),a,t:'Đồng hồ '+dg(h,m)+' → '+v.join(' / '),w:'Giờ này nói được: <b lang="zh">'+v.join(' · ')+'</b>.'}})}
+function qMulti(){return Array.from({length:10},()=>{const h=r(1,12),m=pk([15,30,35,40,45,50,55]),v=allF(h,m),o=new Set(v),k=m==45?'四':m==15?'二':'三';[hr(h)+'点'+k+'刻','差'+cn(60-m)+'分'+hr(h)+'点',allF(r(1,12),(m+10)%60)[0],hr(h)+'点'+cn((m+5)%60)+'分'].forEach(x=>{if(!v.includes(x)&&o.size<v.length+2)o.add(x)});return{h:clk(h,m)+'<p class="big" style="font-size:18px">Chọn <b>TẤT CẢ</b> cách nói đúng cho '+dg(h,m)+'</p>',o:sh(o),a:v,multi:1,t:dg(h,m)+' → '+v.join(' / '),w:'Tất cả cách nói đúng: <b lang="zh">'+v.join(' · ')+'</b>.'}})}
+function qRev(){return Array.from({length:14},()=>{const h=r(1,12),m=pk(MS5),s=pk(allF(h,m)),o=new Set([dg(h,m)]);if(m>30)o.add(dg(h%12+1,60-m));if(m==45)o.add(dg(h,15));if(m==15)o.add(dg(h,45));for(let g=0;o.size<4&&g<60;g++)o.add(dg(Math.random()<.6?h:r(1,12),pk(MS5)));return{h:'<p class="big" lang="zh">'+s+'</p><p style="text-align:center">Là mấy giờ?</p>',o:sh(o),a:dg(h,m),t:s+' = '+dg(h,m),w:'<b lang="zh">'+s+'</b> = '+dg(h,m)+'. '+(s[0]=='差'?'差 + số phút + GIỜ SAU: giờ thật = giờ sau − 1, phút = 60 − số phút.':/刻/.test(s)?'一刻 = 15 phút, 三刻 = 45 phút.':'')}})}
+function qClockOld(){return Array.from({length:12},()=>{const h=r(1,12),m=MS[r(0,15)],a=rd(h,m),o=new Set([a]);
+[rd(h,(m+5*r(1,5))%60),rd(h%12+1,m),rd(h==1?12:h-1,m)].forEach(x=>o.size<4&&o.add(x));if(h==2&&o.size<4)o.add(a.replace('两','二'));
+while(o.size<4)o.add(rd(r(1,12),MS[r(0,15)]));
+return{h:clk(h,m)+'<p class="big" style="font-size:18px">Đồng hồ chỉ mấy giờ?</p>',o:sh(o),a,t:'Đồng hồ → '+a,w:`Kim giờ chỉ gần số ${h}, kim phút chỉ ${m} phút → <b lang="zh">${a}</b> (${py(a)}).`+(h==2?' Nhớ: 2:00 đọc là 两点.':'')}})}
+const KD=[['我八点睡觉。','T','八点'],['我睡了八个小时。','D','八个小时'],['我三点上课。','T','三点'],['我上三个小时的课。','D','三个小时'],['我每天七点起床。','T','七点'],['他学了半个小时汉语。','D','半个小时'],['现在十点十五分。','T','十点十五分'],['我工作了一个半小时。','D','一个半小时'],['我们两点半见面。','T','两点半'],['他等了你十分钟。','D','十分钟'],['我下午五点回家。','T','下午五点'],['我看了一个小时电影。','D','一个小时'],['我昨天睡了九个小时。','D','九个小时']];
+const qKind=()=>KD.map(([s,k,y])=>({h:`<p class="big" lang="zh">${s}</p><p style="text-align:center">Chỗ in đậm trả lời cho câu hỏi nào?</p>`.replace(y,'<b>'+y+'</b>'),o:['几点 (mốc giờ)','多久 (thời lượng)'],a:k=='T'?'几点 (mốc giờ)':'多久 (thời lượng)',t:s,w:`<b lang="zh">${y}</b> `+(k=='T'?'là một mốc trên đồng hồ → trả lời cho 几点.':'là khoảng thời gian kéo dài → trả lời cho 多久.')}));
+const ER=[['我每天七点起床了。','我每天七点起床。','我每天起床七点。','我七点每天起床。','Thói quen hằng ngày không cần 了, và giờ đứng trước động từ.'],['我一星期两次去图书馆。','我一星期去两次图书馆。','一星期我两次去图书馆。','我去一星期两次图书馆。','Số lần đứng sau động từ: 去两次.'],['明天我上午去学校八点。','我明天上午八点去学校。','我去学校明天上午八点。','我上午明天八点去学校。','Thứ tự: ngày, buổi, giờ, rồi mới tới hành động.'],['我起床七点。','我七点起床。','七点起床我。','我起床在七点。','Giờ đứng TRƯỚC động từ.'],['我八个点睡觉。','我八点睡觉。','我八个小时睡觉。','我睡觉八个点。','Nói giờ dùng 点, không thêm 个.'],['星期五号我有课。','星期五我有课。','五星期我有课。','星期号五我有课。','Chỉ dùng 星期五 hoặc 五号, không ghép.'],['我七点四刻起床。','我七点三刻起床。','我七点四十刻起床。','我七点五刻起床。','Chỉ có 一刻 (15 phút) và 三刻 (45 phút). 7:45 là 七点三刻.'],['我差八点十分起床。','我差十分八点起床。','我八点差十分起床。','我差八点起床十分。','差 + số phút + giờ sau: 差十分八点 = 7:50.']];
+const qErr=()=>ER.map(([b,g,x,y,w])=>({h:`<p class="big no" lang="zh">${b}</p><p style="text-align:center">Câu này sai. Chọn câu sửa đúng:</p>`,o:sh([g,x,y]),a:g,t:b+' → '+g,w}));
+const OR=[['我/明天/上午八点/去/学校',['我明天上午八点去学校','明天上午八点我去学校','明天我上午八点去学校']],['我/每天/早上七点/起床',['我每天早上七点起床','每天早上七点我起床','每天我早上七点起床']],['他/星期六/上午九点/学习/汉语',['他星期六上午九点学习汉语','星期六上午九点他学习汉语','星期六他上午九点学习汉语']],['我/一星期/上/两次/汉语课',['我一星期上两次汉语课','一星期我上两次汉语课']],['我/从八点半/到十点/上课',['我从八点半到十点上课','从八点半到十点我上课']],['我/下午三点/在图书馆/学习',['我下午三点在图书馆学习','下午三点我在图书馆学习']],['我/每天/学习/两个小时/汉语',['我每天学习两个小时汉语','每天我学习两个小时汉语']],['我/晚上七点半/吃/晚饭',['我晚上七点半吃晚饭','晚上七点半我吃晚饭']],['我/七点三刻/去/上学',['我七点三刻去上学','七点三刻我去上学']],['他/差十分八点/起床',['他差十分八点起床','差十分八点他起床']],['我们/下午四点一刻/下课',['我们下午四点一刻下课','下午四点一刻我们下课']]];
+const qOrd=()=>OR.map(([s,ok])=>({h:'<p style="text-align:center">Xếp các từ thành câu đúng:</p>',ws:s.split('/'),ok,t:ok[0],w:'Thời gian đứng trước động từ. Một câu đúng: <b lang="zh">'+ok[0]+'。</b>'}));
+const GM={clock:{n:'看钟说时间',d:'Nhìn đồng hồ, chọn một cách nói đúng (点·半·刻·差)',q:qClock},multi:{n:'一题多答',d:'Chọn TẤT CẢ cách nói đúng của cùng một giờ',q:qMulti},rev:{n:'听懂时间',d:'Đọc 半・刻・差 rồi chọn giờ dạng số',q:qRev},kind:{n:'几点 or 多久?',d:'Phân biệt mốc giờ và thời lượng',q:qKind},ord:{n:'拼句子',d:'Xếp từ thành câu, thời gian đúng chỗ',q:qOrd},err:{n:'找错误',d:'Tìm cách sửa câu sai',q:qErr}};
+let G,qs,ix,sc,wr,rt=0,lk,bt;
+function stars(){try{return JSON.parse(localStorage.getItem('dctg')||'{}')}catch(e){return{}}}
+function list(){$('#ga').hidden=true;$('#gl').hidden=false;const s=stars();$('#gl').innerHTML='<p>Chọn một trò. Chơi không tính giờ, sai sẽ có giải thích ngay.</p>'+Object.keys(GM).map(k=>`<button class="gc" data-k="${k}"><span><b lang="zh">${GM[k].n}</b><br><small>${GM[k].d}</small></span><span>${'★'.repeat(s[k]||0)+'☆'.repeat(3-(s[k]||0))}</span></button>`).join('')}
+$('#gl').onclick=e=>{const b=e.target.closest('.gc');if(b)open(b.dataset.k)};
+function open(k){G=k;qs=sh(GM[k].q()).slice(0,8);ix=0;sc=0;wr=[];rt=0;$('#gl').hidden=true;$('#ga').hidden=false;show()}
+function show(){if(ix>=qs.length)return end();const q=qs[ix];lk=0;bt=[];$('#gp').innerHTML=`${GM[G].n} · ${ix+1}/${qs.length}`;$('#fb').innerHTML='';
+let h=q.h;if(q.o)h+=q.o.map(o=>`<button class="op" lang="zh" data-v="${o}">${o}</button>`).join('')+(q.multi?'<button class="b" id="mc">Kiểm tra</button>':'');
+else h+='<p class="big" lang="zh" id="bd" style="min-height:44px;border-bottom:2px solid var(--line)"></p><div id="pk">'+q.ws.map((w,i)=>`<button class="op chp" lang="zh" data-i="${i}">${w}</button>`).join('')+'</div><button class="b g" id="cl">Xóa</button><button class="b" id="ck">Kiểm tra</button>';
+$('#gq').innerHTML=h}
+function fb(ok,w){const q=qs[ix];lk=1;if(ok)sc++;else wr.push(q);$('#fb').innerHTML=`<div class="card"><p class="${ok?'yes':'no'}">${ok?'✅ Chính xác!':'❌ Chưa đúng.'}</p><p>${w}</p><button class="b" id="nx">Tiếp</button></div>`;$('#nx').onclick=()=>{ix++;show()}}
+$('#gq').onclick=e=>{if(lk)return;const q=qs[ix],b=e.target.closest('button');if(!b)return;
+if(b.id=='mc'){const sel=[...document.querySelectorAll('.op.sel')].map(x=>x.dataset.v),ok=sel.length==q.a.length&&sel.every(x=>q.a.includes(x));document.querySelectorAll('.op').forEach(x=>{const c=q.a.includes(x.dataset.v);x.classList.remove('sel');if(c)x.classList.add('ok');else if(sel.includes(x.dataset.v))x.classList.add('no')});fb(ok,q.w)}else if(b.dataset.v!=null&&q.multi)b.classList.toggle('sel');else if(b.dataset.v!=null){const ok=b.dataset.v==q.a;b.classList.add(ok?'ok':'no');if(!ok)document.querySelectorAll('.op').forEach(x=>x.dataset.v==q.a&&x.classList.add('ok'));fb(ok,q.w)}
+else if(b.id=='cl'){bt=[];document.querySelectorAll('#pk .op').forEach(x=>x.disabled=false);$('#bd').textContent=''}
+else if(b.id=='ck'){if(!bt.length)return;fb(q.ok.includes(bt.join('')),q.ok.includes(bt.join(''))?q.w:'Bạn xếp: <b lang="zh">'+bt.join('')+'</b>. '+q.w)}
+else if(b.dataset.i!=null){bt.push(q.ws[b.dataset.i]);b.disabled=true;$('#bd').textContent=bt.join('')}};
+function end(){const n=qs.length,p=sc/n,st=p>=.9?3:p>=.7?2:p>=.4?1:0;
+if(!rt)try{const s=stars();s[G]=Math.max(s[G]||0,st);localStorage.setItem('dctg',JSON.stringify(s))}catch(e){}
+$('#gp').textContent=GM[G].n;$('#fb').innerHTML='';
+$('#gq').innerHTML=`<p class="big">${'★'.repeat(st)+'☆'.repeat(3-st)}</p><p style="text-align:center">Đúng <b>${sc}/${n}</b> câu</p>`+(wr.length?'<p><b>Các câu cần xem lại:</b></p><ul>'+wr.map(q=>`<li lang="zh">${q.t}<br><small lang="vi">${q.w}</small></li>`).join('')+'</ul><button class="b" id="rw">Luyện lại câu sai</button>':'<p class="yes" style="text-align:center">Không sai câu nào, quá tuyệt vời!</p>')+'<button class="b g" id="ag">Chơi lại</button><button class="b g" id="bk">Danh sách trò</button>';
+const rw=$('#rw');if(rw)rw.onclick=()=>{qs=sh(wr);ix=0;sc=0;wr=[];rt=1;show()};
+$('#ag').onclick=()=>open(G);$('#bk').onclick=list}
+</script></div></body></html>
