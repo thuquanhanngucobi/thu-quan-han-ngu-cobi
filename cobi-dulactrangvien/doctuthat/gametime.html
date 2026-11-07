@@ -32,7 +32,7 @@ li{margin:4px 0}
 <h1>Một Ngày Của Tôi <span lang="zh">我的一天</span></h1>
 
 <div id="s0" class="card">
-<p>Chào Lữ Khách! Hãy sống trọn một ngày bằng tiếng Trung. Mỗi câu phải <b>gõ đúng giờ và đúng ngữ pháp</b> thì nhân vật mới đi tiếp. Gõ sai thì xem lại kiến thức rồi gõ lại. Đồng hồ bấm giờ chạy từ lúc bạn bấm Bắt đầu: ai hoàn thành nhanh nhất sẽ đứng đầu bảng xếp hạng của lớp.</p>
+<p>Chào Lữ Khách! Hãy sống trọn một ngày bằng tiếng Trung. Mỗi câu phải <b>gõ đúng giờ và đúng ngữ pháp</b> thì nhân vật mới đi tiếp. Gõ sai thì xem lại kiến thức rồi gõ lại. Đồng hồ bấm giờ chạy từ lúc bạn bấm Bắt đầu và tổng thời gian hiện ở cuối, không xếp hạng, hãy chơi để học. Có nút 🎤 để luyện nói (cần micro và có mạng).</p>
 <input id="nm" type="text" placeholder="Tên của bạn" maxlength="30">
 <select id="rl"><option value="s">Vai: học sinh (đi CoBi书馆)</option><option value="w">Vai: người đi làm (đi CoBi公司)</option></select>
 
@@ -48,7 +48,7 @@ li{margin:4px 0}
 <div class="row"><div id="ck"></div><p id="tx" style="margin:0"></p></div>
 <div id="ip">
 <input id="in" type="text" lang="zh" autocomplete="off" autocapitalize="off" placeholder="Gõ câu tiếng Trung…">
-<button class="b" id="ok">Kiểm tra</button><button class="b g" id="hb">Gợi ý</button>
+<button class="b" id="ok">Kiểm tra</button><button class="b g" id="hb">Gợi ý</button><button class="b g" id="mic">🎤 Nói</button><label id="sml" style="display:block;font-size:14px;margin-top:4px"><input type="checkbox" id="smt"> Chế độ luyện nói: bắt buộc nói, không gõ và không sửa chữ</label>
 <div id="hs"></div></div>
 <div id="cc" hidden><button class="b" data-b="h">🏠 Về nhà</button><button class="b" data-b="o">🎈 Đi chơi</button></div>
 <p id="ms" class="msg"></p>
@@ -149,11 +149,21 @@ $('#hb').onclick=()=>{const st=ST[i];hint++;let h='';
 if(hint==1||hint==2){h='<p>'+(st.t!=null?'🕐 Đồng hồ đang chỉ <b>'+dig(st.t)+'</b>.<br>':'')+'Bấm từ để ghép câu:</p>'+(st.t!=null?[...new Map(st.w.concat([['半','bàn'],['刻','kè'],['差','chà']]).map(x=>[x[0],x])).values()]:st.w).map(([a,b])=>`<span class="chip" data-h="${a}">${a}<small>${b}</small></span>`).join('')}
 if(hint>=2){if(!st.pen){pen+=30;st.pen=1}h+='<p>Câu mẫu (+30 giây): <b>'+smp(st)+'</b></p>'}
 $('#hs').innerHTML=h};
-$('#hs').onclick=e=>{const c=e.target.closest('.chip');if(c)$('#in').value+=c.dataset.h};
+$('#hs').onclick=e=>{const c=e.target.closest('.chip');if(c&&!sm)$('#in').value+=c.dataset.h};
 $('#cc').onclick=e=>{const b=e.target.dataset.b;if(!b)return;ST=ST.concat(mb(b));dia.push(b=='h'?'(Tôi chọn về nhà.)':'(Tôi chọn đi chơi.)');i++;render()};
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let sm=false,rec,lis=0;
+const s2h=t=>t.replace(/(\d+)\s*[:：]\s*(\d+)/g,'$1点$2分').replace(/(^|\D)2(?=\s*点)/g,'$1两').replace(/\d+/g,m=>m.length>1&&m[0]=='0'?'零'+cn(+m):cn(+m)).replace(/[，。,.！!？?]/g,'').trim();
+if(!SR){$('#mic').style.display='none';$('#sml').style.display='none'}
+$('#smt').onchange=()=>{sm=$('#smt').checked;$('#in').readOnly=sm;$('#in').value='';$('#in').placeholder=sm?'Bấm 🎤 Nói và đọc câu của bạn…':'Gõ câu tiếng Trung…'};
+$('#mic').onclick=()=>{if(lis){rec.stop();return}const m=$('#ms');rec=new SR();rec.lang='zh-CN';rec.interimResults=false;rec.continuous=false;rec.maxAlternatives=1;
+rec.onstart=()=>{lis=1;$('#mic').textContent='⏹ Đang nghe…';m.textContent='🎤 Hãy nói câu của bạn…';m.className='msg'};
+rec.onend=()=>{lis=0;$('#mic').textContent='🎤 Nói'};
+rec.onerror=e=>{const x={'not-allowed':'Trình duyệt chưa cho dùng micro. Hãy bấm biểu tượng ổ khóa cạnh địa chỉ trang và cho phép micro.','service-not-allowed':'Trình duyệt đang chặn nhận diện giọng nói. Hãy kiểm tra quyền micro.','no-speech':'Máy không nghe thấy gì. Hãy nói gần micro hơn.','audio-capture':'Không tìm thấy micro.','network':'Cần có mạng để nhận diện giọng nói.'}[e.error];if(e.error=='aborted')return;m.textContent='⚠️ '+(x||'Không nhận diện được ('+e.error+'). Hãy thử lại.');m.className='msg no'};
+rec.onresult=e=>{const a=e.results[0][0],c=a.confidence;if(c>0&&c<.5){m.textContent='⚠️ Máy nghe chưa rõ ('+Math.round(c*100)+'%). Hãy nói chậm, rõ từng chữ rồi thử lại.';m.className='msg no';return}$('#in').value=s2h(a.transcript);m.textContent='🎤 Máy nghe được: '+$('#in').value+' — hãy đối chiếu chữ Hán. Nếu chưa đúng nghĩa là phát âm chưa chuẩn, hãy bấm Nói để thử lại.';m.className='msg'};
+try{rec.start()}catch(x){}};
 function end(){clearInterval(tm);const s=Math.floor((Date.now()-t0)/1000)+pen,d=dia.filter(x=>!/^\(/.test(x)).join(' ');
 $('#s1').hidden=true;const e=$('#s2');e.hidden=false;
-e.innerHTML=`<h1>Một ngày đã trọn vẹn! 🎉</h1><p style="text-align:center;font-size:44px;margin:4px;color:var(--navy)"><b>${fmt(s)}</b></p><p style="text-align:center">Tổng thời gian của <b>${name}</b> (đã gồm +${pen} giây gợi ý) · Gõ sai: <b>${errs}</b> lần</p><p><b>Nhật ký một ngày của bạn:</b></p><p lang="zh" style="font-size:18px">${d}</p><button class="b" id="cp">Sao chép nhật ký</button><button class="b g" onclick="location.reload()">Chơi lại</button><p style="font-size:14px">📸 Hãy chụp màn hình này gửi cho giáo viên để được xếp hạng.</p>`;
+e.innerHTML=`<h1>Một ngày đã trọn vẹn! 🎉</h1><p style="text-align:center;font-size:44px;margin:4px;color:var(--navy)"><b>${fmt(s)}</b></p><p style="text-align:center">Tổng thời gian của <b>${name}</b> (đã gồm +${pen} giây gợi ý) · Gõ sai: <b>${errs}</b> lần</p><p><b>Nhật ký một ngày của bạn:</b></p><p lang="zh" style="font-size:18px">${d}</p><button class="b" id="cp">Sao chép nhật ký</button><button class="b g" onclick="location.reload()">Chơi lại</button><p style="font-size:14px">📸 Bạn có thể chụp màn hình này để lưu lại hoặc gửi cho giáo viên xem.</p>`;
 $('#cp').onclick=()=>{try{navigator.clipboard.writeText(d);$('#cp').textContent='Đã sao chép'}catch(x){}}}
 const _r=render;render=function(){if(i>=ST.length&&!fin){fin=1;end();return}_r()};
 </script></body></html>
