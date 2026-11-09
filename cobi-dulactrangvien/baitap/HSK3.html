@@ -54,6 +54,7 @@ input[type=text]{width:100%;padding:8px 10px}
 .res .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
 .note{color:var(--muted);font-size:.9rem}
 .rc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 16px;margin:12px 0}.rc summary{cursor:pointer;font-weight:600}.rc h3{font-size:1rem;margin:14px 0 6px;color:var(--accent)}.rc table{width:100%;border-collapse:collapse;font-size:.95rem}.rc td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}.rc td.zh{font-size:1.05rem}
+.tok[draggable=true]{cursor:grab}.fb summary{cursor:pointer;color:var(--ok)}
 </style>
 </head>
 <body>
@@ -62,6 +63,10 @@ input[type=text]{width:100%;padding:8px 10px}
 /* ===== KHO DỮ LIỆU: thêm bài mới = thêm 1 khối vào SETS ===== */
 /* Bài trắc nghiệm đơn giản: mk({id,level,name,instr,words,rows:[[câu, đáp án (số thứ tự từ 0), giải thích]]}) */
 const mk=d=>({id:d.id,level:d.level,name:d.name,title:d.instr,sub:d.name,sections:[{title:d.instr,sub:'',items:d.rows.map(r=>({type:'mc',text:r[0],opts:d.words,ans:r[1],exp:r[2]}))}]});
+const _B=(t,a,e)=>({type:"build",hint:"Kéo thả (hoặc bấm) các từ để ghép thành câu hoàn chỉnh.",tokens:t,accept:a,exp:e});
+const _R=(src,pre,acc,e)=>({type:"rewrite",hint:"Viết lại bằng câu chữ 把, điền phần còn thiếu sau dấu →.",parts:[{src,pre,accept:acc}],exp:e});
+const _T=(vi,acc,show,e)=>({type:"trans",hint:"Dịch sang tiếng Trung bằng câu chữ 把.",parts:[{vi,accept:acc,show}],exp:e});
+const _F=(wrong,acc,show,e)=>({type:"fix",hint:"Tìm lỗi và viết lại thành câu chữ 把 đúng.",wrong,accept:acc,show,exp:e});
 const SETS=[
 {id:"hsk3-bonguu",level:"HSK3",name:"Bổ ngữ",title:"HSK 3B – Bài 8: Bài tập bổ ngữ",sub:"Bổ ngữ kết quả · khả năng · trạng thái · xu hướng.",
  tags:["结果补语","可能补语","状态补语","趋向补语"],sections:[
@@ -87,7 +92,7 @@ const SETS=[
    {vi:"Anh ấy mang một cuốn sách đến.",accept:["他带来了一本书","他带来一本书","他带了一本书来","他带一本书来","他拿来了一本书","他拿来一本书","他拿了一本书来","他拿一本书来"],show:"他带来了一本书。 / 他拿来了一本书。"}],
    exp:"Lần lượt là: 没听懂 (kết quả), 唱得很好听 (trạng thái), 做完 (kết quả), 带来 (xu hướng). Có thể còn cách diễn đạt đúng khác, hãy nhờ giáo viên kiểm tra."}]}
 ]},
-{id:"hsk3-sosanh",level:"HSK3",name:"So sánh 比较句",title:"HSK 3 – So sánh 比较句",sub:"So sánh hơn (比), so sánh bằng (跟……一样), so sánh thua (没有 / 不如). Làm hết các bài rồi bấm “Chấm bài”.",
+{id:"hsk3-sosanh",level:"HSK3",name:"So sánh 比较句",title:"HSK 3 – So sánh 比较句",sub:"So sánh hơn (比), so sánh bằng (跟……一样), so sánh thua (没有 / 不如). Làm hết các bài rồi bấm “Nộp bài”.",
  tags:["比","跟……一样","没有 / 不如"],
  recap:[
   {t:"1. So sánh hơn – 比",rows:[["A + 比 + B + tính từ","今天比昨天冷。"],["A + 比 + B + 更/还 + tính từ","他比我更认真。"],["A + 比 + B + tính từ + 一点儿","今天比昨天暖和一点儿。"],["A + 比 + B + tính từ + 得多/多了","他比我高得多。"],["A + 比 + B + động từ + 得 + tính từ","他比我跑得快。 / 他跑得比我快。"],["A + 比 + B + tính từ + số lượng","他比我大三岁。"]],notes:["Câu 比 không dùng 很、非常 trước tính từ.","Không đặt 不 / 没有 trực tiếp trước tính từ để tạo so sánh hơn."]},
@@ -154,6 +159,59 @@ const SETS=[
    {src:"这个房间不如那个房间大。",pre:"这个房间没有那个房间",accept:["大","那么大"]}],
    exp:"Chuyển đổi: A 比 B … ↔ B 没有/不如 A …; 跟……一样 = bằng nhau. Lưu ý 大 chỉ tuổi, 高 chỉ chiều cao."}]}
  ]},
+{id:"hsk3-ba",level:"HSK3",name:"Câu chữ 把 (把字句)",title:"HSK 3 – Câu chữ 把",sub:"Cấu trúc S + 把 + O + V + thành phần khác. Làm hết 40 câu rồi bấm “Nộp bài”.",
+ tags:["把字句","结果补语","趋向补语","在 / 给 / 成"],
+ recap:[
+  {t:"1. Cấu trúc cơ bản",rows:[["S + 把 + O + V + thành phần khác","我把作业做完了。"]],notes:["O sau 把 phải xác định (这本书、那个苹果、我的手机…), không dùng 一本书.","Động từ không đứng một mình: sau V phải có 了, bổ ngữ, 一下… (không nói 我把作业做)."]},
+  {t:"2. Thành phần thường đi sau động từ",rows:[["V + 了","妈妈把衣服洗了。"],["V + bổ ngữ kết quả","我把作业做完了。 / 他把杯子打破了。"],["V + bổ ngữ xu hướng","他把椅子搬进来了。"],["V + 在 + nơi chốn","请把书放在桌子上。"],["V + 给 + người","他把礼物送给了朋友。"],["V + 成 + …","请把这个句子翻译成中文。"],["V + 一下 / lặp động từ","请你把房间打扫打扫。"]]},
+  {t:"3. Vị trí của phủ định, trợ động từ, trạng từ",rows:[["S + 没(有)/不 + 把 + O + V…","我没把作业做完。"],["S + 想/要/应该 + 把 + O + V…","我想把这本书还给他。"],["S + 已经/常常… + 把 + O + V…","我已经把衣服洗干净了。"]],notes:["Phủ định, trợ động từ và trạng từ đứng TRƯỚC 把, không đứng sau.","Không dùng 把 với động từ chỉ trạng thái, tâm lý, cảm giác như 是、有、在、喜欢、知道、觉得、看见、听见."]}
+ ],
+ sections:[
+ {title:"一、排序",sub:"Sắp xếp thành câu chữ 把",items:[
+  _B(["我","把","作业","做完","了"],["我把作业做完了"],"S + 把 + O + V + 结果补语 + 了: 我把作业做完了."),
+  _B(["请","把","书","放","在","桌子上"],["请把书放在桌子上"],"V + 在 + nơi chốn: 请把书放在桌子上."),
+  _B(["他","把","礼物","送给","了","朋友"],["他把礼物送给了朋友","他把礼物送给朋友了"],"V + 给 + người nhận: 他把礼物送给了朋友."),
+  _B(["妈妈","把","衣服","洗","干净","了"],["妈妈把衣服洗干净了"],"干净 là bổ ngữ kết quả: 妈妈把衣服洗干净了."),
+  _B(["请","把","门","关","上"],["请把门关上"],"Câu mệnh lệnh: 请把门关上. 上 là bổ ngữ kết quả."),
+  _B(["我","把","手机","忘","在","家里","了"],["我把手机忘在家里了"],"V + 在 + nơi chốn: 我把手机忘在家里了."),
+  _B(["他","把","椅子","搬","进来","了"],["他把椅子搬进来了"],"Bổ ngữ xu hướng 进来 đứng sau động từ: 他把椅子搬进来了."),
+  _B(["老师","把","这个句子","翻译","成","汉语"],["老师把这个句子翻译成汉语"],"V + 成 + …: 老师把这个句子翻译成汉语."),
+  _B(["我","没","把","作业","带来"],["我没把作业带来"],"Phủ định 没 đứng trước 把: 我没把作业带来."),
+  _B(["我","想","把","这本书","还给","他"],["我想把这本书还给他"],"Trợ động từ 想 đứng trước 把: 我想把这本书还给他.")]},
+ {title:"二、改写句子",sub:"Viết lại bằng câu chữ 把",items:[
+  _R("我做完作业了。","我把",["作业做完了"],"S + V完 + O → S + 把 + O + V完了: 我把作业做完了."),
+  _R("他吃完了那个苹果。","他把",["那个苹果吃完了"],"Tân ngữ 那个苹果 đưa lên sau 把: 他把那个苹果吃完了."),
+  _R("请关上门。","请把",["门关上"],"请把门关上: 关 + 上 là bổ ngữ kết quả."),
+  _R("妈妈洗干净了衣服。","妈妈把",["衣服洗干净了"],"妈妈把衣服洗干净了: 干净 là bổ ngữ kết quả."),
+  _R("我的手机忘在家里了。","我把",["手机忘在家里了","手机忘在家了"],"V + 在 + nơi chốn: 我把手机忘在家里了."),
+  _R("小李送了那份礼物给朋友。","小李把",["那份礼物送给了朋友","那份礼物送给朋友了"],"V + 给 + người nhận: 小李把那份礼物送给了朋友."),
+  _R("我吃了药。","我把",["药吃了"],"Sau 把 có thể dùng V + 了: 我把药吃了."),
+  _R("他拿出了那本书。","他把",["那本书拿出来了"],"Dùng bổ ngữ xu hướng: 他把那本书拿出来了."),
+  _R("他的书放在桌子上了。","他把",["书放在桌子上了"],"V + 在 + nơi chốn: 他把书放在桌子上了."),
+  _R("他还给了我那本书。","他把",["那本书还给了我","那本书还给我了"],"V + 给 + người nhận: 他把那本书还给了我.")]},
+ {title:"三、翻译",sub:"Dịch Việt – Trung bằng câu chữ 把",items:[
+  _T("Tôi làm xong bài tập rồi.",["我把作业做完了","我把作业写完了"],"我把作业做完了。","把 + O + V + 结果补语 + 了."),
+  _T("Xin hãy đóng cửa lại.",["请把门关上","请把门关好","请你把门关上","请你把门关好"],"请把门关上。","Câu mệnh lệnh: 请把 + O + V + bổ ngữ kết quả."),
+  _T("Anh ấy để quên điện thoại ở nhà rồi.",["他把手机忘在家里了","他把手机忘在家了","他把手机落在家里了"],"他把手机忘在家里了。","V + 在 + nơi chốn: 忘在家里."),
+  _T("Mẹ giặt sạch quần áo rồi.",["妈妈把衣服洗干净了","妈妈把衣服洗好了"],"妈妈把衣服洗干净了。","把 + O + V + 干净 + 了."),
+  _T("Xin hãy đặt quyển sách lên bàn.",["请把书放在桌子上","请把书放到桌子上","请把这本书放在桌子上","请把这本书放到桌子上","请你把书放在桌子上","请你把书放到桌子上"],"请把书放在桌子上。","V + 在/到 + nơi chốn."),
+  _T("Em đã trả sách cho thầy giáo rồi.",["我把书还给老师了","我把书还给了老师","我已经把书还给老师了","我把这本书还给老师了","我把这本书还给了老师","我已经把这本书还给老师了"],"我已经把书还给老师了。","V + 给 + người nhận: 还给老师. Trạng từ 已经 đứng trước 把."),
+  _T("Hãy dịch câu này sang tiếng Trung.",["把这个句子翻译成中文","请把这个句子翻译成中文","请你把这个句子翻译成中文","把这句话翻译成中文","请把这句话翻译成中文","请你把这句话翻译成中文","把这个句子翻译成汉语","请把这个句子翻译成汉语"],"请把这个句子翻译成中文。","V + 成 + …: 翻译成中文."),
+  _T("Anh ấy mang chiếc ghế vào rồi.",["他把椅子搬进来了","他把椅子拿进来了","他把椅子搬进去了","他把椅子拿进去了","他把那把椅子搬进来了","他把那把椅子拿进来了"],"他把椅子搬进来了。","Bổ ngữ xu hướng: 进来 hay 进去 tùy vị trí người nói."),
+  _T("Tôi muốn trả quyển sách này cho anh ấy.",["我想把这本书还给他","我要把这本书还给他"],"我想把这本书还给他。","Trợ động từ 想/要 đứng trước 把."),
+  _T("Tôi chưa làm xong bài tập.",["我没把作业做完","我还没把作业做完","我没有把作业做完","我还没有把作业做完"],"我没把作业做完。","Phủ định 没(有) đứng trước 把.")]},
+ {title:"四、Tìm lỗi sai và viết lại",sub:"Tìm lỗi sai, viết lại câu chữ 把 đúng",items:[
+  _F("我把作业做。",["我把作业做完了","我把作业做完","我把作业写完了","我把作业做好了"],"我把作业做完了。","Động từ sau 把 không đứng một mình, cần thêm 了 hoặc bổ ngữ (做完了)."),
+  _F("我把一本书买了。",["我把那本书买了","我把这本书买了","我把那本书买到了","我把这本书买到了"],"我把那本书买了。","Tân ngữ sau 把 phải xác định (那本书/这本书), không dùng 一本书."),
+  _F("我把作业没做完。",["我没把作业做完","我没有把作业做完"],"我没把作业做完。","Từ phủ định 没(有) phải đứng trước 把."),
+  _F("我把应该作业做完。",["我应该把作业做完","我应该把作业做完了"],"我应该把作业做完。","Trợ động từ 应该 đứng trước 把."),
+  _F("他把手机放桌子上。",["他把手机放在桌子上","他把手机放到桌子上"],"他把手机放在桌子上。","Thiếu 在 sau động từ: V + 在 + nơi chốn."),
+  _F("他把杯子打破。",["他把杯子打破了"],"他把杯子打破了。","Sau bổ ngữ kết quả cần 了 để chỉ hành động đã hoàn thành."),
+  _F("我把衣服已经洗干净了。",["我已经把衣服洗干净了","我已经把衣服洗好了"],"我已经把衣服洗干净了。","Trạng từ 已经 đứng trước 把."),
+  _F("他把礼物送了给朋友。",["他把礼物送给了朋友","他把礼物送给朋友了"],"他把礼物送给了朋友。","送给 là một khối, 了 đặt sau 送给 hoặc cuối câu."),
+  _F("请把这个句子翻译中文。",["请把这个句子翻译成中文","请把这个句子翻译成汉语"],"请把这个句子翻译成中文。","Thiếu 成: V + 成 + ngôn ngữ."),
+  _F("请把门不要关。",["请不要把门关上","请别把门关上","请不要把门关好","请别把门关好"],"请不要把门关上。","不要/别 đứng trước 把, và động từ cần có bổ ngữ (关上).")]}
+ ]},
 mk({id:"hsk3-shoudao-shoudao-dedao",level:"HSK3",name:"Phân biệt 收到 / 受到 / 得到",instr:"Chọn từ thích hợp",words:["得到","收到","受到"],rows:[
  ["我昨天____了一封朋友寄来的信。",1,"收到信 = thư được gửi đến và tiếp nhận → 收到."],
  ["通过努力,他终于____了大家的认可。",0,"得到认可 = có được sự công nhận."],
@@ -169,7 +227,7 @@ function h(t,p){const e=document.createElement(t);p=p||{};for(const k in p){if(p
  for(let i=2;i<arguments.length;i++){const c=arguments[i];if(c!=null)e.append(c)}return e}
 const norm=s=>String(s||'').normalize('NFKC').replace(/[\s,.!?;:、。,!?;:"'“”‘’()()]/g,'');
 const shuffle=a=>{const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r};
-const fb=(ok,head,body)=>h('div',{class:'fb '+(ok?'ok':'bad')},h('b',null,head),body?h('span',{class:'ex'},body):null);
+const fb=(ok,head,body)=>h('div',{class:'fb '+(ok?'ok':'bad')},h('b',null,head),body?(ok?h('details',{class:'ex'},h('summary',{class:'note'},'Xem giải thích'),body):h('span',{class:'ex'},body)):null);
 const blankText=t=>{const b=h('div',{class:'qt'});t.split('____').forEach((p,i,a)=>{b.append(p);if(i<a.length-1)b.append(h('span',{class:'blank'},' '))});return b};
 const T={
 mc(q,nm){let c=-1;const ls=[],o=h('div',{class:'opts'});
@@ -184,8 +242,13 @@ fill(q){const bs=[],b=h('div');if(q.hint)b.append(h('p',{class:'hint'},q.hint));
  return{body:[b],grade(){let g=0;bs.forEach(([s,a])=>{const ok=[].concat(a).includes(s.value);s.classList.remove('sok','sbad');s.classList.add(ok?'sok':'sbad');if(ok)g++});
   const all=g===bs.length;return{got:g,max:bs.length,fb:fb(all,all?'✓ Chính xác.':'✗ Đúng '+g+'/'+bs.length+'. Đáp án: '+q.parts.map((p,i)=>(i+1)+'. '+[].concat(p.ans).join('/')+(p.mid!==undefined?' + '+[].concat(p.ans2).join('/'):'')).join('   '),q.exp)}}}},
 build(q){let order=[];const pool=shuffle(q.tokens.map((t,i)=>i)),bt=h('div',{class:'built'}),pb=h('div',{class:'pool'});
- const r=()=>{bt.textContent='';pb.textContent='';order.forEach((i,pos)=>bt.append(h('button',{type:'button',class:'tok in',onclick:()=>{order.splice(pos,1);r()}},q.tokens[i])));
-  pool.forEach(i=>pb.append(h('button',{type:'button',class:'tok',disabled:order.includes(i)?'disabled':null,onclick:()=>{if(!order.includes(i)){order.push(i);r()}}},q.tokens[i])))};r();
+ const drop=(e,at)=>{e.preventDefault();e.stopPropagation();const d=(e.dataTransfer.getData('text')||'').split(':');
+  if(d[0]==='p'){const i=+d[1];if(!order.includes(i)){order.splice(at,0,i);r()}}else if(d[0]==='b'){const f=+d[1],it=order.splice(f,1)[0];order.splice(at>f?at-1:at,0,it);r()}};
+ bt.ondragover=e=>e.preventDefault();bt.ondrop=e=>drop(e,order.length);
+ pb.ondragover=e=>e.preventDefault();pb.ondrop=e=>{e.preventDefault();const d=(e.dataTransfer.getData('text')||'').split(':');if(d[0]==='b'){order.splice(+d[1],1);r()}};
+ const r=()=>{bt.textContent='';pb.textContent='';
+  order.forEach((i,pos)=>bt.append(h('button',{type:'button',class:'tok in',draggable:'true',ondragstart:e=>e.dataTransfer.setData('text','b:'+pos),ondragover:e=>e.preventDefault(),ondrop:e=>drop(e,pos),onclick:()=>{order.splice(pos,1);r()}},q.tokens[i])));
+  pool.forEach(i=>pb.append(h('button',{type:'button',class:'tok',draggable:'true',ondragstart:e=>e.dataTransfer.setData('text','p:'+i),disabled:order.includes(i)?'disabled':null,onclick:()=>{if(!order.includes(i)){order.push(i);r()}}},q.tokens[i])))};r();
  return{body:[h('p',{class:'hint'},q.hint),bt,pb,h('div',{style:'margin-top:8px'},h('button',{type:'button',class:'btn g s',onclick:()=>{order=[];r()}},'Xóa hết'))],
   grade(){const s=order.map(i=>q.tokens[i]).join(''),ok=q.accept.includes(norm(s));return{got:+ok,max:1,fb:fb(ok,ok?'✓ Chính xác.':(s?'✗ Chưa đúng. ':'✗ Chưa trả lời. ')+'Đáp án: '+q.accept[0]+'。',q.exp)}}}},
 fix(q){const i=h('input',{type:'text',autocomplete:'off',placeholder:'Viết lại câu đúng…'});
@@ -213,12 +276,12 @@ function quizView(s){app.innerHTML='';const qs=[],res=h('div'),box=h('div');
   s.sections.forEach((sec,si)=>{box.append(h('h2',{class:'st'},sec.title,sec.sub?h('small',null,sec.sub):null));
    sec.items.forEach((q,qi)=>{n++;const b=T[q.type](q,'q'+si+'_'+qi),c=h('div',{class:'card'},h('div',{class:'qh'},h('span',{class:'qn'},'第 '+n+' 题'),q.topic?h('span',{class:'tag'},q.topic):null,q.level?h('span',{class:'tag lv'},q.level):null));
     b.body.forEach(x=>c.append(x));box.append(c);qs.push({c,b})})})};
- const grade=()=>{let t=0;qs.forEach(it=>{const o=it.c.querySelector('.fb');if(o)o.remove();const r=it.b.grade();it.c.classList.remove('ok','bad');it.c.classList.add(r.got===r.max?'ok':'bad');it.c.append(r.fb);t+=r.got/r.max});
-  const sc=Math.round(t*10)/10,p=sc/qs.length;res.textContent='';res.append(h('div',{class:'res'},h('div',{class:'big'},sc+' / '+qs.length),h('div',null,p>=.9?'Xuất sắc!':p>=.7?'Khá tốt, ôn thêm các câu sai nhé.':p>=.5?'Cần ôn thêm.':'Hãy xem lại bài rồi làm lại nhé.')));res.scrollIntoView({behavior:'smooth',block:'center'})};
+ const grade=()=>{let t=0;const wr=[];qs.forEach((it,ix)=>{const o=it.c.querySelector('.fb');if(o)o.remove();const r=it.b.grade();it.c.classList.remove('ok','bad');it.c.classList.add(r.got===r.max?'ok':'bad');it.c.append(r.fb);t+=r.got/r.max;if(r.got!==r.max)wr.push(ix+1)});
+  const sc=Math.round(t*10)/10,p=sc/qs.length;res.textContent='';res.append(h('div',{class:'res'},h('div',{class:'big'},sc+' / '+qs.length),h('div',null,p>=.9?'Xuất sắc!':p>=.7?'Khá tốt, ôn thêm các câu sai nhé.':p>=.5?'Cần ôn thêm.':'Hãy xem lại bài rồi làm lại nhé.'),h('div',{class:'note',style:'margin-top:6px'},wr.length?'Câu cần xem lại: '+wr.join(', ')+'. Xem giải thích ở từng câu phía trên.':'Bạn làm đúng hết!')));res.scrollIntoView({behavior:'smooth',block:'center'})};
  init();
  app.append(h('button',{class:'back',onclick:()=>go('lv-'+s.level.toLowerCase())},'← '+s.level+' – Bài tập'),h('h1',null,s.title),h('p',{class:'sub'},s.sub),
   s.tags?h('div',{class:'tags'},...s.tags.map(t=>h('span',{class:'tag'},t))):null,s.recap?recapEl(s.recap):null,box,
-  h('div',{class:'acts'},h('button',{class:'btn',onclick:grade},'Chấm bài'),h('button',{class:'btn g',onclick:()=>{init();scrollTo(0,0)}},'Làm lại')),res)}
+  h('div',{class:'acts'},h('button',{class:'btn',onclick:grade},'Nộp bài'),h('button',{class:'btn g',onclick:()=>{init();scrollTo(0,0)}},'Làm lại')),res)}
 function route(){const x=location.hash.slice(1),s=SETS.find(a=>a.id===x),l=levels.find(a=>'lv-'+a.toLowerCase()===x);s?quizView(s):l?listView(l):levelsView();scrollTo(0,0)}
 addEventListener('hashchange',route);route();
 </script>
