@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>把字句 – Kiến thức và Vận dụng</title>
+<style>
+#ba-app{
+  --navy:#14304f;--navy-2:#245079;--navy-soft:#e3ebf3;
+  --brown:#6b4a2f;--brown-soft:#f1e6d6;
+  --gold:#b58a2a;--gold-l:#f1d58a;--gold-soft:#f8efd2;
+  --ink:#1b1b1b;--muted:#5f656b;--silver:#c8cdd2;--silver-soft:#eef0f2;
+  --paper:#f7f0df;--paper2:#fbf7ec;--charcoal:#2a2a2a;--line:#cdb77a;
+  --serif:"Noto Serif SC","Source Han Serif SC","Songti SC","STSong","SimSun","Noto Serif","Georgia","Times New Roman",serif;
+  --kai:"KaiTi","Kaiti SC","STKaiti","BiauKai","Noto Serif SC","Songti SC","SimSun",serif;
+  --sans:"Segoe UI","Noto Sans","Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif;
+  font-family:var(--sans);color:var(--ink);line-height:1.65;box-sizing:border-box;
+  max-width:1040px;margin:0 auto;padding:30px 24px 52px;
+  background:
+    radial-gradient(ellipse at 12% 0%,rgba(181,138,42,.12),transparent 46%),
+    radial-gradient(ellipse at 92% 100%,rgba(20,48,79,.09),transparent 46%),
+    var(--paper);
+  border:1px solid var(--line);
+  box-shadow:inset 0 0 0 6px var(--paper),inset 0 0 0 7px var(--line);
+}
+#ba-app *{box-sizing:border-box}
+#ba-app [hidden]{display:none!important}
+#ba-app .zh{font-family:var(--kai)}
+#ba-app .zs{font-family:var(--serif)}
+
+/* ---------- decorative ---------- */
+#ba-app .ba-band{height:14px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath d='M1 13V1h12v12H4V4h6v6' fill='none' stroke='%23b58a2a' stroke-width='1.3'/%3E%3C/svg%3E") repeat-x;opacity:.95}
+#ba-app .ba-div{height:20px;margin:30px 0;position:relative}
+#ba-app .ba-div::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+#ba-app .ba-div::after{content:"";position:absolute;left:50%;top:3px;width:12px;height:12px;background:var(--navy);border:2px solid var(--gold);transform:translateX(-50%) rotate(45deg)}
+
+/* ---------- hero ---------- */
+#ba-app .ba-hero{background:linear-gradient(160deg,#0f2740 0%,var(--navy) 55%,var(--navy-2) 100%);color:#fff;border-radius:6px;overflow:hidden;position:relative;box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--gold)}
+#ba-app .ba-hero-in{padding:30px 24px 28px;text-align:center;position:relative}
+#ba-app .ba-hero small{display:block;letter-spacing:6px;color:var(--gold-l);font-size:13px;font-family:var(--serif)}
+#ba-app .ba-hero h1{margin:6px 0 4px;font-family:var(--kai);font-size:64px;letter-spacing:10px;font-weight:700;line-height:1.15;text-shadow:0 2px 0 rgba(0,0,0,.35)}
+#ba-app .ba-hero p{margin:0;color:#dbe6f1;font-size:16px}
+#ba-app .ba-seal{width:64px;height:64px;border:3px solid var(--gold);background:var(--navy);color:var(--gold-l);font-family:var(--kai);font-size:38px;display:flex;align-items:center;justify-content:center;transform:rotate(-5deg);box-shadow:0 0 0 3px var(--navy),0 0 0 4px var(--gold);flex:0 0 64px}
+#ba-app .ba-hero .ba-seal{position:absolute;right:22px;top:22px}
+
+/* ---------- tabs ---------- */
+#ba-app .ba-tabs{display:flex;justify-content:center;gap:14px;margin:26px 0 8px;flex-wrap:wrap}
+#ba-app .ba-tab{cursor:pointer;min-width:190px;border:2px solid var(--navy);background:var(--paper2);color:var(--navy);font-family:var(--serif);font-size:17px;font-weight:700;padding:11px 24px;border-radius:4px;position:relative}
+#ba-app .ba-tab span{display:block;font-family:var(--sans);font-size:12px;font-weight:400;letter-spacing:1px;opacity:.8}
+#ba-app .ba-tab[aria-selected="true"]{background:var(--navy);color:var(--gold-l);box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--gold)}
+#ba-app .ba-tab:focus-visible,#ba-app .ba-btn:focus-visible,#ba-app .ba-in:focus-visible,#ba-app .ba-chip:focus-visible,#ba-app .ba-toc button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+/* ---------- toc + section heads ---------- */
+#ba-app .ba-toc{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:18px 0 4px}
+#ba-app .ba-toc button{cursor:pointer;border:1px solid var(--line);background:var(--paper2);color:var(--navy);border-radius:999px;padding:5px 14px;font-size:14px;font-family:inherit}
+#ba-app .ba-toc button:hover{background:var(--gold-soft)}
+#ba-app .ba-sec{display:flex;align-items:center;gap:14px;margin:38px 0 16px;scroll-margin-top:14px}
+#ba-app .ba-sec .no{width:46px;height:46px;flex:0 0 46px;background:var(--navy);color:var(--gold-l);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--kai);font-size:24px;transform:rotate(-3deg)}
+#ba-app .ba-sec h2{margin:0;font-family:var(--serif);color:var(--navy);font-size:24px;line-height:1.25}
+#ba-app .ba-sec p{margin:2px 0 0;color:var(--muted);font-size:14px}
+
+/* ---------- structure cards (book) ---------- */
+#ba-app .ba-st{background:var(--paper2);border:1px solid var(--line);border-radius:6px;box-shadow:0 0 0 4px var(--paper),0 0 0 5px var(--line);padding:22px 22px 20px;margin:0 6px 26px}
+#ba-app .ba-tag{display:inline-block;background:var(--navy);color:var(--gold-l);font-size:13px;letter-spacing:1px;padding:3px 12px;border-radius:3px;font-family:var(--serif)}
+#ba-app .ba-st h3{margin:8px 0 4px;font-family:var(--serif);font-size:23px;color:var(--navy)}
+#ba-app .ba-st .mean{margin:0 0 14px;color:#33383d}
+#ba-app .ba-lbl{font-size:13px;letter-spacing:1px;color:var(--brown);font-weight:700;margin:16px 0 8px;text-transform:uppercase}
+#ba-app .ba-formula{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px 14px 12px}
+#ba-app .ba-pts{margin:0;padding:0;list-style:none;counter-reset:p}
+#ba-app .ba-pts li{counter-increment:p;position:relative;padding:0 0 10px 38px;margin:0}
+#ba-app .ba-pts li::before{content:counter(p);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#1b1b1b;font-weight:700;text-align:center;line-height:26px;font-size:14px}
+#ba-app .ba-tip{margin-top:6px;background:var(--gold-soft);border-left:5px solid var(--gold);border-radius:4px;padding:9px 14px;font-size:15px}
+#ba-app .ba-exs{display:grid;gap:12px}
+#ba-app .ba-exb{background:#fff;border:1px solid #e3d8b5;border-radius:8px;padding:12px 14px}
+#ba-app .ba-exb .vi{margin:8px 0 0;color:var(--muted);font-size:14.5px;font-style:italic}
+#ba-app .ba-exb .nt{margin:2px 0 0;color:var(--brown);font-size:13.5px}
+
+/* seg chips */
+#ba-app .ba-seg{display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start}
+#ba-app .sg{display:flex;flex-direction:column;align-items:center;gap:3px}
+#ba-app .sg b{display:block;padding:5px 12px;border-radius:5px;font-weight:600;font-size:21px;line-height:1.3;border:1px solid transparent;font-family:var(--sans)}
+#ba-app .sg b.zh{font-family:var(--kai);font-weight:700}
+#ba-app .sg i{font-style:normal;font-size:11.5px;color:var(--muted);text-align:center;max-width:116px;line-height:1.25}
+#ba-app .sg.s b{background:#e9ecef;border-color:#c8cdd2;color:#222}
+#ba-app .sg.pre b{background:var(--brown-soft);border-color:#cdb08a;color:var(--brown)}
+#ba-app .sg.ba b{background:var(--navy);color:var(--gold-l);border-color:var(--gold);font-size:23px}
+#ba-app .sg.o b{background:#dfe9f3;border-color:#a9c0d6;color:var(--navy)}
+#ba-app .sg.v b{background:#2a2a2a;color:#fff}
+#ba-app .sg.z b{background:#ecd9a0;border-color:#c9a64a;color:#3a2a0c}
+#ba-app .sg.l b{background:#f7efd2;border-color:#d8c27a;color:#4a3a14}
+#ba-app .sg.le b{background:#f2f3f5;border-color:#d4d8dc;color:#555}
+
+/* ---------- extended ---------- */
+#ba-app .ba-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+#ba-app .ba-grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+#ba-app .ba-mini{background:#fff;border:1px solid var(--line);border-top:4px solid var(--brown);border-radius:6px;padding:12px 14px}
+#ba-app .ba-mini h4{margin:0 0 2px;font-family:var(--serif);color:var(--navy);font-size:17px}
+#ba-app .ba-mini .f{font-size:13.5px;color:var(--brown);margin-bottom:6px}
+#ba-app .ba-mini .e{font-size:19px;font-family:var(--kai);font-weight:700}
+#ba-app .ba-mini .v{font-size:13.5px;color:var(--muted);font-style:italic}
+#ba-app .ba-box{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+#ba-app .ba-box h3{margin:0 0 10px;font-family:var(--serif);font-size:18px;color:var(--navy)}
+#ba-app .ba-pos{margin:0;padding:0;list-style:none}
+#ba-app .ba-pos li{padding:8px 0;border-top:1px dashed #d8c996}
+#ba-app .ba-pos li:first-child{border-top:0;padding-top:0}
+#ba-app .ba-pos b{color:var(--brown)}
+#ba-app .ba-pos .zh{display:block;font-size:18px;font-weight:700;color:var(--ink)}
+#ba-app .ba-pair{padding:9px 0;border-top:1px dashed #d8c996}
+#ba-app .ba-pair:first-of-type{border-top:0}
+#ba-app .ba-pair .t{font-weight:700;color:var(--ink)}
+#ba-app .ba-pair .t small{font-weight:400;color:var(--muted)}
+#ba-app .ba-bad,#ba-app .ba-good{display:block;font-size:18px;font-family:var(--kai);font-weight:700}
+#ba-app .ba-bad::before{content:"✗ ";font-family:var(--sans);color:var(--charcoal)}
+#ba-app .ba-bad{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--brown)}
+#ba-app .ba-good::before{content:"✓ ";font-family:var(--sans);color:var(--navy-2)}
+#ba-app .ba-good{color:var(--navy)}
+#ba-app .ba-note{background:var(--gold-soft);border:1px solid #e0cd8c;border-radius:6px;padding:11px 16px;margin-top:16px;font-size:15px}
+
+/* ---------- mind map ---------- */
+#ba-app .ba-root{max-width:420px;margin:0 auto;background:var(--charcoal);color:#fff;text-align:center;border-radius:6px;padding:14px 18px;position:relative;border:2px solid var(--gold);box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--gold)}
+#ba-app .ba-root b{display:block;font-family:var(--kai);font-size:34px;letter-spacing:6px;color:var(--gold-l)}
+#ba-app .ba-root span{color:#e5e7ea;font-size:14.5px}
+#ba-app .ba-root::after{content:"";position:absolute;left:50%;bottom:-28px;width:3px;height:26px;background:var(--gold);transform:translateX(-50%)}
+#ba-app .ba-branches{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;position:relative;padding-top:28px;margin-top:30px}
+#ba-app .ba-branches::before{content:"";position:absolute;top:0;left:16.6%;right:16.6%;height:3px;background:var(--gold)}
+#ba-app .ba-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+#ba-app .ba-card::before{content:"";position:absolute;top:-28px;left:50%;width:3px;height:28px;background:var(--gold);transform:translateX(-50%)}
+#ba-app .ba-card-h{padding:11px 14px;color:#fff;font-weight:700;font-size:15.5px;font-family:var(--serif);letter-spacing:.5px}
+#ba-app .c1 .ba-card-h{background:var(--navy)}
+#ba-app .c2 .ba-card-h{background:var(--brown)}
+#ba-app .c3 .ba-card-h{background:var(--charcoal)}
+#ba-app .ba-card-b{padding:12px 14px;font-size:14.5px}
+#ba-app .ba-card-b ul{margin:0;padding:0;list-style:none}
+#ba-app .ba-card-b li{margin-bottom:9px;padding-left:15px;position:relative}
+#ba-app .ba-card-b li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
+#ba-app .ba-card-b .fm{background:var(--silver-soft);border:1px solid var(--silver);border-radius:6px;padding:7px 9px;margin:0 0 9px;font-size:14px}
+#ba-app .ba-card-b .fm b{display:block;color:var(--navy);font-size:12.5px;letter-spacing:.5px}
+#ba-app .ba-card-b .fm .zh{font-size:16.5px;font-weight:700}
+#ba-app .ba-warn2{border:2px dashed var(--brown);border-radius:6px;padding:7px 10px;color:var(--brown);font-weight:700;font-size:14px}
+
+/* ---------- practice ---------- */
+#ba-app .ba-vintro{background:var(--paper2);border:1px solid var(--line);border-radius:6px;box-shadow:0 0 0 4px var(--paper),0 0 0 5px var(--line);padding:18px 20px;margin:20px 6px 8px;display:flex;gap:16px;align-items:center}
+#ba-app .ba-vintro h2{margin:0 0 4px;font-family:var(--serif);color:var(--navy);font-size:23px}
+#ba-app .ba-vintro p{margin:0 0 8px;color:#33383d;font-size:15px}
+#ba-app .ba-stats{display:flex;flex-wrap:wrap;gap:8px}
+#ba-app .ba-stats span{background:var(--navy-soft);color:var(--navy);border-radius:999px;padding:3px 12px;font-weight:600;font-size:13.5px}
+#ba-app .ba-part{margin:26px 6px 0;background:var(--paper2);border:1px solid var(--line);border-radius:6px;overflow:hidden;box-shadow:0 0 0 4px var(--paper),0 0 0 5px var(--line)}
+#ba-app .ba-part>header{background:var(--navy);color:#fff;padding:14px 18px;border-bottom:4px solid var(--gold)}
+#ba-app .ba-part>header h3{margin:0;font-size:17.5px;font-family:var(--serif);letter-spacing:.3px}
+#ba-app .ba-part>header p{margin:5px 0 0;color:#dbe6f1;font-size:14px}
+#ba-app .ba-badge{display:inline-block;background:var(--gold);color:#1b1b1b;font-weight:700;border-radius:999px;padding:1px 10px;font-size:12.5px;margin-left:8px;font-family:var(--sans)}
+#ba-app .ba-q{display:flex;gap:12px;padding:15px 18px;border-top:1px solid #e6dcbb;position:relative}
+#ba-app .ba-q:nth-child(even){background:#f9f3e3}
+#ba-app .ba-qn{flex:0 0 34px;height:34px;background:var(--brown);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;border-radius:4px;transform:rotate(-3deg)}
+#ba-app .ba-qb{flex:1;min-width:0}
+#ba-app .ba-prompt{font-size:19px;margin-bottom:8px;font-family:var(--kai);font-weight:700}
+#ba-app .ba-prompt.vi{font-family:var(--sans);font-weight:400;font-size:16px}
+#ba-app .ba-in{width:100%;font-size:18px;padding:9px 12px;border:1.5px solid var(--silver);border-radius:6px;background:#fff;color:var(--ink);font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC","Segoe UI",sans-serif}
+#ba-app .ba-in:focus{border-color:var(--navy-2)}
+#ba-app .ba-in:read-only{background:#f3f1ea}
+#ba-app .ba-hint{margin:10px 18px 0;font-size:13.5px;color:var(--muted)}
+#ba-app .ba-lab{font-size:12px;color:var(--brown);font-weight:700;letter-spacing:1px;margin:2px 0 4px;text-transform:uppercase}
+#ba-app .ba-bank,#ba-app .ba-ans{display:flex;flex-wrap:wrap;gap:8px;min-height:56px;padding:9px;border-radius:8px;align-items:center}
+#ba-app .ba-bank{background:#f1e8cf;border:1px dashed var(--brown);margin-bottom:10px}
+#ba-app .ba-ans{background:#fff;border:2px dashed var(--navy-2)}
+#ba-app .ba-ans:empty::before{content:attr(data-ph);color:#8b9096;font-size:14px;padding-left:4px}
+#ba-app .ba-bank.over,#ba-app .ba-ans.over{background:var(--navy-soft);border-style:solid}
+#ba-app .ba-chip{cursor:grab;user-select:none;-webkit-user-select:none;background:var(--gold-soft);border:1px solid #cfb15a;border-radius:6px;padding:5px 14px;font-size:21px;font-family:var(--kai);font-weight:700;box-shadow:0 2px 0 #cfb15a;touch-action:manipulation}
+#ba-app .ba-chip:active{cursor:grabbing}
+#ba-app .ba-chip.drag{opacity:.35}
+#ba-app .ba-ans .ba-chip{background:var(--navy);color:var(--gold-l);border-color:var(--gold);box-shadow:0 2px 0 var(--gold)}
+#ba-app.locked .ba-chip{cursor:default;pointer-events:none}
+#ba-app .ba-q.ok .ba-qn{background:var(--navy)}
+#ba-app .ba-q.bad .ba-qn{background:var(--charcoal)}
+#ba-app .ba-q.ok{box-shadow:inset 5px 0 0 var(--navy-2)}
+#ba-app .ba-q.bad{box-shadow:inset 5px 0 0 var(--brown);background:#f4ece0}
+#ba-app .ba-res-tag{display:inline-block;font-size:12.5px;font-weight:700;border-radius:999px;padding:1px 10px;margin-bottom:6px}
+#ba-app .ba-q.ok .ba-res-tag{background:var(--navy-soft);color:var(--navy)}
+#ba-app .ba-q.bad .ba-res-tag{background:var(--brown-soft);color:var(--brown)}
+
+/* submit + result */
+#ba-app .ba-submit{margin:28px 6px 0;text-align:center}
+#ba-app .ba-btn{cursor:pointer;border:2px solid var(--navy);background:var(--paper2);color:var(--navy);border-radius:4px;padding:10px 22px;font-weight:700;font-size:15px;font-family:var(--serif)}
+#ba-app .ba-btn.pri{background:var(--navy);color:var(--gold-l);box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--gold);font-size:19px;padding:13px 52px;letter-spacing:4px}
+#ba-app .ba-btn.pri:hover{background:var(--navy-2)}
+#ba-app .ba-sw{margin:0 0 12px;color:var(--brown);font-weight:700;font-size:14.5px}
+#ba-app .ba-res{margin:30px 6px 0;background:var(--paper2);border:2px solid var(--gold);border-radius:6px;box-shadow:0 0 0 4px var(--paper),0 0 0 5px var(--line);overflow:hidden;scroll-margin-top:12px}
+#ba-app .ba-res-top{display:flex;gap:20px;align-items:center;background:var(--navy);color:#fff;padding:20px 22px;border-bottom:5px solid var(--gold)}
+#ba-app .ba-res-top .ba-seal{width:84px;height:84px;flex:0 0 84px;font-size:52px}
+#ba-app .ba-bigscore{font-family:var(--serif);font-size:20px;color:#dbe6f1}
+#ba-app .ba-bigscore b{font-size:54px;color:var(--gold-l);line-height:1}
+#ba-app .ba-pct{font-size:17px;font-weight:700;color:#fff;margin-top:2px}
+#ba-app .ba-res-top p{margin:6px 0 0;color:#dbe6f1;font-size:15px}
+#ba-app .ba-res-b{padding:18px 22px 22px}
+#ba-app .ba-res-b h3{margin:22px 0 10px;font-family:var(--serif);font-size:19px;color:var(--navy);padding-left:10px;border-left:5px solid var(--gold)}
+#ba-app .ba-res-b h3:first-child{margin-top:0}
+#ba-app .ba-prow{display:grid;grid-template-columns:90px 1fr 60px;gap:10px;align-items:center;margin-bottom:8px;font-size:14.5px}
+#ba-app .ba-bar{height:12px;background:var(--silver-soft);border:1px solid var(--silver);border-radius:99px;overflow:hidden}
+#ba-app .ba-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--navy-2))}
+#ba-app .ba-w{background:#fff;border:1px solid #e0d2a6;border-left:6px solid var(--brown);border-radius:6px;padding:11px 14px;margin-bottom:10px}
+#ba-app .ba-w-h{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+#ba-app .ba-w-tag{background:var(--brown);color:#fff;border-radius:4px;padding:1px 9px;font-size:12.5px;font-weight:700}
+#ba-app .ba-w-q{font-size:18px;font-family:var(--kai);font-weight:700}
+#ba-app .ba-w-r{font-size:14.5px;margin:2px 0}
+#ba-app .ba-w-r b{color:var(--navy)}
+#ba-app .ba-w-r .zh{font-size:17px;font-weight:700}
+#ba-app .ba-w-r.why{margin-top:5px;background:var(--gold-soft);border-radius:4px;padding:6px 10px}
+#ba-app .ba-w-r.why b{color:var(--brown)}
+#ba-app .ba-all{background:var(--navy-soft);border:1px solid #a9c0d6;border-radius:6px;padding:12px 16px;color:var(--navy);font-weight:700}
+#ba-app table.ba-t{border-collapse:collapse;width:100%;font-size:14.5px;background:#fff}
+#ba-app .ba-tw{overflow-x:auto;border:1px solid var(--line);border-radius:6px}
+#ba-app .ba-t th{background:var(--navy);color:#fff;text-align:left;padding:8px 12px;font-weight:600}
+#ba-app .ba-t td{padding:8px 12px;border-top:1px solid #e6dcbb;vertical-align:top}
+#ba-app .ba-t td.k{font-weight:700;color:var(--brown);white-space:nowrap}
+#ba-app .ba-t tr.on td{background:var(--gold-soft);font-weight:700}
+#ba-app .ba-again{margin-top:20px;text-align:center}
+
+@media (max-width:820px){
+  #ba-app{padding:20px 12px 40px}
+  #ba-app .ba-branches{grid-template-columns:1fr;padding-top:0;margin-top:16px}
+  #ba-app .ba-branches::before,#ba-app .ba-card::before,#ba-app .ba-root::after{display:none}
+  #ba-app .ba-grid3,#ba-app .ba-grid2{grid-template-columns:1fr}
+  #ba-app .ba-hero h1{font-size:46px;letter-spacing:6px}
+  #ba-app .ba-hero .ba-seal{position:static;margin:12px auto 0}
+  #ba-app .ba-vintro{flex-direction:column;align-items:flex-start;margin-left:0;margin-right:0}
+  #ba-app .ba-st,#ba-app .ba-part,#ba-app .ba-res,#ba-app .ba-submit{margin-left:0;margin-right:0}
+  #ba-app .ba-res-top{flex-direction:column;text-align:center}
+  #ba-app .ba-prow{grid-template-columns:70px 1fr 50px}
+  #ba-app .ba-tab{min-width:150px}
+}
+
+/* ===== v3 additions ===== */
+#ba-app .ba-st .lead{font-size:18px;margin:0 0 6px;line-height:1.7}
+#ba-app .ba-cmp{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px}
+#ba-app .ba-cmp .row{padding:10px 12px;border-radius:6px;background:var(--silver-soft)}
+#ba-app .ba-cmp .row.hl{background:var(--gold-soft);border:1px solid #dcc678}
+#ba-app .ba-cmp .tg{display:inline-block;font-size:12px;font-weight:700;letter-spacing:1px;padding:1px 10px;border-radius:3px;background:var(--charcoal);color:#fff;margin-bottom:8px}
+#ba-app .ba-cmp .row.hl .tg{background:var(--navy);color:var(--gold-l)}
+#ba-app .ba-cmp .vi{margin:8px 0 0;color:var(--muted);font-size:14.5px;font-style:italic}
+#ba-app .ba-cmp .arrow{text-align:center;margin:8px 0;color:var(--brown);font-weight:700;font-size:14.5px}
+#ba-app .ba-core{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px;text-align:center}
+#ba-app .ba-core .n,#ba-app .ba-cd .n{display:inline-flex;width:34px;height:34px;flex:0 0 34px;align-items:center;justify-content:center;background:var(--navy);color:var(--gold-l);font-family:var(--kai);font-size:18px;font-weight:700;border:2px solid var(--gold);transform:rotate(-3deg);margin-bottom:6px}
+#ba-app .ba-core b{display:block;color:var(--navy);font-size:16px;margin-bottom:4px}
+#ba-app .ba-core p{margin:0;font-size:14.5px;color:#33383d}
+
+#ba-app .ba-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+#ba-app .ba-tile{position:relative;background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+#ba-app .ba-tile h4{margin:0 0 4px;font-family:var(--serif);font-size:16px;color:var(--navy)}
+#ba-app .ba-tile .p{font-family:var(--kai);font-weight:700;font-size:16.5px;color:var(--ink)}
+#ba-app .ba-tile .q{font-size:13.5px;color:var(--brown);margin-top:4px}
+#ba-app .ba-tile.bk{border:2px solid var(--gold);background:var(--gold-soft)}
+#ba-app .ba-tile .rb{position:absolute;top:-1px;right:-1px;background:var(--navy);color:var(--gold-l);font-size:10.5px;letter-spacing:1px;padding:2px 9px;border-radius:0 6px 0 8px;font-weight:700}
+
+#ba-app .ba-conds{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+#ba-app .ba-cd{background:#fff;border:1px solid var(--line);border-top:5px solid var(--navy);border-radius:8px;padding:14px 16px 12px}
+#ba-app .ba-cd .hd{display:flex;gap:10px;align-items:center;margin-bottom:6px}
+#ba-app .ba-cd .hd .n{margin-bottom:0}
+#ba-app .ba-cd h4{margin:0;font-family:var(--serif);font-size:17px;color:var(--navy)}
+#ba-app .ba-cd p{margin:0 0 8px;font-size:14.5px;color:#33383d}
+#ba-app .ba-cd small{display:block;color:var(--muted);font-size:13px;margin:0}
+
+#ba-app .ba-subh{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:30px 0 12px;font-family:var(--serif);font-size:20px;color:var(--navy)}
+#ba-app .ba-subh span{background:var(--brown);color:#fff;font-family:var(--sans);font-size:13px;font-weight:700;padding:2px 10px;border-radius:3px}
+#ba-app .ba-subh em{font-style:normal;background:var(--gold);color:#1b1b1b;font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px;font-family:var(--sans)}
+
+#ba-app .ba-negs{background:#fff;border:1px solid var(--line);border-radius:8px}
+#ba-app .ba-negs .r{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:12px 14px;border-top:1px dashed #d8c996}
+#ba-app .ba-negs .r:first-child{border-top:0}
+#ba-app .ba-negs .w{font-family:var(--kai);font-weight:700;font-size:19px;color:var(--brown)}
+#ba-app .ba-negs .w small{display:block;font-family:var(--sans);font-weight:400;font-size:12.5px;color:var(--muted)}
+#ba-app .ba-negs .t{font-size:14.5px}
+#ba-app .ba-negs .t .zh{display:block;font-size:18px;font-weight:700;margin-top:2px}
+#ba-app .ba-negs .t .vi{display:block;color:var(--muted);font-size:13.5px;font-style:italic}
+
+#ba-app .ba-flow{max-width:760px;margin:0 auto}
+#ba-app .ba-fn{background:#fff;border:2px solid var(--line);border-radius:8px;padding:12px 16px;text-align:center;position:relative}
+#ba-app .ba-fn.root{background:var(--charcoal);color:#fff;border-color:var(--gold);box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--gold)}
+#ba-app .ba-fn.root b{font-family:var(--kai);font-size:34px;letter-spacing:6px;color:var(--gold-l);display:block;line-height:1.2}
+#ba-app .ba-fn.mid{background:var(--navy);color:var(--gold-l);font-family:var(--serif);font-weight:700;font-size:17px}
+#ba-app .ba-fn.fm2{background:var(--gold-soft);border-color:var(--gold)}
+#ba-app .ba-fn.fm2 .ba-seg{justify-content:center}
+#ba-app .ba-ar{height:30px;position:relative}
+#ba-app .ba-ar::before{content:"";position:absolute;left:50%;top:0;bottom:8px;width:3px;background:var(--gold);transform:translateX(-50%)}
+#ba-app .ba-ar::after{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid var(--gold)}
+#ba-app .ba-cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;position:relative;padding:30px 0}
+#ba-app .ba-cols::before,#ba-app .ba-cols::after{content:"";position:absolute;left:25%;right:25%;height:3px;background:var(--gold)}
+#ba-app .ba-cols::before{top:0}
+#ba-app .ba-cols::after{bottom:0}
+#ba-app .ba-col{position:relative;background:#fff;border:1px solid var(--line);border-radius:6px}
+#ba-app .ba-col::before,#ba-app .ba-col::after{content:"";position:absolute;left:50%;width:3px;height:30px;background:var(--gold);transform:translateX(-50%)}
+#ba-app .ba-col::before{top:-30px}
+#ba-app .ba-col::after{bottom:-30px}
+#ba-app .ba-col h4{margin:0;padding:10px 14px;color:#fff;font-family:var(--serif);font-size:16px;border-radius:5px 5px 0 0}
+#ba-app .ba-col.a h4{background:var(--navy)}
+#ba-app .ba-col.b h4{background:var(--brown)}
+#ba-app .ba-col ol{margin:0;padding:12px 14px 6px 36px;font-size:15px}
+#ba-app .ba-col li{margin-bottom:7px}
+#ba-app .ba-col li small{color:var(--muted);font-size:13.5px}
+#ba-app .ba-fn.neg{border-color:var(--brown);background:var(--brown-soft)}
+#ba-app .ba-fn.neg>b{color:var(--navy);font-family:var(--serif)}
+#ba-app .ba-fn.neg .zh{display:block;font-size:26px;font-weight:700;color:var(--brown);letter-spacing:4px}
+#ba-app .ba-fn.no-use{margin-top:18px;background:var(--silver-soft);border-style:dashed;border-color:var(--charcoal);text-align:left;font-size:14.5px}
+
+@media (max-width:820px){
+  #ba-app .ba-tiles,#ba-app .ba-conds{grid-template-columns:1fr}
+  #ba-app .ba-negs .r{grid-template-columns:1fr;gap:4px}
+  #ba-app .ba-cols{grid-template-columns:1fr;padding:18px 0 0;gap:14px}
+  #ba-app .ba-cols::before,#ba-app .ba-cols::after,#ba-app .ba-col::before,#ba-app .ba-col::after{display:none}
+  #ba-app .ba-fn.neg{margin-top:14px}
+}
+</style>
+</head>
+<body>
+<div id="ba-app">
+
+  <div class="ba-hero">
+    <div class="ba-band"></div>
+    <div class="ba-hero-in">
+      <small>新 HSK 3 · 语 法</small>
+      <h1>把字句</h1>
+      <p>Câu chữ 把 · Đối tượng bị xử lý như thế nào?</p>
+      <div class="ba-seal" aria-hidden="true">把</div>
+    </div>
+    <div class="ba-band"></div>
+  </div>
+
+  <div class="ba-tabs" role="tablist">
+    <button class="ba-tab zs" role="tab" id="ba-tab-k" aria-selected="true" aria-controls="ba-p-k" data-tab="k">知识<span>KIẾN THỨC</span></button>
+    <button class="ba-tab zs" role="tab" id="ba-tab-v" aria-selected="false" aria-controls="ba-p-v" data-tab="v">练习<span>VẬN DỤNG</span></button>
+  </div>
+
+  <!-- ================= KIẾN THỨC ================= -->
+  <div id="ba-p-k" role="tabpanel" aria-labelledby="ba-tab-k">
+
+    <div class="ba-toc">
+      <button type="button" data-go="ba-k1">1 · Bản chất</button>
+      <button type="button" data-go="ba-k2">2 · Cấu trúc cơ bản</button>
+      <button type="button" data-go="ba-k3">3 · 4 điều kiện</button>
+      <button type="button" data-go="ba-k4">4 · Các dạng câu thường gặp</button>
+      <button type="button" data-go="ba-k5">5 · Sơ đồ tổng kết</button>
+    </div>
+
+    <!-- 1. BẢN CHẤT -->
+    <div class="ba-sec" id="ba-k1"><div class="no">壹</div><div><h2>Bản chất của câu chữ 把</h2><p>Hiểu một lần, dùng được mãi</p></div></div>
+    <article class="ba-st">
+      <p class="lead">Câu chữ <span class="zh">把</span> dùng để <b>đưa đối tượng (O) lên trước động từ</b>, nhằm nói rõ <b>đối tượng đó bị xử lý như thế nào</b>.</p>
+
+      <div class="ba-lbl">Cùng một ý, hai cách nói</div>
+      <div class="ba-cmp">
+        <div class="row"><span class="tg">CÂU THƯỜNG</span><div id="ba-cmp1"></div><p class="vi">Tôi ăn xong bữa sáng.</p></div>
+        <div class="arrow">↓ đưa O lên trước V và thêm 把</div>
+        <div class="row hl"><span class="tg">CÂU 把</span><div id="ba-cmp2"></div><p class="vi">Bữa sáng ấy, tôi đã ăn xong rồi.</p></div>
+      </div>
+
+      <div class="ba-lbl">3 ý cốt lõi</div>
+      <div class="ba-grid3">
+        <div class="ba-core"><div class="n">一</div><b>Đưa O lên trước</b><p>O đứng ngay sau <span class="zh">把</span>, trước động từ.</p></div>
+        <div class="ba-core"><div class="n">二</div><b>V “xử lý” O</b><p>Động từ là hành động tác động lên O (<span class="zh">放、洗、关、写</span>).</p></div>
+        <div class="ba-core"><div class="n">三</div><b>Phải có kết quả</b><p>Sau V cho biết O thay đổi thế nào: thành ra sao, ở đâu, cho ai…</p></div>
+      </div>
+      <div class="ba-tip">Cách kiểm tra nhanh: hỏi “<b>đối tượng này đã bị làm sao?</b>”. Nếu trả lời được bằng <b>kết quả / nơi chốn / người nhận</b> thì dùng được <span class="zh">把</span>.</div>
+    </article>
+
+    <!-- 2. CẤU TRÚC CƠ BẢN -->
+    <div class="ba-sec" id="ba-k2"><div class="no">贰</div><div><h2>Cấu trúc cơ bản</h2><p>Một công thức, nhiều “thành phần khác”</p></div></div>
+    <article class="ba-st">
+      <div class="ba-lbl" style="margin-top:0">2.1 Công thức tổng quát</div>
+      <div class="ba-formula"><div id="ba-gen"></div></div>
+      <p style="margin:8px 0 0;font-size:14.5px;color:#33383d"><b>Thành phần khác là phần bắt buộc.</b> Động từ không được đứng một mình sau tân ngữ.</p>
+
+      <div class="ba-lbl">2.2 Thành phần khác bao gồm</div>
+      <div class="ba-tiles" id="ba-tiles"></div>
+      <p style="margin:10px 0 0;font-size:13.5px;color:var(--muted)">Hai ô có nhãn <b>GIÁO TRÌNH</b> là hai cấu trúc đang học, được giải thích kỹ ở mục 4.</p>
+    </article>
+
+    <!-- 3. 4 ĐIỀU KIỆN -->
+    <div class="ba-sec" id="ba-k3"><div class="no">叁</div><div><h2>4 điều kiện quan trọng khi sử dụng 把</h2><p>Thiếu một điều kiện là cần xem lại</p></div></div>
+    <div class="ba-conds">
+      <div class="ba-cd">
+        <div class="hd"><div class="n">1</div><h4>Tân ngữ xác định</h4></div>
+        <p>O là cái đã biết, cụ thể: <span class="zh">这本书、我的手机、那件事</span>.</p>
+        <span class="ba-good">我把这本书看完了。</span>
+        <span class="ba-bad">我把一本汉语词典买了。</span>
+        <small>→ “một cuốn” là chưa xác định, nói: 我买了一本汉语词典。</small>
+      </div>
+      <div class="ba-cd">
+        <div class="hd"><div class="n">2</div><h4>Động từ tác động</h4></div>
+        <p>V là hành động làm gì đó lên O: <span class="zh">放、洗、关、写、拿</span>. Động từ cảm xúc không phải hành động tác động.</p>
+        <span class="ba-good">请把门关上。</span>
+        <span class="ba-bad">他把喜欢这件衣服。</span>
+        <small>→ 喜欢 là cảm xúc, nói: 他喜欢这件衣服。</small>
+      </div>
+      <div class="ba-cd">
+        <div class="hd"><div class="n">3</div><h4>Có kết quả / thay đổi</h4></div>
+        <p>Sau V phải có thành phần khác cho biết O đã thay đổi (kết quả, vị trí, người nhận, 了…).</p>
+        <span class="ba-good">我把苹果吃了。</span>
+        <span class="ba-bad">我把苹果吃。</span>
+        <small>→ động từ đứng trơ trọi, thiếu thành phần khác.</small>
+      </div>
+      <div class="ba-cd">
+        <div class="hd"><div class="n">4</div><h4>Có thể xử lý O</h4></div>
+        <p>O thật sự là thứ bị tác động. Động từ nhận thức / trạng thái (<span class="zh">认识、知道、想念、生病</span>) không “xử lý” được O.</p>
+        <span class="ba-good">他把我的自行车修好了。</span>
+        <span class="ba-bad">我把老师认识了。</span>
+        <small>→ 认识 là nhận thức, nói: 我认识老师。</small>
+      </div>
+    </div>
+    <div class="ba-note"><b>Lưu ý:</b> “đủ điều kiện” không có nghĩa là bắt buộc dùng <span class="zh">把</span>. Câu <span class="zh">我做完了作业</span> vẫn đúng. Người nói chọn <span class="zh">把</span> khi muốn nhấn mạnh việc đối tượng đã bị xử lý ra sao.</div>
+
+    <!-- 4. CÁC DẠNG CÂU THƯỜNG GẶP -->
+    <div class="ba-sec" id="ba-k4"><div class="no">肆</div><div><h2>Những dạng câu 把 thường gặp</h2><p>Gồm cả phủ định, năng nguyện, nghi vấn đi kèm</p></div></div>
+
+    <h3 class="ba-subh"><span>4.1</span> Dạng 1 · 把字句 (1): chuyển vị trí <em>GIÁO TRÌNH</em></h3>
+    <article class="ba-st">
+      <p class="mean" style="margin-top:0">Tác động lên người hoặc vật <b>đã xác định</b>, làm cho <b>vị trí</b> của nó thay đổi.</p>
+      <div class="ba-lbl">Công thức</div>
+      <div class="ba-formula"><div id="ba-f1"></div></div>
+      <div class="ba-lbl">Điểm cần nhớ</div>
+      <ol class="ba-pts">
+        <li><b>O phải xác định</b> (这些题, 作业本, 名字…).</li>
+        <li><b>Phủ định (不 / 没) và động từ năng nguyện (会, 能, 不能…) đứng TRƯỚC 把.</b></li>
+        <li><b>Sau động từ có 在 / 到 + địa điểm</b>, cho biết vật được đặt, viết, để ở đâu.</li>
+      </ol>
+      <div class="ba-tip">Mẹo nhớ: dạng 1 trả lời câu hỏi <b>“vật đi ĐÂU?”</b> → <span class="zh">在 / 到 + nơi chốn</span></div>
+      <div class="ba-lbl">Ví dụ</div>
+      <div class="ba-exs" id="ba-ex1"></div>
+    </article>
+
+    <h3 class="ba-subh"><span>4.2</span> Dạng 2 · 把字句 (2): chuyển giao <em>GIÁO TRÌNH</em></h3>
+    <article class="ba-st">
+      <p class="mean" style="margin-top:0">Qua hành động, sự vật <b>đã xác định</b> được chuyển từ người này sang người khác, nên <b>quan hệ sở hữu / tiếp nhận</b> thay đổi.</p>
+      <div class="ba-lbl">Công thức</div>
+      <div class="ba-formula"><div id="ba-f2"></div></div>
+      <div class="ba-lbl">Điểm cần nhớ</div>
+      <ol class="ba-pts">
+        <li><b>O₁ là vật được chuyển giao</b> và phải xác định (书, 礼物, 这本书…).</li>
+        <li><b>给 đứng sau động từ, theo sau là O₂ = người nhận.</b></li>
+        <li>Động từ thường gặp: <span class="zh">还</span> (trả), <span class="zh">送</span> (tặng), <span class="zh">带</span> (mang), <span class="zh">交</span> (giao, nộp), <span class="zh">寄</span> (gửi).</li>
+      </ol>
+      <div class="ba-tip">Mẹo nhớ: dạng 2 trả lời câu hỏi <b>“vật đưa CHO AI?”</b> → <span class="zh">给 + người nhận</span></div>
+      <div class="ba-lbl">Ví dụ</div>
+      <div class="ba-exs" id="ba-ex2"></div>
+    </article>
+
+    <h3 class="ba-subh"><span>4.3</span> Các dạng khác (kiến thức mở rộng)</h3>
+    <div class="ba-grid3" id="ba-ext"></div>
+
+    <h3 class="ba-subh"><span>4.4</span> Phủ định, năng nguyện, nghi vấn đi kèm</h3>
+    <div class="ba-formula" style="margin-bottom:14px"><div id="ba-pos"></div></div>
+    <div class="ba-negs">
+      <div class="r"><div class="w">没 / 没有<small>chưa, đã không</small></div><div class="t">Đứng <b>trước 把</b>. Không thêm 了 ở cuối câu.<span class="zh">他没有把钱带来。</span><span class="vi">Anh ấy không mang tiền đến.</span></div></div>
+      <div class="r"><div class="w">不 + năng nguyện<small>不能 · 不会 · 不想</small></div><div class="t">Đứng <b>trước 把</b>.<span class="zh">你不能把名字写在这里。</span><span class="vi">Bạn không được viết tên ở đây.</span></div></div>
+      <div class="r"><div class="w">不要 / 别<small>khuyên, cấm</small></div><div class="t">Đứng <b>trước 把</b>, dùng trong câu mệnh lệnh.<span class="zh">请不要把这个消息告诉别人。</span><span class="vi">Xin đừng nói tin này cho người khác.</span></div></div>
+      <div class="r"><div class="w">会 / 能 / 应该<small>năng nguyện khẳng định</small></div><div class="t">Đứng <b>trước 把</b>.<span class="zh">我会把这些题都记在本子上。</span><span class="vi">Tôi sẽ ghi hết những câu hỏi này vào vở.</span></div></div>
+      <div class="r"><div class="w">为什么<small>từ để hỏi</small></div><div class="t">Đứng <b>trước 把</b>.<span class="zh">你为什么把我的名字写错了？</span><span class="vi">Sao bạn lại viết sai tên tôi?</span></div></div>
+      <div class="r"><div class="w">吗<small>nghi vấn</small></div><div class="t">Đứng <b>cuối câu</b>.<span class="zh">你把作业做完了吗？</span><span class="vi">Bạn làm xong bài tập chưa?</span></div></div>
+      <div class="r"><div class="w">都<small>đều, tất cả</small></div><div class="t">Đứng <b>sau O, trước V</b>.<span class="zh">他把所有的行李都带回宾馆了。</span><span class="vi">Anh ấy đã mang toàn bộ hành lý về khách sạn.</span></div></div>
+    </div>
+
+    <!-- 5. SƠ ĐỒ TỔNG KẾT -->
+    <div class="ba-sec" id="ba-k5"><div class="no">伍</div><div><h2>Sơ đồ tổng kết kiến thức</h2><p>Nhìn một lần là nhớ toàn bộ</p></div></div>
+    <div class="ba-flow">
+      <div class="ba-fn root"><b>把字句</b></div>
+      <div class="ba-ar"></div>
+      <div class="ba-fn mid">Đưa đối tượng lên trước</div>
+      <div class="ba-ar"></div>
+      <div class="ba-fn fm2"><div id="ba-gen2"></div></div>
+
+      <div class="ba-cols">
+        <div class="ba-col a">
+          <h4>ĐIỀU KIỆN</h4>
+          <ol>
+            <li><b>Tân ngữ xác định</b></li>
+            <li><b>Động từ tác động</b></li>
+            <li><b>Có kết quả / thay đổi</b></li>
+            <li><b>Có thể xử lý O</b></li>
+          </ol>
+        </div>
+        <div class="ba-col b">
+          <h4>CẤU TRÚC · thành phần khác</h4>
+          <ol>
+            <li><b>Kết quả</b> <small class="zh">完 · 好 · 干净</small></li>
+            <li><b>Xu hướng</b> <small class="zh">上 · 走 · 回</small></li>
+            <li><b>Vị trí</b> <small class="zh">在 / 到 + nơi chốn</small></li>
+            <li><b>Chuyển giao</b> <small class="zh">给 + người nhận</small></li>
+            <li><b>Số lượng</b> <small class="zh">一下 · 一遍</small></li>
+            <li><b>Mệnh lệnh</b> <small class="zh">请 · 别 · 不要</small></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="ba-fn neg">
+        <b>PHỦ ĐỊNH / NGHI VẤN</b>
+        <span class="zh">不 · 没 · 不要 · 吗</span>
+        <small style="display:block;color:var(--muted);margin-top:2px">不 / 没 / 不要 đứng TRƯỚC 把 · 吗 đứng cuối câu</small>
+      </div>
+      <div class="ba-fn no-use"><b style="color:var(--brown)">Không dùng 把 khi:</b> động từ cảm xúc / nhận thức (<span class="zh">喜欢、想念、认识、知道、生病</span>) · thiếu thành phần khác · O chưa xác định · 没 đặt sau 把.</div>
+    </div>
+  </div>
+
+<!-- ================= VẬN DỤNG ================= -->
+  <div id="ba-p-v" role="tabpanel" aria-labelledby="ba-tab-v" hidden>
+    <div class="ba-vintro">
+      <div class="ba-seal" aria-hidden="true">练</div>
+      <div>
+        <h2>Phiếu bài tập <span class="zh">把字句</span></h2>
+        <p>Làm hết 4 phần rồi bấm <b>Nộp bài</b>. Hệ thống tự chấm và cho biết điểm, các câu sai và lý do.</p>
+        <div class="ba-stats" id="ba-stats"></div>
+      </div>
+    </div>
+
+    <div id="ba-parts"></div>
+
+    <div class="ba-submit">
+      <div class="ba-sw" id="ba-warn" hidden></div>
+      <button class="ba-btn pri" type="button" id="ba-submit">NỘP BÀI</button>
+    </div>
+
+    <div id="ba-result" hidden></div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('ba-app');
+  function $(s, c) { return (c || root).querySelector(s); }
+  function $$(s, c) { return Array.prototype.slice.call((c || root).querySelectorAll(s)); }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  /*TEST-START*/
+  function norm(s) {
+    return String(s).replace(/[\s　]+/g, '').replace(/[。！？!?.，,、；;：:“”"'‘’（）()→…]/g, '');
+  }
+  function expand(t) {
+    var m = t.match(/\{([^{}]*)\}/);
+    if (!m) { return [t]; }
+    var out = [];
+    m[1].split('|').forEach(function (o) {
+      out = out.concat(expand(t.slice(0, m.index) + o + t.slice(m.index + m[0].length)));
+    });
+    return out;
+  }
+  function isX(s) { return /^[×xX✗✘╳]/.test(String(s).replace(/[\s→]/g, '')); }
+  function accSet(it) {
+    if (it._set) { return it._set; }
+    var list = it.acc ? (Array.isArray(it.acc) ? it.acc : [it.acc]) : [it.a];
+    var set = {};
+    list.forEach(function (t) { expand(t).forEach(function (s) { set[norm(s)] = 1; }); });
+    it._set = set;
+    return set;
+  }
+  function okAns(it, val) {
+    var v = String(val).trim();
+    if (!v) { return false; }
+    if (it.x) { return isX(v); }
+    if (isX(v)) { return false; }
+    return !!accSet(it)[norm(v)];
+  }
+
+  var PARTS = [
+    {
+      title: 'PHẦN I. 连词成句 — SẮP XẾP TỪ THÀNH CÂU HOÀN CHỈNH',
+      short: 'Phần I', type: 'words',
+      req: 'Kéo thả các từ/cụm từ thành câu hoàn chỉnh có sử dụng 把. (Trên điện thoại: chạm vào từ để chọn, chạm lại để bỏ ra.)',
+      items: [
+        { w: ['做完', '作业', '了', '把', '我'], a: '我把作业做完了。', n: 'Kết quả 做完 đứng sau động từ.' },
+        { w: ['桌子上', '他', '了', '手机', '把', '放在'], a: '他把手机放在桌子上了。', n: '放在 + nơi chốn (dạng 1: chuyển vị trí).' },
+        { w: ['来', '钱', '他', '带', '把', '没有'], a: '他没有把钱带来。', n: '没有 đứng trước 把; 带来 là bổ ngữ xu hướng.' },
+        { w: ['吧', '窗户', '把', '你', '打开'], a: '你把窗户打开吧。', n: 'Câu mệnh lệnh, 吧 đứng cuối câu.' },
+        { w: ['写错', '为什么', '我的名字', '了', '你', '把'], a: '你为什么把我的名字写错了？', acc: ['你为什么把我的名字写错了', '为什么你把我的名字写错了'], n: 'Từ để hỏi 为什么 đứng trước 把.' }
+      ]
+    },
+    {
+      title: 'PHẦN II. 改写句子 — VIẾT LẠI CÂU VỚI 把',
+      short: 'Phần II', type: 'zh', ph: '→ Viết lại thành câu 把, hoặc ghi × nếu không chuyển được',
+      req: 'Dựa vào điều kiện sử dụng câu chữ 把, hãy chuyển những câu có thể chuyển sang câu chữ 把. Nếu không thể chuyển, ghi × (lý do sẽ hiện sau khi nộp bài).',
+      items: [
+        { q: '我吃完了早饭。', a: '我把早饭吃完了。', acc: '我{已经|}把早饭吃完了', n: 'Có kết quả 完.' },
+        { q: '他拿走了我的词典。', a: '他把我的词典拿走了。', acc: '他{已经|}把我的词典拿走了', n: 'Có bổ ngữ xu hướng 走.' },
+        { q: '她喜欢这件衣服。', a: '×', x: true, n: '喜欢 là động từ tâm lý/cảm xúc, không tác động làm đối tượng thay đổi.' },
+        { q: '我买了一本汉语词典。', a: '×', x: true, n: '一本汉语词典 là tân ngữ không xác định. Nói bình thường: 我买了一本汉语词典。 Chỉ cân nhắc dùng 把 khi đối tượng đã xác định (ví dụ 那本汉语词典).' },
+        { q: '请你关掉电视。', a: '请你把电视关掉。', acc: '请{你|}把电视关掉', n: 'Có bổ ngữ kết quả 掉; câu mệnh lệnh rất hay dùng 把.' }
+      ]
+    },
+    {
+      title: 'PHẦN III. 越译汉 — DỊCH VIỆT SANG TRUNG',
+      short: 'Phần III', type: 'vi', ph: '写出汉语句子…',
+      req: 'Sử dụng câu chữ 把 để dịch các câu sau sang tiếng Trung.',
+      items: [
+        { q: 'Tôi đã để sách lên trên bàn rồi.', a: '我把书放在桌子上了。', acc: '我{已经|}把书放{在|到}桌子{上|上面}了', n: 'V + 在/到 + nơi chốn (dạng 1: chuyển vị trí).' },
+        { q: 'Đừng vứt quyển sách này đi!', a: '不要把这本书扔掉！', acc: '{你|}{不要|别}把这本书{扔掉|扔了|丢掉|丢了}', n: '不要 đứng trước 把; 扔掉 là kết quả.' },
+        { q: 'Tôi đã đọc cuốn sách này ba lần rồi.', a: '我已经把这本书看了三遍了。', acc: '我{已经|}把这本书{看|读}了三遍{了|}', n: 'Bổ ngữ số lượng 三遍; 已经 đứng trước 把.' },
+        { q: 'Tôi vẫn chưa làm xong bài tập hôm qua.', a: '我还没把昨天的作业做完。', acc: '我还{没|没有}把昨天的{作业|功课}{做完|写完}', n: '还没 + 把 + O + V + kết quả; không thêm 了 cuối câu.' },
+        { q: 'Anh ấy đã mang tất cả hành lý về khách sạn rồi.', a: '他把所有的行李都带回宾馆了。', acc: '他{已经|}把{所有的|所有|全部}行李{都|}{带|拿}回{宾馆|酒店}{去|}了', n: '都 đứng sau tân ngữ, trước động từ; 回 là bổ ngữ xu hướng.' }
+      ]
+    },
+    {
+      title: 'PHẦN IV. 改错句 — SỬA NHỮNG CÂU SAU',
+      short: 'Phần IV', type: 'zh', ph: 'Viết lại câu đúng…',
+      req: 'Những câu sau đều có lỗi sai. Hãy sửa lại cho đúng.',
+      items: [
+        { q: '我把苹果吃。', a: '我把苹果吃了。', acc: ['我{已经|}把苹果吃{了|完了}', '我吃了苹果', '我吃苹果了'], n: 'Động từ không được đứng trơ trọi sau tân ngữ, cần thêm thành phần khác (了 / 完…).' },
+        { q: '他把喜欢这件衣服。', a: '他喜欢这件衣服。', acc: '他{很|}喜欢这件衣服', n: '喜欢 là động từ tâm lý, không xử lý đối tượng nên không dùng 把.' },
+        { q: '我没把作业做完了。', a: '我没把作业做完。', acc: ['我没{有|}把作业做完', '我没{有|}做完作业'], n: '没 phủ định hành động thì không dùng thêm 了 ở cuối câu.' },
+        { q: '我把一本汉语词典买了。', a: '我买了一本汉语词典。', acc: '我买了一本汉语词典', n: '一本汉语词典 là tân ngữ không xác định, nên dùng câu thông thường.' },
+        { q: '我把老师认识了。', a: '我认识老师。', acc: '我认识{了|}老师{了|}', n: '认识 là động từ nhận thức, không xử lý đối tượng nên không dùng 把.' }
+      ]
+    }
+  ];
+  /*TEST-END*/
+
+  /* ================= KIẾN THỨC ================= */
+  function seg(parts) {
+    return '<div class="ba-seg">' + parts.map(function (p) {
+      var zh = /[一-鿿]/.test(p[0]) ? ' zh' : '';
+      return '<span class="sg ' + p[1] + '"><b class="' + zh + '">' + esc(p[0]) + '</b><i>' + esc(p[2] || '') + '</i></span>';
+    }).join('') + '</div>';
+  }
+  function exBlock(parts, vi, nt) {
+    return '<div class="ba-exb">' + seg(parts) + '<p class="vi">' + esc(vi) + '</p>' + (nt ? '<p class="nt">' + esc(nt) + '</p>' : '') + '</div>';
+  }
+
+  /* 1. bản chất */
+  $('#ba-cmp1').innerHTML = seg([['我', 's', 'Chủ ngữ'], ['吃完了', 'v', 'Động từ + kết quả'], ['早饭', 'o', 'Tân ngữ']]);
+  $('#ba-cmp2').innerHTML = seg([['我', 's', 'Chủ ngữ'], ['把', 'ba', 'Từ khóa'], ['早饭', 'o', 'Tân ngữ'], ['吃完了', 'v', 'Động từ + kết quả']]);
+
+  /* 2. cấu trúc cơ bản */
+  var GEN = [['S', 's', 'Chủ ngữ'], ['把', 'ba', 'Từ khóa'], ['O', 'o', 'Tân ngữ'], ['V', 'v', 'Động từ'], ['Thành phần khác', 'z', 'Kết quả · xu hướng · 在/到 · 给 · số lượng…']];
+  $('#ba-gen').innerHTML = seg(GEN);
+  $('#ba-gen2').innerHTML = seg(GEN);
+
+  var TILES = [
+    ['Kết quả', 'V + 完 / 好 / 干净 / 破 / 错', 'Thành ra thế nào?', 0],
+    ['Xu hướng', 'V + 上 / 走 / 回 / 出来…', 'Đi theo hướng nào?', 0],
+    ['Vị trí', 'V + 在 / 到 + nơi chốn', 'Để ở đâu?', 1],
+    ['Chuyển giao', 'V + 给 + người nhận', 'Đưa cho ai?', 1],
+    ['Số lượng', 'V + 一下 / 一遍 / số lần', 'Bao nhiêu lần?', 0],
+    ['Khác', 'V + 成 / 作 · V + 得… · V + 了', 'Biến thành gì / mô tả / thay đổi', 0]
+  ];
+  $('#ba-tiles').innerHTML = TILES.map(function (t) {
+    return '<div class="ba-tile' + (t[3] ? ' bk' : '') + '">' + (t[3] ? '<span class="rb">GIÁO TRÌNH</span>' : '') +
+      '<h4>' + esc(t[0]) + '</h4><div class="p">' + esc(t[1]) + '</div><div class="q">→ ' + esc(t[2]) + '</div></div>';
+  }).join('');
+
+  /* 4.1 + 4.2 giáo trình */
+  $('#ba-f1').innerHTML = seg([
+    ['S', 's', 'Chủ ngữ'], ['(不 / 没 / 能愿动词)', 'pre', 'Phủ định / năng nguyện'], ['把', 'ba', 'Từ khóa'],
+    ['O', 'o', 'Tân ngữ'], ['V', 'v', 'Động từ'], ['在 / 到', 'z', 'Giới từ'], ['Địa điểm', 'l', 'Nơi chốn']
+  ]);
+  $('#ba-f2').innerHTML = seg([
+    ['S', 's', 'Chủ ngữ'], ['把', 'ba', 'Từ khóa'], ['O₁', 'o', 'Vật chuyển giao'],
+    ['V', 'v', 'Động từ'], ['给', 'z', 'Giới từ'], ['O₂', 'l', 'Người nhận']
+  ]);
+
+  $('#ba-ex1').innerHTML =
+    exBlock([['我', 's', 'Chủ ngữ'], ['会', 'pre', 'Năng nguyện'], ['把', 'ba', ''], ['这些题', 'o', 'Tân ngữ'], ['都', 'pre', 'Phó từ'], ['记', 'v', 'Động từ'], ['在', 'z', ''], ['本子上', 'l', 'Địa điểm']],
+      'Tôi sẽ ghi hết những câu hỏi này vào vở.', '') +
+    exBlock([['老师', 's', 'Chủ ngữ'], ['把', 'ba', ''], ['作业本', 'o', 'Tân ngữ'], ['放', 'v', 'Động từ'], ['到', 'z', ''], ['桌子上', 'l', 'Địa điểm'], ['了', 'le', 'Trợ từ']],
+      'Thầy/cô giáo đã đặt vở bài tập lên bàn rồi.', '') +
+    exBlock([['你', 's', 'Chủ ngữ'], ['不能', 'pre', 'Phủ định + năng nguyện'], ['把', 'ba', ''], ['名字', 'o', 'Tân ngữ'], ['写', 'v', 'Động từ'], ['在', 'z', ''], ['这里', 'l', 'Địa điểm']],
+      'Bạn không được viết tên ở đây.', 'Chú ý: 不能 đứng trước 把.');
+
+  $('#ba-ex2').innerHTML =
+    exBlock([['你', 's', 'Chủ ngữ'], ['明天再', 'pre', 'Thời gian / phó từ'], ['把', 'ba', ''], ['书', 'o', 'O₁'], ['还', 'v', 'Động từ'], ['给', 'z', ''], ['我', 'l', 'O₂ (người nhận)']],
+      'Ngày mai bạn hãy trả sách cho tôi.', '') +
+    exBlock([['我', 's', 'Chủ ngữ'], ['把', 'ba', ''], ['礼物', 'o', 'O₁'], ['送', 'v', 'Động từ'], ['给', 'z', ''], ['她', 'l', 'O₂ (người nhận)'], ['了', 'le', 'Trợ từ']],
+      'Tôi đã tặng quà cho cô ấy rồi.', '') +
+    exBlock([['请你', 's', 'Chủ ngữ (câu cầu khiến)'], ['把', 'ba', ''], ['这本书', 'o', 'O₁'], ['带', 'v', 'Động từ'], ['给', 'z', ''], ['老师', 'l', 'O₂ (người nhận)']],
+      'Nhờ bạn mang cuốn sách này cho thầy/cô giáo.', '');
+
+  /* 4.3 dạng khác */
+  var EXT = [
+    ['Kết quả', 'V + 完 / 好 / 干净 / 破 / 错', '妈妈把衣服洗干净了。', 'Mẹ giặt sạch quần áo rồi.'],
+    ['Xu hướng', 'V + 上 / 走 / 回 / 出来…', '他把我的词典拿走了。', 'Anh ấy cầm cuốn từ điển của tôi đi rồi.'],
+    ['Số lượng', 'V + 一下 / 一遍 / số lần', '请你把课文读一遍。', 'Bạn hãy đọc bài khóa một lượt.'],
+    ['成 / 作', 'V + 成 / 作 + …', '请把这句话翻译成越南语。', 'Hãy dịch câu này sang tiếng Việt.'],
+    ['Trạng thái (得)', 'V + 得 + mô tả', '她把房间打扫得很干净。', 'Cô ấy dọn phòng rất sạch.'],
+    ['了', 'V + 了 (hành động làm thay đổi / mất đi)', '他把我的手机丢了。', 'Anh ấy làm mất điện thoại của tôi.'],
+    ['Mệnh lệnh', '请 / 别 / 不要 + 把 + O + V + …', '请把门关上。', 'Hãy đóng cửa lại.']
+  ];
+  $('#ba-ext').innerHTML = EXT.map(function (e) {
+    return '<div class="ba-mini"><h4>' + esc(e[0]) + '</h4><div class="f">' + esc(e[1]) + '</div><div class="e">' + esc(e[2]) + '</div><div class="v">' + esc(e[3]) + '</div></div>';
+  }).join('');
+
+  /* 4.4 vị trí */
+  $('#ba-pos').innerHTML = seg([
+    ['S', 's', 'Chủ ngữ'], ['没 / 不 / 不要 / 能愿 / 为什么', 'pre', 'Đứng TRƯỚC 把'], ['把', 'ba', 'Từ khóa'],
+    ['O', 'o', 'Tân ngữ'], ['都', 'pre', 'Sau O'], ['V', 'v', 'Động từ'], ['…', 'z', 'Thành phần khác'], ['吗', 'le', 'Cuối câu (nghi vấn)']
+  ]);
+
+  /* ================= VẬN DỤNG ================= */
+  var locked = false, warned = false;
+  var total = 0;
+  PARTS.forEach(function (p) { total += p.items.length; });
+
+  $('#ba-stats').innerHTML = '<span>' + PARTS.length + ' phần</span><span>' + total + ' câu</span><span>' + total + ' điểm · mỗi câu 1 điểm</span>';
+
+  function setupDnD(q) {
+    var bank = $('.ba-bank', q), ans = $('.ba-ans', q), dragged = null;
+    function place(zone, chip, x, y) {
+      var kids = $$('.ba-chip', zone).filter(function (c) { return c !== chip; });
+      if (!kids.length) { zone.appendChild(chip); return; }
+      var best = null, bd = 1e12;
+      kids.forEach(function (c) {
+        var r = c.getBoundingClientRect();
+        var dx = x - (r.left + r.width / 2), dy = y - (r.top + r.height / 2);
+        var d = dx * dx + dy * dy * 4;
+        if (d < bd) { bd = d; best = c; }
+      });
+      var r2 = best.getBoundingClientRect();
+      if (x < r2.left + r2.width / 2) { zone.insertBefore(chip, best); } else { zone.insertBefore(chip, best.nextSibling); }
+    }
+    q.addEventListener('dragstart', function (e) {
+      if (locked) { return; }
+      var c = e.target.closest ? e.target.closest('.ba-chip') : null;
+      if (!c) { return; }
+      dragged = c;
+      setTimeout(function () { c.classList.add('drag'); }, 0);
+      e.dataTransfer.effectAllowed = 'move';
+      try { e.dataTransfer.setData('text/plain', c.textContent); } catch (err) { /* ignore */ }
+    });
+    q.addEventListener('dragend', function () {
+      if (dragged) { dragged.classList.remove('drag'); }
+      dragged = null;
+      bank.classList.remove('over'); ans.classList.remove('over');
+    });
+    [bank, ans].forEach(function (z) {
+      z.addEventListener('dragover', function (e) { if (!dragged || locked) { return; } e.preventDefault(); z.classList.add('over'); });
+      z.addEventListener('dragleave', function (e) { if (!z.contains(e.relatedTarget)) { z.classList.remove('over'); } });
+      z.addEventListener('drop', function (e) {
+        e.preventDefault(); z.classList.remove('over');
+        if (!dragged || locked) { return; }
+        place(z, dragged, e.clientX, e.clientY);
+      });
+    });
+    q.addEventListener('click', function (e) {
+      if (locked) { return; }
+      var c = e.target.closest ? e.target.closest('.ba-chip') : null;
+      if (!c) { return; }
+      (c.parentNode === bank ? ans : bank).appendChild(c);
+    });
+    q.addEventListener('keydown', function (e) {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('ba-chip')) {
+        e.preventDefault(); e.target.click();
+      }
+    });
+  }
+
+  function qEl(pi, i) { return $('#ba-q-' + pi + '-' + i); }
+
+  function renderParts() {
+    var h = '';
+    PARTS.forEach(function (p, pi) {
+      h += '<section class="ba-part"><header><h3>' + esc(p.title) + '<span class="ba-badge">' + p.items.length + ' câu · ' + p.items.length + ' điểm</span></h3><p><b>Yêu cầu:</b> ' + esc(p.req) + '</p></header>';
+      p.items.forEach(function (it, i) {
+        h += '<div class="ba-q" id="ba-q-' + pi + '-' + i + '"><div class="ba-qn">' + (i + 1) + '</div><div class="ba-qb"><div class="ba-slot"></div>';
+        if (p.type === 'words') {
+          h += '<div class="ba-lab">Từ cho sẵn</div><div class="ba-bank">' +
+            it.w.map(function (w) { return '<span class="ba-chip" draggable="true" tabindex="0" role="button">' + esc(w) + '</span>'; }).join('') +
+            '</div><div class="ba-lab">Câu của bạn</div><div class="ba-ans" data-ph="Kéo các từ vào đây theo đúng thứ tự…"></div>';
+        } else {
+          h += '<div class="ba-prompt ' + (p.type === 'vi' ? 'vi' : 'zh') + '">' + esc(it.q) + '</div>' +
+            '<input class="ba-in" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="' + esc(p.ph) + '" aria-label="' + esc(p.short) + ' câu ' + (i + 1) + '">';
+        }
+        h += '</div></div>';
+      });
+      h += '</section>';
+    });
+    $('#ba-parts').innerHTML = h;
+    PARTS.forEach(function (p, pi) {
+      if (p.type === 'words') { p.items.forEach(function (it, i) { setupDnD(qEl(pi, i)); }); }
+    });
+  }
+
+  function getVal(p, q) {
+    if (p.type === 'words') { return $$('.ba-ans .ba-chip', q).map(function (c) { return c.textContent; }).join(''); }
+    return $('.ba-in', q).value.trim();
+  }
+
+  /* bands depend on total */
+  function bands(T) {
+    var a = Math.ceil(T * 0.9 - 1e-9), b = Math.ceil(T * 0.75 - 1e-9), c = Math.ceil(T * 0.6 - 1e-9);
+    return [
+      { min: a, label: 'Xuất sắc', seal: '优', range: a + '–' + T + ' điểm', txt: 'Nắm chắc cấu trúc, biết vận dụng và phân biệt điều kiện sử dụng.' },
+      { min: b, label: 'Tốt', seal: '良', range: b + '–' + (a - 1) + ' điểm', txt: 'Nắm tốt kiến thức, còn một số lỗi nhỏ về trật tự từ hoặc bổ ngữ.' },
+      { min: c, label: 'Khá', seal: '可', range: c + '–' + (b - 1) + ' điểm', txt: 'Hiểu công thức nhưng chưa thực sự vững về điều kiện sử dụng.' },
+      { min: 0, label: 'Cần ôn thêm', seal: '勉', range: 'Dưới ' + c + ' điểm', txt: 'Cần ôn lại bản chất câu 把 và luyện thêm cách nhận diện đối tượng chịu tác động.' }
+    ];
+  }
+
+  function why(it, val) {
+    if (it.x) { return 'Câu này không dùng được 把. ' + it.n; }
+    if (val && isX(val)) { return 'Câu này chuyển được sang câu 把. ' + it.n; }
+    return it.n;
+  }
+
+  function countEmpty() {
+    var n = 0;
+    PARTS.forEach(function (p, pi) { p.items.forEach(function (it, i) { if (!getVal(p, qEl(pi, i))) { n++; } }); });
+    return n;
+  }
+
+  function grade() {
+    locked = true; root.classList.add('locked');
+    var score = 0, wrong = [], perPart = [];
+    PARTS.forEach(function (p, pi) {
+      var ps = 0;
+      p.items.forEach(function (it, i) {
+        var q = qEl(pi, i), val = getVal(p, q), good = okAns(it, val);
+        if (good) { score++; ps++; } else { wrong.push({ p: p, pi: pi, i: i, it: it, val: val }); }
+        q.classList.add(good ? 'ok' : 'bad');
+        $('.ba-slot', q).innerHTML = '<span class="ba-res-tag">' + (good ? '✓ Đúng' : '✗ Sai') + '</span>';
+        var inp = $('.ba-in', q); if (inp) { inp.readOnly = true; }
+        $$('.ba-chip', q).forEach(function (c) { c.setAttribute('draggable', 'false'); c.setAttribute('tabindex', '-1'); });
+      });
+      perPart.push(ps);
+    });
+    showResult(score, wrong, perPart);
+  }
+
+  function showResult(score, wrong, perPart) {
+    var B = bands(total), bi = 0;
+    for (var k = 0; k < B.length; k++) { if (score >= B[k].min) { bi = k; break; } }
+    var b = B[bi];
+    var h = '<div class="ba-res"><div class="ba-res-top"><div class="ba-seal">' + b.seal + '</div><div>' +
+      '<div class="ba-bigscore"><b>' + score + '</b> / ' + total + ' điểm</div>' +
+      '<div class="ba-pct">' + Math.round(score / total * 100) + '% · ' + b.label + '</div><p>' + esc(b.txt) + '</p></div></div><div class="ba-res-b">';
+
+    h += '<h3>Điểm theo từng phần</h3>';
+    PARTS.forEach(function (p, pi) {
+      var n = p.items.length;
+      h += '<div class="ba-prow"><span><b>' + esc(p.short) + '</b></span><div class="ba-bar"><i style="width:' + Math.round(perPart[pi] / n * 100) + '%"></i></div><span>' + perPart[pi] + ' / ' + n + '</span></div>';
+    });
+
+    h += '<h3>Những câu cần xem lại' + (wrong.length ? ' (' + wrong.length + ')' : '') + '</h3>';
+    if (!wrong.length) {
+      h += '<div class="ba-all">Chúc mừng! Bạn làm đúng toàn bộ các câu.</div>';
+    } else {
+      wrong.forEach(function (w) {
+        var prompt = w.p.type === 'words' ? w.it.w.join(' / ') : w.it.q;
+        h += '<div class="ba-w"><div class="ba-w-h"><span class="ba-w-tag">' + esc(w.p.short) + ' · Câu ' + (w.i + 1) + '</span><span class="ba-w-q">' + esc(prompt) + '</span></div>' +
+          '<div class="ba-w-r"><b>Bạn trả lời:</b> <span class="zh">' + (w.val ? esc(w.val) : '(chưa làm)') + '</span></div>' +
+          '<div class="ba-w-r"><b>Đáp án:</b> <span class="zh">' + esc(w.it.a) + '</span></div>' +
+          '<div class="ba-w-r why"><b>Vì sao sai:</b> ' + esc(why(w.it, w.val)) + '</div></div>';
+      });
+    }
+
+    h += '<h3>Thang đánh giá</h3><div class="ba-tw"><table class="ba-t"><thead><tr><th>Điểm</th><th>Xếp loại</th><th>Nhận xét</th></tr></thead><tbody>';
+    B.forEach(function (x, i) {
+      h += '<tr' + (i === bi ? ' class="on"' : '') + '><td class="k">' + esc(x.range) + '</td><td>' + esc(x.label) + '</td><td>' + esc(x.txt) + '</td></tr>';
+    });
+    h += '</tbody></table></div><div class="ba-again"><button class="ba-btn" type="button" id="ba-again">Làm lại từ đầu</button></div></div></div>';
+
+    var out = $('#ba-result');
+    out.innerHTML = h; out.hidden = false;
+    $('#ba-submit').hidden = true;
+    $('#ba-warn').hidden = true;
+    $('#ba-again').addEventListener('click', reset);
+    var box = $('.ba-res', out);
+    if (box.scrollIntoView) { box.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  }
+
+  function reset() {
+    locked = false; warned = false;
+    root.classList.remove('locked');
+    $('#ba-result').hidden = true; $('#ba-result').innerHTML = '';
+    $('#ba-submit').hidden = false; $('#ba-warn').hidden = true;
+    renderParts();
+    var t = $('.ba-vintro');
+    if (t && t.scrollIntoView) { t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  }
+
+  $('#ba-submit').addEventListener('click', function () {
+    if (locked) { return; }
+    var n = countEmpty();
+    if (n > 0 && !warned) {
+      warned = true;
+      var w = $('#ba-warn');
+      w.textContent = 'Bạn còn ' + n + ' câu chưa làm. Bấm “NỘP BÀI” lần nữa nếu bạn vẫn muốn nộp.';
+      w.hidden = false;
+      return;
+    }
+    grade();
+  });
+
+  renderParts();
+
+  /* ================= tabs + toc ================= */
+  var tabs = $$('.ba-tab');
+  function show(which) {
+    tabs.forEach(function (t) { t.setAttribute('aria-selected', t.getAttribute('data-tab') === which ? 'true' : 'false'); });
+    $('#ba-p-k').hidden = which !== 'k';
+    $('#ba-p-v').hidden = which !== 'v';
+  }
+  tabs.forEach(function (t) { t.addEventListener('click', function () { show(t.getAttribute('data-tab')); }); });
+  $$('.ba-toc button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var el = document.getElementById(b.getAttribute('data-go'));
+      if (el && el.scrollIntoView) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+})();
+</script>
+</body>
+</html>
