@@ -218,7 +218,24 @@ mk({id:"hsk3-shoudao-shoudao-dedao",level:"HSK3",name:"Phân biệt 收到 / 受
  ["他的身体____了严重的伤害。",2,"受到伤害 = chịu tổn thương."],
  ["这次活动让我____了很多启发。",0,"得到启发 = có được sự gợi mở, cảm hứng."],
  ["学生应该____老师的尊重。",2,"受到尊重 là cách kết hợp rất tự nhiên."],
- ["公司已经____了客户的投诉。",1,"收到投诉 = tiếp nhận đơn/khiếu nại."]]})
+ ["公司已经____了客户的投诉。",1,"收到投诉 = tiếp nhận đơn/khiếu nại."]]}),
+Object.assign(mk({id:"hsk3-yudao-jian",level:"HSK3",name:"Phân biệt 遇到 / 见",instr:"Chọn 遇到 hoặc 见",words:["遇到","见"],rows:[
+ ["我在路上____了一位老同学,真巧!",0,"Gặp tình cờ, bất ngờ (真巧) → 遇到."],
+ ["明天下午三点,我约了医生,我要去____他。",1,"Đã hẹn trước, có kế hoạch → 去见医生."],
+ ["他在工作中____了很多困难。",0,"遇到困难 = gặp phải khó khăn."],
+ ["我明天要去学校____老师,问他几个问题。",1,"Chủ động đi gặp thầy có mục đích → 见老师."],
+ ["旅行的时候,我们____了一场大雨。",0,"遇到 dùng với tình huống bất ngờ, ngoài ý muốn (大雨, 意外)."],
+ ["好久不____,你最近怎么样?",1,"好久不见 là cụm cố định, nghĩa là lâu rồi không gặp."],
+ ["我在商店里看____了我的朋友,可是他没看见我。",1,"看见 = nhìn thấy. 见 là bổ ngữ kết quả sau 看, không nói 看遇到."],
+ ["学习汉语的时候,你有没有____什么问题?",0,"遇到问题 = gặp phải vấn đề."],
+ ["他开车去机场的路上____了堵车。",0,"遇到堵车 = gặp tắc đường, tình huống bất ngờ."],
+ ["周末我想去____一个很久没见的老朋友。",1,"Chủ động đi thăm, có kế hoạch → 去见老朋友."]]}),
+ {recap:[{t:"Bảng so sánh",head:["Điểm","遇到 (yùdào)","见 (jiàn)"],rows:[
+  ["Ý nghĩa","Gặp phải, tình huống bất ngờ, khó khăn","Gặp, nhìn thấy (có mục đích)"],
+  ["Tính chất","Ngẫu nhiên, bất ngờ","Chủ động, có kế hoạch"],
+  ["Dùng với","人, 问题, 困难, 挑战, 意外","人, 医生, 老朋友, 看到"],
+  ["Ví dụ","遇到问题 / 遇到朋友","见老师 / 看见朋友"]],
+  notes:["Gặp tình cờ ngoài đường: 遇到朋友. Hẹn trước, đi gặp: 见朋友 / 见老师.","见 còn làm bổ ngữ kết quả sau 看/听: 看见 (nhìn thấy), 听见 (nghe thấy). Không nói 看遇到."]}]})
 ];
 /* ===== BỘ MÁY LÀM BÀI (dùng chung, không cần sửa khi thêm bài) ===== */
 const app=document.getElementById('app'),go=x=>{location.hash=x};
@@ -264,7 +281,7 @@ rewrite(q){const is=[],b=h('div');if(q.hint)b.append(h('p',{class:'hint'},q.hint
  return{body:[b],grade(){let g=0;const ln=[];q.parts.forEach((p,i)=>{let v=norm(is[i].value);const pn=norm(p.pre);if(pn&&v.startsWith(pn))v=v.slice(pn.length);const ok=p.accept.map(norm).includes(v);is[i].classList.remove('sok','sbad');is[i].classList.add(ok?'sok':'sbad');if(ok)g++;else ln.push((i+1)+'. '+p.pre+p.accept[0])});
   const all=g===q.parts.length;return{got:g,max:q.parts.length,fb:fb(all,all?'✓ Chính xác.':'✗ Đúng '+g+'/'+q.parts.length+'. Đáp án gợi ý: '+ln.join('   '),q.exp)}}}}
 };
-const recapEl=r=>h('details',{class:'rc'},h('summary',null,'📖 Kiến thức cần nhớ'),...r.map(g=>h('div',null,h('h3',null,g.t),h('table',null,...g.rows.map(x=>h('tr',null,h('td',null,x[0]),h('td',{class:'zh'},x[1])))),...(g.notes||[]).map(n=>h('p',{class:'note'},'• '+n)))));
+const recapEl=r=>h('details',{class:'rc'},h('summary',null,'📖 Kiến thức cần nhớ'),...r.map(g=>h('div',null,h('h3',null,g.t),h('table',null,g.head?h('tr',null,...g.head.map(c=>h('th',{style:'text-align:left;padding:6px 8px'},c))):null,...g.rows.map(x=>h('tr',null,...x.map((c,i)=>h('td',i?{class:'zh'}:null,c))))),...(g.notes||[]).map(n=>h('p',{class:'note'},'• '+n)))));
 function levelsView(){app.innerHTML='';app.append(h('h1',null,'Bài tập ngữ pháp tiếng Trung'),h('p',{class:'sub'},'Chọn cấp độ để xem danh sách bài tập.'),
  ...levels.map(l=>h('button',{class:'set',onclick:()=>go('lv-'+l.toLowerCase())},h('b',null,l),h('div',{class:'meta'},SETS.filter(s=>s.level===l).length+' bài tập'))))}
 function listView(l){app.innerHTML='';const ls=h('div'),kw=h('input',{type:'search',placeholder:'Tìm bài tập…'});
