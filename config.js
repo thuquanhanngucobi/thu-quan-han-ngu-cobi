@@ -79,7 +79,7 @@ const COBI_DATA = {
           { id: "ttc-l2", name: "Quyển 2", path: "./tang-thu-cac/bai-giang/quyen-2/index.html" },
            { id: "lec-b1", name: "Dòng chảy thời gian", path: "./tang-thu-cac/bai-giang/quyen-1/time2.html" },
           { id: "ttc-l3", name: "HSK 3", path: "./tang-thu-cac/bai-giang/hsk-3/index.html" }
-           { id: "lec-b1", name: "CÂU CHỮ 把", path: "./tang-thu-cac/bai-giang/HSK3/cauchuba.html" },
+           { id: "lec-b1", name: "CÂU CHỮ 把", path: "./tang-thu-cac/bai-giang/HSK3/cauchuba.html" }
         ]
       }
     ]
