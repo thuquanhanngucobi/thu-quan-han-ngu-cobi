@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bí Kíp & Luyện Công – Bài 3</title>
+<meta name="description" content="Ôn bài 3: Có thể mượn điện thoại của bạn một lát được không? – Từ vựng, ngữ pháp, mẫu câu và bài tập tự chấm điểm.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fbf6ea; --card:#fffdf7; --ink:#1d2640; --muted:#5d6580; --line:#e6dcc3;
+  --accent:#16336b; --accent-soft:#e4ebf7; --gold:#a8770a; --gold-soft:#f6ecd0;
+  --ok:#1d7a46; --ok-soft:#e2f3e8; --bad:#8a4b00; --bad-soft:#fdf0dc; --blue:#3a62a8; --blue-soft:#e6ecf7;
+  --shadow:0 1px 2px rgba(29,38,64,.06),0 6px 18px rgba(29,38,64,.06);
+  --zh:"Noto Serif SC","Songti SC","SimSun","Source Han Serif SC",serif;
+  --vi:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#141a2c; --card:#1b2238; --ink:#eee8d8; --muted:#a2a9c2; --line:#2e3855;
+    --accent:#9db9ff; --accent-soft:#1f2b49; --gold:#e5b94e; --gold-soft:#332d1c;
+    --ok:#6fd49a; --ok-soft:#183326; --bad:#ffb74d; --bad-soft:#3a2d17; --blue:#9bb8f0; --blue-soft:#1f2b49;
+    --shadow:none;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--vi);-webkit-text-size-adjust:100%}
+.zh{font-family:var(--zh);font-weight:500}
+a{color:var(--blue)}
+.py{color:var(--blue);font-size:.88em}
+body.nopy .py{display:none}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+
+/* hero */
+header.hero{padding:32px 0 8px;position:relative;overflow:hidden}
+.hero .seal{display:inline-flex;align-items:center;gap:10px;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.hero .seal b{background:var(--accent);color:#fff;font-family:var(--zh);font-size:1rem;padding:4px 8px;border-radius:4px;letter-spacing:0;text-transform:none}
+.hero h1{font-size:clamp(2rem,6vw,3.2rem);line-height:1.1;margin:14px 0 6px;font-weight:700}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .lesson{font-size:1.1rem;margin:10px 0 0;max-width:34em}
+.hero .lesson .zh{display:block;font-size:1.5rem;margin-top:4px}
+.hero .ghost{position:absolute;right:-10px;top:-30px;font-family:var(--zh);font-size:min(46vw,300px);line-height:1;color:var(--gold);opacity:.1;pointer-events:none;user-select:none}
+.agenda{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.agenda span{background:var(--gold-soft);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:.9rem}
+
+/* nav */
+nav.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;gap:4px;align-items:center;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:none}
+nav.top a{white-space:nowrap;text-decoration:none;color:var(--ink);padding:6px 12px;border-radius:8px;font-weight:500;font-size:.95rem}
+nav.top a:hover,nav.top a:focus-visible{background:var(--gold-soft);outline:none}
+nav.top a.cta{background:var(--accent);color:#fff;margin-left:auto}
+nav.top a.cta:hover{filter:brightness(1.1);background:var(--accent)}
+.sep{width:1px;height:20px;background:var(--line);flex:none;margin:0 4px}
+
+/* sections */
+section{padding:40px 0 8px}
+.kicker{font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+h2{font-size:clamp(1.5rem,4vw,2rem);margin:4px 0 4px;line-height:1.2}
+h2 .zh{color:var(--accent);margin-left:.3em;font-size:.9em}
+h3{font-size:1.15rem;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 20px;max-width:46em}
+.big-band{margin-top:44px;padding:22px 0 0;border-top:2px solid var(--ink)}
+.big-band h2.band{font-size:clamp(1.8rem,5vw,2.6rem);margin:0}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+.stack{display:grid;gap:16px}
+
+/* toolbar */
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px}
+.chip{font:inherit;font-size:.9rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip:focus-visible,.btn:focus-visible,.spk:focus-visible,select:focus-visible,input:focus-visible,.tok:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.tools .grow{flex:1}
+
+/* vocab */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.v{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow);position:relative}
+.v.extra{border-style:dashed}
+.v .row1{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.v .h{font-size:2rem;line-height:1.2;font-family:var(--zh);font-weight:700}
+.v .p{color:var(--blue);font-weight:500}
+.v .t{font-size:.72rem;font-weight:700;background:var(--gold-soft);color:var(--gold);border-radius:4px;padding:1px 6px}
+.v .m{font-weight:600;margin:2px 0 6px}
+.v ul{list-style:none;margin:0;padding:8px 0 0;border-top:1px dashed var(--line);font-size:.92rem}
+.v li{padding:2px 0}
+.v li .zh{font-size:1.05rem}
+.v li small{display:block;color:var(--muted)}
+.spk{position:absolute;right:10px;top:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:1rem;line-height:1}
+.spk:hover{background:var(--gold-soft)}
+.tag-extra{position:absolute;right:52px;top:14px;font-size:.7rem;color:var(--muted)}
+
+/* grammar */
+.formula{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 0}
+.formula span{background:var(--blue-soft);color:var(--blue);border-radius:8px;padding:4px 10px;font-weight:600}
+.formula span.hl{background:var(--accent);color:#fff}
+.formula i{font-style:normal;color:var(--muted)}
+.ex{margin:6px 0;padding:8px 12px;border-left:3px solid var(--gold);background:var(--gold-soft);border-radius:0 8px 8px 0}
+.ex .zh{font-size:1.15rem}
+.ex small{display:block;color:var(--muted)}
+.note{background:var(--accent-soft);border-radius:10px;padding:10px 14px;margin:12px 0 0;font-size:.95rem}
+.note b{color:var(--accent)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){.two{grid-template-columns:1fr}}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+th{background:var(--gold-soft)}
+
+/* sentence patterns */
+.pat{display:grid;gap:8px}
+.qa{display:grid;grid-template-columns:1fr;gap:6px}
+.bubble{padding:8px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
+.bubble .zh{font-size:1.15rem}
+.bubble small{display:block;color:var(--muted)}
+.bubble.q{border-left:4px solid var(--blue)}
+.bubble.a{border-left:4px solid var(--ok)}
+.bubble.n{border-left:4px solid var(--accent)}
+.lab{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.digits{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:10px 0}
+@media(max-width:520px){.digits{grid-template-columns:repeat(5,1fr);font-size:.85rem}}
+.digits div{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 2px}
+.digits div b{display:block;font-family:var(--zh);font-size:1.3rem}
+.digits div.yao{background:var(--accent);color:#fff;border-color:var(--accent)}
+.digits div.yao .py{color:#fff}
+.phone{font-size:1.2rem;font-weight:600;letter-spacing:.04em}
+details.dlg{margin-top:12px}
+details.dlg summary{cursor:pointer;font-weight:600;padding:10px 14px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+details.dlg[open] summary{border-radius:10px 10px 0 0}
+.dl{border:1px solid var(--line);border-top:0;border-radius:0 0 10px 10px;background:var(--card);padding:10px 14px}
+.line{display:grid;grid-template-columns:64px 1fr;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line)}
+.line:last-child{border:0}
+.line .who{font-weight:700;color:var(--accent);font-size:.9rem}
+.line .zh{font-size:1.15rem}
+.line small{display:block;color:var(--muted)}
+
+/* exercises */
+.ex-head{display:flex;gap:12px;align-items:flex-start;margin:8px 0 14px}
+.ex-head .n{flex:none;background:var(--accent);color:#fff;font-family:var(--zh);font-weight:700;font-size:1.2rem;width:38px;height:38px;border-radius:8px;display:grid;place-items:center}
+.ex-head h3{margin:0}
+.ex-head p{margin:2px 0 0;color:var(--muted);font-size:.95rem}
+.bank{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;padding:12px;background:var(--gold-soft);border:1px dashed var(--gold);border-radius:12px}
+.bank .w{font-family:var(--zh);font-weight:700;font-size:1.15rem;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:2px 12px}
+.bank .w small{font-family:var(--vi);font-weight:400;color:var(--blue);margin-left:6px;font-size:.78rem}
+.q-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px;position:relative}
+.q-card.right{border-color:var(--ok);background:var(--ok-soft)}
+.q-card.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.qn{font-weight:700;color:var(--accent);margin-right:6px}
+.sent{font-size:1.3rem;line-height:2.1}
+.sent .py{display:block;font-size:.8rem;line-height:1.3;font-family:var(--vi)}
+select{font:inherit;font-family:var(--zh);font-size:1.15rem;font-weight:700;padding:2px 6px;border-radius:8px;border:2px solid var(--blue);background:var(--card);color:var(--ink);min-width:5.2em;margin:0 4px}
+select:disabled{opacity:1;color:var(--ink)}
+.vi{color:var(--muted);font-size:.95rem}
+.answer-line{min-height:54px;border:2px dashed var(--line);border-radius:10px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0;background:var(--paper)}
+.answer-line:empty::before{content:"Bấm vào các từ bên dưới theo đúng thứ tự…";color:var(--muted);font-size:.9rem}
+.tok{font-family:var(--zh);font-weight:700;font-size:1.15rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer}
+.tok:hover:not(:disabled){border-color:var(--blue);background:var(--blue-soft)}
+.tok.used{opacity:.25}
+.answer-line .tok{background:var(--blue-soft);border-color:var(--blue)}
+.tok:disabled{cursor:default}
+.minibtn{font:inherit;font-size:.85rem;background:none;border:0;color:var(--blue);text-decoration:underline;cursor:pointer;padding:4px 0}
+input.tr{width:100%;font:inherit;font-family:var(--zh);font-size:1.15rem;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);margin-top:6px}
+input.tr:focus{border-color:var(--blue);outline:none}
+input.tr:disabled{opacity:1}
+.fb{margin-top:10px;font-size:.95rem}
+.fb .st{font-weight:700}
+.right .fb .st{color:var(--ok)}
+.wrong .fb .st{color:var(--bad)}
+.fb .your{color:var(--muted)}
+.fb .corr{margin:4px 0;padding:6px 10px;background:var(--card);border-radius:8px;border:1px solid var(--line)}
+.fb .corr .zh{font-size:1.2rem}
+.fb .why{margin-top:4px}
+.hint{font-size:.85rem;color:var(--muted);margin:0 0 6px}
+
+.submit-bar{pointer-events:none;position:sticky;bottom:0;background:linear-gradient(transparent,var(--paper) 30%);padding:24px 0 14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;z-index:10}
+.btn{pointer-events:auto;font:inherit;font-weight:700;font-size:1.05rem;border:0;border-radius:12px;padding:12px 28px;cursor:pointer;background:var(--accent);color:#fff;box-shadow:0 4px 14px rgba(22,51,107,.3)}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line);box-shadow:none}
+.btn:hover{filter:brightness(1.08)}
+.name-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.name-row input{font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);min-width:220px}
+
+#result{display:none;margin:20px 0;padding:22px;border-radius:16px;background:var(--ink);color:var(--paper);text-align:center}
+#result.show{display:block}
+#result .who{opacity:.8;font-size:.95rem}
+#result .score{font-size:clamp(3rem,12vw,5rem);font-weight:700;line-height:1.1}
+#result .score small{font-size:.4em;opacity:.7}
+#result .msg{font-size:1.1rem;margin:4px 0 14px}
+#result .parts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+#result .parts div{background:rgba(255,255,255,.12);border-radius:10px;padding:6px 14px;font-size:.92rem}
+#result .wrongs{margin-top:14px;font-size:.95rem}
+#result .wrongs a{color:#ffd9a0}
+footer{padding:36px 0 120px;color:var(--muted);text-align:center;font-size:.9rem}
+@media print{nav.top,.submit-bar,.spk{display:none}}
+
+.stack>*,.card{min-width:0}
+@media(max-width:560px){.tab .zh{display:none}}
+/* tabs */
+nav.top .wrap{padding-top:10px;padding-bottom:10px;overflow:visible}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+.tab{font:inherit;cursor:pointer;text-align:left;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:8px 14px;display:flex;flex-direction:column;position:relative}
+.tab .zh{position:absolute;right:12px;top:6px;font-size:1.3rem;opacity:.35}
+.tab{font-weight:700;font-size:1.1rem;line-height:1.25}
+.tab small{font-weight:400;font-size:.78rem;color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tab[aria-selected="true"] small{color:#d5e0f7}
+.tab[aria-selected="true"] .zh{opacity:.5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab[aria-selected="true"]{color:#10183a}:root:not([data-theme="light"]) .tab[aria-selected="true"] small{color:#27355f}}
+.subnav{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 0}
+.subnav a{text-decoration:none;font-size:.9rem;font-weight:500;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:4px 14px}
+.subnav a:hover{background:var(--gold-soft)}
+html{scroll-padding-top:96px}
+/* grammar */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.gt{min-width:640px}
+table.gt td{vertical-align:top}
+table.gt td.grp{font-weight:700;background:var(--gold-soft);width:92px}
+table.gt tr.focus td:not(.grp),table.gt td.focus-c{background:var(--accent-soft)}
+.tagb{display:inline-block;margin-top:2px;font-size:.66rem;font-weight:700;background:var(--accent);color:#fff;border-radius:4px;padding:0 6px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tagb{color:#10183a}}
+table.gt small{display:block;color:var(--muted)}
+.rules{margin:10px 0 0;padding-left:22px}
+.rules>li{margin-bottom:10px}
+.muted{color:var(--muted)}
+.use{margin:10px 0;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="ghost zh" aria-hidden="true">借</div>
+  <div class="wrap">
+    <div class="seal"><b>第三课</b> Hán ngữ toàn diện · Sơ cấp · Quyển 2 · Bài 3</div>
+    <div class="agenda" aria-label="Nội dung bài học">
+      <span>Xin phép</span><span>Mượn đồ dùng</span><span>Hỏi số điện thoại</span><span>想 · 可以</span><span>一下</span>
+    </div>
+  </div>
+</header>
+
+<nav class="top" aria-label="Chọn phần học">
+  <div class="wrap">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-bikip" aria-controls="p-bikip" aria-selected="true" type="button"><span class="zh">秘笈</span>Bí Kíp<small>Từ vựng · Ngữ pháp · Mẫu câu</small></button>
+      <button class="tab" role="tab" id="tab-luyen" aria-controls="p-luyen" aria-selected="false" type="button" tabindex="-1"><span class="zh">练习</span>Luyện Công<small>Bài tập &amp; chấm điểm</small></button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ================= BÍ KÍP ================= -->
+<div id="p-bikip" role="tabpanel" aria-labelledby="tab-bikip">
+<div class="subnav" aria-label="Mục trong Bí Kíp"><a href="#tuvung">Từ vựng</a><a href="#nguphap">Ngữ pháp</a><a href="#mausau">Mẫu câu</a></div>
+
+<!-- 1. TỪ VỰNG -->
+<section id="tuvung">
+  <div class="kicker">Bí Kíp 1</div>
+  <h2>Từ vựng <span class="zh">生词</span></h2>
+  <div class="tools">
+    <button class="chip" data-f="all" aria-pressed="true">Tất cả</button>
+    <button class="chip" data-f="main" aria-pressed="false">Từ chính (22)</button>
+    <button class="chip" data-f="extra" aria-pressed="false">Từ liên quan</button>
+    <span class="grow"></span>
+    <button class="chip" id="pyToggle" aria-pressed="true">Pinyin: Bật</button>
+  </div>
+  <div class="vgrid" id="vgrid"></div>
+</section>
+
+<!-- 2. NGỮ PHÁP -->
+<section id="nguphap">
+  <div class="kicker">Bí Kíp 2</div>
+  <h2>Ngữ pháp <span class="zh">语法</span></h2>
+
+  <div class="stack">
+
+  <!-- 1 -->
+  <div class="card">
+    <h3>1. Động từ năng nguyện <span class="zh">能愿动词</span></h3>
+    <p style="margin:0">Động từ năng nguyện (còn gọi là <b>trợ động từ</b> <span class="zh">助动词</span>) được dùng <b>trước động từ chính hoặc tính từ</b> để diễn tả <b>khả năng, nguyện vọng, sự cần thiết hoặc xin phép</b>.</p>
+    <div class="formula"><span>S</span><i>+</i><span class="hl">động từ năng nguyện</span><i>+</i><span>V</span><i>+</i><span>(O)</span></div>
+
+    <h3 style="margin-top:18px">Các nhóm động từ năng nguyện thường gặp</h3>
+    <div class="tw">
+    <table class="gt">
+      <thead><tr><th>Nhóm</th><th>Từ vựng</th><th>Ý nghĩa &amp; phân biệt</th><th>Ví dụ</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="3" class="grp">Khả năng</td>
+          <td><b class="zh">会</b><br><span class="py">huì</span></td>
+          <td>Khả năng có được <b>qua học tập, rèn luyện</b></td>
+          <td><span class="zh">我会说汉语。</span><span class="py"><br>Wǒ huì shuō Hànyǔ.</span><small>Tôi biết nói tiếng Trung.</small></td></tr>
+        <tr><td><b class="zh">能</b><br><span class="py">néng</span></td>
+          <td>Năng lực bản thân hoặc <b>điều kiện khách quan cho phép</b></td>
+          <td><span class="zh">我腿受伤了,不能走路。</span><span class="py"><br>Wǒ tuǐ shòushāng le, bù néng zǒulù.</span><small>Chân tôi bị thương, không thể đi được.</small></td></tr>
+        <tr class="focus"><td><b class="zh">可以</b><br><span class="py">kěyǐ</span><br><span class="tagb">bài 3</span></td>
+          <td>Có thể (khả năng hoặc <b>sự cho phép</b>)</td>
+          <td><span class="zh">这里可以停车吗?</span><span class="py"><br>Zhèlǐ kěyǐ tíngchē ma?</span><small>Ở đây có thể đỗ xe không?</small></td></tr>
+
+        <tr><td rowspan="3" class="grp">Nguyện vọng</td>
+          <td class="focus-c"><b class="zh">想</b><br><span class="py">xiǎng</span><br><span class="tagb">bài 3</span></td>
+          <td>Muốn, dự định (mức độ nhẹ, suy nghĩ trong đầu)</td>
+          <td><span class="zh">我想去中国旅游。</span><span class="py"><br>Wǒ xiǎng qù Zhōngguó lǚyóu.</span><small>Tôi muốn đi du lịch Trung Quốc.</small></td></tr>
+        <tr><td><b class="zh">要</b><br><span class="py">yào</span></td>
+          <td>Muốn, cần (mức độ mạnh hơn, quyết tâm làm)</td>
+          <td><span class="zh">我要买这本书。</span><span class="py"><br>Wǒ yào mǎi zhè běn shū.</span><small>Tôi muốn / sẽ mua quyển sách này.</small></td></tr>
+        <tr><td><b class="zh">愿意</b><br><span class="py">yuànyì</span></td>
+          <td>Tự nguyện, bằng lòng</td>
+          <td><span class="zh">你愿意和我一起去吗?</span><span class="py"><br>Nǐ yuànyì hé wǒ yìqǐ qù ma?</span><small>Bạn có bằng lòng đi cùng tôi không?</small></td></tr>
+
+        <tr><td rowspan="3" class="grp">Cần thiết / Nghĩa vụ</td>
+          <td><b class="zh">应该</b><br><span class="py">yīnggāi</span></td>
+          <td>Nên (nghĩa vụ, đạo đức hoặc khuyên bảo)</td>
+          <td><span class="zh">你应该多休息。</span><span class="py"><br>Nǐ yīnggāi duō xiūxi.</span><small>Bạn nên nghỉ ngơi nhiều hơn.</small></td></tr>
+        <tr><td><b class="zh">必须</b><br><span class="py">bìxū</span></td>
+          <td>Bắt buộc, phải</td>
+          <td><span class="zh">明天必须准时到。</span><span class="py"><br>Míngtiān bìxū zhǔnshí dào.</span><small>Ngày mai bắt buộc phải đến đúng giờ.</small></td></tr>
+        <tr><td><b class="zh">得</b><br><span class="py">děi</span></td>
+          <td>Phải (dùng trong giao tiếp khẩu ngữ)</td>
+          <td><span class="zh">我得走了。</span><span class="py"><br>Wǒ děi zǒu le.</span><small>Tôi phải đi rồi.</small></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 style="margin-top:18px">Đặc điểm ngữ pháp quan trọng</h3>
+    <ol class="rules">
+      <li><b>Phủ định:</b> đặt <b>不</b> <span class="py">(bù)</span> <b>trước</b> động từ năng nguyện (không đặt trước động từ chính).
+        <div class="ex"><span class="zh">我不想去。 / 我不会游泳。</span><span class="py"><br>Wǒ bù xiǎng qù. / Wǒ bú huì yóuyǒng.</span><small>Tôi không muốn đi. / Tôi không biết bơi.</small></div>
+      <li><b>Không lặp lại:</b> động từ năng nguyện <b>không dùng dạng trùng điệp</b> (không nói <span class="zh">想想, 会会</span> khi đóng vai trò trợ động từ).</li>
+      <li><b>Không mang trợ từ động thái:</b> không thêm <b class="zh">了, 着, 过</b> ngay sau động từ năng nguyện.</li>
+      <li><b>Câu hỏi chính phản:</b> trùng điệp động từ năng nguyện (khẳng định + phủ định).
+        <div class="ex"><span class="zh">你想不想去? / 你能不能帮我?</span><span class="py"><br>Nǐ xiǎng bu xiǎng qù? / Nǐ néng bu néng bāng wǒ?</span><small>Bạn có muốn đi không? / Bạn có thể giúp tôi không?</small></div>
+        <div class="ex"><span class="zh">可不可以借一下你的手机?</span><span class="py"><br>Kě bu kěyǐ jiè yíxià nǐ de shǒujī?</span><small>Mượn điện thoại của bạn một lát được không? (可以 rút gọn thành 可不可以)</small></div></li>
+    </ol>
+
+    <div class="note"><b>Trong bài hôm nay:</b> <b class="zh">可以</b> biểu thị mong muốn <b>nhận được sự chấp thuận</b> để làm việc gì đó (xin phép); <b class="zh">想</b> biểu thị <b>nguyện vọng chủ quan</b> của người nói.
+      <div class="ex" style="background:var(--card)"><span class="zh">我可以看一下你的书吗?</span><span class="py"> Wǒ kěyǐ kàn yíxià nǐ de shū ma?</span><small>Tôi xem sách của bạn một chút được không?</small></div>
+      <div class="ex" style="background:var(--card)"><span class="zh">我想用一下你的电脑。</span><span class="py"> Wǒ xiǎng yòng yíxià nǐ de diànnǎo.</span><small>Tôi muốn dùng máy tính của bạn một chút.</small></div>
+      <div class="ex" style="background:var(--card)"><span class="zh">上课可不可以打电话?——不可以!</span><span class="py"> Shàngkè kě bu kěyǐ dǎ diànhuà? — Bù kěyǐ!</span><small>Đang học có được gọi điện thoại không? — Không được!</small></div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card">
+    <h3>2. Cấu trúc V + 一下 <span class="zh">(yíxià)</span></h3>
+    <p style="margin:0"><b>一下</b> là <b>động lượng từ</b>, đứng <b>sau động từ</b>, biểu thị hành động diễn ra <b>trong thời gian ngắn, mang tính thử nghiệm</b>, hoặc làm cho ngữ khí câu trở nên <b>nhẹ nhàng, lịch sự</b>.</p>
+    <div class="formula"><span>V</span><i>+</i><span class="hl">一下</span><i>+</i><span>(O)</span></div>
+
+    <h3 style="margin-top:16px">Công dụng chính</h3>
+    <div class="use"><b>① Thời gian ngắn / số lần ngắn</b> <small>(làm một chút, một lát)</small>
+      <div class="ex"><span class="zh">请等一下。</span><span class="py"> Qǐng děng yíxià.</span><small>Xin đợi một chút.</small></div>
+      <div class="ex"><span class="zh">休息一下吧。</span><span class="py"> Xiūxi yíxià ba.</span><small>Nghỉ ngơi một lát đi.</small></div></div>
+    <div class="use"><b>② Thử nghiệm</b> <small>(làm thử xem sao)</small>
+      <div class="ex"><span class="zh">你尝一下这个菜。</span><span class="py"> Nǐ cháng yíxià zhège cài.</span><small>Bạn ăn thử món này xem.</small></div>
+      <div class="ex"><span class="zh">我看一下。</span><span class="py"> Wǒ kàn yíxià.</span><small>Để tôi xem thử.</small></div></div>
+    <div class="use"><b>③ Làm giảm nhẹ ngữ khí</b> <small>(thân mật, lịch sự, không xơ cứng)</small>
+      <div class="ex"><span class="zh">麻烦你配合一下。</span><span class="py"> Máfan nǐ pèihé yíxià.</span><small>Phiền bạn phối hợp một chút.</small></div>
+      <div class="ex"><span class="zh">我介绍一下。</span><span class="py"> Wǒ jièshào yíxià.</span><small>Tôi xin giới thiệu một chút.</small></div></div>
+    <div class="note"><b>Nhớ:</b> tân ngữ đứng <b>sau</b> 一下: <span class="zh">借一下你的笔</span>, <span class="zh">用一下你的手机</span> (không nói 借你的笔一下).</div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card">
+    <h3>3. Động từ 借 <span class="zh">jiè</span></h3>
+    <p style="margin:0"><b>借</b> nghĩa là <b>mượn</b>; trong tình huống khác cũng có thể là <b>cho mượn</b>. Khi muốn nói rõ "cho ai mượn" thì dùng <b>借给</b>.</p>
+    <div class="formula"><span>S</span><i>+</i><span class="hl">借</span><i>+</i><span>(người)</span><i>+</i><span>đồ vật</span></div>
+    <div class="ex"><span class="zh">去图书馆借书。</span><span class="py"><br>Qù túshūguǎn jiè shū.</span><small>Đến thư viện mượn sách.</small></div>
+    <div class="ex"><span class="zh">这本书是我借他的。</span><span class="py"><br>Zhè běn shū shì wǒ jiè tā de.</span><small>Cuốn sách này là tôi mượn của anh ấy.</small></div>
+    <div class="ex"><span class="zh">可以借一下你的手机吗?</span><span class="py"><br>Kěyǐ jiè yíxià nǐ de shǒujī ma?</span><small>Mượn điện thoại của bạn một lát được không?</small></div>
+    <div class="note"><b>Mẹo:</b> khi mượn đồ, <b>借</b> và <b>用</b> đều dùng được: <span class="zh">借一下你的笔</span> (mượn bút), <span class="zh">用一下你的笔</span> (dùng bút một chút).</div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card">
+    <h3>4. 打电话 <span class="zh">dǎ diànhuà</span>: 给 / 跟</h3>
+    <p style="margin:0"><b>打电话</b> = gọi điện thoại. Đây là cụm <b>động từ + tân ngữ</b> (打 + 电话), nên người nhận cuộc gọi được đặt <b>trước</b> cụm này bằng <b>给</b> hoặc <b>跟</b>.</p>
+    <div class="formula"><span>S</span><i>+</i><span>(thời gian)</span><i>+</i><span class="hl">给 / 跟</span><i>+</i><span>người</span><i>+</i><span>打电话</span></div>
+
+    <div class="note" style="background:var(--gold-soft)"><b>Có thể thay 给 bằng 跟 (hoặc 和) không?</b> Có, trong câu <span class="zh">给妈妈打电话 = 跟妈妈打电话</span> cả hai đều nói được, chỉ khác sắc thái:</div>
+    <div class="tw" style="margin-top:10px"><table class="gt">
+      <thead><tr><th></th><th><span class="zh">给</span> gěi</th><th><span class="zh">跟 / 和</span> gēn / hé</th></tr></thead>
+      <tbody>
+        <tr><td><b>Nghĩa</b></td><td>"Cho, hướng tới ai" → <b>gọi cho ai</b>. Nhấn vào người <b>chủ động gọi</b></td><td>"Cùng với ai" → <b>gọi điện nói chuyện với ai</b>. Nhấn vào việc hai người trò chuyện qua điện thoại</td></tr>
+        <tr><td><b>Ví dụ</b></td>
+          <td><span class="zh">我明天给你打电话。</span><span class="py"><br>Wǒ míngtiān gěi nǐ dǎ diànhuà.</span><small>Ngày mai mình gọi cho bạn.</small></td>
+          <td><span class="zh">我常常跟朋友打电话。</span><span class="py"><br>Wǒ chángcháng gēn péngyou dǎ diànhuà.</span><small>Mình thường gọi điện trò chuyện với bạn.</small></td></tr>
+        <tr><td><b>Khi nào dùng</b></td><td>Hẹn gọi, xin phép gọi, nhờ ai gọi: <span class="zh">我可以给你打电话吗?</span></td><td>Kể chuyện thường ngày, nói về việc trò chuyện: <span class="zh">跟妈妈打电话</span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h3 style="margin-top:18px">Mở rộng cách dùng</h3>
+    <div class="use"><b>① Đặt 给 sau động từ:</b> <span class="zh">打电话给 + người</span> (cũng đúng, nghe hơi khẩu ngữ)
+      <div class="ex"><span class="zh">我想打电话给你。</span><span class="py"> Wǒ xiǎng dǎ diànhuà gěi nǐ.</span><small>Mình muốn gọi điện cho bạn.</small></div></div>
+    <div class="use"><b>② Tách 打 và 电话:</b> chèn <b>个 / 一个</b> vào giữa để câu nhẹ nhàng hơn
+      <div class="ex"><span class="zh">我想给黄老师打个电话。</span><span class="py"> Wǒ xiǎng gěi Huáng lǎoshī dǎ ge diànhuà.</span><small>Mình muốn gọi điện cho cô Hoàng một cuộc.</small></div></div>
+    <div class="use"><b>③ Kết hợp động từ năng nguyện:</b> 可以 / 想 đứng <b>trước</b> cụm 给…打电话
+      <div class="ex"><span class="zh">我明天可以给你打电话吗?</span><span class="py"> Wǒ míngtiān kěyǐ gěi nǐ dǎ diànhuà ma?</span><small>Ngày mai mình gọi cho bạn được không?</small></div>
+      <div class="ex"><span class="zh">我想给你打电话。</span><span class="py"> Wǒ xiǎng gěi nǐ dǎ diànhuà.</span><small>Mình muốn gọi điện cho bạn.</small></div></div>
+    <div class="use"><b>④ Phủ định:</b> <b>没</b> hoặc <b>不</b> đứng trước 给/跟
+      <div class="ex"><span class="zh">我没给他打电话。</span><span class="py"> Wǒ méi gěi tā dǎ diànhuà.</span><small>Mình chưa gọi điện cho anh ấy.</small></div></div>
+    <div class="use"><b>⑤ Từ hay đi cùng 电话</b>
+      <div class="ex"><span class="zh">他不接电话。</span><span class="py"> Tā bù jiē diànhuà.</span><small>接电话: nghe máy. Anh ấy không nghe máy.</small></div>
+      <div class="ex"><span class="zh">请你给我回电话。</span><span class="py"> Qǐng nǐ gěi wǒ huí diànhuà.</span><small>回电话: gọi lại. Xin bạn gọi lại cho tôi.</small></div>
+      <div class="ex"><span class="zh">别挂电话。</span><span class="py"> Bié guà diànhuà.</span><small>挂电话: cúp máy. Đừng cúp máy.</small></div></div>
+  </div>
+
+  </div>
+</section>
+
+<!-- 3. MẪU CÂU -->
+<section id="mausau">
+  <div class="kicker">Bí Kíp 3</div>
+  <h2>Mẫu câu hỏi đáp <span class="zh">常用句</span></h2>
+  <p class="lead">Mượn đồ, nhờ vả, trao đổi số điện thoại. Học thuộc các mẫu dưới đây là giao tiếp được ngay.</p>
+
+  <div class="stack">
+  <div class="card">
+    <h3>A. Xin phép · Mượn đồ</h3>
+    <div class="pat">
+      <div class="qa">
+        <span class="lab">Hỏi mượn</span>
+        <div class="bubble q"><span class="zh">可以用一下你的手机吗?</span><span class="py"><br>Kěyǐ yòng yíxià nǐ de shǒujī ma?</span><small>Tôi dùng điện thoại của bạn một lát được không?</small></div>
+        <div class="bubble q"><span class="zh">可不可以借一下你的笔?</span><span class="py"><br>Kě bu kěyǐ jiè yíxià nǐ de bǐ?</span><small>Có thể mượn bút của bạn một lát không?</small></div>
+        <div class="bubble q"><span class="zh">我想借一下你的电脑。</span><span class="py"><br>Wǒ xiǎng jiè yíxià nǐ de diànnǎo.</span><small>Mình muốn mượn máy tính của bạn một chút.</small></div>
+      </div>
+      <div class="qa">
+        <span class="lab">Đồng ý</span>
+        <div class="bubble a"><span class="zh">可以。 / 可以,你用吧。</span><span class="py"><br>Kěyǐ. / Kěyǐ, nǐ yòng ba.</span><small>Được. / Được, bạn dùng đi.</small></div>
+        <div class="bubble a"><span class="zh">没问题。 / 没关系,给。</span><span class="py"><br>Méi wèntí. / Méi guānxi, gěi.</span><small>Không vấn đề gì. / Không sao, đây.</small></div>
+        <div class="bubble a"><span class="zh">在这儿,你打吧。</span><span class="py"><br>Zài zhèr, nǐ dǎ ba.</span><small>Đây, bạn gọi đi.</small></div>
+      </div>
+      <div class="qa">
+        <span class="lab">Từ chối lịch sự (nêu lý do)</span>
+        <div class="bubble n"><span class="zh">对不起,我现在要用。</span><span class="py"><br>Duìbuqǐ, wǒ xiànzài yào yòng.</span><small>Xin lỗi, bây giờ mình đang cần dùng.</small></div>
+        <div class="bubble n"><span class="zh">对不起,我的手机也没电了。</span><span class="py"><br>Duìbuqǐ, wǒ de shǒujī yě méi diàn le.</span><small>Xin lỗi, điện thoại của mình cũng hết pin rồi.</small></div>
+      </div>
+      <div class="qa">
+        <span class="lab">Cảm ơn · Đáp lại</span>
+        <div class="bubble a"><span class="zh">谢谢!——没关系。</span><span class="py"><br>Xièxie! — Méi guānxi.</span><small>Cảm ơn! — Không có gì / Không sao.</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>B. Nhờ vả người khác</h3>
+    <div class="pat">
+      <div class="bubble q"><span class="zh">等一下。 / 请等一下。</span><span class="py"><br>Děng yíxià. / Qǐng děng yíxià.</span><small>Đợi một chút. / Xin đợi một chút.</small></div>
+      <div class="bubble q"><span class="zh">你慢一点儿。 / 请你说慢一点儿。</span><span class="py"><br>Nǐ màn yìdiǎnr. / Qǐng nǐ shuō màn yìdiǎnr.</span><small>Bạn chậm một chút. / Xin bạn nói chậm một chút.</small></div>
+      <div class="bubble q"><span class="zh">对不起,请你再说一遍。</span><span class="py"><br>Duìbuqǐ, qǐng nǐ zài shuō yí biàn.</span><small>Xin lỗi, bạn nói lại một lần nữa được không?</small></div>
+      <div class="bubble q"><span class="zh">你可以给我打电话吗?</span><span class="py"><br>Nǐ kěyǐ gěi wǒ dǎ diànhuà ma?</span><small>Bạn có thể gọi điện cho mình không?</small></div>
+      <div class="bubble q"><span class="zh">你有黄老师的电话号码吗?——有,我找一下。</span><span class="py"><br>Nǐ yǒu Huáng lǎoshī de diànhuà hàomǎ ma? — Yǒu, wǒ zhǎo yíxià.</span><small>Bạn có số điện thoại của cô Hoàng không? — Có, để mình tìm.</small></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>C. Hỏi và trao đổi số điện thoại</h3>
+    <div class="pat">
+      <div class="bubble q"><span class="zh">你的电话号码是多少?</span> <span class="zh">/ 你的手机号是多少?</span><span class="py"><br>Nǐ de diànhuà hàomǎ shì duōshao? / Nǐ de shǒujī hào shì duōshao?</span><small>Số điện thoại của bạn là bao nhiêu?</small></div>
+      <div class="bubble a"><span class="zh">我的手机号是 <span class="phone">136-1847-2834</span>。</span><span class="py"><br>Wǒ de shǒujī hào shì yāo sān liù, yāo bā sì qī, èr bā sān sì.</span><small>Số di động của mình là 136-1847-2834.</small></div>
+      <div class="bubble q"><span class="zh">我没有你的电话号码。 / 对了,你的电话号码是多少?</span><span class="py"><br>Wǒ méiyǒu nǐ de diànhuà hàomǎ. / Duìle, nǐ de diànhuà hàomǎ shì duōshao?</span><small>Mình chưa có số điện thoại của bạn. / À này, số điện thoại của bạn là bao nhiêu?</small></div>
+      <div class="bubble q"><span class="zh">我明天可以给你打电话吗?——可以。</span><span class="py"><br>Wǒ míngtiān kěyǐ gěi nǐ dǎ diànhuà ma? — Kěyǐ.</span><small>Ngày mai mình gọi cho bạn được không? — Được.</small></div>
+    </div>
+
+    <h3 style="margin-top:18px">Cách đọc số điện thoại: số <span class="zh">1</span> đọc là <span class="zh" style="color:var(--accent)">yāo</span></h3>
+    <p style="margin:0">Khi đọc số điện thoại, số <b>1</b> thường đọc là <b>yāo</b> (để khỏi nhầm với số 7 <i>qī</i>). Số <b>2</b> đọc <b>èr</b>. Số di động Trung Quốc gồm 11 chữ số, đọc theo nhóm 3-4-4.</p>
+    <div class="digits" aria-label="Cách đọc các chữ số">
+      <div>0<b class="zh">零</b><span class="py">líng</span></div>
+      <div class="yao">1<b class="zh">幺</b><span class="py">yāo</span></div>
+      <div>2<b class="zh">二</b><span class="py">èr</span></div>
+      <div>3<b class="zh">三</b><span class="py">sān</span></div>
+      <div>4<b class="zh">四</b><span class="py">sì</span></div>
+      <div>5<b class="zh">五</b><span class="py">wǔ</span></div>
+      <div>6<b class="zh">六</b><span class="py">liù</span></div>
+      <div>7<b class="zh">七</b><span class="py">qī</span></div>
+      <div>8<b class="zh">八</b><span class="py">bā</span></div>
+      <div>9<b class="zh">九</b><span class="py">jiǔ</span></div>
+    </div>
+    <div class="ex"><span class="phone">136 · 1847 · 2834</span><span class="py"><br>yāo sān liù · yāo bā sì qī · èr bā sān sì</span></div>
+    <div class="note"><b>Lưu ý:</b> khi viết chữ Hán vẫn viết <span class="zh">一</span> hoặc số <b>1</b>; chỉ khi <b>đọc to</b> số điện thoại mới đọc là yāo.</div>
+  </div>
+  </div>
+</section>
+
+</div><!-- /p-bikip -->
+
+<!-- ================= LUYỆN CÔNG ================= -->
+<div id="p-luyen" role="tabpanel" aria-labelledby="tab-luyen" hidden>
+<div id="luyencong" style="padding-top:28px">
+  <p class="lead">3 bài tập, tổng cộng <b>16 điểm</b> (mỗi câu 1 điểm). Làm xong bấm <b>Nộp bài</b> để xem điểm, đáp án đúng và giải thích cho những câu sai.</p>
+  <div class="name-row">
+    <label for="stuName">Tên của bạn (không bắt buộc):</label>
+    <input id="stuName" type="text" maxlength="40" placeholder="Nguyễn Văn A" autocomplete="name">
+  </div>
+
+  <!-- BÀI 1 -->
+  <section id="bt1" style="padding-top:12px">
+    <div class="ex-head"><div class="n">1</div><div><h3>Điền từ thích hợp vào chỗ trống</h3><p>Chọn từ trong ô gợi ý điền vào 5 chỗ trống. Có 7 từ nhưng chỉ 5 từ đúng, 2 từ là "bẫy" đấy! <span class="zh">用以上的词填空</span></p></div></div>
+    <div class="bank" id="bank1" aria-label="Danh sách từ gợi ý"></div>
+    <div id="q1"></div>
+  </section>
+
+  <!-- BÀI 2 -->
+  <section id="bt2" style="padding-top:20px">
+    <div class="ex-head"><div class="n">2</div><div><h3>Sắp xếp câu</h3><p>Bấm lần lượt các từ để ghép thành câu đúng (luyện 可以, 想, 一下, 借). Bấm vào từ đã chọn để bỏ ra. <span class="zh">连词成句</span></p></div></div>
+    <div id="q2"></div>
+  </section>
+
+  <!-- BÀI 3 -->
+  <section id="bt3" style="padding-top:20px">
+    <div class="ex-head"><div class="n">3</div><div><h3>Dịch câu Việt sang Trung</h3><p>Gõ bằng chữ Hán (bàn phím pinyin). Có thể gõ thêm hoặc bỏ dấu câu. <span class="zh">翻译</span></p></div></div>
+    <div id="q3"></div>
+  </section>
+
+  <div id="nop"></div>
+  <div class="submit-bar">
+    <button class="btn" id="submitBtn" type="button">Nộp bài</button>
+    <button class="btn ghost" id="resetBtn" type="button" hidden>Làm lại</button>
+  </div>
+  <div id="result" role="status" aria-live="polite"></div>
+</div>
+</div><!-- /p-luyen -->
+
+</main>
+<footer>
+  <div class="wrap">Hán ngữ toàn diện · Bài 3 · Chúc bạn học tốt! <span class="zh">加油!</span></div>
+</footer>
+
+<script>
+/* ---------- helpers ---------- */
+const $ = (s, r=document) => r.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- VOCAB ---------- */
+const VOCAB = [
+ // từ chính
+ {h:'可以',p:'kěyǐ',t:'động từ',m:'có thể, được phép',ex:[['可以吃','kěyǐ chī','có thể ăn'],['可以喝','kěyǐ hē','có thể uống']]},
+ {h:'用',p:'yòng',t:'động từ',m:'dùng, sử dụng',ex:[['用汉语说话','yòng Hànyǔ shuōhuà','nói chuyện bằng tiếng Hán']]},
+ {h:'借',p:'jiè',t:'động từ',m:'mượn, cho mượn',ex:[['去图书馆借书','qù túshūguǎn jiè shū','đến thư viện mượn sách'],['这本书是我借他的。','Zhè běn shū shì wǒ jiè tā de.','Cuốn sách này tôi mượn của anh ấy.']]},
+ {h:'手机',p:'shǒujī',t:'danh từ',m:'điện thoại di động',ex:[['这是我的手机。','Zhè shì wǒ de shǒujī.','Đây là điện thoại của tôi.']]},
+ {h:'给',p:'gěi',t:'động từ',m:'cho; (giới từ) cho, gọi cho ai',ex:[['给你吃','gěi nǐ chī','cho bạn ăn'],['给妈妈打电话','gěi māma dǎ diànhuà','gọi điện cho mẹ']]},
+ {h:'电话',p:'diànhuà',t:'danh từ',m:'điện thoại, cuộc gọi',ex:[['一个电话','yí ge diànhuà','một cuộc điện thoại']]},
+ {h:'打电话',p:'dǎ diànhuà',t:'động từ',m:'gọi điện thoại',ex:[['跟朋友打电话','gēn péngyou dǎ diànhuà','gọi điện cho bạn'],['给妈妈打电话','gěi māma dǎ diànhuà','gọi điện cho mẹ']]},
+ {h:'号码',p:'hàomǎ',t:'danh từ',m:'số',ex:[['电话号码','diànhuà hàomǎ','số điện thoại'],['手机号码 / 手机号','shǒujī hàomǎ / shǒujī hào','số di động'],['你的电话号码是多少?','Nǐ de diànhuà hàomǎ shì duōshao?','Số điện thoại của bạn là bao nhiêu?']]},
+ {h:'等',p:'děng',t:'động từ',m:'đợi, chờ',ex:[['我在这儿等你。','Wǒ zài zhèr děng nǐ.','Tôi đợi bạn ở đây.'],['等朋友','děng péngyou','đợi bạn']]},
+ {h:'一下',p:'yíxià',t:'số lượng từ',m:'một lát, một chút',ex:[['等一下','děng yíxià','đợi một chút'],['你吃一下这个菜。','Nǐ chī yíxià zhège cài.','Bạn ăn thử món này đi.']]},
+ {h:'可是',p:'kěshì',t:'liên từ',m:'tuy nhiên, nhưng',ex:[['我想去中国,可是我的汉语不好。','Wǒ xiǎng qù Zhōngguó, kěshì wǒ de Hànyǔ bù hǎo.','Tôi muốn đi Trung Quốc, nhưng tiếng Hán của tôi chưa tốt.']]},
+ {h:'笔',p:'bǐ',t:'danh từ',m:'bút',ex:[['他的笔','tā de bǐ','bút của anh ấy'],['我用他的笔。','Wǒ yòng tā de bǐ.','Tôi dùng bút của anh ấy.']]},
+ {h:'写',p:'xiě',t:'động từ',m:'viết',ex:[['写名字','xiě míngzi','viết tên'],['写汉字','xiě Hànzì','viết chữ Hán'],['用笔写汉字','yòng bǐ xiě Hànzì','dùng bút viết chữ Hán']]},
+ {h:'说',p:'shuō',t:'động từ',m:'nói',ex:[['说汉语','shuō Hànyǔ','nói tiếng Hán'],['跟朋友说话','gēn péngyou shuōhuà','nói chuyện với bạn']]},
+ {h:'支',p:'zhī',t:'lượng từ',m:'cây (dùng cho bút, thuốc lá)',ex:[['一支笔','yì zhī bǐ','một cây bút']]},
+ {h:'慢',p:'màn',t:'tính từ',m:'chậm',ex:[['不慢','bú màn','không chậm'],['慢一点儿','màn yìdiǎnr','chậm một chút'],['说慢一点儿','shuō màn yìdiǎnr','nói chậm một chút']]},
+ {h:'遍',p:'biàn',t:'lượng từ',m:'lần (lượng từ của hành động)',ex:[['说两遍','shuō liǎng biàn','nói hai lần'],['写两遍','xiě liǎng biàn','viết hai lần']]},
+ {h:'电脑',p:'diànnǎo',t:'danh từ',m:'máy tính',ex:[['用电脑','yòng diànnǎo','dùng máy tính'],['我的电脑','wǒ de diànnǎo','máy tính của tôi']]},
+ {h:'对了',p:'duìle',t:'cụm từ',m:'nhân tiện, à đúng rồi',ex:[['对了,你的电话号码是多少?','Duìle, nǐ de diànhuà hàomǎ shì duōshao?','À này, số điện thoại của bạn là bao nhiêu?']]},
+ {h:'电',p:'diàn',t:'danh từ',m:'điện',ex:[['没电了!','Méi diàn le!','Hết pin / hết điện rồi!']]},
+ {h:'找',p:'zhǎo',t:'động từ',m:'tìm',ex:[['找朋友','zhǎo péngyou','tìm bạn'],['找手机','zhǎo shǒujī','tìm điện thoại']]},
+ {h:'没问题',p:'méi wèntí',t:'cụm từ',m:'không vấn đề gì',ex:[['可以用一下你的手机吗?——没问题。','Kěyǐ yòng yíxià nǐ de shǒujī ma? — Méi wèntí.','Dùng điện thoại của bạn một lát được không? — Không vấn đề gì.']]},
+ // từ liên quan
+ {x:1,h:'想',p:'xiǎng',t:'động từ năng nguyện',m:'muốn',ex:[['我想用一下你的电脑。','Wǒ xiǎng yòng yíxià nǐ de diànnǎo.','Tôi muốn dùng máy tính của bạn một chút.']]},
+ {x:1,h:'要',p:'yào',t:'động từ',m:'muốn, cần',ex:[['我饿了,我要吃饭。','Wǒ è le, wǒ yào chī fàn.','Tôi đói rồi, tôi muốn ăn cơm.']]},
+ {x:1,h:'请',p:'qǐng',t:'động từ',m:'mời, xin (lịch sự)',ex:[['请等一下。','Qǐng děng yíxià.','Xin đợi một chút.']]},
+ {x:1,h:'再',p:'zài',t:'phó từ',m:'lại, thêm lần nữa',ex:[['请你再说一遍。','Qǐng nǐ zài shuō yí biàn.','Xin bạn nói lại một lần nữa.']]},
+ {x:1,h:'多少',p:'duōshao',t:'đại từ',m:'bao nhiêu',ex:[['你的手机号是多少?','Nǐ de shǒujī hào shì duōshao?','Số di động của bạn là bao nhiêu?']]},
+ {x:1,h:'一点儿',p:'yìdiǎnr',t:'số lượng từ',m:'một chút',ex:[['请慢一点儿。','Qǐng màn yìdiǎnr.','Xin chậm một chút.']]},
+ {x:1,h:'快',p:'kuài',t:'tính từ',m:'nhanh',ex:[['我用一下,很快就好。','Wǒ yòng yíxià, hěn kuài jiù hǎo.','Mình dùng một lát, xong ngay.']]},
+ {x:1,h:'对不起',p:'duìbuqǐ',t:'cụm từ',m:'xin lỗi',ex:[['对不起,请你再说一遍。','Duìbuqǐ, qǐng nǐ zài shuō yí biàn.','Xin lỗi, bạn nói lại một lần nữa.']]},
+ {x:1,h:'没关系',p:'méi guānxi',t:'cụm từ',m:'không sao, không có gì',ex:[['没关系,给。','Méi guānxi, gěi.','Không sao, đây.']]},
+ {x:1,h:'手机号',p:'shǒujī hào',t:'danh từ',m:'số di động (nói gọn)',ex:[['我的手机号是136-1847-2834。','Wǒ de shǒujī hào shì yāo sān liù, yāo bā sì qī, èr bā sān sì.','Số di động của tôi là 136-1847-2834.']]},
+ {x:1,h:'充电器',p:'chōngdiànqì',t:'danh từ',m:'bộ sạc',ex:[['可以借一下你的充电器吗?','Kěyǐ jiè yíxià nǐ de chōngdiànqì ma?','Mượn bộ sạc của bạn một lát được không?']]},
+ {x:1,h:'词典',p:'cídiǎn',t:'danh từ',m:'từ điển',ex:[['我想借一下你的词典。','Wǒ xiǎng jiè yíxià nǐ de cídiǎn.','Mình muốn mượn từ điển của bạn một chút.']]},
+ {x:1,h:'书',p:'shū',t:'danh từ',m:'sách',ex:[['我可以看一下你的书吗?','Wǒ kěyǐ kàn yíxià nǐ de shū ma?','Mình xem sách của bạn một chút được không?']]},
+ {x:1,h:'图书馆',p:'túshūguǎn',t:'danh từ',m:'thư viện',ex:[['去图书馆借书','qù túshūguǎn jiè shū','đến thư viện mượn sách']]},
+];
+const vgrid = $('#vgrid');
+vgrid.innerHTML = VOCAB.map(v => `
+  <article class="v ${v.x?'extra':''}" data-g="${v.x?'extra':'main'}">
+    ${v.x?'<span class="tag-extra">liên quan</span>':''}
+    <button class="spk" type="button" aria-label="Nghe phát âm ${esc(v.h)}" data-say="${esc(v.h)}">🔊</button>
+    <div class="row1"><span class="h">${esc(v.h)}</span><span class="p py">${esc(v.p)}</span><span class="t">${esc(v.t)}</span></div>
+    <div class="m">${esc(v.m)}</div>
+    <ul>${v.ex.map(e=>`<li><span class="zh">${esc(e[0])}</span> <span class="py">${esc(e[1])}</span><small>${esc(e[2])}</small></li>`).join('')}</ul>
+  </article>`).join('');
+
+document.querySelectorAll('.tools .chip[data-f]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.tools .chip[data-f]').forEach(x => x.setAttribute('aria-pressed', x===b));
+  const f = b.dataset.f;
+  vgrid.querySelectorAll('.v').forEach(c => c.hidden = !(f==='all' || c.dataset.g===f));
+}));
+$('#pyToggle').addEventListener('click', e => {
+  const on = e.currentTarget.getAttribute('aria-pressed') === 'true';
+  e.currentTarget.setAttribute('aria-pressed', String(!on));
+  e.currentTarget.textContent = 'Pinyin: ' + (on ? 'Tắt' : 'Bật');
+  document.body.classList.toggle('nopy', on);
+});
+/* phát âm */
+if ('speechSynthesis' in window) {
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.spk'); if (!b) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(b.dataset.say);
+    u.lang = 'zh-CN'; u.rate = .8; speechSynthesis.speak(u);
+  });
+} else {
+  document.querySelectorAll('.spk').forEach(b => b.hidden = true);
+}
+
+
+/* ---------- QUIZ DATA ---------- */
+const WORDS = [['可以','kěyǐ'],['给','gěi'],['可是','kěshì'],['遍','biàn'],['号码','hàomǎ'],['借','jiè'],['等','děng']];
+// bài 1: 5 câu / 5 chỗ trống
+const FILL = [
+ {pre:'我(',post:')看一下你的书吗?',py:'Wǒ (   ) kàn yíxià nǐ de shū ma?',vi:'Tôi xem sách của bạn một chút được không?',ans:'可以',
+  why:'Hỏi xin phép làm việc gì dùng động từ năng nguyện 可以, đứng trước động từ 看: 我可以看一下你的书吗?'},
+ {pre:'他喜欢我,(',post:')我不喜欢他。',py:'Tā xǐhuan wǒ, (   ) wǒ bù xǐhuan tā.',vi:'Anh ấy thích tôi, nhưng tôi không thích anh ấy.',ans:'可是',
+  why:'Hai vế ý đối lập nhau, cần liên từ chuyển ý 可是 (nhưng, tuy nhiên) ở đầu vế sau.'},
+ {pre:'你可以(',post:')我打电话吗?',py:'Nǐ kěyǐ (   ) wǒ dǎ diànhuà ma?',vi:'Bạn có thể gọi điện cho tôi không?',ans:'给',
+  why:'Cấu trúc 给 + người + 打电话 nghĩa là "gọi điện cho ai": 你可以给我打电话吗?'},
+ {pre:'对不起,请你再说一(',post:')。',py:'Duìbuqǐ, qǐng nǐ zài shuō yí (   ).',vi:'Xin lỗi, xin bạn nói lại một lần nữa.',ans:'遍',
+  why:'遍 là lượng từ của hành động, chỉ "một lần" từ đầu đến cuối: 说一遍 (nói một lượt), 写两遍 (viết hai lượt).'},
+ {pre:'请问,你的电话(',post:')是多少?',py:'Qǐngwèn, nǐ de diànhuà (   ) shì duōshao?',vi:'Xin hỏi, số điện thoại của bạn là bao nhiêu?',ans:'号码',
+  why:'"Số điện thoại" là 电话号码. 号码 là danh từ chỉ "số", đi sau 电话.'},
+];
+// bài 2: sắp xếp câu
+const SORT = [
+ {tokens:['我','可以','借','一下','你的','笔','吗'],ok:['我可以借一下你的笔吗'],show:'我可以借一下你的笔吗?',vi:'Tôi mượn bút của bạn một lát được không?',
+  why:'Công thức: S + 可以 + V + 一下 + O + 吗. 可以 đứng trước động từ 借; 一下 đứng ngay sau động từ, tân ngữ 你的笔 đứng sau 一下.'},
+ {tokens:['明天','我','想','给','你','打电话'],ok:['明天我想给你打电话','我明天想给你打电话'],show:'明天我想给你打电话。(hoặc 我明天想给你打电话。)',vi:'Ngày mai tôi muốn gọi điện cho bạn.',
+  why:'Trạng ngữ thời gian 明天 đứng trước chủ ngữ hoặc ngay sau chủ ngữ đều được. Động từ năng nguyện 想 đứng trước cụm "给你打电话".'},
+ {tokens:['我','可不可以','看','一下','你的','书'],ok:['我可不可以看一下你的书'],show:'我可不可以看一下你的书?',vi:'Tôi xem sách của bạn một chút được không?',
+  why:'可不可以 (= 可以 + 不 + 可以) là dạng câu hỏi chính phản, đứng trước động từ 看; câu đã có 可不可以 thì không cần thêm 吗.'},
+ {tokens:['我','想','去','中国','可是','我的','汉语','不','好'],ok:['我想去中国可是我的汉语不好'],show:'我想去中国,可是我的汉语不好。',vi:'Tôi muốn đi Trung Quốc, nhưng tiếng Hán của tôi chưa tốt.',
+  why:'Vế 1: 我想去中国 (想 + động từ 去). Vế 2 mở đầu bằng 可是 để chuyển ý; phủ định 不 đứng trước tính từ 好.'},
+ {tokens:['我','想','用','一下','你的','电脑'],ok:['我想用一下你的电脑'],show:'我想用一下你的电脑。',vi:'Tôi muốn dùng máy tính của bạn một chút.',
+  why:'Công thức: S + 想 + V + 一下 + O. 想 đứng trước 用, 一下 đứng sau 用 và trước tân ngữ 你的电脑.'},
+];
+// bài 3: dịch Việt - Trung. {a|b} = các lựa chọn chấp nhận được
+const TRANS = [
+ {vi:'Tôi có thể mượn máy tính của bạn một chút không?',
+  tpl:['{我|}{可以|能}{借|用}一下你的电脑吗','{我|}可不可以{借|用}一下你的电脑'],
+  show:'我可以借一下你的电脑吗?(hoặc 我可以用一下你的电脑吗?)',
+  why:'S + 可以 + 借/用 + 一下 + 你的电脑 + 吗. Xin phép dùng 可以; 一下 đứng sau động từ, làm lời hỏi nhẹ nhàng, lịch sự.'},
+ {vi:'Điện thoại của tôi hết pin rồi, bạn có thể cho tôi mượn điện thoại của bạn không?',
+  tpl:['我的手机没电了{你|}{可以|能}{借|用}一下你的手机吗','我的手机没电了{你|}可不可以{借|用}一下你的手机','我的手机没电了{你|}{可以|能}借我{用一下|}你的手机吗','我的手机没电了{你|}可不可以借我{用一下|}你的手机'],
+  show:'我的手机没电了,你可以借一下你的手机吗?(hoặc 你可以借我用一下你的手机吗?)',
+  why:'"Hết pin" là 没电了 (了 chỉ trạng thái mới xuất hiện). Vế sau hỏi mượn: 可以 + 借一下 + 你的手机 + 吗.'},
+ {vi:'Số điện thoại của bạn là bao nhiêu, 7h tối nay tôi gọi cho bạn.',
+  tpl:['{你的|}{电话号码|手机号码|手机号}是多少{今晚|今天晚上}七点我给你打{个|}电话','{你的|}{电话号码|手机号码|手机号}是多少我{今晚|今天晚上}七点给你打{个|}电话'],
+  show:'你的电话号码是多少?今晚七点我给你打电话。',
+  why:'Hỏi số: 你的电话号码是多少? Mốc thời gian (今晚七点) đứng trước động từ; "gọi cho bạn" là 给你打电话 (给 + người + 打电话).'},
+ {vi:'Bạn đợi một chút, tôi đưa 1 cây bút cho bạn.',
+  tpl:['{你|请你|请}等{一下|一会儿}我给你一支笔'],
+  show:'你等一下,我给你一支笔。',
+  why:'等一下 = đợi một chút (一下 sau động từ). "Đưa cho bạn" là 给你; lượng từ của bút là 支: 一支笔.'},
+ {vi:'Bạn nói nhanh quá, bạn nói lại lần nữa được không?',
+  tpl:['{你说得太快了|你说话太快了|你说太快了|你说得很快|你说话很快}{可以再说一遍吗|你可以再说一遍吗|能再说一遍吗|你能再说一遍吗|可不可以再说一遍|你可不可以再说一遍|请你再说一遍|请再说一遍|再说一遍好吗}'],
+  show:'你说得太快了,可以再说一遍吗?(hoặc 你说话太快了,请你再说一遍。)',
+  why:'"Nói lại một lần" là 再说一遍 (再 + động từ + 遍). Xin phép/nhờ vả dùng 可以…吗 hoặc 请你….'},
+ {vi:'Cô ấy đang tìm gì vậy?',
+  tpl:['她{正在|在|}找什么{呢|}'],
+  show:'她在找什么呢?(hoặc 她在找什么?)',
+  why:'找 = tìm; 什么 = cái gì (đứng đúng vị trí tân ngữ, không đảo lên đầu câu). 在 trước động từ biểu thị đang làm gì.'},
+];
+
+/* ---------- chuẩn hoá và mở rộng đáp án ---------- */
+const DIG = '零一二三四五六七八九';
+function norm(s){
+  return String(s).replace(/幺/g,'一').replace(/[0-9]/g, d => DIG[+d]).replace(/[^一-鿿A-Za-z]/g,'').toLowerCase();
+}
+function expand(t){
+  const m = t.match(/\{([^{}]*)\}/);
+  if(!m) return [t];
+  const out = [];
+  m[1].split('|').forEach(o => expand(t.slice(0,m.index)+o+t.slice(m.index+m[0].length)).forEach(x=>out.push(x)));
+  return out;
+}
+TRANS.forEach(q => q.set = new Set(q.tpl.flatMap(expand).map(norm)));
+SORT.forEach(q => q.set = new Set(q.ok.map(norm)));
+
+/* ---------- render Bài 1 ---------- */
+$('#bank1').innerHTML = WORDS.map(w => `<span class="w">${w[0]}<small class="py">${w[1]}</small></span>`).join('');
+$('#q1').innerHTML = FILL.map((q,i) => `
+  <div class="q-card" id="c1_${i}">
+    <div class="sent"><span class="qn">1.${i+1}</span>${esc(q.pre.replace('(',''))}<select id="s1_${i}" aria-label="Chỗ trống câu 1.${i+1}"><option value="">— chọn —</option>${WORDS.map(w=>`<option value="${w[0]}">${w[0]}</option>`).join('')}</select>${esc(q.post.replace(')',''))}
+      <span class="py">${esc(q.py)}</span></div>
+    <div class="vi">${esc(q.vi)}</div>
+    <div class="fb" hidden></div>
+  </div>`).join('');
+
+/* ---------- render Bài 2 ---------- */
+const shuffle = a => { const r=a.map((t,i)=>({t,i})); for(let k=0;k<20;k++){ for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];} if(r.map(x=>x.t).join('')!==a.join('')) break;} return r; };
+const sortState = SORT.map(q => ({order: shuffle(q.tokens), picked: []}));
+$('#q2').innerHTML = SORT.map((q,i) => `
+  <div class="q-card" id="c2_${i}">
+    <div><span class="qn">2.${i+1}</span><span class="vi">${esc(q.vi)}</span></div>
+    <div class="answer-line" id="al2_${i}" aria-label="Câu đã ghép"></div>
+    <div class="bankline" id="bl2_${i}" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+    <button class="minibtn" type="button" data-clear="${i}">Xoá làm lại câu này</button>
+    <div class="fb" hidden></div>
+  </div>`).join('');
+let locked = false;
+function drawSort(i){
+  const st = sortState[i];
+  $('#al2_'+i).innerHTML = st.picked.map(k => `<button type="button" class="tok" data-i="${i}" data-k="${k}" ${locked?'disabled':''}>${esc(st.order[k].t)}</button>`).join('');
+  $('#bl2_'+i).innerHTML = st.order.map((o,k) => `<button type="button" class="tok ${st.picked.includes(k)?'used':''}" data-i="${i}" data-add="${k}" ${locked||st.picked.includes(k)?'disabled':''}>${esc(o.t)}</button>`).join('');
+}
+SORT.forEach((_,i)=>drawSort(i));
+$('#q2').addEventListener('click', e => {
+  if(locked) return;
+  const add = e.target.closest('[data-add]'), rem = e.target.closest('.answer-line .tok'), clr = e.target.closest('[data-clear]');
+  if(add){ const i=+add.dataset.i; sortState[i].picked.push(+add.dataset.add); drawSort(i); }
+  else if(rem){ const i=+rem.dataset.i; const k=+rem.dataset.k; sortState[i].picked = sortState[i].picked.filter(x=>x!==k); drawSort(i); }
+  else if(clr){ const i=+clr.dataset.clear; sortState[i].picked=[]; drawSort(i); }
+});
+
+/* ---------- render Bài 3 ---------- */
+$('#q3').innerHTML = TRANS.map((q,i) => `
+  <div class="q-card" id="c3_${i}">
+    <div><span class="qn">3.${i+1}</span>${esc(q.vi)}</div>
+    <input class="tr zh" id="t3_${i}" type="text" lang="zh-CN" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Gõ câu tiếng Trung…" aria-label="Bản dịch câu 3.${i+1}">
+    <div class="fb" hidden></div>
+  </div>`).join('');
+
+/* ---------- chấm điểm ---------- */
+function feedback(card, ok, yours, q){
+  card.classList.add(ok?'right':'wrong');
+  const fb = card.querySelector('.fb'); fb.hidden = false;
+  if(ok){
+    fb.innerHTML = `<span class="st">✓ Chính xác! +1 điểm</span>`;
+  } else {
+    fb.innerHTML = `<span class="st">✗ Chưa đúng</span>
+      <div class="your">Bạn trả lời: ${yours ? `<span class="zh">${esc(yours)}</span>` : '<i>(chưa trả lời)</i>'}</div>
+      <div class="corr">Đáp án đúng: <span class="zh"><b>${esc(q.show)}</b></span></div>
+      <div class="why"><b>Giải thích:</b> ${esc(q.why)}</div>`;
+  }
+}
+function submit(){
+  const blanks = FILL.filter((_,i)=>!$('#s1_'+i).value).length
+               + sortState.filter(s=>s.picked.length===0).length
+               + TRANS.filter((_,i)=>!$('#t3_'+i).value.trim()).length;
+  locked = true;
+  let s1=0,s2=0,s3=0; const wrong=[];
+  FILL.forEach((q,i)=>{
+    const sel=$('#s1_'+i); sel.disabled=true;
+    const ok = sel.value===q.ans; if(ok) s1++; else wrong.push(['1.'+(i+1),'c1_'+i]);
+    feedback($('#c1_'+i), ok, sel.value ? q.pre.replace('(','')+sel.value+q.post.replace(')','') : '', {show:q.pre.replace('(','')+q.ans+q.post.replace(')',''),why:q.why});
+  });
+  SORT.forEach((q,i)=>{
+    const st=sortState[i]; const yours = st.picked.map(k=>st.order[k].t).join('');
+    const ok = q.set.has(norm(yours)); if(ok) s2++; else wrong.push(['2.'+(i+1),'c2_'+i]);
+    drawSort(i); feedback($('#c2_'+i), ok, yours, q);
+  });
+  TRANS.forEach((q,i)=>{
+    const inp=$('#t3_'+i); inp.disabled=true; const yours=inp.value.trim();
+    const ok = q.set.has(norm(yours)); if(ok) s3++; else wrong.push(['3.'+(i+1),'c3_'+i]);
+    feedback($('#c3_'+i), ok, yours, q);
+  });
+  const total=s1+s2+s3, max=FILL.length+SORT.length+TRANS.length;
+  const msg = total===max ? 'Tuyệt đối! Bạn nắm chắc bài rồi 🎉' : total>=max*0.8 ? 'Rất tốt! Xem lại vài câu sai bên dưới nhé.' : total>=max*0.5 ? 'Khá ổn, ôn lại Bí Kíp rồi làm lại để lên điểm nhé.' : 'Cần ôn thêm. Đọc lại Bí Kíp rồi thử lại nhé, cố lên!';
+  const name = $('#stuName').value.trim();
+  const r = $('#result');
+  r.innerHTML = `${name?`<div class="who">Học viên: <b>${esc(name)}</b></div>`:''}
+    <div class="score">${total}<small> / ${max}</small></div>
+    <div class="msg">${msg}</div>
+    <div class="parts"><div>Điền từ: <b>${s1}/${FILL.length}</b></div><div>Sắp xếp câu: <b>${s2}/${SORT.length}</b></div><div>Dịch câu: <b>${s3}/${TRANS.length}</b></div></div>
+    ${blanks?`<div class="wrongs">Còn ${blanks} câu chưa làm (tính 0 điểm).</div>`:''}
+    ${wrong.length?`<div class="wrongs">Câu cần xem lại: ${wrong.map(w=>`<a href="#${w[1]}">${w[0]}</a>`).join(' · ')}</div>`:''}`;
+  r.classList.add('show');
+  $('#submitBtn').hidden = true; $('#resetBtn').hidden = false;
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function reset(){
+  locked=false;
+  document.querySelectorAll('.q-card').forEach(c=>{c.classList.remove('right','wrong'); const f=c.querySelector('.fb'); f.hidden=true; f.innerHTML='';});
+  FILL.forEach((_,i)=>{const s=$('#s1_'+i); s.disabled=false; s.value='';});
+  SORT.forEach((q,i)=>{sortState[i]={order:shuffle(q.tokens),picked:[]}; drawSort(i);});
+  TRANS.forEach((_,i)=>{const t=$('#t3_'+i); t.disabled=false; t.value='';});
+  $('#result').classList.remove('show'); $('#result').innerHTML='';
+  $('#submitBtn').hidden=false; $('#resetBtn').hidden=true;
+  window.scrollTo({top:$('nav.top').offsetTop,behavior:'smooth'});
+}
+$('#submitBtn').addEventListener('click', submit);
+$('#resetBtn').addEventListener('click', reset);
+
+/* ---------- TABS ---------- */
+const TABS = {bikip:['#tab-bikip','#p-bikip'], luyen:['#tab-luyen','#p-luyen']};
+function showTab(name, scroll){
+  Object.entries(TABS).forEach(([k,[t,p]])=>{
+    const on = k===name;
+    $(t).setAttribute('aria-selected', on); $(t).tabIndex = on?0:-1; $(p).hidden = !on;
+  });
+  if(scroll) window.scrollTo({top:$('nav.top').offsetTop,behavior:'smooth'});
+}
+$('#tab-bikip').addEventListener('click',()=>{showTab('bikip',true);history.replaceState(null,'','#bikip');});
+$('#tab-luyen').addEventListener('click',()=>{showTab('luyen',true);history.replaceState(null,'','#luyencong');});
+document.querySelector('.tabs').addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowLeft'){const n=$('#tab-bikip').getAttribute('aria-selected')==='true'?'luyen':'bikip';showTab(n,false);$(TABS[n][0]).focus();}
+});
+function fromHash(){
+  const h=location.hash.slice(1);
+  if(h==='luyencong'||h==='luyen'||/^c\d_|^bt\d/.test(h)) showTab('luyen',false);
+  else if(['bikip','tuvung','nguphap','mausau'].includes(h)) showTab('bikip',false);
+}
+fromHash(); addEventListener('hashchange',fromHash);
+</script>
+</body>
+</html>
