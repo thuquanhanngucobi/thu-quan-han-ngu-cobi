@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Đi bằng phương tiện gì? – 坐 / 开 / 骑</title>
+<style>
+:root{--bg:#fbf6ec;--card:#fff;--ink:#2b2118;--mute:#7a6a58;--red:#c8312b;--gold:#e0a526;--ok:#2e9e5b;--bad:#d93a3a;--line:#e8dcc6;--soft:#fdf0d5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1814;--card:#2a231d;--ink:#f3e9d9;--mute:#b3a48f;--red:#ef5a52;--gold:#f0bb45;--ok:#47c27a;--bad:#f06565;--line:#46392d;--soft:#3a2f22}}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Roboto,"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.5}
+.wrap{max-width:900px;margin:0 auto;padding:16px}
+h1{font-size:1.5rem;margin:8px 0 2px;color:var(--red)}
+.sub{color:var(--mute);margin:0 0 14px}
+.tabs{display:flex;gap:8px;margin-bottom:14px}
+.tab{flex:1;padding:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer}
+.tab.on{background:var(--red);border-color:var(--red);color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+h2{font-size:1.15rem;margin:0 0 10px}
+.hz{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif}
+.verbs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.vb{border:2px solid var(--gold);border-radius:12px;padding:12px;background:var(--soft)}
+.vb .big{font-size:2.4rem;font-weight:800;color:var(--red);line-height:1}
+.vb small{color:var(--mute)}
+.vb ul{list-style:none;padding:0;margin:8px 0 0}
+.vb li{display:flex;gap:8px;align-items:center;padding:5px 0;border-top:1px dashed var(--line)}
+.vb li .e{font-size:1.5rem}
+.vb li b{font-size:1.1rem}
+.formula{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:1.05rem;margin:8px 0}
+.formula span{padding:6px 10px;border-radius:8px;background:var(--soft);border:1px solid var(--gold);font-weight:600}
+.formula i{color:var(--mute);font-style:normal}
+.ex{padding:8px 0;border-top:1px dashed var(--line)}
+.ex .z{font-size:1.25rem;font-weight:700}
+.ex .p{color:var(--red)}
+.ex .v{color:var(--mute);font-size:.92rem}
+.note{background:var(--soft);border-left:4px solid var(--gold);padding:8px 12px;border-radius:8px;margin:8px 0}
+.steps{display:flex;gap:6px;margin-bottom:12px}
+.st{flex:1;text-align:center;padding:9px 4px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;cursor:pointer;font-size:.9rem}
+.st.on{border-color:var(--red);color:var(--red)}
+.st.done{background:var(--ok);border-color:var(--ok);color:#fff}
+.st.lock{opacity:.5;cursor:not-allowed}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.col{display:flex;flex-direction:column;gap:8px}
+.it{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;min-height:64px;padding:8px;background:var(--card);border:2px solid var(--line);border-radius:12px;font-size:1.3rem;font-weight:700;cursor:pointer;user-select:none;color:var(--ink)}
+.it .em{font-size:2.2rem}
+.it.sel{border-color:var(--gold);background:var(--soft);transform:scale(1.03)}
+.it.ok{border-color:var(--ok);background:var(--ok);color:#fff;cursor:default}
+.it .py{position:absolute;bottom:2px;left:0;right:0;text-align:center;font-size:.72rem;font-weight:500;color:var(--red)}
+.it.ok .py{color:#fff}
+.it.hasp{padding-bottom:20px}
+.pb{position:absolute;top:3px;right:3px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--soft);color:var(--ink);font-size:.7rem;cursor:pointer;padding:0}
+.shake{animation:sh .45s}
+@keyframes sh{0%,100%{transform:translateX(0)}15%{transform:translateX(-9px)}35%{transform:translateX(9px)}55%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.flash{border-color:var(--bad)!important;background:rgba(217,58,58,.18)!important}
+.pool{display:flex;flex-wrap:wrap;gap:8px;min-height:80px;padding:10px;border:2px dashed var(--line);border-radius:12px;margin-bottom:12px}
+.zones{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.zone{border:2px solid var(--gold);border-radius:12px;padding:8px;min-height:150px;background:var(--soft);cursor:pointer}
+.zone.over{background:var(--card);border-style:dashed}
+.zone h3{margin:0 0 6px;text-align:center;font-size:2rem;color:var(--red);line-height:1.1}
+.zone h3 small{display:block;font-size:.75rem;color:var(--mute);font-weight:500}
+.zone .it{margin-bottom:6px;min-height:50px;font-size:1rem;cursor:default}
+.zone .it .em{font-size:1.6rem}
+.drag{width:calc(33% - 6px);min-width:96px;flex-direction:column;gap:0;cursor:grab}
+.drag .em{font-size:2.2rem}
+.drag span{font-size:.9rem}
+.hint{color:var(--mute);font-size:.9rem;margin:0 0 10px}
+.lockbox{text-align:center;padding:30px 10px;color:var(--mute)}
+.q{text-align:center;margin-bottom:10px}
+.q .big{font-size:3rem}
+.q .vi{font-size:1.05rem}
+.ans{min-height:70px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;padding:10px;border-bottom:3px solid var(--gold);font-size:1.8rem;font-weight:700;margin-bottom:12px}
+.ans .t{padding:2px 10px;border-radius:8px;background:var(--ok);color:#fff}
+.bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.tile{padding:10px 16px;font-size:1.4rem;font-weight:700;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);cursor:pointer}
+.res{text-align:center;margin-top:12px}
+.res .py{color:var(--red);font-size:1.05rem}
+.btn{margin-top:10px;padding:11px 22px;border:0;border-radius:10px;background:var(--red);color:#fff;font-size:1rem;font-weight:700;cursor:pointer}
+.prog{height:8px;border-radius:6px;background:var(--line);overflow:hidden;margin-bottom:10px}
+.prog div{height:100%;background:var(--ok);width:0;transition:width .3s}
+.hide{display:none}
+@media(max-width:520px){.zones{gap:6px}.zone h3{font-size:1.6rem}.drag{width:calc(50% - 4px)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>🚦 Đi bằng phương tiện gì?</h1>
+<p class="sub">Học cách nói “đi bằng…” trong tiếng Trung với 坐 / 开 / 骑</p>
+<div class="tabs"><button class="tab on" data-t="bk">📜 Bí Kíp</button><button class="tab" data-t="lc">🥋 Luyện Công</button></div>
+
+<section id="bk">
+<div class="card"><h2>1. Từ vựng theo động từ</h2>
+<div class="verbs">
+<div class="vb"><div class="big hz">坐</div><b>zuò</b> – ngồi, đi (xe/tàu/máy bay)<br><small>Dùng khi là hành khách, không tự điều khiển.</small>
+<ul><li><span class="e">🚌</span><b class="hz">公共汽车</b><small>gōnggòng qìchē · xe buýt</small></li><li><span class="e">🚇</span><b class="hz">地铁</b><small>dìtiě · tàu điện ngầm</small></li><li><span class="e">🚆</span><b class="hz">火车</b><small>huǒchē · tàu hỏa</small></li><li><span class="e">✈️</span><b class="hz">飞机</b><small>fēijī · máy bay</small></li><li><span class="e">🚕</span><b class="hz">出租车</b><small>chūzūchē · taxi</small></li></ul></div>
+<div class="vb"><div class="big hz">开</div><b>kāi</b> – lái (xe)<br><small>Dùng khi tự cầm lái, điều khiển phương tiện.</small>
+<ul><li><span class="e">🚗</span><b class="hz">汽车</b><small>qìchē · ô tô</small></li><li><span class="e">🚌</span><b class="hz">公共汽车</b><small>(tài xế) lái xe buýt</small></li><li><span class="e">🚕</span><b class="hz">出租车</b><small>(tài xế) lái taxi</small></li></ul></div>
+<div class="vb"><div class="big hz">骑</div><b>qí</b> – cưỡi, đi (xe hai bánh)<br><small>Dùng khi ngồi dạng chân trên xe.</small>
+<ul><li><span class="e">🚲</span><b class="hz">自行车</b><small>zìxíngchē · xe đạp</small></li><li><span class="e">🏍️</span><b class="hz">摩托车</b><small>mótuōchē · xe máy</small></li></ul></div>
+</div></div>
+
+<div class="card"><h2>2. Ngữ pháp: câu nói “đi đâu bằng gì”</h2>
+<div class="formula hz"><span>主语<br><small>Chủ ngữ</small></span><i>+</i><span>坐 / 开 / 骑</span><i>+</i><span>Phương tiện</span><i>+</i><span>去</span><i>+</i><span>Nơi đến</span></div>
+<div class="ex hz"><div class="z">我骑自行车去超市。</div><div class="p">Wǒ qí zìxíngchē qù chāoshì.</div><div class="v">Tôi đi xe đạp đến siêu thị.</div></div>
+<div class="ex hz"><div class="z">他坐地铁去学校。</div><div class="p">Tā zuò dìtiě qù xuéxiào.</div><div class="v">Anh ấy đi tàu điện ngầm đến trường.</div></div>
+<div class="ex hz"><div class="z">爸爸开车去公司。</div><div class="p">Bàba kāichē qù gōngsī.</div><div class="v">Bố lái xe đến công ty.</div></div>
+<h2 style="margin-top:14px">3. Kết hợp mở rộng</h2>
+<div class="ex hz"><div class="z">我不坐飞机去。</div><div class="v">Phủ định: đặt 不 trước 坐 / 开 / 骑 – Tôi không đi máy bay.</div></div>
+<div class="ex hz"><div class="z">你怎么去学校？ / 你坐什么去？</div><div class="v">Hỏi cách đi: 怎么去 (đi bằng cách nào), 坐/骑/开 + 什么 (đi bằng gì).</div></div>
+<div class="ex hz"><div class="z">我走路去。</div><div class="v">Đi bộ: 走路 (zǒulù) đứng một mình, không dùng 坐 / 开 / 骑.</div></div>
+<div class="note">💡 <b>Mẹo nhớ:</b> 坐 = ngồi (hành khách) · 开 = lái (tay cầm vô lăng) · 骑 = cưỡi (xe hai bánh, dạng chân).<br>Cùng một xe, vai khác thì động từ khác: 我<b class="hz">坐</b>公共汽车 (tôi đi buýt) – 他<b class="hz">开</b>公共汽车 (anh ấy lái buýt).</div>
+</div>
+</section>
+
+<section id="lc" class="hide">
+<div class="steps"><button class="st on" data-s="1">① Nối ảnh – chữ</button><button class="st" data-s="2">② Chọn động từ</button><button class="st lock" data-s="3">③ Hoàn thành câu 🔒</button></div>
+
+<div id="s1" class="card"><h2>Phần 1: Nối hình với chữ Hán</h2><p class="hint">Chạm một hình, rồi chạm chữ Hán tương ứng. Bấm nút <b>拼</b> để xem pinyin. Nối sai sẽ rung!</p><div class="grid2"><div class="col" id="c1L"></div><div class="col" id="c1R"></div></div><div id="m1" class="res"></div></div>
+
+<div id="s2" class="card hide"><h2>Phần 2: Phương tiện nào đi với 坐 / 开 / 骑?</h2><p class="hint">Kéo thả phương tiện vào ô động từ đúng (hoặc chạm phương tiện rồi chạm ô). Sai sẽ rung!</p><div class="pool" id="pool"></div><div class="zones" id="zones"></div><div id="m2" class="res"></div></div>
+
+<div id="s3" class="card hide"><h2>Phần 3: Hoàn thành câu</h2><div class="prog"><div id="pg"></div></div><div id="g3"></div></div>
+</section>
+</div>
+
+<script>
+const V=[
+{h:'自行车',p:'zìxíngchē',vi:'xe đạp',e:'🚲',v:'骑'},
+{h:'摩托车',p:'mótuōchē',vi:'xe máy',e:'🏍️',v:'骑'},
+{h:'公共汽车',p:'gōnggòng qìchē',vi:'xe buýt',e:'🚌',v:'坐'},
+{h:'地铁',p:'dìtiě',vi:'tàu điện ngầm',e:'🚇',v:'坐'},
+{h:'火车',p:'huǒchē',vi:'tàu hỏa',e:'🚆',v:'坐'},
+{h:'飞机',p:'fēijī',vi:'máy bay',e:'✈️',v:'坐'},
+{h:'出租车',p:'chūzūchē',vi:'taxi',e:'🚕',v:'坐'},
+{h:'汽车',p:'qìchē',vi:'ô tô',e:'🚗',v:'开'}];
+const VP={'坐':'zuò','开':'kāi','骑':'qí'};
+const VI={'坐':'ngồi / đi (hành khách)','开':'lái xe','骑':'cưỡi (xe 2 bánh)'};
+const D=[['超市','chāoshì','siêu thị','🛒'],['电影院','diànyǐngyuàn','rạp chiếu phim','🎬'],['学校','xuéxiào','trường học','🏫'],['大学','dàxué','đại học','🎓'],['邮局','yóujú','bưu điện','📮'],['银行','yínháng','ngân hàng','🏦'],['饭店','fàndiàn','nhà hàng / khách sạn','🍽️'],['酒店','jiǔdiàn','khách sạn','🏨'],['饭馆','fànguǎn','quán ăn','🍜'],['火车站','huǒchēzhàn','ga tàu hỏa','🚉'],['地铁站','dìtiězhàn','ga tàu điện ngầm','🚇'],['取款机','qǔkuǎnjī','cây ATM','🏧'],['博物馆','bówùguǎn','bảo tàng','🏛️'],['人民广场','Rénmín Guǎngchǎng','quảng trường Nhân Dân','⛲'],['公园','gōngyuán','công viên','🌳'],['书店','shūdiàn','hiệu sách','📚'],['药店','yàodiàn','hiệu thuốc','💊']];
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const shuf=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+function bad(...els){els.forEach(e=>{if(!e)return;e.classList.remove('shake');void e.offsetWidth;e.classList.add('shake','flash');setTimeout(()=>e.classList.remove('shake','flash'),460)});try{navigator.vibrate&&navigator.vibrate(200)}catch(e){}}
+let done1=false,done2=false;
+
+/* tabs */
+$$('.tab').forEach(b=>b.onclick=()=>{$$('.tab').forEach(x=>x.classList.toggle('on',x===b));$('#bk').classList.toggle('hide',b.dataset.t!=='bk');$('#lc').classList.toggle('hide',b.dataset.t!=='lc')});
+function step(n){
+ if(n==3&&!(done1&&done2))return;
+ $$('.st').forEach(b=>b.classList.toggle('on',b.dataset.s==n));
+ [1,2,3].forEach(i=>$('#s'+i).classList.toggle('hide',i!=n));
+ if(n==3&&!g.started)startG();
+}
+function refreshSteps(){
+ const st=$$('.st');
+ st[0].classList.toggle('done',done1);st[1].classList.toggle('done',done2);
+ const open=done1&&done2;st[2].classList.toggle('lock',!open);st[2].textContent=open?'③ Hoàn thành câu':'③ Hoàn thành câu 🔒';
+}
+$$('.st').forEach(b=>b.onclick=()=>{ if(b.dataset.s==3&&!(done1&&done2)){bad(b);return} step(+b.dataset.s)});
+
+/* part 1 */
+let sL=null,sR=null,m1=0;
+function init1(){
+ const L=$('#c1L'),R=$('#c1R');L.innerHTML=R.innerHTML='';
+ shuf(V).forEach(v=>{const d=document.createElement('div');d.className='it';d.dataset.h=v.h;d.innerHTML='<span class="em">'+v.e+'</span>';d.onclick=()=>pick('L',d);L.appendChild(d)});
+ shuf(V).forEach(v=>{const d=document.createElement('div');d.className='it hasp hz';d.dataset.h=v.h;d.innerHTML='<span>'+v.h+'</span><button class="pb" title="Xem pinyin">拼</button><span class="py hide">'+v.p+'</span>';
+  d.querySelector('.pb').onclick=e=>{e.stopPropagation();d.querySelector('.py').classList.toggle('hide')};
+  d.onclick=()=>pick('R',d);R.appendChild(d)});
+}
+function pick(side,d){
+ if(d.classList.contains('ok'))return;
+ if(side=='L'){if(sL)sL.classList.remove('sel');sL=d;}else{if(sR)sR.classList.remove('sel');sR=d;}
+ d.classList.add('sel');
+ if(sL&&sR){
+  if(sL.dataset.h===sR.dataset.h){[sL,sR].forEach(x=>{x.classList.remove('sel');x.classList.add('ok')});sR.querySelector('.py').classList.remove('hide');m1++;sL=sR=null;
+   if(m1===V.length){done1=true;refreshSteps();$('#m1').innerHTML='🎉 Chính xác hết rồi! <br><button class="btn" onclick="step(2)">Sang Phần 2 →</button>'}
+  }else{const a=sL,b=sR;bad(a,b);a.classList.remove('sel');b.classList.remove('sel');sL=sR=null}
+ }
+}
+
+/* part 2 */
+let sel2=null,m2=0;
+function init2(){
+ const P=$('#pool'),Z=$('#zones');P.innerHTML=Z.innerHTML='';
+ shuf(V).forEach(v=>{const d=document.createElement('div');d.className='it drag';d.draggable=true;d.dataset.h=v.h;d.innerHTML='<span class="em">'+v.e+'</span><span class="hz">'+v.h+'</span>';
+  d.ondragstart=e=>{e.dataTransfer.setData('text/plain',v.h);sel2=d};
+  d.onclick=()=>{if(sel2)sel2.classList.remove('sel');sel2=d;d.classList.add('sel')};P.appendChild(d)});
+ ['坐','开','骑'].forEach(k=>{const z=document.createElement('div');z.className='zone';z.dataset.v=k;z.innerHTML='<h3 class="hz">'+k+'<small>'+VP[k]+' · '+VI[k]+'</small></h3>';
+  z.ondragover=e=>{e.preventDefault();z.classList.add('over')};z.ondragleave=()=>z.classList.remove('over');
+  z.ondrop=e=>{e.preventDefault();z.classList.remove('over');const h=e.dataTransfer.getData('text/plain');const c=[...P.children].find(x=>x.dataset.h===h);if(c)place(c,z)};
+  z.onclick=()=>{if(sel2&&sel2.parentNode===P)place(sel2,z)};Z.appendChild(z)});
+}
+function place(c,z){
+ const v=V.find(x=>x.h===c.dataset.h);
+ if(v.v===z.dataset.v){c.draggable=false;c.className='it ok drag';c.classList.remove('drag');c.style.flexDirection='row';z.appendChild(c);sel2=null;m2++;
+  if(m2===V.length){done2=true;refreshSteps();$('#m2').innerHTML='🎉 Tuyệt vời! '+(done1?'<br><button class="btn" onclick="step(3)">Sang Phần 3 →</button>':'<br>Hãy hoàn thành Phần 1 để mở khóa Phần 3.')}
+ }else{bad(c,z);c.classList.remove('sel');sel2=null}
+}
+
+/* part 3 */
+const g={started:false,order:[],i:0,exp:[],pos:0};
+function startG(){g.started=true;g.order=shuf(V);g.i=0;render3()}
+function render3(){
+ const box=$('#g3');
+ $('#pg').style.width=(g.i/V.length*100)+'%';
+ if(g.i>=V.length){box.innerHTML='<div class="lockbox"><div style="font-size:3rem">🏆</div><h2>Xuất sắc! Bạn đã hoàn thành cả 8 câu.</h2><button class="btn" onclick="startG()">Chơi lại với nơi đến mới</button></div>';return}
+ const v=g.order[g.i],d=D[Math.random()*D.length|0];
+ g.exp=['我',v.v,v.h,'去',d[0]];g.pos=0;g.cur={v,d};
+ const others=Object.keys(VP).filter(k=>k!==v.v);
+ const dd=shuf(D.filter(x=>x[0]!==d[0]))[0][0],vv=shuf(V.filter(x=>x.h!==v.h))[0].h;
+ const tiles=shuf([...g.exp,others[0],others[1],dd,vv]);
+ box.innerHTML='<div class="q"><div class="big">'+v.e+' ➜ '+d[3]+'</div><div class="vi">Tôi đi <b>'+v.vi+'</b> đến <b>'+d[2]+'</b></div><div class="hint">Câu '+(g.i+1)+'/'+V.length+' – chạm các từ theo đúng thứ tự</div></div><div class="ans hz" id="ans"></div><div class="bank hz" id="bank"></div><div class="res" id="r3"></div>';
+ tiles.forEach(t=>{const b=document.createElement('button');b.className='tile';b.textContent=t;b.onclick=()=>tap(b,t);$('#bank').appendChild(b)});
+}
+function tap(b,t){
+ if(t===g.exp[g.pos]){b.remove();const s=document.createElement('span');s.className='t';s.textContent=t;$('#ans').appendChild(s);g.pos++;
+  if(g.pos===g.exp.length){const{v,d}=g.cur;$('#ans').insertAdjacentHTML('beforeend','<span>。</span>');$('#bank').innerHTML='';
+   $('#r3').innerHTML='<div class="py">Wǒ '+VP[v.v]+' '+v.p+' qù '+d[1]+'.</div><div>✅ Tôi '+VI[v.v].split(' ')[0]+' '+v.vi+' đến '+d[2]+'.</div><button class="btn" id="nx">'+(g.i+1<V.length?'Câu tiếp →':'Hoàn thành 🏆')+'</button>';
+   $('#nx').onclick=()=>{g.i++;render3()}}
+ }else bad(b,$('#ans'));
+}
+
+init1();init2();refreshSteps();
+</script>
+</body>
+</html>

@@ -1,0 +1,628 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>我的家 Ôn tập Bài 10</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap">
+<style>
+/* Layout: masthead, then a sticky bar (3 tabs + 2 toggles), then one panel at a time.
+   Tree is five tiers, left half = paternal (blue), right half = maternal (orange). */
+:root{
+  --bg:#f3f4f7; --surface:#ffffff; --ink:#1a2030; --muted:#5a6376; --line:#dbdfe7;
+  --seal:#b3302a; --seal-soft:#f7e4e2;
+  --noi:#27579f; --noi-bg:#e4edfa; --noi-line:#9db8e4;
+  --ngoai:#b4520b; --ngoai-bg:#fcebd8; --ngoai-line:#e6b07a;
+  --kin:#1f6b50; --kin-bg:#e1f2ea; --kin-line:#86c4a9;
+  --gold:#7a5a00; --gold-bg:#f8e6a6; --gold-line:#d3a21c;
+  --f-body:"Noto Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-zh:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --f-head:"Noto Serif SC","Songti SC","SimSun",serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#10141b; --surface:#1a202a; --ink:#e7ebf3; --muted:#9aa4b6; --line:#2b3340;
+  --seal:#ff7d70; --seal-soft:#3a1e1c;
+  --noi:#9bbcf5; --noi-bg:#1b2a45; --noi-line:#41629f;
+  --ngoai:#f4ac70; --ngoai-bg:#3a2513; --ngoai-line:#8d5629;
+  --kin:#7fd2ae; --kin-bg:#16302a; --kin-line:#3a7a60;
+  --gold:#f6d56a; --gold-bg:#3e3512; --gold-line:#a2821f;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10141b; --surface:#1a202a; --ink:#e7ebf3; --muted:#9aa4b6; --line:#2b3340;
+  --seal:#ff7d70; --seal-soft:#3a1e1c;
+  --noi:#9bbcf5; --noi-bg:#1b2a45; --noi-line:#41629f;
+  --ngoai:#f4ac70; --ngoai-bg:#3a2513; --ngoai-line:#8d5629;
+  --kin:#7fd2ae; --kin-bg:#16302a; --kin-line:#3a7a60;
+  --gold:#f6d56a; --gold-bg:#3e3512; --gold-line:#a2821f;
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+body.sheet-open{padding-bottom:300px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,[tabindex]:focus-visible,input:focus-visible{outline:3px solid var(--seal);outline-offset:2px}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.zh{font-family:var(--f-zh)}
+.py{color:var(--muted);font-size:.86em}
+.muted{color:var(--muted)}
+
+/* masthead */
+.mast{padding-block:22px 14px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.mast h1{font-family:var(--f-head);font-size:40px;line-height:1.1;margin:6px 0 4px;display:flex;align-items:center;gap:12px;text-wrap:balance}
+.stamp{display:inline-grid;place-items:center;width:34px;height:34px;border:2px solid var(--seal);color:var(--seal);border-radius:5px;font-size:20px;transform:rotate(-5deg);font-family:var(--f-head)}
+.mast p{margin:0;color:var(--muted)}
+.mast .q{color:var(--ink);font-family:var(--f-zh);font-size:17px;margin-top:2px}
+
+/* sticky bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--bg);border-bottom:1px solid var(--line)}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding-top:6px}
+.tab{border:0;background:none;padding:9px 4px 8px;font-weight:600;font-size:14px;color:var(--muted);border-bottom:3px solid transparent;line-height:1.25}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--seal)}
+.tab small{display:block;font-family:var(--f-zh);font-weight:500;font-size:12px;opacity:.85}
+.toggles{display:flex;gap:8px;padding-block:7px;align-items:center}
+.toggles .lbl{font-size:12px;color:var(--muted);margin-right:auto}
+.tg{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 12px;font-size:13px;font-weight:600;color:var(--muted)}
+.tg[aria-pressed="true"]{border-color:var(--seal);color:var(--seal);background:var(--seal-soft)}
+
+main{padding-block:16px 40px}
+h2{font-size:19px;margin:0 0 4px;text-wrap:balance}
+h3{font-size:15.5px;margin:0}
+.lead{margin:0 0 12px;color:var(--muted)}
+.sec{margin-top:30px;scroll-margin-top:150px}
+.sec:first-child{margin-top:0}
+
+/* family tree */
+.toolbar{display:flex;gap:8px 12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:6px}
+.toolbar .tg{white-space:nowrap}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px;border:1.5px solid}
+.l-n{background:var(--noi-bg);border-color:var(--noi-line)!important}.l-o{background:var(--ngoai-bg);border-color:var(--ngoai-line)!important}.l-m{background:var(--kin-bg);border-color:var(--kin-line)!important}
+.treebox{max-width:520px;margin:0 auto}
+.treebox svg{display:block;width:100%;height:auto;overflow:visible}
+.edge{stroke:var(--muted);stroke-width:1.6;fill:none;opacity:.55;stroke-linecap:round}
+.heart{fill:var(--seal);font-size:13px;text-anchor:middle;font-family:var(--f-body)}
+.treecap{font-size:10.5px;font-weight:700;font-family:var(--f-body)}
+.treecap.n{fill:var(--noi);text-anchor:middle}.treecap.o{fill:var(--ngoai);text-anchor:middle}
+.treecap.m{fill:var(--muted);font-weight:600}
+.person{cursor:pointer;outline:none}
+.person rect{stroke-width:1.5}
+.person.n rect{fill:var(--noi-bg);stroke:var(--noi-line)}
+.person.o rect{fill:var(--ngoai-bg);stroke:var(--ngoai-line)}
+.person.m rect{fill:var(--kin-bg);stroke:var(--kin-line)}
+.person.me rect{fill:var(--gold-bg);stroke:var(--gold-line);stroke-width:2.2}
+.person.extra rect{stroke-dasharray:4 3}
+.person text{text-anchor:middle}
+.person .vi{font-size:9.5px;font-weight:700;font-family:var(--f-body)}
+.person.n .vi{fill:var(--noi)}.person.o .vi{fill:var(--ngoai)}.person.m .vi{fill:var(--kin)}.person.me .vi{fill:var(--gold)}
+.person .zh{font-family:var(--f-head);font-weight:700;fill:var(--ink)}
+.person.me .zh{fill:var(--seal)}
+.person .py{font-size:9.5px;fill:var(--muted);font-family:var(--f-body)}
+.person .qm{font-size:20px;fill:var(--muted);opacity:0;font-family:var(--f-body)}
+.person.sel rect,.person:focus-visible rect{stroke:var(--seal);stroke-width:3}
+.quiz .person:not(.me):not(.on) .zh,.quiz .person:not(.me):not(.on) .py{opacity:0}
+.quiz .person:not(.me):not(.on) .qm{opacity:1}
+.no-vi .person:not(.on) .vi{opacity:0}
+.note{margin-top:14px;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;font-size:14px}
+.note b{font-family:var(--f-zh)}
+.note p{margin:4px 0 0}
+
+/* detail sheet */
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:8;background:var(--surface);border-top:2px solid var(--seal);box-shadow:0 -6px 22px rgba(0,0,0,.18);padding-block:12px calc(14px + env(safe-area-inset-bottom,0px))}
+.sheet .top{display:flex;gap:12px;align-items:center}
+.sheet .big{font-family:var(--f-head);font-size:42px;font-weight:700;line-height:1.1}
+.sheet .meaning{font-weight:700;font-size:16px}
+.sheet .rel{color:var(--muted);font-size:13.5px}
+.sheet .x{border:1.5px solid var(--line);background:none;border-radius:8px;padding:4px 12px;font-size:13px;font-weight:600;align-self:flex-start;white-space:nowrap}
+
+/* speaker + example */
+.spk{flex:none;display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);color:var(--seal)}
+.spk:active{background:var(--seal-soft)}
+.ex{display:flex;gap:10px;align-items:flex-start;margin-top:8px}
+.ex .zh{font-size:18px;font-weight:500;line-height:1.4}
+.ex .py{line-height:1.35}
+.ex .vi-t{font-size:14px;line-height:1.4}
+.no-vi .vi-t:not(.on){color:transparent!important;background:var(--line);border-radius:5px;user-select:none;-webkit-user-select:none;cursor:pointer;text-shadow:none}
+.no-vi .vi-t:not(.on) *{color:transparent!important;background:transparent!important;border-color:transparent!important}
+
+/* vocab */
+.search{width:100%;font:inherit;font-size:16px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 0 4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 13px;font-size:13.5px;font-weight:600;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.count{font-size:12.5px;color:var(--muted);margin:6px 0 8px}
+.vlist{display:flex;flex-direction:column;gap:6px}
+.vrow{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 10px}
+.vhead{display:flex;gap:10px;align-items:center;cursor:pointer}
+.vzh{font-family:var(--f-head);font-size:26px;font-weight:700;min-width:3.1em;line-height:1.25}
+.vmid{flex:1;min-width:0}
+.vpy{font-size:14px}
+.vvi{font-weight:600;line-height:1.35}
+.pos{display:inline-block;font-size:11px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px;margin-right:6px;vertical-align:1px}
+.tag{display:inline-block;font-size:11px;font-weight:600;border-radius:4px;padding:0 6px;margin-left:6px;background:var(--seal-soft);color:var(--seal)}
+.tag.bk{background:var(--kin-bg);color:var(--kin)}
+.vbody{display:none;margin-top:4px;padding-top:6px;border-top:1px dashed var(--line)}
+.vrow.open .vbody{display:block}
+.vnote{font-size:13.5px;color:var(--muted);margin-top:6px}
+.empty{padding:24px;text-align:center;color:var(--muted)}
+
+/* patterns tab */
+.subnav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.qh{margin:16px 0 8px;font-size:15px;color:var(--seal)}
+#qaList .qh:first-child{margin-top:0}
+.qa{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.qa .topic{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--seal);margin-bottom:2px}
+.qa .a{margin-top:6px;padding-top:6px;border-top:1px dashed var(--line)}
+.qa .lab{display:inline-block;width:1.5em;font-weight:700;color:var(--muted);font-size:13px}
+.gr{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
+.gr summary{list-style:none;cursor:pointer;padding:11px 12px;display:flex;flex-direction:column;gap:3px}
+.gr summary::-webkit-details-marker{display:none}
+.gr summary::after{content:"+";position:absolute}
+.gr .t{font-weight:700}
+.gr .f{font-family:var(--f-zh);font-size:15px;color:var(--seal);font-weight:500;overflow-wrap:anywhere}
+.gr .gb{padding:0 12px 12px}
+.gr ul{margin:0;padding-left:18px;color:var(--ink);font-size:14.5px}
+.gr li{margin-bottom:3px}
+.gr[open] summary{border-bottom:1px solid var(--line);margin-bottom:8px}
+.gr summary{position:relative;padding-right:34px}
+.gr summary::after{right:12px;top:10px;font-size:20px;color:var(--muted);line-height:1}
+.gr[open] summary::after{content:"\2212"}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:420px}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;font-size:14.5px}
+th{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td .big{font-family:var(--f-head);font-size:24px;font-weight:700;line-height:1.2}
+ol.steps{list-style:none;margin:0;padding:0;counter-reset:s;display:flex;flex-direction:column;gap:8px}
+ol.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px 10px 46px;position:relative}
+ol.steps li::before{content:counter(s);position:absolute;left:12px;top:10px;width:24px;height:24px;border-radius:50%;background:var(--seal);color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center}
+ol.steps .tpl{font-family:var(--f-zh);font-size:18px;font-weight:500;margin-top:2px;overflow-wrap:anywhere}
+.model{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--seal);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+.model .zh{font-size:18px;line-height:1.7}
+.model .py{line-height:1.5;margin-top:4px}
+.model .vi-t{margin-top:4px;font-size:14.5px}
+.model .head{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:4px}
+.btn{border:1.5px solid var(--seal);color:var(--seal);background:var(--surface);border-radius:999px;padding:4px 14px;font-size:13px;font-weight:700;display:inline-flex;gap:6px;align-items:center}
+.btn:active{background:var(--seal-soft)}
+.dlg{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 12px 10px;margin-bottom:12px}
+.dlg .head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0}
+.line{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px dashed var(--line)}
+.spkr{flex:none;width:58px;font-size:12px;font-weight:700;color:var(--seal);line-height:1.3;padding-top:3px}
+.spkr span{display:block;font-family:var(--f-zh);font-weight:500;color:var(--muted)}
+.line .body{flex:1;min-width:0}
+.line .zh{font-size:17px;line-height:1.45}
+.line .py{line-height:1.35}
+.line .vi-t{font-size:14px}
+.foot{margin-top:34px;padding:14px 0 28px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.foot p{margin:0 0 4px}
+.no-py .py{display:none}
+@media (max-width:420px){.mast h1{font-size:34px}.vzh{font-size:23px}.person .zh{font-size:22px}.person .vi{font-size:10.5px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
+
+<header class="mast"><div class="wrap">
+  <div class="eyebrow">Hán ngữ toàn diện · Sơ cấp 1 · Bài 10</div>
+  <h1><span class="stamp zh" aria-hidden="true">家</span><span class="zh">我的家</span></h1>
+  <p>Nhà bạn có mấy người?</p>
+  <p class="q">你家有几口人？</p>
+</div></header>
+
+<div class="bar">
+  <div class="wrap">
+    <div class="tabs" role="tablist" aria-label="Nội dung ôn tập">
+      <button class="tab" id="t-cay-gia-pha" role="tab" aria-selected="true" aria-controls="p-cay-gia-pha" data-tab="cay-gia-pha">Cây gia phả<small>家谱</small></button>
+      <button class="tab" id="t-tu-vung" role="tab" aria-selected="false" aria-controls="p-tu-vung" data-tab="tu-vung">Từ vựng<small>生词</small></button>
+      <button class="tab" id="t-mau-cau" role="tab" aria-selected="false" aria-controls="p-mau-cau" data-tab="mau-cau">Mẫu câu<small>句型</small></button>
+    </div>
+    <div class="toggles">
+      <span class="lbl">Tự kiểm tra:</span>
+      <button class="tg" id="tgPy" type="button" aria-pressed="false">Ẩn pinyin</button>
+      <button class="tg" id="tgVi" type="button" aria-pressed="false">Che nghĩa Việt</button>
+    </div>
+  </div>
+</div>
+
+<main><div class="wrap">
+
+<!-- ================= TAB 1: CÂY GIA PHẢ ================= -->
+<section id="p-cay-gia-pha" role="tabpanel" aria-labelledby="t-cay-gia-pha">
+  <div class="sec">
+    <h2>Cây gia phả của bạn</h2>
+    <p class="lead">Bạn ở giữa. Chạm vào từng người để xem nghĩa, câu ví dụ và nghe phát âm.</p>
+    <div class="toolbar">
+      <div class="legend"><span><i class="l-n"></i>Bên nội 父亲这边</span><span><i class="l-o"></i>Bên ngoại 母亲这边</span></div>
+      <button class="tg" id="tgQuiz" type="button" aria-pressed="false">Che chữ Hán</button>
+    </div>
+    <div id="tree"></div>
+    <div class="note">
+      <b>堂亲 tángqīn · 表亲 biǎoqīn</b>
+      <p>Anh chị em họ. <b>堂</b>: cùng họ nội, là con của bác hoặc chú. <b>表</b>: khác họ, là con của cô, cậu hoặc dì.</p>
+      <p class="muted">Ô viền nét đứt (chồng, vợ, con) là từ mở rộng, không có trong slide.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TAB 2: TỪ VỰNG ================= -->
+<section id="p-tu-vung" role="tabpanel" aria-labelledby="t-tu-vung" hidden>
+  <div class="sec">
+    <h2>Từ vựng Bài 10</h2>
+    <p class="lead">Chạm vào một từ để xem câu ví dụ. Nút loa để nghe phát âm.</p>
+    <input class="search" id="q" type="search" placeholder="Tìm chữ Hán, pinyin hoặc nghĩa tiếng Việt" autocomplete="off">
+    <div class="chips" id="chips"></div>
+    <div class="count" id="count"></div>
+    <div class="vlist" id="vlist"></div>
+  </div>
+</section>
+
+<!-- ================= TAB 3: MẪU CÂU ================= -->
+<section id="p-mau-cau" role="tabpanel" aria-labelledby="t-mau-cau" hidden>
+  <div class="subnav" id="subnav"></div>
+  <div class="sec" id="sec-qa"><h2>Mẫu câu hỏi đáp</h2><p class="lead">Hỏi về thành viên gia đình, tuổi tác và nghề nghiệp. Mỗi câu hỏi có một câu trả lời mẫu.</p><div id="qaList"></div></div>
+  <div class="sec" id="sec-gr"><h2>Ngữ pháp cần nhớ</h2><p class="lead">Chạm vào từng mục để xem quy tắc và ví dụ.</p><div id="grList"></div></div>
+  <div class="sec" id="sec-mw"><h2>Bốn lượng từ của bài</h2><div class="tbl"><table>
+    <thead><tr><th>Từ</th><th>Dùng cho</th><th>Ví dụ</th></tr></thead><tbody id="mwBody"></tbody></table></div></div>
+  <div class="sec" id="sec-intro"><h2>Cách giới thiệu gia đình</h2><p class="lead">Làm lần lượt từng bước, thay chỗ ___ bằng thông tin của bạn.</p>
+    <ol class="steps" id="steps"></ol>
+    <h3 style="margin:18px 0 8px">Đoạn mẫu</h3><div id="models"></div>
+    <h3 style="margin:18px 0 8px">Giới thiệu từng người trong ảnh</h3><div id="photo"></div>
+    <div class="note"><b>Tự luyện</b><p>Nhìn ảnh gia đình của bạn và nói to: số người, hai thành viên (tuổi, nghề nghiệp), rồi một điều bạn thích. Sau đó so với đoạn mẫu ở trên.</p></div>
+  </div>
+  <div class="sec" id="sec-dlg"><h2>Hội thoại mẫu</h2><p class="lead">Hai bài khóa. Che pinyin hoặc nghĩa ở thanh trên để tự kiểm tra.</p><div id="dlgs"></div></div>
+</section>
+
+<div class="foot">
+  <p>Nội dung theo slide Bài 10 · 你家有几口人？ Một số phiên âm trong slide đã được chỉnh lại cho đúng.</p>
+  <p>Nếu bấm loa mà không nghe thấy tiếng, hãy bật giọng đọc tiếng Trung trong phần Cài đặt của điện thoại.</p>
+</div>
+</div></main>
+
+<div class="sheet" id="sheet" hidden><div class="wrap">
+  <div class="top">
+    <div class="big" id="shZh"></div>
+    <div><div class="py" id="shPy" style="font-size:15px"></div><div class="meaning" id="shVi"></div><div class="rel" id="shRel"></div></div>
+    <button class="spk" id="shSpk" type="button" data-say="" aria-label="Nghe" style="margin-left:auto"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <button class="x" id="shX" type="button">Đóng</button>
+  </div>
+  <div id="shEx"></div>
+</div></div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var ls={get:function(k,d){try{var v=localStorage.getItem(k);return v===null?d:v}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* ---------- speech ---------- */
+var voice=null;
+function pickVoice(){try{voice=speechSynthesis.getVoices().filter(function(v){return /^zh/i.test(v.lang)})[0]||null}catch(e){}}
+if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
+function speakList(list){
+  if(!('speechSynthesis' in window))return;
+  try{speechSynthesis.cancel();list.forEach(function(t){var u=new SpeechSynthesisUtterance(t);u.lang='zh-CN';if(voice)u.voice=voice;u.rate=.8;speechSynthesis.speak(u)})}catch(e){}
+}
+var ICON='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+function spk(t){return '<button class="spk" type="button" data-say="'+t+'" aria-label="Nghe">'+ICON+'</button>'}
+function ex(a){return '<div class="ex">'+spk(a[0])+'<div><div class="zh">'+a[0]+'</div><div class="py">'+a[1]+'</div><div class="vi-t">'+a[2]+'</div></div></div>'}
+
+/* ---------- people (tree) ---------- */
+var P={
+ yeye:{zh:'爷爷',py:'yéye',vi:'ông nội',rel:'Bố của bố',ex:['我爷爷今年七十岁。','Wǒ yéye jīnnián qīshí suì.','Ông nội tôi năm nay 70 tuổi.']},
+ nainai:{zh:'奶奶',py:'nǎinai',vi:'bà nội',rel:'Mẹ của bố',ex:['我奶奶很可爱。','Wǒ nǎinai hěn kě’ài.','Bà nội tôi rất dễ thương.']},
+ waigong:{zh:'外公',py:'wàigōng',vi:'ông ngoại',rel:'Bố của mẹ',ex:['这是我外公的照片。','Zhè shì wǒ wàigōng de zhàopiàn.','Đây là ảnh của ông ngoại tôi.']},
+ waipo:{zh:'外婆',py:'wàipó',vi:'bà ngoại',rel:'Mẹ của mẹ',ex:['我外婆不工作。','Wǒ wàipó bù gōngzuò.','Bà ngoại tôi không đi làm.']},
+ bofu:{zh:'伯父',py:'bófù',vi:'bác',rel:'Anh trai của bố',ex:['他是我伯父。','Tā shì wǒ bófù.','Ông ấy là bác của tôi.']},
+ shushu:{zh:'叔叔',py:'shūshu',vi:'chú',rel:'Em trai của bố',ex:['我叔叔是医生。','Wǒ shūshu shì yīshēng.','Chú tôi là bác sĩ.']},
+ gugu:{zh:'姑姑',py:'gūgu',vi:'cô',rel:'Chị hoặc em gái của bố',ex:['我姑姑是律师。','Wǒ gūgu shì lǜshī.','Cô tôi là luật sư.']},
+ jiujiu:{zh:'舅舅',py:'jiùjiu',vi:'cậu',rel:'Anh hoặc em trai của mẹ',ex:['我舅舅在中国。','Wǒ jiùjiu zài Zhōngguó.','Cậu tôi ở Trung Quốc.']},
+ yi:{zh:'姨',py:'yí',vi:'dì',rel:'Chị hoặc em gái của mẹ (cũng nói 姨妈 yímā)',ex:['她是我姨。','Tā shì wǒ yí.','Bà ấy là dì của tôi.']},
+ baba:{zh:'爸爸',py:'bàba',vi:'bố',rel:'Cách nói trang trọng: 父亲 fùqīn',ex:['我爸爸是律师。','Wǒ bàba shì lǜshī.','Bố tôi là luật sư.']},
+ mama:{zh:'妈妈',py:'māma',vi:'mẹ',rel:'Cách nói trang trọng: 母亲 mǔqīn',ex:['我妈妈是医生。','Wǒ māma shì yīshēng.','Mẹ tôi là bác sĩ.']},
+ gege:{zh:'哥哥',py:'gēge',vi:'anh trai',rel:'Anh ruột của bạn',ex:['他是我的哥哥。','Tā shì wǒ de gēge.','Anh ấy là anh trai của tôi.']},
+ jiejie:{zh:'姐姐',py:'jiějie',vi:'chị gái',rel:'Chị ruột của bạn',ex:['她是我的姐姐。','Tā shì wǒ de jiějie.','Chị ấy là chị gái của tôi.']},
+ me:{zh:'我',py:'wǒ',vi:'tôi',rel:'Bạn, chủ thể của cây gia phả',ex:['我家有五口人。','Wǒ jiā yǒu wǔ kǒu rén.','Nhà tôi có năm người.']},
+ didi:{zh:'弟弟',py:'dìdi',vi:'em trai',rel:'Em trai ruột của bạn',ex:['我弟弟是大学生。','Wǒ dìdi shì dàxuéshēng.','Em trai tôi là sinh viên đại học.']},
+ meimei:{zh:'妹妹',py:'mèimei',vi:'em gái',rel:'Em gái ruột của bạn',ex:['我妹妹今年十二岁。','Wǒ mèimei jīnnián shí’èr suì.','Em gái tôi năm nay 12 tuổi.']},
+ zhangfu:{zh:'丈夫',py:'zhàngfu',vi:'chồng',rel:'Từ mở rộng, không có trong slide',ex:['他是我丈夫。','Tā shì wǒ zhàngfu.','Anh ấy là chồng tôi.']},
+ qizi:{zh:'妻子',py:'qīzi',vi:'vợ',rel:'Từ mở rộng, không có trong slide',ex:['她是我妻子。','Tā shì wǒ qīzi.','Cô ấy là vợ tôi.']},
+ erzi:{zh:'儿子',py:'érzi',vi:'con trai',rel:'Từ mở rộng, không có trong slide',ex:['我有一个儿子。','Wǒ yǒu yí ge érzi.','Tôi có một con trai.']},
+ nver:{zh:'女儿',py:'nǚ’ér',vi:'con gái',rel:'Từ mở rộng, không có trong slide',ex:['我女儿今年三岁。','Wǒ nǚ’ér jīnnián sān suì.','Con gái tôi năm nay 3 tuổi.']}
+};
+function node(id,x,y,w,hh,s,zs,extra){
+  var p=P[id],cx=w/2;
+  return '<g class="person '+(id==='me'?'me':s)+(extra?' extra':'')+'" data-id="'+id+'" transform="translate('+x+','+y+')" tabindex="0" role="button" aria-label="'+p.vi+', '+p.zh+'">'+
+    '<rect width="'+w+'" height="'+hh+'" rx="9"/>'+
+    '<text class="vi" x="'+cx+'" y="13">'+p.vi+'</text>'+
+    '<text class="zh" x="'+cx+'" y="'+(hh/2+zs*0.36+2)+'" font-size="'+zs+'">'+p.zh+'</text>'+
+    '<text class="py" x="'+cx+'" y="'+(hh-7)+'">'+p.py+'</text>'+
+    '<text class="qm" x="'+cx+'" y="'+(hh/2+8)+'">?</text></g>';
+}
+function ln(d){return '<path class="edge" d="'+d+'"/>'}
+function buildTree(){
+  var s='';
+  /* đường nối (vẽ trước, nằm dưới ô) */
+  s+=ln('M98.5 66V124M26.5 124H170.5M26.5 124V150M74.5 124V150M122.5 124V150M170.5 124V150');           // ông bà nội -> con
+  s+=ln('M285.5 66V124M237.5 124H333.5M237.5 124V150M285.5 124V150M333.5 124V150');                      // ông bà ngoại -> con
+  s+=ln('M204 192V250M44 250H316M44 250V272M112 250V272M180 250V272M248 250V272M316 250V272');          // bố mẹ -> con
+  s+=ln('M180 342V362M120 362H240M120 362V374M240 362V374');                                             // bạn -> chồng/vợ
+  s+=ln('M120 436V452H240V436M180 452V470M140 470H220M140 470V486M220 470V486');                         // chồng/vợ -> con
+  /* chú thích */
+  s+='<text class="treecap n" x="98.5" y="13">Bên nội · 父亲这边</text><text class="treecap o" x="285.5" y="13">Bên ngoại · 母亲这边</text>';
+  s+='<text class="treecap m" x="4" y="402">Mở rộng:</text><text class="treecap m" x="4" y="416">gia đình riêng</text><text class="treecap m" x="4" y="430">của bạn</text>';
+  s+='<text class="treecap m" x="180" y="409" style="text-anchor:middle;font-weight:500">hoặc</text>';
+  /* thế hệ 1: ông bà */
+  s+=node('yeye',34.5,22,56,66,'n',24)+node('nainai',106.5,22,56,66,'n',24);
+  s+=node('waigong',221.5,22,56,66,'o',24)+node('waipo',293.5,22,56,66,'o',24);
+  s+='<text class="heart" x="98.5" y="59">♥</text><text class="heart" x="285.5" y="59">♥</text>';
+  /* thế hệ 2: bác, chú, cô, bố | mẹ, cậu, dì */
+  s+=node('bofu',4,150,45,62,'n',20)+node('shushu',52,150,45,62,'n',20)+node('gugu',100,150,45,62,'n',20)+node('baba',148,150,45,62,'n',20);
+  s+=node('mama',215,150,45,62,'o',20)+node('jiujiu',263,150,45,62,'o',20)+node('yi',311,150,45,62,'o',20);
+  s+='<text class="heart" x="204" y="186">♥</text>';
+  /* thế hệ 3: anh chị em và bạn */
+  s+=node('gege',13,272,62,70,'m',24)+node('jiejie',81,272,62,70,'m',24)+node('me',149,272,62,70,'m',30)+node('didi',217,272,62,70,'m',24)+node('meimei',285,272,62,70,'m',24);
+  /* thế hệ 4-5: mở rộng */
+  s+=node('zhangfu',89,374,62,62,'m',20,1)+node('qizi',209,374,62,62,'m',20,1);
+  s+=node('erzi',109,486,62,62,'m',20,1)+node('nver',189,486,62,62,'m',20,1);
+  $('#tree').innerHTML='<div class="treebox"><svg viewBox="0 0 360 560" role="group" aria-label="Cây gia phả tiếng Trung">'+s+'</svg></div>';
+}
+var selId=null;
+function openSheet(id){
+  var p=P[id];selId=id;
+  $('#shZh').textContent=p.zh;$('#shPy').textContent=p.py;$('#shVi').textContent=p.vi;$('#shRel').textContent=p.rel;
+  $('#shSpk').dataset.say=p.zh;
+  $('#shEx').innerHTML=ex(p.ex);
+  $('#sheet').hidden=false;document.body.classList.add('sheet-open');
+  var sel=null;
+  $$('.person').forEach(function(b){var on=b.dataset.id===id;b.classList.toggle('sel',on);if(on)sel=b});
+  if(sel){var room=window.innerHeight-$('#sheet').offsetHeight-12,r=sel.getBoundingClientRect();
+    if(r.bottom>room)window.scrollBy(0,r.bottom-room+8)}
+  speakList([p.zh]);
+}
+function closeSheet(){$('#sheet').hidden=true;document.body.classList.remove('sheet-open');selId=null;$$('.person.sel').forEach(function(b){b.classList.remove('sel')})}
+
+/* ---------- vocab ---------- */
+// zh, pinyin, loại từ, nghĩa, nhóm, nguồn (tm = từ mới, bk = bài khóa, ex = mở rộng), ví dụ [zh,py,vi], ghi chú
+var V=[
+ ['爸爸','bàba','danh từ','bố','fam','tm',['我爸爸是律师。','Wǒ bàba shì lǜshī.','Bố tôi là luật sư.']],
+ ['妈妈','māma','danh từ','mẹ','fam','tm',['我妈妈是医生。','Wǒ māma shì yīshēng.','Mẹ tôi là bác sĩ.']],
+ ['哥哥','gēge','danh từ','anh trai','fam','tm',['他是我的哥哥。','Tā shì wǒ de gēge.','Anh ấy là anh trai của tôi.']],
+ ['姐姐','jiějie','danh từ','chị gái','fam','tm',['她是我的姐姐。','Tā shì wǒ de jiějie.','Chị ấy là chị gái của tôi.']],
+ ['弟弟','dìdi','danh từ','em trai','fam','tm',['他的弟弟','Tā de dìdi','Em trai của anh ấy']],
+ ['妹妹','mèimei','danh từ','em gái','fam','tm',['我的妹妹很可爱。','Wǒ de mèimei hěn kě’ài.','Em gái tôi rất dễ thương.']],
+ ['家人','jiārén','danh từ','người nhà','fam','tm',['我是他的家人。','Wǒ shì tā de jiārén.','Tôi là người nhà của anh ấy.']],
+ ['爷爷','yéye','danh từ','ông nội','fam','tm',['我爷爷今年七十岁。','Wǒ yéye jīnnián qīshí suì.','Ông nội tôi năm nay 70 tuổi.']],
+ ['奶奶','nǎinai','danh từ','bà nội','fam','tm',['我奶奶很可爱。','Wǒ nǎinai hěn kě’ài.','Bà nội tôi rất dễ thương.']],
+ ['外公','wàigōng','danh từ','ông ngoại','fam','tm',['这是我外公的照片。','Zhè shì wǒ wàigōng de zhàopiàn.','Đây là ảnh của ông ngoại tôi.']],
+ ['外婆','wàipó','danh từ','bà ngoại','fam','tm',['我外婆不工作。','Wǒ wàipó bù gōngzuò.','Bà ngoại tôi không đi làm.']],
+ ['伯父','bófù','danh từ','bác (anh trai của bố)','fam','tm',['他是我伯父。','Tā shì wǒ bófù.','Ông ấy là bác của tôi.']],
+ ['叔叔','shūshu','danh từ','chú (em trai của bố)','fam','tm',['我叔叔是医生。','Wǒ shūshu shì yīshēng.','Chú tôi là bác sĩ.']],
+ ['姑姑','gūgu','danh từ','cô (chị, em gái của bố)','fam','tm',['我姑姑是律师。','Wǒ gūgu shì lǜshī.','Cô tôi là luật sư.']],
+ ['舅舅','jiùjiu','danh từ','cậu (anh, em trai của mẹ)','fam','tm',['我舅舅在中国。','Wǒ jiùjiu zài Zhōngguó.','Cậu tôi ở Trung Quốc.']],
+ ['姨','yí','danh từ','dì (chị, em gái của mẹ)','fam','tm',['她是我姨。','Tā shì wǒ yí.','Bà ấy là dì của tôi.'],'Cũng nói 姨妈 yímā.'],
+ ['父亲','fùqīn','danh từ','cha (trang trọng)','fam','tm',['我父亲是律师。','Wǒ fùqīn shì lǜshī.','Cha tôi là luật sư.'],'Cùng nghĩa với 爸爸 nhưng trang trọng hơn.'],
+ ['母亲','mǔqīn','danh từ','mẹ (trang trọng)','fam','tm',['我母亲是医生。','Wǒ mǔqīn shì yīshēng.','Mẹ tôi là bác sĩ.'],'Cùng nghĩa với 妈妈 nhưng trang trọng hơn.'],
+ ['堂亲','tángqīn','danh từ','anh chị em họ bên nội','fam','tm',null,'Cùng họ nội, là con của bác hoặc chú.'],
+ ['表亲','biǎoqīn','danh từ','anh chị em họ khác họ','fam','tm',null,'Khác họ, là con của cô, cậu hoặc dì.'],
+ ['男朋友','nánpéngyou','danh từ','bạn trai','fam','bk',['他是我姐姐的男朋友。','Tā shì wǒ jiějie de nánpéngyou.','Anh ấy là bạn trai của chị tôi.']],
+ ['朋友','péngyou','danh từ','bạn bè','fam','bk',['他们是我的朋友。','Tāmen shì wǒ de péngyou.','Họ là bạn của tôi.']],
+ ['丈夫','zhàngfu','danh từ','chồng','fam','ex',['他是我丈夫。','Tā shì wǒ zhàngfu.','Anh ấy là chồng tôi.']],
+ ['妻子','qīzi','danh từ','vợ','fam','ex',['她是我妻子。','Tā shì wǒ qīzi.','Cô ấy là vợ tôi.']],
+ ['儿子','érzi','danh từ','con trai','fam','ex',['我有一个儿子。','Wǒ yǒu yí ge érzi.','Tôi có một con trai.']],
+ ['女儿','nǚ’ér','danh từ','con gái','fam','ex',['我有一个女儿。','Wǒ yǒu yí ge nǚ’ér.','Tôi có một con gái.']],
+
+ ['口','kǒu','lượng từ','người (đếm thành viên gia đình)','mw','tm',['我家有五口人。','Wǒ jiā yǒu wǔ kǒu rén.','Nhà tôi có năm người.']],
+ ['个','gè','lượng từ','cái, người (lượng từ chung)','mw','bk',['我有一个妹妹。','Wǒ yǒu yí ge mèimei.','Tôi có một em gái.']],
+ ['只','zhī','lượng từ','con (động vật)','mw','tm',['我家有一只狗。','Wǒ jiā yǒu yì zhī gǒu.','Nhà tôi có một con chó.']],
+ ['岁','suì','lượng từ','tuổi','mw','tm',['我今年二十三岁。','Wǒ jīnnián èrshísān suì.','Năm nay tôi 23 tuổi.']],
+
+ ['律师','lǜshī','danh từ','luật sư','job','tm',['我爸爸是律师。','Wǒ bàba shì lǜshī.','Bố tôi là luật sư.']],
+ ['医生','yīshēng','danh từ','bác sĩ','job','tm',['妈妈是医生。','Māma shì yīshēng.','Mẹ là bác sĩ.']],
+ ['学生','xuésheng','danh từ','học sinh','job','bk',['你弟弟和妹妹都是学生吗？','Nǐ dìdi hé mèimei dōu shì xuésheng ma?','Em trai và em gái bạn đều là học sinh à?']],
+ ['大学生','dàxuéshēng','danh từ','sinh viên đại học','job','bk',['我弟弟是大学生。','Wǒ dìdi shì dàxuéshēng.','Em trai tôi là sinh viên đại học.']],
+ ['中学生','zhōngxuéshēng','danh từ','học sinh trung học','job','bk',['我妹妹是中学生。','Wǒ mèimei shì zhōngxuéshēng.','Em gái tôi là học sinh trung học.']],
+ ['工作','gōngzuò','động từ, danh từ','làm việc, công việc','job','bk',['我妈妈不工作。','Wǒ māma bù gōngzuò.','Mẹ tôi không đi làm.']],
+ ['公司','gōngsī','danh từ','công ty','job','ex',['马克爸爸的公司在北京。','Mǎkè bàba de gōngsī zài Běijīng.','Công ty của bố Mark ở Bắc Kinh.']],
+
+ ['几','jǐ','đại từ','mấy','ask','bk',['你家有几口人？','Nǐ jiā yǒu jǐ kǒu rén?','Nhà bạn có mấy người?']],
+ ['多大','duō dà','cụm từ','bao nhiêu tuổi','ask','tm',['你多大了？','Nǐ duō dà le?','Bạn bao nhiêu tuổi?']],
+ ['谁','shéi','đại từ','ai','ask','tm',['这是谁？','Zhè shì shéi?','Đây là ai?']],
+ ['什么','shénme','đại từ','gì','ask','bk',['你爸爸做什么工作？','Nǐ bàba zuò shénme gōngzuò?','Bố bạn làm nghề gì?']],
+ ['他们','tāmen','đại từ','họ','ask','tm',['他们是我的家人。','Tāmen shì wǒ de jiārén.','Họ là người nhà của tôi.']],
+ ['和','hé','liên từ','và','ask','tm',['爸爸和妈妈。','Bàba hé māma.','Bố và mẹ.']],
+ ['都','dōu','phó từ','đều','ask','bk',['他们都在美国。','Tāmen dōu zài Měiguó.','Họ đều ở Mỹ.']],
+ ['还有','háiyǒu','cụm từ','còn có','ask','bk',['我家还有一只狗。','Wǒ jiā hái yǒu yì zhī gǒu.','Nhà tôi còn có một con chó.']],
+ ['今年','jīnnián','danh từ','năm nay','ask','tm',['你今年多大了？','Nǐ jīnnián duō dà le?','Năm nay bạn bao nhiêu tuổi?']],
+
+ ['照片','zhàopiàn','danh từ','ảnh','oth','tm',['妈妈的照片。','Māma de zhàopiàn.','Ảnh của mẹ.']],
+ ['可爱','kě’ài','tính từ','dễ thương','oth','tm',['我的妹妹很可爱。','Wǒ de mèimei hěn kě’ài.','Em gái tôi rất dễ thương.']],
+ ['漂亮','piàoliang','tính từ','đẹp','oth','bk',['她的狗又漂亮又可爱。','Tā de gǒu yòu piàoliang yòu kě’ài.','Chó của cô ấy vừa đẹp vừa dễ thương.']],
+ ['喜欢','xǐhuan','động từ','thích','oth','bk',['我很喜欢它。','Wǒ hěn xǐhuan tā.','Tôi rất thích nó.']],
+ ['狗','gǒu','danh từ','chó','oth','tm',['这是我的狗。','Zhè shì wǒ de gǒu.','Đây là chó của tôi.']],
+ ['对','duì','tính từ','đúng, phải','oth','bk',['对，他们都在美国。','Duì, tāmen dōu zài Měiguó.','Đúng, họ đều ở Mỹ.']],
+ ['在','zài','động từ','ở','oth','bk',['我妈妈在中国。','Wǒ māma zài Zhōngguó.','Mẹ tôi ở Trung Quốc.']],
+ ['看','kàn','động từ','xem, nhìn','oth','bk',['你看，这是他们的照片。','Nǐ kàn, zhè shì tāmen de zhàopiàn.','Bạn xem này, đây là ảnh của họ.']],
+ ['美国','Měiguó','danh từ','Mỹ','oth','bk',['他们都在美国。','Tāmen dōu zài Měiguó.','Họ đều ở Mỹ.']],
+ ['中国','Zhōngguó','danh từ','Trung Quốc','oth','bk',['我妈妈在中国。','Wǒ māma zài Zhōngguó.','Mẹ tôi ở Trung Quốc.']],
+ ['韩国','Hánguó','danh từ','Hàn Quốc','oth','bk',['我的爸爸在韩国。','Wǒ de bàba zài Hánguó.','Bố tôi ở Hàn Quốc.']]
+];
+var CATS=[['all','Tất cả'],['fam','Gia đình'],['mw','Lượng từ'],['job','Nghề nghiệp'],['ask','Hỏi đáp, đại từ'],['oth','Từ khác']];
+var cat='all',query='';
+function norm(s){return s.toLowerCase().replace(/đ/g,'d').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’']/g,'')}
+V.forEach(function(v){v.key=norm(v[0]+' '+v[1]+' '+v[3])});
+function buildChips(){
+  $('#chips').innerHTML=CATS.map(function(c){return '<button class="chip" type="button" data-cat="'+c[0]+'" aria-pressed="'+(c[0]===cat)+'">'+c[1]+'</button>'}).join('');
+}
+function drawVocab(){
+  var q=norm(query.trim());
+  var list=V.filter(function(v){return (cat==='all'||v[4]===cat)&&(!q||v.key.indexOf(q)>-1||v.key.replace(/ /g,'').indexOf(q.replace(/ /g,''))>-1)});
+  $('#count').textContent=list.length+' từ';
+  if(!list.length){$('#vlist').innerHTML='<div class="empty">Không tìm thấy từ nào. Thử gõ chữ Hán hoặc pinyin không dấu.</div>';return}
+  $('#vlist').innerHTML=list.map(function(v){
+    var tag=v[5]==='ex'?'<span class="tag">mở rộng</span>':v[5]==='bk'?'<span class="tag bk">bài khóa</span>':'';
+    return '<div class="vrow"><div class="vhead" role="button" tabindex="0" aria-expanded="false">'+
+      '<div class="vzh">'+v[0]+'</div><div class="vmid"><div class="vpy py">'+v[1]+'</div>'+
+      '<div class="vvi vi-t"><span class="pos">'+v[2]+'</span>'+v[3]+tag+'</div></div>'+spk(v[0])+'</div>'+
+      '<div class="vbody">'+(v[6]?ex(v[6]):'')+(v[7]?'<div class="vnote">'+v[7]+'</div>':'')+'</div></div>'}).join('');
+}
+
+/* ---------- patterns tab ---------- */
+var QA=[
+ ['Thành viên gia đình',[
+  [['你家有几口人？','Nǐ jiā yǒu jǐ kǒu rén?','Nhà bạn có mấy người?'],['我家有五口人。','Wǒ jiā yǒu wǔ kǒu rén.','Nhà tôi có năm người.']],
+  [['你家还有谁？','Nǐ jiā hái yǒu shéi?','Nhà bạn còn có ai?'],['我还有一个妹妹。','Wǒ hái yǒu yí ge mèimei.','Tôi còn có một em gái.']],
+  [['这是谁？','Zhè shì shéi?','Đây là ai?'],['这是我妈妈。','Zhè shì wǒ māma.','Đây là mẹ tôi.']],
+  [['他是谁？是你哥哥吗？','Tā shì shéi? Shì nǐ gēge ma?','Anh ấy là ai? Là anh trai bạn à?'],['不是，他是我姐姐的男朋友。','Bú shì, tā shì wǒ jiějie de nánpéngyou.','Không phải, anh ấy là bạn trai của chị tôi.']]]],
+ ['Tuổi tác',[
+  [['你多大了？','Nǐ duō dà le?','Bạn bao nhiêu tuổi?'],['我二十岁。','Wǒ èrshí suì.','Tôi 20 tuổi.']],
+  [['你今年多大了？','Nǐ jīnnián duō dà le?','Năm nay bạn bao nhiêu tuổi?'],['我今年二十三岁。','Wǒ jīnnián èrshísān suì.','Năm nay tôi 23 tuổi.']],
+  [['你妹妹今年多大？','Nǐ mèimei jīnnián duō dà?','Em gái bạn năm nay bao nhiêu tuổi?'],['她今年十二岁。','Tā jīnnián shí’èr suì.','Em ấy năm nay 12 tuổi.']],
+  [['你哥哥、姐姐多大了？','Nǐ gēge, jiějie duō dà le?','Anh trai, chị gái bạn bao nhiêu tuổi?'],['我哥哥二十八岁，姐姐三十岁。','Wǒ gēge èrshíbā suì, jiějie sānshí suì.','Anh trai tôi 28 tuổi, chị gái tôi 30 tuổi.']]]],
+ ['Nghề nghiệp',[
+  [['你爸爸、妈妈做什么工作？','Nǐ bàba, māma zuò shénme gōngzuò?','Bố mẹ bạn làm nghề gì?'],['我爸爸是律师，我妈妈不工作。','Wǒ bàba shì lǜshī, wǒ māma bù gōngzuò.','Bố tôi là luật sư, mẹ tôi không đi làm.']],
+  [['你哥哥、姐姐做什么工作？','Nǐ gēge, jiějie zuò shénme gōngzuò?','Anh trai, chị gái bạn làm nghề gì?'],['我哥哥是医生，姐姐是律师。','Wǒ gēge shì yīshēng, jiějie shì lǜshī.','Anh trai tôi là bác sĩ, chị gái tôi là luật sư.']],
+  [['你弟弟和妹妹都是学生吗？','Nǐ dìdi hé mèimei dōu shì xuésheng ma?','Em trai và em gái bạn đều là học sinh à?'],['对，我弟弟是大学生，我妹妹是中学生。','Duì, wǒ dìdi shì dàxuéshēng, wǒ mèimei shì zhōngxuéshēng.','Ừ, em trai tôi là sinh viên đại học, em gái tôi là học sinh trung học.']]]]
+];
+var GR=[
+ {t:'Nói số người trong nhà',f:'我家有 + số + 口人。',open:true,
+  n:['口 là lượng từ dùng riêng để đếm thành viên trong gia đình.','几 hỏi số lượng nhỏ, câu trả lời là một con số cụ thể.'],
+  e:[['你家有几口人？','Nǐ jiā yǒu jǐ kǒu rén?','Nhà bạn có mấy người?'],['我家有五口人。','Wǒ jiā yǒu wǔ kǒu rén.','Nhà tôi có năm người.']]},
+ {t:'Liệt kê thành viên',f:'……、一个 + người、一个 + người，还有我。',
+  n:['Dùng dấu 、 để ngăn các thành viên, 还有 đứng trước phần cuối.','个 là lượng từ chung đi với người. Số 2 đứng trước lượng từ đọc là 两, không nói 二个.'],
+  e:[['爸爸、妈妈、一个弟弟、一个妹妹，还有我。','Bàba, māma, yí ge dìdi, yí ge mèimei, hái yǒu wǒ.','Bố, mẹ, một em trai, một em gái và tôi.'],['我有两个姐姐。','Wǒ yǒu liǎng ge jiějie.','Tôi có hai chị gái.']]},
+ {t:'Giới thiệu người: 是 và 不是',f:'他 / 她 + 是 + 我(的) + người thân',
+  n:['Phủ định đặt 不 trước 是, đọc thanh 2: bú shì.','他 (nam), 她 (nữ) và 他们 (họ) đều đọc là tā, tāmen.'],
+  e:[['他是我的哥哥。','Tā shì wǒ de gēge.','Anh ấy là anh trai của tôi.'],['他不是我哥哥，他是我姐姐的男朋友。','Tā bú shì wǒ gēge, tā shì wǒ jiějie de nánpéngyou.','Anh ấy không phải anh trai tôi, anh ấy là bạn trai của chị tôi.']]},
+ {t:'Hỏi người trong ảnh: 谁',f:'这 / 他 + 是 + 谁？  这是 + 谁 + 的照片？',
+  n:['Từ để hỏi 谁 đứng đúng vị trí của thông tin cần hỏi, không đưa lên đầu câu.','Muốn hỏi có phải không thì thêm 吗 ở cuối câu.'],
+  e:[['这是谁？','Zhè shì shéi?','Đây là ai?'],['这是你家人的照片吗？','Zhè shì nǐ jiārén de zhàopiàn ma?','Đây là ảnh người nhà bạn à?']]},
+ {t:'Sở hữu: 的',f:'A + 的 + B',
+  n:['Với người thân rất gần có thể bỏ 的: 我爸爸, 我家.','Khi nói về đồ vật hoặc quan hệ hai tầng thì giữ 的: 妈妈的照片, 我姐姐的男朋友.'],
+  e:[['我的妈妈 / 我妈妈','Wǒ de māma / wǒ māma','Mẹ của tôi'],['这是妈妈的照片。','Zhè shì māma de zhàopiàn.','Đây là ảnh của mẹ.']]},
+ {t:'Và, đều: 和 và 都',f:'A 和 B + 都 + động từ',
+  n:['和 chỉ nối danh từ hoặc đại từ, không nối hai câu.','都 đứng sau chủ ngữ, trước động từ.'],
+  e:[['你弟弟和妹妹都是学生吗？','Nǐ dìdi hé mèimei dōu shì xuésheng ma?','Em trai và em gái bạn đều là học sinh à?'],['他们都在美国。','Tāmen dōu zài Měiguó.','Họ đều ở Mỹ.']]},
+ {t:'Hỏi nghề nghiệp',f:'你爸爸做什么工作？ → 我爸爸是 + nghề。',
+  n:['做什么工作 nghĩa là làm nghề gì.','Không đi làm thì nói 不工作.'],
+  e:[['我哥哥是医生，姐姐是律师。','Wǒ gēge shì yīshēng, jiějie shì lǜshī.','Anh tôi là bác sĩ, chị tôi là luật sư.'],['我妈妈不工作。','Wǒ māma bù gōngzuò.','Mẹ tôi không đi làm.']]},
+ {t:'Hỏi và nói tuổi: 多大, 岁',f:'你(今年)多大了？ → 我(今年) + số + 岁。',
+  n:['岁 là lượng từ chỉ tuổi, đứng sau số.','今年 (năm nay) có thể đặt trước 多大 hoặc trước số tuổi.','Hỏi trẻ nhỏ thường dùng 几岁.'],
+  e:[['你今年多大了？','Nǐ jīnnián duō dà le?','Năm nay bạn bao nhiêu tuổi?'],['我今年二十三岁。','Wǒ jīnnián èrshísān suì.','Năm nay tôi 23 tuổi.']]},
+ {t:'Thú cưng: 只 và 又……又……',f:'家 + 有 + 一只 + 狗  ·  又 + tính từ + 又 + tính từ',
+  n:['只 là lượng từ của động vật.','又……又…… nghĩa là vừa… vừa…, nối hai tính từ.'],
+  e:[['美京家有一只狗。','Měijīng jiā yǒu yì zhī gǒu.','Nhà Mỹ Kinh có một con chó.'],['她的狗又漂亮又可爱。','Tā de gǒu yòu piàoliang yòu kě’ài.','Chó của cô ấy vừa đẹp vừa dễ thương.']]},
+ {t:'Còn ai, ở đâu: 还 và 在',f:'你家还有谁？  人 + 在 + nơi',
+  n:['还有 nghĩa là còn có.','在 đứng trước nơi chốn để nói ở đâu.'],
+  e:[['我还有一个妹妹。','Wǒ hái yǒu yí ge mèimei.','Tôi còn có một em gái.'],['我的爸爸在韩国，我妈妈在中国。','Wǒ de bàba zài Hánguó, wǒ māma zài Zhōngguó.','Bố tôi ở Hàn Quốc, mẹ tôi ở Trung Quốc.']]}
+];
+var MW=[['口','kǒu','Số người trong gia đình','五口人 wǔ kǒu rén'],['个','gè','Người và đồ vật nói chung','一个弟弟 yí ge dìdi'],['只','zhī','Động vật','一只狗 yì zhī gǒu'],['岁','suì','Tuổi','二十三岁 èrshísān suì']];
+var STEPS=[
+ ['Nói số người','我家有 ___ 口人。','Wǒ jiā yǒu ___ kǒu rén.','Nhà tôi có ___ người.'],
+ ['Liệt kê thành viên','爸爸、妈妈、一个___、一个___，还有我。','Bàba, māma, yí ge ___, yí ge ___, hái yǒu wǒ.','Bố, mẹ, một ___, một ___ và tôi.'],
+ ['Nói nghề nghiệp','我爸爸是___，我妈妈不工作。','Wǒ bàba shì ___, wǒ māma bù gōngzuò.','Bố tôi là ___, mẹ tôi không đi làm.'],
+ ['Nói tuổi và nơi ở','我妹妹今年___岁。他们都在___。','Wǒ mèimei jīnnián ___ suì. Tāmen dōu zài ___.','Em gái tôi năm nay ___ tuổi. Họ đều ở ___.'],
+ ['Thêm điều bạn thích','我家还有一只狗，它又___又___。我很喜欢它。','Wǒ jiā hái yǒu yì zhī gǒu, tā yòu ___ yòu ___. Wǒ hěn xǐhuan tā.','Nhà tôi còn có một con chó, nó vừa ___ vừa ___. Tôi rất thích nó.']
+];
+var MODELS=[
+ ['Mẫu 1: bố mẹ và anh chị em',
+  '我家有五口人：爸爸、妈妈、一个弟弟、一个妹妹，还有我。我爸爸是律师，我妈妈不工作。我弟弟是大学生，我妹妹是中学生，她今年十二岁。我家还有一只狗，它又漂亮又可爱。我很喜欢它。',
+  'Wǒ jiā yǒu wǔ kǒu rén: bàba, māma, yí ge dìdi, yí ge mèimei, hái yǒu wǒ. Wǒ bàba shì lǜshī, wǒ māma bù gōngzuò. Wǒ dìdi shì dàxuéshēng, wǒ mèimei shì zhōngxuéshēng, tā jīnnián shí’èr suì. Wǒ jiā hái yǒu yì zhī gǒu, tā yòu piàoliang yòu kě’ài. Wǒ hěn xǐhuan tā.',
+  'Nhà tôi có năm người: bố, mẹ, một em trai, một em gái và tôi. Bố tôi là luật sư, mẹ tôi không đi làm. Em trai tôi là sinh viên đại học, em gái tôi là học sinh trung học, em ấy năm nay 12 tuổi. Nhà tôi còn có một con chó, nó vừa đẹp vừa dễ thương. Tôi rất thích nó.'],
+ ['Mẫu 2: có chồng và con (từ mở rộng)',
+  '我家有四口人：丈夫、一个儿子、一个女儿，还有我。我丈夫是医生。我儿子今年八岁，我女儿今年五岁。我爸爸、妈妈在中国。',
+  'Wǒ jiā yǒu sì kǒu rén: zhàngfu, yí ge érzi, yí ge nǚ’ér, hái yǒu wǒ. Wǒ zhàngfu shì yīshēng. Wǒ érzi jīnnián bā suì, wǒ nǚ’ér jīnnián wǔ suì. Wǒ bàba, māma zài Zhōngguó.',
+  'Nhà tôi có bốn người: chồng, một con trai, một con gái và tôi. Chồng tôi là bác sĩ. Con trai tôi năm nay 8 tuổi, con gái tôi năm nay 5 tuổi. Bố mẹ tôi ở Trung Quốc.']
+];
+var PHOTO=[
+ ['这是我爸爸。','Zhè shì wǒ bàba.','Đây là bố tôi.'],
+ ['他今年五十岁，是律师。','Tā jīnnián wǔshí suì, shì lǜshī.','Ông ấy năm nay 50 tuổi, là luật sư.'],
+ ['这是我姐姐，她是医生。','Zhè shì wǒ jiějie, tā shì yīshēng.','Đây là chị tôi, chị ấy là bác sĩ.'],
+ ['他是我姐姐的男朋友。','Tā shì wǒ jiějie de nánpéngyou.','Anh ấy là bạn trai của chị tôi.'],
+ ['他们都在中国。','Tāmen dōu zài Zhōngguó.','Họ đều ở Trung Quốc.']
+];
+var DLG=[
+ ['Bài khóa 1','Hǎilún giới thiệu gia đình',[
+  ['Ōuwén 欧文','你家有几口人？','Nǐ jiā yǒu jǐ kǒu rén?','Nhà bạn có mấy người?'],
+  ['Hǎilún 海伦','我家有五口人，爸爸、妈妈、一个弟弟、一个妹妹，还有我。你看，这是他们的照片。','Wǒ jiā yǒu wǔ kǒu rén, bàba, māma, yí ge dìdi, yí ge mèimei, hái yǒu wǒ. Nǐ kàn, zhè shì tāmen de zhàopiàn.','Nhà mình có năm người: bố, mẹ, một em trai, một em gái và mình. Bạn xem này, đây là ảnh của họ.'],
+  ['Ōuwén 欧文','你爸爸、妈妈做什么工作？','Nǐ bàba, māma zuò shénme gōngzuò?','Bố mẹ bạn làm nghề gì?'],
+  ['Hǎilún 海伦','我爸爸是律师，我妈妈不工作。','Wǒ bàba shì lǜshī, wǒ māma bù gōngzuò.','Bố mình là luật sư, mẹ mình không đi làm.'],
+  ['Ōuwén 欧文','你弟弟和妹妹都是学生吗？','Nǐ dìdi hé mèimei dōu shì xuésheng ma?','Em trai và em gái bạn đều là học sinh à?'],
+  ['Hǎilún 海伦','对，我弟弟是大学生，我妹妹是中学生。','Duì, wǒ dìdi shì dàxuéshēng, wǒ mèimei shì zhōngxuéshēng.','Ừ, em trai mình là sinh viên đại học, em gái mình là học sinh trung học.'],
+  ['Ōuwén 欧文','你妹妹今年多大？','Nǐ mèimei jīnnián duō dà?','Em gái bạn năm nay bao nhiêu tuổi?'],
+  ['Hǎilún 海伦','十二岁。','Shí’èr suì.','12 tuổi.'],
+  ['Ōuwén 欧文','你的家人都在美国吗？','Nǐ de jiārén dōu zài Měiguó ma?','Người nhà bạn đều ở Mỹ à?'],
+  ['Hǎilún 海伦','对，他们都在美国。','Duì, tāmen dōu zài Měiguó.','Đúng, họ đều ở Mỹ.']]],
+ ['Bài khóa 2','Mỹ Kinh và bức ảnh gia đình',[
+  ['Xiǎomíng 小明','美京，这是你家人的照片吗？','Měijīng, zhè shì nǐ jiārén de zhàopiàn ma?','Mỹ Kinh, đây là ảnh gia đình bạn à?'],
+  ['Měijīng 美京','是。','Shì.','Vâng.'],
+  ['Xiǎomíng 小明','他是谁？是你哥哥吗？','Tā shì shéi? Shì nǐ gēge ma?','Anh ấy là ai? Là anh trai bạn à?'],
+  ['Měijīng 美京','不是，他是我姐姐的男朋友。这是我的爸爸、妈妈，这是我哥哥、姐姐。','Bú shì, tā shì wǒ jiějie de nánpéngyou. Zhè shì wǒ de bàba, māma, zhè shì wǒ gēge, jiějie.','Không phải, anh ấy là bạn trai của chị mình. Đây là bố mẹ mình, đây là anh trai và chị gái mình.'],
+  ['Xiǎomíng 小明','你家还有一只狗？','Nǐ jiā háiyǒu yì zhī gǒu?','Nhà bạn còn có một con chó à?'],
+  ['Měijīng 美京','对，她是我妹妹。她又漂亮又可爱，我很喜欢她。','Duì, tā shì wǒ mèimei. Tā yòu piàoliang yòu kě’ài, wǒ hěn xǐhuan tā.','Đúng, nó là em gái mình. Nó vừa đẹp vừa dễ thương, mình rất thích nó. (Bài dùng 她 vì coi chú chó như em gái. Bình thường dùng 它 cho con vật.)'],
+  ['Xiǎomíng 小明','她多大？','Tā duō dà?','Nó mấy tuổi?'],
+  ['Měijīng 美京','她今年三岁。','Tā jīnnián sān suì.','Nó năm nay 3 tuổi.'],
+  ['Xiǎomíng 小明','你哥哥、姐姐做什么工作？','Nǐ gēge, jiějie zuò shénme gōngzuò?','Anh trai và chị gái bạn làm nghề gì?'],
+  ['Měijīng 美京','我哥哥是医生，姐姐是律师。','Wǒ gēge shì yīshēng, jiějie shì lǜshī.','Anh trai mình là bác sĩ, chị gái mình là luật sư.']]]
+];
+function buildPatterns(){
+  $('#subnav').innerHTML=[['sec-qa','Hỏi đáp'],['sec-gr','Ngữ pháp'],['sec-mw','Lượng từ'],['sec-intro','Giới thiệu'],['sec-dlg','Hội thoại']].map(function(s){return '<button class="chip" type="button" data-go="'+s[0]+'">'+s[1]+'</button>'}).join('');
+  $('#qaList').innerHTML=QA.map(function(g){return '<h3 class="qh">'+g[0]+'</h3>'+g[1].map(function(q){return '<div class="qa"><div><span class="lab">Q</span>'+exInline(q[0])+'</div><div class="a"><span class="lab">A</span>'+exInline(q[1])+'</div></div>'}).join('')}).join('');
+  $('#grList').innerHTML=GR.map(function(g){return '<details class="gr"'+(g.open?' open':'')+'><summary><span class="t">'+g.t+'</span><span class="f">'+g.f+'</span></summary><div class="gb"><ul>'+
+    g.n.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>'+g.e.map(ex).join('')+'</div></details>'}).join('');
+  $('#mwBody').innerHTML=MW.map(function(m){return '<tr><td><span class="big">'+m[0]+'</span><div class="py">'+m[1]+'</div></td><td>'+m[2]+'</td><td class="zh">'+m[3].split(' ')[0]+'<div class="py">'+m[3].split(' ').slice(1).join(' ')+'</div></td></tr>'}).join('');
+  $('#steps').innerHTML=STEPS.map(function(s){return '<li><b>'+s[0]+'</b><div class="tpl">'+s[1]+'</div><div class="py">'+s[2]+'</div><div class="vi-t" style="font-size:14px">'+s[3]+'</div></li>'}).join('');
+  $('#models').innerHTML=MODELS.map(function(m,i){return '<div class="model"><div class="head"><b>'+m[0]+'</b><button class="btn" type="button" data-say="'+m[1]+'">'+ICON+' Nghe</button></div><div class="zh">'+m[1]+'</div><div class="py">'+m[2]+'</div><div class="vi-t">'+m[3]+'</div></div>'}).join('');
+  $('#photo').innerHTML='<div class="model">'+PHOTO.map(function(p){return ex(p)}).join('')+'</div>';
+  $('#dlgs').innerHTML=DLG.map(function(d,i){
+    return '<div class="dlg"><div class="head"><div><b>'+d[0]+'</b><div class="muted" style="font-size:13px">'+d[1]+'</div></div><button class="btn" type="button" data-all="'+i+'">'+ICON+' Nghe cả bài</button></div>'+
+    d[2].map(function(l){return '<div class="line"><div class="spkr">'+l[0].split(' ')[0]+'<span>'+l[0].split(' ')[1]+'</span></div><div class="body"><div class="zh">'+l[1]+'</div><div class="py">'+l[2]+'</div><div class="vi-t">'+l[3]+'</div></div>'+spk(l[1])+'</div>'}).join('')+'</div>'}).join('');
+}
+function exInline(a){return '<div class="ex" style="margin-top:2px;display:inline-flex;vertical-align:top;width:calc(100% - 2em)">'+spk(a[0])+'<div><div class="zh">'+a[0]+'</div><div class="py">'+a[1]+'</div><div class="vi-t">'+a[2]+'</div></div></div>'}
+
+/* ---------- toggles ---------- */
+function setFlag(cls,btn,on,key){document.body.classList.toggle(cls,on);btn.setAttribute('aria-pressed',on?'true':'false');ls.set(key,on?'1':'0')}
+
+/* ---------- tabs ---------- */
+var TABS=['cay-gia-pha','tu-vung','mau-cau'];
+function show(id){
+  if(TABS.indexOf(id)<0)id=TABS[0];
+  TABS.forEach(function(t){$('#t-'+t).setAttribute('aria-selected',t===id?'true':'false');$('#p-'+t).hidden=t!==id});
+  closeSheet();ls.set('tab',id);
+  var top=$('.bar').offsetTop;if(window.pageYOffset>top)window.scrollTo(0,top);
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',function(e){
+  var t=e.target;
+  var sp=t.closest('[data-say]');if(sp){e.stopPropagation();speakList([sp.dataset.say]);return}
+  var all=t.closest('[data-all]');if(all){speakList(DLG[+all.dataset.all][2].map(function(l){return l[1]}));return}
+  var pe=t.closest('.person');
+  if(pe){
+    var hide=document.body.classList.contains('quiz')||document.body.classList.contains('no-vi');
+    if(hide&&pe.dataset.id!=='me'&&!pe.classList.contains('on')){pe.classList.add('on');return}
+    if(selId===pe.dataset.id)closeSheet();else openSheet(pe.dataset.id);return}
+  var vt=t.closest('.vi-t');if(vt&&document.body.classList.contains('no-vi')){vt.classList.toggle('on')}
+  var vh=t.closest('.vhead');if(vh){var r=vh.parentNode;r.classList.toggle('open');vh.setAttribute('aria-expanded',r.classList.contains('open')?'true':'false');return}
+  var go=t.closest('[data-go]');if(go){var el=document.getElementById(go.dataset.go);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});return}
+  var ch=t.closest('[data-cat]');if(ch){cat=ch.dataset.cat;buildChips();drawVocab();return}
+  var tb=t.closest('[data-tab]');if(tb){location.hash=tb.dataset.tab;return}
+});
+document.addEventListener('keydown',function(e){
+  if((e.key==='Enter'||e.key===' ')&&e.target.classList&&(e.target.classList.contains('vhead')||e.target.classList.contains('person'))){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}
+});
+$('#q').addEventListener('input',function(e){query=e.target.value;drawVocab()});
+$('#shX').addEventListener('click',closeSheet);
+$('#tgPy').addEventListener('click',function(){setFlag('no-py',this,!document.body.classList.contains('no-py'),'noPy')});
+$('#tgVi').addEventListener('click',function(){var on=!document.body.classList.contains('no-vi');setFlag('no-vi',this,on,'noVi');$$('.person.on').forEach(function(x){x.classList.remove('on')});$$('.vi-t.on').forEach(function(x){x.classList.remove('on')})});
+$('#tgQuiz').addEventListener('click',function(){var on=!document.body.classList.contains('quiz');setFlag('quiz',this,on,'quiz');$$('.person.on').forEach(function(x){x.classList.remove('on')});if(on)closeSheet()});
+window.addEventListener('hashchange',function(){show(location.hash.replace('#',''))});
+
+/* ---------- start ---------- */
+buildTree();buildChips();drawVocab();buildPatterns();
+if(ls.get('noPy','0')==='1')setFlag('no-py',$('#tgPy'),true,'noPy');
+if(ls.get('noVi','0')==='1')setFlag('no-vi',$('#tgVi'),true,'noVi');
+show(location.hash.replace('#','')||ls.get('tab','cay-gia-pha'));
+})();
+</script>
+
+</body></html>
