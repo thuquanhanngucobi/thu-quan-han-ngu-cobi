@@ -1,0 +1,1096 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thư Quán CoBi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Serif+Display:wght@500;700&family=Noto+Serif+SC:wght@500;700&display=swap">
+<style>
+/* Bố cục: toàn cảnh giảng đường (SVG) → thư chủ và bảng từ ở trên, 10 bàn học 2 hàng ở dưới; bảng điều khiển phủ lên cảnh */
+:root{
+  --page:#d9b886; --page-line:#c8a16d;
+  --paper:#f7ecd1; --paper-2:#ecdcb6;
+  --ink:#2b190c; --ink-soft:#6a4a30;
+  --wood:#7b4c2a; --edge:#4b2b15;
+  --seal:#b3302a; --on-seal:#fff4e2;
+  --jade:#2c6a4d; --gold:#b9852a; --on-gold:#24130a;
+  --lacquer:#37160f; --leaf:#ecc86c;
+  --font-display:'Noto Serif Display','Noto Serif',Georgia,serif;
+  --font-han:'Noto Serif SC','Noto Serif Display','Songti SC','SimSun',serif;
+  --font-body:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#1d140e; --page-line:#291b13;
+    --paper:#2c1f15; --paper-2:#392a1b;
+    --ink:#f3e4c6; --ink-soft:#c8ab8c;
+    --wood:#9a6639; --edge:#0e0803;
+    --seal:#df5a4b; --on-seal:#2a0e08;
+    --jade:#72c5a0; --gold:#e1b455; --on-gold:#24130a;
+    --lacquer:#2a100a; --leaf:#efcd78;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --page:#1d140e; --page-line:#291b13;
+  --paper:#2c1f15; --paper-2:#392a1b;
+  --ink:#f3e4c6; --ink-soft:#c8ab8c;
+  --wood:#9a6639; --edge:#0e0803;
+  --seal:#df5a4b; --on-seal:#2a0e08;
+  --jade:#72c5a0; --gold:#e1b455; --on-gold:#24130a;
+  --lacquer:#2a100a; --leaf:#efcd78;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{color-scheme:light}
+body{
+  margin:0;background-color:var(--page);
+  background-image:repeating-linear-gradient(90deg,transparent 0 158px,var(--page-line) 158px 160px);
+  color:var(--ink);font:400 15px/1.55 var(--font-body);
+}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hall{
+  max-width:1040px;margin:0 auto;display:grid;gap:16px;
+  padding-block:16px 48px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.hall>*{min-width:0}
+:focus-visible{outline:3px solid var(--seal);outline-offset:2px}
+[hidden]{display:none!important}
+
+.btn{
+  font:600 .95rem var(--font-body);color:var(--ink);background:var(--paper);
+  border:2px solid var(--edge);border-radius:3px;padding:9px 16px;cursor:pointer;
+  box-shadow:0 3px 0 var(--edge);transition:transform .08s;
+}
+.btn:hover:not(:disabled){background:var(--paper-2)}
+.btn:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 var(--edge)}
+.btn:disabled{opacity:.55;cursor:default}
+.btn.primary{background:var(--seal);color:var(--on-seal)}
+.btn.primary:hover:not(:disabled){background:var(--seal);filter:brightness(1.08)}
+.btn.danger{color:var(--seal);border-color:var(--seal);box-shadow:0 3px 0 var(--seal)}
+.btn.small{padding:5px 11px;font-size:.85rem}
+
+.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.brand{margin:0;font:700 1.35rem/1.2 var(--font-display)}
+.role{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.who{background:var(--paper);border:2px solid var(--edge);border-radius:3px;padding:4px 10px;font-size:.85rem;font-weight:600}
+.conn{margin:0;padding:10px 14px;background:var(--paper-2);border:2px dashed var(--edge);border-radius:3px}
+
+.panel{
+  background:var(--paper);border:2px solid var(--edge);border-radius:4px;
+  box-shadow:0 4px 0 var(--edge);padding:16px;display:grid;gap:10px;align-content:start;
+}
+.panel h2{margin:0;font:700 1.2rem/1.3 var(--font-display);text-wrap:balance}
+.sub{margin:0;color:var(--ink-soft)}
+.lbl{display:block;margin:0;font:600 .76rem var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.count{color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.field{
+  width:100%;font:500 1rem var(--font-body);color:var(--ink);background:var(--paper);
+  border:2px solid var(--edge);border-radius:3px;padding:9px 12px;
+}
+.lined{
+  width:100%;display:block;resize:vertical;min-height:6rem;
+  font:500 1.1rem/2rem var(--font-han);color:var(--ink);background-color:var(--paper);
+  background-image:repeating-linear-gradient(transparent 0 calc(2rem - 1px),var(--paper-2) calc(2rem - 1px) 2rem);
+  background-attachment:local;border:2px solid var(--edge);border-radius:3px;padding:0 12px;
+}
+.chip{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;padding:10px 14px;
+  background:var(--lacquer);color:var(--leaf);border-radius:2px;
+  box-shadow:inset 0 0 0 2px var(--lacquer),inset 0 0 0 3px var(--leaf);
+}
+.chip strong{font:700 1.5rem/1.3 var(--font-han)}
+.chip span{color:#f1e2c6}
+.w-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.sentence{
+  margin:0;padding:12px 14px;font:500 1.35rem/1.7 var(--font-han);overflow-wrap:anywhere;
+  background:var(--paper-2);border:2px dashed var(--edge);border-radius:3px;
+}
+.sentence.fix{border-style:solid;border-color:var(--jade)}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.meta{margin-left:auto;background:var(--paper);border:2px solid var(--edge);border-radius:3px;padding:6px 10px;font-size:.88rem;font-variant-numeric:tabular-nums}
+
+/* ---------- toàn cảnh giảng đường ---------- */
+.stage-scroll{overflow-x:auto;border:6px solid var(--wood);outline:2px solid var(--edge);border-radius:4px;box-shadow:0 10px 22px rgba(0,0,0,.28)}
+.stage{position:relative;aspect-ratio:1000/700;container-type:inline-size;background:#cfa670}
+.stage>svg.bg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.board{
+  position:absolute;left:31%;top:14%;width:38%;height:19.5%;
+  display:grid;align-content:center;justify-items:center;text-align:center;gap:.4cqw;
+  padding:0 1%;overflow:hidden;color:#2a1a10;font-family:var(--font-han);
+}
+.board>*{margin:0;max-width:100%;overflow-wrap:anywhere}
+.b-label{font:600 1.15cqw var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:#7a4a2a}
+.b-main{font-weight:700;line-height:1.1;font-size:6.4cqw}
+.b-main.m2{font-size:4.6cqw}.b-main.m3{font-size:3.2cqw}.b-main.m4{font-size:2.2cqw}
+.b-main.small{font:600 1.9cqw/1.25 var(--font-body)}
+.b-extra{font:500 1.5cqw/1.3 var(--font-body);color:#4b2b15;display:grid;gap:0}
+.b-hint{font:500 1.2cqw/1.35 var(--font-body);color:#6a4a30}
+.b-main.rolling{filter:blur(1.2px);opacity:.9}
+.stamp{animation:stamp .45s ease-out}
+@keyframes stamp{0%{transform:scale(1.5);opacity:0}60%{transform:scale(.96);opacity:1}100%{transform:scale(1)}}
+
+.seat{
+  position:absolute;width:14%;aspect-ratio:160/170;transform:translateX(-50%);
+  padding:0;border:0;background:none;color:inherit;font:inherit;cursor:pointer;
+}
+.seat svg{width:100%;height:100%;display:block;overflow:visible}
+.seat:disabled{cursor:default}
+.seat .cushion{transition:fill .15s}
+.seat.empty:hover:not(:disabled) .cushion{fill:#e7c56e}
+.seat.empty:hover:not(:disabled) svg{filter:drop-shadow(0 0 5px #f4d77d)}
+.seat.sel svg{filter:drop-shadow(0 0 4px #b3302a) drop-shadow(0 0 8px #b3302a)}
+.seat.mine svg{filter:drop-shadow(0 0 4px #e1b455) drop-shadow(0 0 8px #e1b455)}
+.plate{
+  position:absolute;left:50%;bottom:1%;transform:translateX(-50%);max-width:124%;
+  background:#37160f;color:#ecc86c;font:600 clamp(8px,1.3cqw,14px)/1.2 var(--font-body);
+  padding:.25em .6em;border-radius:2px;box-shadow:inset 0 0 0 1px #ecc86c;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.seat.empty .plate{background:rgba(55,22,15,.62);color:#f1e2c6;box-shadow:none;font-weight:500}
+.seat.mine .plate{background:#ecc86c;color:#24130a}
+.badge{
+  position:absolute;right:6%;top:30%;min-width:1.6em;height:1.6em;padding:0 .3em;display:grid;place-items:center;
+  border-radius:99px;background:#2c6a4d;color:#fff4e2;font:700 clamp(9px,1.3cqw,14px)/1 var(--font-body);
+  border:2px solid #f4e6c4;
+}
+.badge.w{background:#b9852a}
+.medal{
+  position:absolute;left:6%;top:30%;width:1.9em;height:1.9em;display:grid;place-items:center;border-radius:99px;
+  font:700 clamp(9px,1.3cqw,14px)/1 var(--font-body);color:#24130a;border:2px solid #fff4e2;
+}
+.medal.r1{background:#e1b455}.medal.r2{background:#c9c4b8}.medal.r3{background:#c7875a}
+.flag{position:absolute;left:50%;top:33%;transform:translateX(-50%);background:#ecc86c;color:#24130a;font:700 clamp(8px,1.1cqw,12px)/1 var(--font-body);padding:.25em .6em;border-radius:99px;white-space:nowrap}
+
+/* bảng vàng, bài làm */
+.cols{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.cols>*{min-width:0}
+@media (min-width:760px){.cols{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}}
+.rank{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.rk-row{
+  font:inherit;color:var(--ink);text-align:left;width:100%;
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;
+  padding:8px 10px;background:var(--paper-2);border:2px solid var(--edge);border-radius:3px;
+}
+button.rk-row{cursor:pointer}
+button.rk-row:hover{background:var(--paper)}
+.rk-row.sel{outline:3px solid var(--seal);outline-offset:1px}
+.rk-row.mine{outline:3px solid var(--gold);outline-offset:1px}
+.rk-badge{font:700 .7rem var(--font-body);letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;padding:3px 7px;border-radius:2px;border:1px solid var(--edge);background:var(--paper);color:var(--ink)}
+.rk-badge.r1{background:var(--gold);color:var(--on-gold)}
+.rk-badge.r2{background:var(--ink-soft);color:var(--paper)}
+.rk-badge.r3{background:var(--wood);color:#fff4e2}
+.rk-name{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rk-time{font-size:.85rem;color:var(--ink-soft);font-variant-numeric:tabular-nums;white-space:nowrap}
+.note{
+  position:fixed;z-index:20;left:50%;transform:translateX(-50%);
+  bottom:calc(16px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 32px);
+  background:var(--lacquer);color:var(--leaf);padding:10px 16px;border-radius:3px;
+  box-shadow:0 6px 18px rgba(0,0,0,.35);font-weight:600;text-align:center;
+}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<script>
+/* ===== CẤU HÌNH ĐỒNG BỘ =====
+   Dán địa chỉ Firebase Realtime Database của bạn vào đây, ví dụ:
+   'https://ten-du-an-default-rtdb.asia-southeast1.firebasedatabase.app'
+   Để trống thì trang chạy chế độ thử (chỉ đồng bộ giữa các tab cùng một trình duyệt). Xem README.md. */
+window.COBI_FIREBASE_URL = 'https://khuphocobi-ptgt-default-rtdb.firebaseio.com/';
+/* Tên ngăn riêng của Giảng Đường trong database, để không lẫn với dữ liệu của game khác. Không cần đổi. */
+window.COBI_FIREBASE_PATH = 'giangduong';
+</script>
+
+<main class="hall">
+  <header class="top">
+    <h1 class="brand">Thư Quán CoBi</h1>
+    <div class="role">
+      <span class="who" id="whoAmI" hidden></span>
+      <button class="btn small" id="btnAs" type="button" hidden>Xem như học viên</button>
+      <button class="btn small" id="btnOut" type="button" hidden>Thoát thư chủ</button>
+      <button class="btn small" id="btnLogin" type="button">Thư chủ đăng nhập</button>
+    </div>
+  </header>
+
+  <p class="conn" id="conn" role="status" hidden></p>
+
+  <section class="panel" id="login" hidden>
+    <h2 id="loginTitle">Thư chủ đăng nhập</h2>
+    <p class="sub" id="loginSub"></p>
+    <label class="lbl" for="pin">Mã thư chủ</label>
+    <input class="field" id="pin" type="password" autocomplete="off" maxlength="40">
+    <div class="row"><span></span><button class="btn primary" id="btnPin" type="button">Vào lớp</button></div>
+  </section>
+
+  <section class="panel" id="setup" hidden>
+    <h2 id="setupTitle">Mời thư chủ nhập từ khóa</h2>
+    <p class="sub" id="setupSub"></p>
+    <label class="lbl" for="ttl">Tên buổi học (không bắt buộc)</label>
+    <input class="field" id="ttl" type="text" maxlength="80" placeholder="Ví dụ: HSK 3 · Bài 12" autocomplete="off">
+    <label class="lbl" for="words">Kho từ</label>
+    <textarea class="lined" id="words" rows="7" spellcheck="false" placeholder="学习 | xuéxí | học tập
+朋友 | péngyou | bạn bè
+已经 | yǐjīng | đã
+一边…一边… | yìbiān… yìbiān… | vừa… vừa…"></textarea>
+    <div class="row">
+      <span class="count" id="wordCount">0 từ</span>
+      <button class="btn primary" id="btnSetup" type="button" disabled>Mở lớp, mời học viên vào</button>
+    </div>
+  </section>
+
+  <section class="bar" id="bar" aria-label="Điều khiển của thư chủ" hidden>
+    <button class="btn primary" id="btnShared" type="button">Chọn từ cho cả lớp</button>
+    <button class="btn" id="btnRandom" type="button">Mỗi người một từ ngẫu nhiên</button>
+    <button class="btn" id="btnKho" type="button">Sửa kho từ</button>
+    <button class="btn danger" id="btnEnd" type="button">Kết thúc buổi học</button>
+    <span class="meta" id="meta"></span>
+  </section>
+
+  <section class="panel" id="join" hidden>
+    <h2>Mời vào lớp</h2>
+    <p class="sub">Nhập tên của bạn rồi bấm vào một bàn còn trống trong giảng đường. Ai vào trước được chọn trước.</p>
+    <label class="lbl" for="myName">Tên của bạn</label>
+    <input class="field" id="myName" type="text" maxlength="30" placeholder="Ví dụ: Minh Anh" autocomplete="nickname">
+  </section>
+
+  <section class="panel" id="write" hidden>
+    <div class="w-head">
+      <h2 id="wSeat"></h2>
+      <button class="btn small" id="btnLeave" type="button">Rời bàn</button>
+    </div>
+    <p class="sub" id="wMsg"></p>
+    <div class="chip" id="wWord" hidden></div>
+    <div><button class="btn primary" id="wDraw" type="button" hidden>Rút từ ngẫu nhiên</button></div>
+    <form id="wForm" hidden>
+      <label class="lbl" for="sentence">Câu của bạn</label>
+      <textarea class="lined" id="sentence" rows="3" maxlength="400" placeholder="Viết một câu có dùng từ ở trên…"></textarea>
+      <div class="row">
+        <span class="count" id="sLen">0/400</span>
+        <button class="btn primary" id="btnSubmit" type="submit">Nộp bài</button>
+      </div>
+    </form>
+    <div id="wDone" hidden>
+      <p class="lbl">Câu đã nộp</p>
+      <p class="sentence" id="wDoneSentence"></p>
+      <p class="sub" id="wDoneInfo"></p>
+      <div id="wFix" hidden>
+        <p class="lbl">Thư chủ sửa</p>
+        <p class="sentence fix" id="wFixText"></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="stage-scroll"><div class="stage" id="stage">
+    <svg class="bg" viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <pattern id="plank" width="200" height="44" patternUnits="userSpaceOnUse">
+          <rect width="200" height="44" fill="#cfa670"/><rect y="42" width="200" height="2" fill="#b68a54"/>
+          <rect x="60" width="2" height="42" fill="#b68a54" opacity=".6"/><rect x="150" y="0" width="2" height="42" fill="#b68a54" opacity=".4"/>
+        </pattern>
+        <pattern id="lattice" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <rect width="16" height="16" fill="none"/><path d="M0 0H16M0 0V16" stroke="#5a331b" stroke-width="2"/>
+        </pattern>
+        <pattern id="tiles" width="26" height="14" patternUnits="userSpaceOnUse">
+          <rect width="26" height="14" fill="#3b2314"/><path d="M0 14Q13 -2 26 14" fill="#5d3a22"/><path d="M0 14Q13 -2 26 14" fill="none" stroke="#2a180d" stroke-width="1.5"/>
+        </pattern>
+        <radialGradient id="vig" cx="50%" cy="45%" r="75%"><stop offset="60%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#2a1208" stop-opacity=".35"/></radialGradient>
+        <linearGradient id="lantern" x1="0" x2="1"><stop offset="0" stop-color="#8f1f1a"/><stop offset=".5" stop-color="#e2493a"/><stop offset="1" stop-color="#8f1f1a"/></linearGradient>
+      </defs>
+      <!-- tường và chân tường -->
+      <rect width="1000" height="300" fill="#ead8ac"/>
+      <rect y="215" width="1000" height="85" fill="#8a5a34"/><rect y="215" width="1000" height="6" fill="#5a331b"/>
+      <g stroke="#7a4d2b" stroke-width="2"><path d="M100 221V300M200 221V300M300 221V300M400 221V300M500 221V300M600 221V300M700 221V300M800 221V300M900 221V300"/></g>
+      <!-- mái và xà -->
+      <rect width="1000" height="40" fill="url(#tiles)"/><rect y="38" width="1000" height="8" fill="#2a180d"/>
+      <rect y="46" width="1000" height="26" fill="#6a3f22"/><rect y="46" width="1000" height="4" fill="#8a5a34"/>
+      <g fill="#4b2b15"><path d="M30 72h80l-14 20H44z"/><path d="M890 72h80l-14 20h-52z"/><path d="M440 72h120l-12 14H452z"/></g>
+      <!-- cửa sổ -->
+      <g>
+        <rect x="118" y="100" width="116" height="118" fill="#7b4c2a"/><rect x="128" y="110" width="96" height="98" fill="#bcd8c4"/>
+        <path d="M128 208 Q150 170 176 190 Q200 160 224 196V208z" fill="#6c9a78"/><rect x="128" y="110" width="96" height="98" fill="url(#lattice)" opacity=".7"/>
+        <rect x="766" y="100" width="116" height="118" fill="#7b4c2a"/><rect x="776" y="110" width="96" height="98" fill="#bcd8c4"/>
+        <path d="M776 208 Q800 172 826 190 Q850 158 872 196V208z" fill="#6c9a78"/><rect x="776" y="110" width="96" height="98" fill="url(#lattice)" opacity=".7"/>
+      </g>
+      <!-- cột -->
+      <g>
+        <rect x="14" y="0" width="44" height="700" fill="#8f2f22"/><rect x="14" y="0" width="8" height="700" fill="#b2493a"/><rect x="50" y="0" width="8" height="700" fill="#6a2018"/>
+        <rect x="942" y="0" width="44" height="700" fill="#8f2f22"/><rect x="942" y="0" width="8" height="700" fill="#b2493a"/><rect x="978" y="0" width="8" height="700" fill="#6a2018"/>
+        <rect x="6" y="650" width="60" height="50" fill="#7a746a"/><rect x="934" y="650" width="60" height="50" fill="#7a746a"/>
+      </g>
+      <!-- câu đối -->
+      <g font-family="'Noto Serif SC','Noto Serif Display',serif" font-weight="700" font-size="22" fill="#ecc86c" text-anchor="middle">
+        <rect x="68" y="92" width="30" height="132" fill="#37160f" stroke="#ecc86c" stroke-width="1.5"/>
+        <text x="83" y="118">學</text><text x="83" y="144">而</text><text x="83" y="170">時</text><text x="83" y="196">習</text><text x="83" y="218" font-size="14">·</text>
+        <rect x="902" y="92" width="30" height="132" fill="#37160f" stroke="#ecc86c" stroke-width="1.5"/>
+        <text x="917" y="118">書</text><text x="917" y="144">中</text><text x="917" y="170">有</text><text x="917" y="196">路</text><text x="917" y="218" font-size="14">·</text>
+      </g>
+      <!-- đèn lồng -->
+      <g>
+        <line x1="270" y1="72" x2="270" y2="96" stroke="#4b2b15" stroke-width="2"/>
+        <rect x="260" y="94" width="20" height="6" fill="#ecc86c"/><ellipse cx="270" cy="124" rx="24" ry="26" fill="url(#lantern)"/><rect x="260" y="148" width="20" height="6" fill="#ecc86c"/>
+        <path d="M270 154v16M266 154l-3 14M274 154l3 14" stroke="#ecc86c" stroke-width="2"/>
+        <line x1="730" y1="72" x2="730" y2="96" stroke="#4b2b15" stroke-width="2"/>
+        <rect x="720" y="94" width="20" height="6" fill="#ecc86c"/><ellipse cx="730" cy="124" rx="24" ry="26" fill="url(#lantern)"/><rect x="720" y="148" width="20" height="6" fill="#ecc86c"/>
+        <path d="M730 154v16M726 154l-3 14M734 154l3 14" stroke="#ecc86c" stroke-width="2"/>
+      </g>
+      <!-- hoành phi -->
+      <g>
+        <line x1="380" y1="72" x2="380" y2="84" stroke="#4b2b15" stroke-width="2"/><line x1="620" y1="72" x2="620" y2="84" stroke="#4b2b15" stroke-width="2"/>
+        <rect x="340" y="14" width="320" height="58" rx="3" fill="#37160f" stroke="#ecc86c" stroke-width="3"/>
+        <rect x="348" y="21" width="304" height="44" fill="none" stroke="#b9852a" stroke-width="1.5"/>
+        <text x="500" y="52" text-anchor="middle" font-family="'Noto Serif Display',Georgia,serif" font-weight="700" font-size="29" letter-spacing="2" fill="#ecc86c">THƯ QUÁN COBI</text>
+      </g>
+      <!-- bảng từ -->
+      <g>
+        <line x1="330" y1="72" x2="330" y2="96" stroke="#4b2b15" stroke-width="2"/><line x1="670" y1="72" x2="670" y2="96" stroke="#4b2b15" stroke-width="2"/>
+        <rect x="300" y="94" width="400" height="150" rx="3" fill="#6e4425"/><rect x="310" y="103" width="380" height="132" fill="#f3e4bd"/>
+        <rect x="310" y="103" width="380" height="132" fill="none" stroke="#b9852a" stroke-width="2"/>
+      </g>
+      <!-- giảng đài -->
+      <rect y="300" width="1000" height="26" fill="#a56f3e"/><rect y="326" width="1000" height="18" fill="#6e4425"/><rect y="326" width="1000" height="3" fill="#4b2b15"/>
+      <g fill="#8a5a34"><rect x="430" y="344" width="140" height="8"/></g><rect x="430" y="352" width="140" height="3" fill="#4b2b15"/>
+      <!-- sàn -->
+      <rect y="352" width="1000" height="348" fill="url(#plank)"/>
+      <rect y="344" width="1000" height="10" fill="#000" opacity=".12"/>
+      <!-- trống và chậu trúc -->
+      <g>
+        <rect x="810" y="268" width="62" height="40" rx="6" fill="#8f2f22"/><ellipse cx="841" cy="268" rx="31" ry="9" fill="#e2c28a"/>
+        <path d="M812 275h58M812 296h58" stroke="#ecc86c" stroke-width="2"/><rect x="822" y="306" width="8" height="10" fill="#4b2b15"/><rect x="852" y="306" width="8" height="10" fill="#4b2b15"/>
+        <rect x="902" y="276" width="34" height="30" rx="3" fill="#2c6a4d"/>
+        <g stroke="#4f8a3a" stroke-width="4" stroke-linecap="round"><path d="M912 276V210M920 276V196M928 276V218"/></g>
+        <g fill="#6aa84a"><path d="M912 230l-14-8 14 2zM920 214l16-8-14 10zM928 236l14-6-12 10z"/></g>
+      </g>
+      <!-- thư chủ CoBi -->
+      <g>
+        <path d="M130 246Q130 332 150 332L200 332Q220 332 220 246Z" fill="#1c1410"/>
+        <path d="M143 262Q145 232 175 230Q205 232 207 262L216 316H134Z" fill="#f4e7c8"/>
+        <path d="M160 232L175 262L190 232" fill="none" stroke="#b3302a" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M175 262V316" stroke="#d8c59c" stroke-width="2"/>
+        <ellipse cx="175" cy="216" rx="20" ry="22" fill="#f1d3b2"/>
+        <path d="M153 214Q150 188 175 188Q200 188 197 214Q190 200 175 200Q160 200 153 214Z" fill="#1c1410"/>
+        <circle cx="175" cy="182" r="11" fill="#1c1410"/><path d="M164 178l22 8" stroke="#ecc86c" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="168" cy="217" r="2.3" fill="#2a1a10"/><circle cx="182" cy="217" r="2.3" fill="#2a1a10"/>
+        <ellipse cx="162" cy="224" rx="4" ry="2.5" fill="#e79a8a" opacity=".7"/><ellipse cx="188" cy="224" rx="4" ry="2.5" fill="#e79a8a" opacity=".7"/>
+        <path d="M169 228Q175 234 181 228" fill="none" stroke="#9a3a2a" stroke-width="2" stroke-linecap="round"/>
+        <path d="M138 276Q128 296 140 312L152 300Q148 290 154 280Z" fill="#f4e7c8" stroke="#d8c59c"/><path d="M212 276Q222 296 210 312L198 300Q202 290 196 280Z" fill="#f4e7c8" stroke="#d8c59c"/>
+      </g>
+      <!-- bàn giảng -->
+      <g>
+        <rect x="96" y="282" width="158" height="14" rx="2" fill="#a8743f"/><rect x="102" y="296" width="146" height="42" fill="#7b4c2a"/>
+        <rect x="112" y="304" width="126" height="26" fill="none" stroke="#4b2b15" stroke-width="2"/>
+        <text x="175" y="322" text-anchor="middle" font-family="'Noto Serif Display',Georgia,serif" font-weight="700" font-size="12" letter-spacing="1.5" fill="#ecc86c">THƯ CHỦ COBI</text>
+        <rect x="116" y="272" width="46" height="10" rx="2" fill="#f6e8c2" stroke="#8a6a3a"/><line x1="206" y1="280" x2="238" y2="262" stroke="#4b2b15" stroke-width="3" stroke-linecap="round"/>
+        <rect x="106" y="338" width="10" height="14" fill="#4b2b15"/><rect x="234" y="338" width="10" height="14" fill="#4b2b15"/>
+      </g>
+      <rect width="1000" height="700" fill="url(#vig)"/>
+    </svg>
+
+    <div class="board" id="board" aria-live="polite">
+      <p class="b-label" id="bLabel"></p>
+      <p class="b-main" id="bMain"></p>
+      <p class="b-extra" id="bExtra" hidden></p>
+      <p class="b-hint" id="bHint" hidden></p>
+    </div>
+    <div id="seatLayer"></div>
+  </div></div>
+
+  <div class="cols">
+    <section class="panel" aria-labelledby="hRank">
+      <h2 id="hRank">Bảng vàng</h2>
+      <p class="sub">Xếp theo thời gian làm bài, ai nộp nhanh nhất đứng đầu.</p>
+      <p class="sub" id="rankEmpty"></p>
+      <ol class="rank" id="rankList"></ol>
+    </section>
+
+    <section class="panel" id="review" aria-labelledby="hReview" hidden>
+      <h2 id="hReview">Bài làm</h2>
+      <p class="sub" id="rvEmpty"></p>
+      <div id="rvBody" hidden style="display:grid;gap:10px">
+        <p class="lbl" id="rvName"></p>
+        <div class="chip" id="rvWord" hidden></div>
+        <p class="sub" id="rvPending" hidden></p>
+        <p class="sentence" id="rvSentence" hidden></p>
+        <p class="count" id="rvTime" hidden></p>
+        <div id="rvFix" hidden style="display:grid;gap:8px">
+          <label class="lbl" id="fixLbl" for="fixText">Bản sửa của thư chủ</label>
+          <textarea class="lined" id="fixText" rows="3" maxlength="400"></textarea>
+          <div class="row">
+            <button class="btn small danger" id="btnKick" type="button">Mời rời bàn</button>
+            <button class="btn primary" id="btnFix" type="button">Lưu bản sửa</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+<p class="note" id="note" role="status" hidden></p>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var SEATS = 10;
+  var COLS = [15, 32.5, 50, 67.5, 85];
+  var ROW_TOP = [50, 75.5];
+  var ROBES = ['#3f6f8f', '#7a4a8a', '#2f7a5a', '#b5653a', '#4a5aa0', '#8a3a4a', '#5f7a3a', '#a07a2a', '#3a7f85', '#7d5a3a'];
+  var RANKS = ['Trạng nguyên', 'Bảng nhãn', 'Thám hoa'];
+  var sid = function (i) { return 's' + String(i + 1).padStart(2, '0'); };
+  var sidx = function (id) { return parseInt(id.slice(1), 10) - 1; };
+  var params = new URLSearchParams(location.search);
+  var ls = {
+    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
+  function h(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function parseWord(raw) {
+    var p = String(raw || '').split('|').map(function (s) { return s.trim(); }).filter(Boolean);
+    return { main: p[0] || '', extra: p.slice(1) };
+  }
+  function parseLines(text) {
+    var seen = {}, out = [];
+    String(text).replace(/\t+/g, ' | ').split(/\r?\n/).forEach(function (l) {
+      l = l.split('|').map(function (s) { return s.trim(); }).filter(Boolean).join(' | ');
+      if (l && !seen[l]) { seen[l] = 1; out.push(l.slice(0, 120)); }
+    });
+    return out.slice(0, 300);
+  }
+  function fmtTime(ms) {
+    var s = (ms || 0) / 1000;
+    if (s < 60) return s.toFixed(1).replace('.', ',') + ' giây';
+    var m = Math.floor(s / 60);
+    return m + ' phút ' + Math.round(s - m * 60) + ' giây';
+  }
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  function rand(n) { return Math.random().toString(36).slice(2, 2 + n); }
+  var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+  var clone = function (o) { return o == null ? null : JSON.parse(JSON.stringify(o)); };
+
+  /* ---------- lưu trữ: Firebase hoặc chế độ thử ---------- */
+  function FirebaseStore(base, onError) {
+    base = base.replace(/\/+$/, '');
+    var root = String(window.COBI_FIREBASE_PATH || 'giangduong').replace(/^\/+|\/+$/g, '');
+    var u = function (p) { return base + '/' + root + '/' + p + '.json'; };
+    async function call(p, method, body) {
+      var r = await fetch(u(p), { method: method, headers: { 'Content-Type': 'application/json' }, body: body === undefined ? undefined : JSON.stringify(body) });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return method === 'GET' ? r.json() : null;
+    }
+    function watch(p, cb) {
+      var dead = false, timer = null, es = null;
+      async function load() {
+        try { var v = await call(p, 'GET'); if (!dead) cb(v); }
+        catch (e) { if (!dead) onError(e); }
+      }
+      function kick() { clearTimeout(timer); timer = setTimeout(load, 120); }
+      load();
+      try { es = new EventSource(u(p)); es.addEventListener('put', kick); es.addEventListener('patch', kick); } catch (e) {}
+      var iv = setInterval(load, 8000);
+      return function () { dead = true; if (es) es.close(); clearInterval(iv); };
+    }
+    return {
+      mode: 'firebase',
+      get: function (p) { return call(p, 'GET'); },
+      set: function (p, o) { return call(p, 'PUT', clone(o)); },
+      update: function (p, o) { return call(p, 'PATCH', clone(o)); },
+      del: function (p) { return call(p, 'DELETE'); },
+      watch: watch,
+      claim: async function (id, data) {
+        var cur = await call('seats/' + id, 'GET');
+        if (cur && cur.uid && cur.uid !== data.uid) return false;
+        await call('seats/' + id, 'PUT', data);
+        await wait(350);
+        var now = await call('seats/' + id, 'GET');
+        return !!(now && now.uid === data.uid);
+      }
+    };
+  }
+  function LocalStore() {
+    var KEY = 'cobi.local.v1', mem = {}, subs = [];
+    var bc = window.BroadcastChannel ? new BroadcastChannel('cobi') : null;
+    function load() { try { var t = localStorage.getItem(KEY); return t ? JSON.parse(t) : {}; } catch (e) { return clone(mem) || {}; } }
+    function fire() { subs.slice().forEach(function (f) { f(); }); }
+    function save(d) { mem = d; try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {} if (bc) bc.postMessage(1); fire(); }
+    if (bc) bc.onmessage = fire;
+    window.addEventListener('storage', function (e) { if (e.key === KEY) fire(); });
+    function getAt(d, p) { return p.split('/').reduce(function (o, k) { return o && o[k] !== undefined ? o[k] : null; }, d); }
+    function setAt(d, p, v) {
+      var s = p.split('/'), o = d;
+      for (var i = 0; i < s.length - 1; i++) { if (!o[s[i]] || typeof o[s[i]] !== 'object') o[s[i]] = {}; o = o[s[i]]; }
+      if (v === null) delete o[s[s.length - 1]]; else o[s[s.length - 1]] = v;
+    }
+    return {
+      mode: 'local',
+      get: async function (p) { return clone(getAt(load(), p)); },
+      set: async function (p, o) { var d = load(); setAt(d, p, clone(o)); save(d); },
+      update: async function (p, o) { var d = load(); setAt(d, p, Object.assign(getAt(d, p) || {}, clone(o))); save(d); },
+      del: async function (p) { var d = load(); setAt(d, p, null); save(d); },
+      watch: function (p, cb) {
+        var f = function () { cb(clone(getAt(load(), p))); };
+        subs.push(f); setTimeout(f, 0);
+        return function () { subs = subs.filter(function (x) { return x !== f; }); };
+      },
+      claim: async function (id, data) {
+        var d = load(), cur = getAt(d, 'seats/' + id);
+        if (cur && cur.uid && cur.uid !== data.uid) return false;
+        setAt(d, 'seats/' + id, data); save(d); return true;
+      }
+    };
+  }
+  async function sha(t) {
+    try {
+      var b = new TextEncoder().encode('cobi|' + t);
+      var d = await crypto.subtle.digest('SHA-256', b);
+      return Array.from(new Uint8Array(d)).map(function (x) { return x.toString(16).padStart(2, '0'); }).join('');
+    } catch (e) {
+      var x = 5381; t = 'cobi|' + t;
+      for (var i = 0; i < t.length; i++) x = ((x << 5) + x + t.charCodeAt(i)) | 0;
+      return 'h' + x;
+    }
+  }
+
+  /* ---------- trạng thái ---------- */
+  var store = null, uid = null, authHash = null, authReady = false;
+  var isTeacher = false, asStudent = false;
+  var S = null, gotState = false, seats = {}, answers = {};
+  var selSeat = null, rolling = false, busy = false, joining = false;
+  var confirmEnd = false, confirmTimer = null, setupOpen = false, setupInit = false, nameInit = false;
+  var lastBoardKey = '', lastRid = null, lastReviewSig = '';
+  var mem = {}, noteTimer = null;
+
+  function who() { return (isTeacher && !asStudent) ? 'teacher' : 'student'; }
+  function cur() { return (S && S.round) || null; }
+  function answerKey(r, id) { return r.id + '_' + id; }
+  function mySeat() { for (var id in seats) { if (seats[id].uid === uid) return id; } return null; }
+  function ranked() {
+    var r = cur();
+    if (!r) return [];
+    return Object.keys(answers).map(function (k) { return answers[k]; })
+      .filter(function (a) { return a.round === r.id && a.submitted; })
+      .sort(function (x, y) { return ((x.elapsedMs || 0) - (y.elapsedMs || 0)) || ((x.submittedAt || 0) - (y.submittedAt || 0)); });
+  }
+  function say(msg) {
+    var n = $('note'); n.textContent = msg; n.hidden = false;
+    clearTimeout(noteTimer); noteTimer = setTimeout(function () { n.hidden = true; }, 6000);
+  }
+  function showConn(msg) { var c = $('conn'); c.textContent = msg || ''; c.hidden = !msg; }
+  function seenAt(r) {
+    var k = 'cobi.seen.' + r.id;
+    if (mem[k]) return mem[k];
+    var v = Number(ls.get(k)) || 0;
+    if (!v) { v = Date.now(); ls.set(k, String(v)); }
+    mem[k] = v; return v;
+  }
+
+  /* ---------- bảng từ ---------- */
+  function setBoard(o) {
+    $('bLabel').textContent = o.label || '';
+    var m = $('bMain');
+    m.textContent = o.main || '';
+    var n = (o.main || '').length;
+    m.className = 'b-main' + (o.small ? ' small' : n <= 2 ? '' : n <= 4 ? ' m2' : n <= 8 ? ' m3' : ' m4');
+    var ex = $('bExtra'); ex.textContent = '';
+    (o.extra || []).forEach(function (t) { ex.appendChild(h('span', '', t)); });
+    ex.hidden = !(o.extra && o.extra.length);
+    $('bHint').textContent = o.hint || ''; $('bHint').hidden = !o.hint;
+    if (o.key && o.key !== lastBoardKey && o.main && !o.small) {
+      m.classList.remove('stamp'); void m.offsetWidth; m.classList.add('stamp');
+    }
+    lastBoardKey = o.key || '';
+  }
+  function renderBoard() {
+    if (rolling) return;
+    var r = cur(), t = who() === 'teacher';
+    var title = (S && S.title) || '';
+    if (!gotState) return setBoard({ label: title, main: 'Đang mở cổng thư quán…', small: true });
+    if (!S || !S.open) {
+      return setBoard({ label: '', main: t ? 'Thư quán đang đóng cửa' : 'Thư quán chưa mở cửa', small: true,
+        hint: t ? 'Nhập kho từ rồi mở lớp cho học viên vào.' : 'Thư chủ CoBi sẽ mở lớp trong giây lát. Trang tự cập nhật.' });
+    }
+    if (!r) {
+      return setBoard({ label: title || 'Lớp đã mở', main: 'Chờ thư chủ chọn từ', small: true, key: 'idle',
+        hint: t ? 'Bấm “Chọn từ cho cả lớp” hoặc “Mỗi người một từ ngẫu nhiên”.' : 'Chọn bàn của bạn trong lúc chờ.' });
+    }
+    var lab = (title ? title + ' · ' : '') + 'Vòng ' + r.n;
+    if (r.mode === 'shared') {
+      var w = parseWord(r.word);
+      return setBoard({ label: lab, main: w.main, extra: w.extra, key: r.id + ':' + w.main });
+    }
+    if (t) {
+      var total = Object.keys(seats).length;
+      var drawn = Object.keys(answers).filter(function (k) { return answers[k].round === r.id && answers[k].word; }).length;
+      var hint = 'Đã rút từ: ' + drawn + '/' + total + ' học viên.';
+      var len = (S.words || []).length;
+      if (Object.keys(seats).some(function (id) { return sidx(id) >= len; })) hint += ' Kho có ' + len + ' từ nên một số bạn trùng từ.';
+      return setBoard({ label: lab, main: 'Mỗi người một từ', small: true, hint: hint, key: r.id + ':rand' });
+    }
+    var id = mySeat();
+    if (!id) return setBoard({ label: lab, main: 'Hãy chọn bàn trước', small: true, hint: 'Ngồi vào bàn rồi bấm “Rút từ ngẫu nhiên”.', key: r.id + ':sit' });
+    var a = answers[answerKey(r, id)];
+    if (a && a.word) {
+      var mw = parseWord(a.word);
+      return setBoard({ label: 'Từ của bạn · ' + lab, main: mw.main, extra: mw.extra, key: r.id + ':' + id + ':' + mw.main });
+    }
+    return setBoard({ label: lab, main: 'Bấm “Rút từ ngẫu nhiên”', small: true, key: r.id + ':draw' });
+  }
+
+  /* ---------- các bảng điều khiển ---------- */
+  function renderRole() {
+    var t = isTeacher;
+    $('btnLogin').hidden = t;
+    $('btnAs').hidden = !t; $('btnOut').hidden = !t;
+    $('whoAmI').hidden = !t;
+    $('whoAmI').textContent = asStudent ? 'Đang xem như học viên' : 'Bạn đang là thư chủ';
+    $('btnAs').textContent = asStudent ? 'Quay lại làm thư chủ' : 'Xem như học viên';
+  }
+  function renderLogin() {
+    var show = !isTeacher && loginOpen;
+    $('login').hidden = !show;
+    if (!show) return;
+    var has = !!authHash;
+    $('loginTitle').textContent = has ? 'Thư chủ đăng nhập' : 'Tạo mã thư chủ';
+    $('loginSub').textContent = has
+      ? 'Nhập mã thư chủ để mở lớp và chấm bài.'
+      : 'Lớp chưa có mã thư chủ. Mã bạn nhập bây giờ sẽ là mã để vào lớp những lần sau. Hãy nhớ mã này.';
+    $('btnPin').textContent = has ? 'Vào lớp' : 'Tạo mã và vào lớp';
+  }
+  function renderBar() {
+    var show = who() === 'teacher' && S && S.open;
+    $('bar').hidden = !show;
+    if (!show) return;
+    var off = rolling || busy;
+    $('btnShared').disabled = off; $('btnRandom').disabled = off;
+    $('btnKho').disabled = busy;
+    $('btnKho').textContent = setupOpen ? 'Đóng kho từ' : 'Sửa kho từ';
+    $('btnEnd').disabled = busy;
+    $('btnEnd').textContent = busy ? 'Đang dọn lớp…' : (confirmEnd ? 'Bấm lần nữa để kết thúc' : 'Kết thúc buổi học');
+    var n = Object.keys(seats).length, r = cur();
+    var meta = 'Học viên ' + n + '/' + SEATS;
+    if (r) meta += ' · Đã nộp ' + ranked().length + '/' + n;
+    var words = S.words || [];
+    var used = (S.used || []).filter(function (u) { return words.indexOf(u) >= 0; }).length;
+    $('meta').textContent = meta + ' · Từ đã dùng ' + used + '/' + words.length;
+  }
+  function updateCount() {
+    var n = parseLines($('words').value).length;
+    $('wordCount').textContent = n + ' từ';
+    $('btnSetup').disabled = n === 0 || busy;
+  }
+  function renderSetup() {
+    var open = !!(S && S.open);
+    var show = who() === 'teacher' && gotState && (!open || setupOpen);
+    $('setup').hidden = !show;
+    if (!show) return;
+    if (!setupInit) {
+      setupInit = true;
+      $('words').value = ((S && S.words) || []).join('\n');
+      $('ttl').value = (S && S.title) || '';
+    }
+    $('setupTitle').textContent = open ? 'Kho từ của buổi học' : 'Mời thư chủ nhập từ khóa';
+    $('setupSub').textContent = open
+      ? 'Sửa danh sách rồi bấm Lưu. Vòng đang chạy không bị ảnh hưởng.'
+      : 'Nhập các từ của buổi học hôm nay, mỗi dòng một từ. Có thể thêm phiên âm và nghĩa sau dấu “|”.';
+    $('btnSetup').textContent = open ? 'Lưu kho từ' : 'Mở lớp, mời học viên vào';
+    updateCount();
+  }
+  function renderJoin() {
+    var show = who() === 'student' && S && S.open && !mySeat();
+    $('join').hidden = !show;
+    if (!show) return;
+    if (!nameInit) { nameInit = true; $('myName').value = ls.get('cobi.name') || ''; }
+  }
+  function updLen() { $('sLen').textContent = $('sentence').value.length + '/400'; }
+  function renderWrite() {
+    var id = mySeat(), r = cur();
+    var show = who() === 'student' && S && S.open && id;
+    $('write').hidden = !show;
+    if (!show) return;
+    $('wSeat').textContent = 'Bàn số ' + (sidx(id) + 1) + ' · ' + seats[id].name;
+    var a = r ? answers[answerKey(r, id)] : null;
+    var submitted = !!(a && a.submitted);
+    var word = r ? (r.mode === 'shared' ? r.word : ((a && a.word) || '')) : '';
+    var rid = r ? r.id : '';
+    if (rid !== lastRid) {
+      lastRid = rid;
+      $('sentence').value = r ? (ls.get('cobi.draft.' + rid) || '') : '';
+      updLen();
+    }
+    var msg;
+    if (!r) msg = 'Chờ thư chủ chọn từ. Muốn đổi bàn, bấm vào một bàn trống.';
+    else if (r.mode === 'random' && !word) msg = 'Bấm “Rút từ ngẫu nhiên” để nhận từ của bạn.';
+    else if (!submitted) msg = 'Đặt một câu với từ bên dưới rồi bấm Nộp bài.';
+    else msg = 'Đã nộp bài. Chờ thư chủ gọi tên để sửa bài.';
+    $('wMsg').textContent = msg;
+    var chip = $('wWord'); chip.hidden = !word;
+    if (word) {
+      var w = parseWord(word);
+      chip.textContent = '';
+      chip.appendChild(h('strong', '', w.main));
+      if (w.extra.length) chip.appendChild(h('span', '', w.extra.join(' · ')));
+    }
+    $('wDraw').hidden = !(r && r.mode === 'random' && !word);
+    $('wForm').hidden = !(word && !submitted);
+    $('wDone').hidden = !submitted;
+    if (submitted) {
+      $('wDoneSentence').textContent = a.sentence || '';
+      var rk = ranked(), k = -1;
+      for (var i = 0; i < rk.length; i++) { if (rk[i].seat === id) { k = i; break; } }
+      $('wDoneInfo').textContent = 'Thời gian ' + fmtTime(a.elapsedMs) + (k >= 0 ? ' · Hạng ' + (k + 1) + '/' + rk.length : '');
+      var fx = a.correction || '';
+      $('wFix').hidden = !fx; $('wFixText').textContent = fx;
+    }
+  }
+
+  /* ---------- bàn ghế và học viên (SVG) ---------- */
+  function seatSVG(i, occ, st) {
+    var robe = ROBES[i % ROBES.length], fem = i % 2 === 1;
+    var s = '<svg viewBox="0 0 160 170" aria-hidden="true">';
+    s += '<rect x="14" y="62" width="10" height="38" fill="#4b2b15"/><rect x="136" y="62" width="10" height="38" fill="#4b2b15"/>';
+    s += '<polygon points="18,12 142,12 156,48 4,48" fill="#b07a44"/><polygon points="18,12 142,12 146,20 14,20" fill="#c48d55"/>';
+    s += '<rect x="4" y="48" width="152" height="16" fill="#7b4c2a"/><rect x="4" y="48" width="152" height="3" fill="#a06a3a"/>';
+    s += '<rect x="52" y="22" width="56" height="20" rx="2" fill="#f6e8c2" stroke="#8a6a3a" stroke-width="1"/>';
+    s += '<path d="M58 28h44M58 33h34M58 38h40" stroke="#c9b27e" stroke-width="1.5"/>';
+    if (occ && st === 'done') s += '<circle cx="98" cy="31" r="5.5" fill="#b3302a"/>';
+    if (occ && st === 'writing') s += '<line x1="118" y1="42" x2="130" y2="18" stroke="#4b2b15" stroke-width="3" stroke-linecap="round"/>';
+    if (occ) {
+      s += '<ellipse cx="80" cy="152" rx="44" ry="9" fill="#5a331b"/>';
+      s += '<path d="M38 154Q38 112 80 106Q122 112 122 154Z" fill="' + robe + '"/>';
+      s += '<path d="M80 108V152" stroke="rgba(0,0,0,.18)" stroke-width="2"/>';
+      s += '<path d="M64 110Q80 122 96 110" fill="none" stroke="#f1e2c6" stroke-width="3"/>';
+      s += '<rect x="73" y="98" width="14" height="12" fill="#e8c39e"/>';
+      s += '<circle cx="63" cy="92" r="3.6" fill="#e8c39e"/><circle cx="97" cy="92" r="3.6" fill="#e8c39e"/>';
+      s += '<circle cx="80" cy="88" r="17" fill="#1c1410"/>';
+      if (fem) s += '<circle cx="80" cy="69" r="10" fill="#1c1410"/><path d="M70 66l22 7" stroke="#ecc86c" stroke-width="3" stroke-linecap="round"/>';
+      else s += '<rect x="74" y="64" width="12" height="14" rx="5" fill="#1c1410"/><rect x="63" y="80" width="34" height="4" fill="' + robe + '"/>';
+    } else {
+      s += '<ellipse class="cushion" cx="80" cy="124" rx="38" ry="14" fill="#c4553d" stroke="#f4e6c4" stroke-width="2" stroke-dasharray="5 4"/>';
+    }
+    return s + '</svg>';
+  }
+  function renderSeats() {
+    var layer = $('seatLayer');
+    var f = document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.seat : null;
+    layer.textContent = '';
+    var r = cur(), tch = who() === 'teacher', mine = mySeat(), open = !!(S && S.open);
+    var myA = (r && mine) ? answers[answerKey(r, mine)] : null;
+    var locked = !!(myA && (myA.submitted || myA.word));
+    var rk = ranked();
+    for (var i = 0; i < SEATS; i++) {
+      var id = sid(i), occ = seats[id] || null;
+      var a = (r && occ) ? answers[answerKey(r, id)] : null;
+      var stt = '';
+      if (occ && r) stt = (a && a.submitted) ? 'done' : ((r.mode === 'random' && !(a && a.word)) ? 'idle' : 'writing');
+      var b = h('button', 'seat' + (occ ? '' : ' empty'));
+      b.type = 'button'; b.dataset.seat = id;
+      b.style.left = COLS[i % 5] + '%';
+      b.style.top = ROW_TOP[Math.floor(i / 5)] + '%';
+      b.innerHTML = seatSVG(i, !!occ, stt);
+      if (id === mine) b.classList.add('mine');
+      if (tch && id === selSeat) b.classList.add('sel');
+      var show = occ ? occ.name : 'Bàn ' + (i + 1);
+      b.appendChild(h('span', 'plate', show));
+      if (occ && stt === 'done') b.appendChild(h('span', 'badge', '✓'));
+      else if (occ && stt === 'writing') b.appendChild(h('span', 'badge w', '✎'));
+      for (var k = 0; k < Math.min(3, rk.length); k++) {
+        if (rk[k].seat === id) b.appendChild(h('span', 'medal r' + (k + 1), String(k + 1)));
+      }
+      if (id === mine) b.appendChild(h('span', 'flag', 'Bạn'));
+      var can = tch ? !!occ : (open && (!occ || id === mine) && !(locked && id !== mine));
+      b.disabled = !can;
+      b.setAttribute('aria-label', 'Bàn ' + (i + 1) + ': ' + (occ ? occ.name : 'còn trống'));
+      (function (idv, idx) { b.addEventListener('click', function () { onSeat(idv, idx); }); })(id, i);
+      layer.appendChild(b);
+    }
+    if (f) {
+      var nb = layer.querySelector('[data-seat="' + f + '"]');
+      if (nb && !nb.disabled) nb.focus();
+    }
+  }
+  function renderRank() {
+    var list = $('rankList'); list.textContent = '';
+    var r = cur(), rows = ranked(), tch = who() === 'teacher', mine = mySeat();
+    $('rankEmpty').hidden = rows.length > 0;
+    $('rankEmpty').textContent = r ? 'Chưa có bài nộp. Bảng vàng sáng lên khi bạn đầu tiên nộp bài.' : 'Bảng vàng xuất hiện khi thư chủ chọn từ.';
+    rows.forEach(function (a, i) {
+      var li = h('li'), row = h(tch ? 'button' : 'div', 'rk-row');
+      if (tch) {
+        row.type = 'button';
+        row.addEventListener('click', function () { selSeat = a.seat; renderAll(); });
+        if (selSeat === a.seat) row.classList.add('sel');
+      } else if (a.seat === mine) row.classList.add('mine');
+      row.appendChild(h('span', 'rk-badge r' + Math.min(i + 1, 4), i < 3 ? RANKS[i] : 'Hạng ' + (i + 1)));
+      row.appendChild(h('span', 'rk-name', a.name || (seats[a.seat] && seats[a.seat].name) || 'Học viên'));
+      row.appendChild(h('span', 'rk-time', fmtTime(a.elapsedMs)));
+      li.appendChild(row); list.appendChild(li);
+    });
+  }
+  function renderReview() {
+    var show = who() === 'teacher' && S && S.open;
+    $('review').hidden = !show;
+    if (!show) return;
+    var r = cur(), id = selSeat;
+    $('rvEmpty').hidden = !!id; $('rvBody').hidden = !id;
+    if (!id) { $('rvEmpty').textContent = 'Bấm vào một học viên (ở bàn hoặc trên bảng vàng) để xem câu của bạn ấy.'; return; }
+    var occ = seats[id] || null, a = r ? answers[answerKey(r, id)] : null;
+    var name = (a && a.name) || (occ && occ.name) || ('Bàn ' + (sidx(id) + 1));
+    $('rvName').textContent = name + ' · bàn ' + (sidx(id) + 1);
+    var wd = '';
+    if (a && a.word) wd = a.word;
+    else if (r && r.mode === 'shared') wd = r.word;
+    else if (r && r.mode === 'random' && occ && r.deck && r.deck.length) wd = r.deck[sidx(id) % r.deck.length];
+    var chip = $('rvWord'); chip.hidden = !wd;
+    if (wd) {
+      var w = parseWord(wd);
+      chip.textContent = '';
+      chip.appendChild(h('strong', '', w.main));
+      if (w.extra.length) chip.appendChild(h('span', '', w.extra.join(' · ')));
+    }
+    var sub = !!(a && a.submitted);
+    $('rvPending').hidden = sub;
+    $('rvPending').textContent = r ? 'Bạn này chưa nộp bài.' : 'Chưa có vòng nào. Hãy chọn từ trước.';
+    $('rvSentence').hidden = !sub; $('rvTime').hidden = !sub;
+    $('rvFix').hidden = !(sub || occ);
+    $('btnFix').hidden = !sub; $('fixText').hidden = !sub; $('fixLbl').hidden = !sub;
+    $('btnKick').hidden = !occ;
+    if (sub) {
+      $('rvSentence').textContent = a.sentence || '';
+      $('rvTime').textContent = 'Thời gian làm bài: ' + fmtTime(a.elapsedMs);
+    }
+    var sig = id + '|' + (r ? r.id : '') + '|' + (a ? a.submittedAt || 0 : 0);
+    if (sig !== lastReviewSig) { lastReviewSig = sig; $('fixText').value = sub ? (a.correction || a.sentence || '') : ''; }
+  }
+  var loginOpen = false;
+  function renderAll() {
+    renderRole(); renderLogin();
+    if (who() === 'student' && S && S.open && cur()) seenAt(cur());
+    renderBoard(); renderBar(); renderSetup(); renderJoin(); renderWrite();
+    renderSeats(); renderRank(); renderReview();
+  }
+
+  /* ---------- hành động của học viên ---------- */
+  function onSeat(id, idx) {
+    if (who() === 'teacher') { selSeat = id; renderAll(); return; }
+    takeSeat(idx);
+  }
+  async function takeSeat(i) {
+    var id = sid(i), old = mySeat();
+    if (id === old || joining) return;
+    var name = $('myName').value.trim() || (old && seats[old] && seats[old].name) || '';
+    if (!name) { say('Hãy nhập tên của bạn trước khi chọn bàn.'); $('join').hidden = false; $('myName').focus(); return; }
+    joining = true;
+    try {
+      var ok = await store.claim(id, { uid: uid, name: name, at: Date.now() });
+      if (!ok) say('Bàn này vừa có bạn khác ngồi. Hãy chọn bàn khác.');
+      else { ls.set('cobi.name', name); if (old) await store.del('seats/' + old); }
+    } catch (e) { say('Chưa chọn được bàn. Kiểm tra mạng rồi thử lại.'); }
+    joining = false;
+  }
+  async function leaveSeat() {
+    var id = mySeat(); if (!id) return;
+    try { await store.del('seats/' + id); } catch (e) { say('Chưa rời bàn được. Thử lại nhé.'); }
+  }
+  async function drawWord() {
+    var r = cur(), id = mySeat();
+    if (!r || r.mode !== 'random' || !id || !r.deck || !r.deck.length) return;
+    var key = answerKey(r, id);
+    if (answers[key] && answers[key].word) return;
+    $('wDraw').disabled = true;
+    try {
+      await store.set('answers/' + key, { round: r.id, seat: id, name: seats[id].name, word: r.deck[sidx(id) % r.deck.length], drawnAt: Date.now(), submitted: false });
+    } catch (e) { say('Chưa rút được từ. Thử lại nhé.'); }
+    $('wDraw').disabled = false;
+  }
+  async function submitSentence() {
+    var r = cur(), id = mySeat(), text = $('sentence').value.trim();
+    if (!r || !id) return;
+    if (!text) { say('Hãy viết câu của bạn trước khi nộp.'); return; }
+    var key = answerKey(r, id), prev = answers[key] || {};
+    if (prev.submitted) return;
+    var start = r.mode === 'random' ? prev.drawnAt : seenAt(r);
+    if (!start) return;
+    var now = Date.now();
+    var doc = {
+      round: r.id, seat: id, name: seats[id].name, word: r.mode === 'random' ? prev.word : r.word,
+      sentence: text, submitted: true, elapsedMs: Math.max(0, now - start), submittedAt: now, correction: ''
+    };
+    if (prev.drawnAt) doc.drawnAt = prev.drawnAt;
+    $('btnSubmit').disabled = true;
+    try { await store.set('answers/' + key, doc); } catch (e) { say('Chưa nộp được bài. Thử lại nhé.'); }
+    $('btnSubmit').disabled = false;
+  }
+
+  /* ---------- hành động của thư chủ ---------- */
+  async function writeState(obj) {
+    try { await store.set('class/state', obj); return true; }
+    catch (e) { say('Chưa lưu được. Kiểm tra mạng rồi thử lại.'); return false; }
+  }
+  async function saveSetup() {
+    var list = parseLines($('words').value);
+    if (!list.length || busy) return;
+    var wasOpen = !!(S && S.open), base = wasOpen ? S : {};
+    busy = true; renderAll();
+    var ok = await writeState({
+      v: 1, open: true, title: $('ttl').value.trim(), words: list, sess: base.sess || rand(6),
+      round: base.round || null, used: (base.used || []).filter(function (u) { return list.indexOf(u) >= 0; }), lastN: base.lastN || 0
+    });
+    busy = false;
+    if (ok) { setupOpen = false; say(wasOpen ? 'Đã lưu kho từ.' : 'Lớp đã mở. Mời học viên vào.'); }
+    renderAll();
+  }
+  function roll(words, finalRaw) {
+    return new Promise(function (res) {
+      if (words.length < 2 || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) { res(); return; }
+      var i = 0;
+      setBoard({ label: 'Đang chọn từ…', main: parseWord(words[0]).main });
+      var m = $('bMain'); m.classList.add('rolling');
+      var t = setInterval(function () {
+        var w = parseWord(words[Math.floor(Math.random() * words.length)]).main;
+        m.textContent = w;
+        if (++i >= 14) { clearInterval(t); m.textContent = parseWord(finalRaw).main; m.classList.remove('rolling'); res(); }
+      }, 85);
+    });
+  }
+  async function pickShared() {
+    if (rolling || busy || !S || !S.open) return;
+    var all = S.words || [];
+    if (!all.length) { say('Kho từ đang trống.'); return; }
+    var used = (S.used || []).filter(function (u) { return all.indexOf(u) >= 0; });
+    var pool = all.filter(function (w) { return used.indexOf(w) < 0; });
+    if (!pool.length) { used = []; pool = all.slice(); }
+    var word = pool[Math.floor(Math.random() * pool.length)];
+    rolling = true; renderBar();
+    await roll(all, word);
+    rolling = false;
+    var n = (S.lastN || 0) + 1;
+    selSeat = null;
+    await writeState(Object.assign({}, S, {
+      round: { id: (S.sess || 'x') + 'r' + n, n: n, mode: 'shared', word: word, startedAt: Date.now() },
+      used: used.concat([word]), lastN: n
+    }));
+    renderAll();
+  }
+  async function pickRandom() {
+    if (rolling || busy || !S || !S.open) return;
+    var all = S.words || [];
+    if (!all.length) { say('Kho từ đang trống.'); return; }
+    var n = (S.lastN || 0) + 1;
+    busy = true; selSeat = null; renderBar();
+    await writeState(Object.assign({}, S, {
+      round: { id: (S.sess || 'x') + 'r' + n, n: n, mode: 'random', deck: shuffle(all.slice()), startedAt: Date.now() },
+      lastN: n
+    }));
+    busy = false; renderAll();
+  }
+  async function endSession() {
+    if (!S || busy) return;
+    if (!confirmEnd) {
+      confirmEnd = true; renderBar();
+      clearTimeout(confirmTimer);
+      confirmTimer = setTimeout(function () { confirmEnd = false; renderBar(); }, 5000);
+      return;
+    }
+    confirmEnd = false; busy = true; renderBar();
+    try {
+      var sk = Object.keys(seats), ak = Object.keys(answers), i;
+      for (i = 0; i < sk.length; i++) await store.del('seats/' + sk[i]);
+      for (i = 0; i < ak.length; i++) await store.del('answers/' + ak[i]);
+      await store.set('class/state', Object.assign({}, S, { open: false, round: null, used: [], lastN: 0, sess: '' }));
+      selSeat = null; setupOpen = false;
+      say('Đã kết thúc buổi học. Kho từ vẫn được giữ cho buổi sau.');
+    } catch (e) { say('Chưa dọn hết lớp được. Thử lại nhé.'); }
+    busy = false; renderAll();
+  }
+  async function saveFix() {
+    var r = cur(), id = selSeat;
+    if (!r || !id) return;
+    var key = answerKey(r, id), a = answers[key];
+    if (!a || !a.submitted) return;
+    var v = $('fixText').value.trim();
+    try { await store.update('answers/' + key, { correction: v === a.sentence ? '' : v }); say('Đã lưu bản sửa cho ' + (a.name || 'học viên') + '.'); }
+    catch (e) { say('Chưa lưu được bản sửa. Thử lại nhé.'); }
+  }
+  async function kick() {
+    var id = selSeat;
+    if (!id || !seats[id]) return;
+    try { await store.del('seats/' + id); say('Đã mời ' + seats[id].name + ' rời bàn.'); }
+    catch (e) { say('Chưa thực hiện được. Thử lại nhé.'); }
+  }
+
+  /* ---------- đăng nhập thư chủ ---------- */
+  async function doLogin() {
+    var pin = $('pin').value.trim();
+    if (pin.length < 4) { say('Mã cần ít nhất 4 ký tự.'); return; }
+    var hsh = await sha(pin);
+    try {
+      var auth = await store.get('class/auth');
+      if (!auth || !auth.hash) await store.set('class/auth', { hash: hsh });
+      else if (auth.hash !== hsh) { say('Mã chưa đúng.'); return; }
+    } catch (e) { say('Chưa kết nối được. Thử lại nhé.'); return; }
+    ls.set('cobi.teacher', hsh);
+    isTeacher = true; loginOpen = false; $('pin').value = '';
+    setupInit = false; renderAll();
+  }
+
+  /* ---------- sự kiện ---------- */
+  $('btnLogin').addEventListener('click', function () { loginOpen = !loginOpen; renderAll(); if (loginOpen) $('pin').focus(); });
+  $('btnPin').addEventListener('click', doLogin);
+  $('pin').addEventListener('keydown', function (e) { if (e.key === 'Enter') doLogin(); });
+  $('btnOut').addEventListener('click', function () { ls.set('cobi.teacher', ''); isTeacher = false; asStudent = false; selSeat = null; renderAll(); });
+  $('btnAs').addEventListener('click', function () { asStudent = !asStudent; selSeat = null; lastRid = null; renderAll(); });
+  $('btnSetup').addEventListener('click', saveSetup);
+  $('words').addEventListener('input', updateCount);
+  $('btnKho').addEventListener('click', function () {
+    if (!setupOpen && S) { $('words').value = (S.words || []).join('\n'); $('ttl').value = S.title || ''; }
+    setupOpen = !setupOpen; renderAll();
+  });
+  $('btnShared').addEventListener('click', pickShared);
+  $('btnRandom').addEventListener('click', pickRandom);
+  $('btnEnd').addEventListener('click', endSession);
+  $('btnFix').addEventListener('click', saveFix);
+  $('btnKick').addEventListener('click', kick);
+  $('btnLeave').addEventListener('click', leaveSeat);
+  $('wDraw').addEventListener('click', drawWord);
+  $('wForm').addEventListener('submit', function (e) { e.preventDefault(); submitSentence(); });
+  $('myName').addEventListener('input', function () { ls.set('cobi.name', $('myName').value.trim()); });
+  $('sentence').addEventListener('input', function () {
+    updLen(); var r = cur(); if (r) ls.set('cobi.draft.' + r.id, $('sentence').value);
+  });
+
+  /* ---------- khởi động ---------- */
+  uid = params.get('as') || ls.get('cobi.uid');
+  if (!uid) { uid = 'u' + rand(10); ls.set('cobi.uid', uid); }
+  var fbUrl = params.get('fb') || window.COBI_FIREBASE_URL || '';
+  function onErr() { showConn('Mất kết nối với lớp học. Kiểm tra mạng, trang sẽ tự thử lại.'); }
+  store = fbUrl ? FirebaseStore(fbUrl, onErr) : LocalStore();
+  if (store.mode === 'local') showConn('Chế độ thử: dữ liệu chỉ đồng bộ giữa các tab trong cùng một trình duyệt. Muốn học viên vào từ máy khác, hãy dán địa chỉ Firebase vào đầu tệp (xem README).');
+  renderAll();
+  store.watch('class/auth', function (v) {
+    authHash = (v && v.hash) || null; authReady = true;
+    var saved = ls.get('cobi.teacher');
+    if (authHash && saved === authHash && !isTeacher) { isTeacher = true; setupInit = false; }
+    if (isTeacher && authHash && saved !== authHash) { isTeacher = false; }
+    renderAll();
+  });
+  store.watch('class/state', function (v) { gotState = true; S = v; renderAll(); });
+  store.watch('seats', function (v) {
+    var m = {}; Object.keys(v || {}).forEach(function (k) { if (v[k] && v[k].uid) m[k] = v[k]; });
+    seats = m; renderAll();
+  });
+  store.watch('answers', function (v) { answers = v || {}; renderAll(); });
+})();
+</script>
+</body>
+</html>
