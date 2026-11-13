@@ -57,7 +57,7 @@ const COBI_DATA = {
     title: "Tàng Thư Các",
     hanzi: "藏书阁",
     modules: [
-      { id: "ttc-intro", name: "Giới thiệu Tàng Thư Các", path: "./tang-thu-cac/intro.html" },
+      { id: "ttc-intro", name: "LUYỆN ĐỌC", path: "./tang-thu-cac/LUYENDOC.html" },
       {
         id: "ttc-vocab", name: "Biển Từ Mênh Mông", desc: "Từ vựng · Chủ đề · Ví dụ", icon: "词",
         subModules: [
