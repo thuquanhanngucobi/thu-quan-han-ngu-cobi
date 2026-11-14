@@ -4,31 +4,32 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap">
 <style>
 /* Layout: một cột hẹp, danh sách phẳng trong một khung; thanh điều khiển cố định ở đáy khi đọc.
-   Tông: xanh ngọc lạnh trên nền xám xanh, vàng nhạt chỉ dùng cho câu đang đọc. */
+   Tông: xanh navy đậm, bạc làm nền và đường kẻ, nâu cho pinyin, vàng cho câu đang đọc và dấu đã đọc. */
 :root {
-  --bg: #F3F6F5;
+  --bg: #EEF0F3;
   --surface: #FFFFFF;
-  --fg: #17211F;
-  --muted: #586964;
-  --line: #D6E0DD;
-  --accent: #0E7A6B;
+  --fg: #14213D;
+  --muted: #5A6578;
+  --line: #CFD5DE;
+  --accent: #1B2F5B;
   --accent-fg: #FFFFFF;
-  --accent-soft: #DCF0EB;
-  --py: #0B6A5D;
-  --hl: #FFF0C2;
+  --accent-soft: #E1E7F2;
+  --py: #7A4E24;
+  --gold: #B8860B;
+  --hl: #F8E7A8;
   --font-ui: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-han: "Noto Serif SC", "Songti SC", "Source Han Serif SC", "SimSun", serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0E1513; --surface: #162120; --fg: #E5EEEB; --muted: #93A6A1; --line: #263634;
-    --accent: #52C9B4; --accent-fg: #08201B; --accent-soft: #17332E; --py: #7ADBC9; --hl: #3B3217;
+    --bg: #0B1324; --surface: #132039; --fg: #E8ECF4; --muted: #9DA9C0; --line: #263659;
+    --accent: #E0B64A; --accent-fg: #1A1405; --accent-soft: #1D2C4D; --py: #D8A56B; --gold: #E0B64A; --hl: #4A3C12;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0E1513; --surface: #162120; --fg: #E5EEEB; --muted: #93A6A1; --line: #263634;
-  --accent: #52C9B4; --accent-fg: #08201B; --accent-soft: #17332E; --py: #7ADBC9; --hl: #3B3217;
+  --bg: #0B1324; --surface: #132039; --fg: #E8ECF4; --muted: #9DA9C0; --line: #263659;
+  --accent: #E0B64A; --accent-fg: #1A1405; --accent-soft: #1D2C4D; --py: #D8A56B; --gold: #E0B64A; --hl: #4A3C12;
   color-scheme: dark;
 }
 
@@ -69,7 +70,10 @@ a.level:hover { background: var(--accent-soft); }
 .lesson .t-han { font-family: var(--font-han); font-size: 22px; font-weight: 700; line-height: 1.3; display: block; }
 .lesson .t-vi { color: var(--muted); font-size: 14px; display: block; }
 .lesson .meta { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; white-space: nowrap; }
-.tick { width: 20px; height: 20px; color: var(--accent); }
+.tick { width: 20px; height: 20px; color: var(--gold); }
+.grp-h { padding: 8px 16px; background: var(--accent-soft); color: var(--py); font-size: 13px; font-weight: 700; letter-spacing: .04em; border-top: 1px solid var(--line); }
+.grp-h:first-child { border-top: 0; }
+.panel { border-top: 3px solid var(--gold); }
 
 .reader-head { margin-bottom: 14px; }
 .reader-head .t-han { font-family: var(--font-han); font-size: clamp(28px, 7vw, 38px); font-weight: 700; line-height: 1.25; margin: 0; }
@@ -131,9 +135,9 @@ a.level:hover { background: var(--accent-soft); }
 
 <!--
   ============================================================
-  DỮ LIỆU BÀI KHÓA — thêm bài mới ở đây
+  DỮ LIỆU BÀI KHÓA — thêm bài mới ở đây (xếp theo thứ tự Quyển, Bài, Bài khóa)
   Cách viết:
-    === Tiêu đề Hán tự | Tiêu đề tiếng Việt | đường dẫn audio (có thể bỏ trống)
+    === Tiêu đề Hán tự | Tiêu đề tiếng Việt | audio (để trống) | Quyển 2 - Bài 4 - Bài khóa 1
     Người nói | Hán tự | Pinyin | Nghĩa tiếng Việt | mốc thời gian bắt đầu câu (có thể bỏ trống)
   Mỗi câu một dòng. Dòng bắt đầu bằng # là ghi chú, bị bỏ qua.
   Mốc thời gian viết dạng 0:12.5 hoặc 12.5 (giây). Nếu có audio mà chưa có mốc,
@@ -141,7 +145,85 @@ a.level:hover { background: var(--accent-soft); }
   ============================================================
 -->
 <script type="text/plain" id="lesson-data">
-=== 买衬衫 | Bài khóa 1 · Mua áo sơ mi |
+=== 听音乐 | Nghe nhạc | | Quyển 2 - Bài 1 - Bài khóa 1
+海伦 | 田中，你在做什么？ | Tiánzhōng, nǐ zài zuò shénme? | Tanaka, bạn đang làm gì thế?
+田中 | 我在听音乐。 | Wǒ zài tīng yīnyuè. | Tôi đang nghe nhạc.
+海伦 | 听什么音乐？ | Tīng shénme yīnyuè? | Nghe nhạc gì vậy?
+田中 | 我在听中国音乐，很好听！ | Wǒ zài tīng Zhōngguó yīnyuè, hěn hǎotīng! | Tôi đang nghe nhạc Trung Quốc, rất hay!
+海伦 | 你喜欢一边看书，一边听音乐？ | Nǐ xǐhuan yìbiān kàn shū, yìbiān tīng yīnyuè? | Bạn thích vừa đọc sách vừa nghe nhạc à?
+田中 | 对，你喜欢听音乐吗？ | Duì, nǐ xǐhuan tīng yīnyuè ma? | Đúng, bạn có thích nghe nhạc không?
+海伦 | 很喜欢，我常常一边走路，一边听音乐。 | Hěn xǐhuan, wǒ chángcháng yìbiān zǒulù, yìbiān tīng yīnyuè. | Rất thích, tôi thường vừa đi bộ vừa nghe nhạc.
+田中 | 你喜欢唱歌吗？ | Nǐ xǐhuan chànggē ma? | Bạn có thích hát không?
+海伦 | 我不喜欢唱歌，我只喜欢听歌。你呢？ | Wǒ bù xǐhuan chànggē, wǒ zhǐ xǐhuan tīng gē. Nǐ ne? | Tôi không thích hát, tôi chỉ thích nghe hát. Còn bạn?
+田中 | 我很喜欢唱歌，我喜欢唱英文歌。 | Wǒ hěn xǐhuan chànggē, wǒ xǐhuan chàng Yīngwén gē. | Tôi rất thích hát, tôi thích hát tiếng Anh.
+海伦 | 太好了，我很喜欢听英文歌。你唱一个，好吗？ | Tài hǎo le, wǒ hěn xǐhuan tīng Yīngwén gē. Nǐ chàng yí ge, hǎo ma? | Tuyệt quá, tôi rất thích nghe nhạc tiếng Anh. Bạn hát một bài nhé?
+田中 | 不行，不行，下次吧！ | Bù xíng, bù xíng, xiàcì ba! | Không được, không được, lần sau nhé!
+
+=== 爱好 | Sở thích | | Quyển 2 - Bài 1 - Bài khóa 2
+欧文 | 卡玛拉，你平时喜欢做什么？ | Kǎmǎlā, nǐ píngshí xǐhuan zuò shénme? | Kamala, bình thường bạn thích làm gì?
+卡玛拉 | 我喜欢打球，还喜欢看电影和电视。你呢？ | Wǒ xǐhuan dǎ qiú, hái xǐhuan kàn diànyǐng hé diànshì. Nǐ ne? | Tôi thích chơi bóng, còn thích xem phim và xem ti vi. Còn bạn?
+欧文 | 我也喜欢看电影，我还喜欢看书和跳舞。 | Wǒ yě xǐhuan kàn diànyǐng, wǒ hái xǐhuan kàn shū hé tiàowǔ. | Tôi cũng thích xem phim, tôi còn thích đọc sách và nhảy.
+卡玛拉 | 你喜欢跳什么舞？ | Nǐ xǐhuan tiào shénme wǔ? | Bạn thích nhảy điệu gì?
+欧文 | 我喜欢跳街舞。你喜欢跳舞吗？ | Wǒ xǐhuan tiào jiēwǔ. Nǐ xǐhuan tiàowǔ ma? | Tôi thích nhảy hip-hop. Bạn có thích nhảy không?
+卡玛拉 | 不喜欢，我只喜欢看别人跳舞。 | Bù xǐhuan, wǒ zhǐ xǐhuan kàn biérén tiàowǔ. | Không thích, tôi chỉ thích xem người khác nhảy.
+欧文 | 你喜欢打球吗？ | Nǐ xǐhuan dǎ qiú ma? | Bạn có thích chơi bóng không?
+卡玛拉 | 我喜欢打篮球。你喜欢吗？ | Wǒ xǐhuan dǎ lánqiú. Nǐ xǐhuan ma? | Tôi thích chơi bóng rổ. Bạn có thích không?
+欧文 | 我不喜欢打球，我只喜欢看球。 | Wǒ bù xǐhuan dǎ qiú, wǒ zhǐ xǐhuan kàn qiú. | Tôi không thích chơi bóng, tôi chỉ thích xem bóng.
+卡玛拉 | 我也喜欢看球，我很喜欢看NBA。 | Wǒ yě xǐhuan kàn qiú, wǒ hěn xǐhuan kàn NBA. | Tôi cũng thích xem bóng, tôi rất thích xem NBA.
+欧文 | 我也是，下个周末我们一起看吧！ | Wǒ yě shì, xià ge zhōumò wǒmen yìqǐ kàn ba! | Tôi cũng vậy, cuối tuần sau chúng ta cùng xem nhé!
+
+=== 几点上课 | Mấy giờ vào học | | Quyển 2 - Bài 2 - Bài khóa 1
+海伦 | 欧文，现在几点？ | Ōuwén, xiànzài jǐ diǎn? | Owen, bây giờ mấy giờ rồi?
+欧文 | 八点一刻。你今天几点上课？ | Bā diǎn yí kè. Nǐ jīntiān jǐ diǎn shàngkè? | Tám giờ mười lăm. Hôm nay mấy giờ bạn vào học?
+海伦 | 九点。你呢？ | Jiǔ diǎn. Nǐ ne? | Chín giờ. Còn bạn?
+欧文 | 我今天九点五十五（分）上课。 | Wǒ jīntiān jiǔ diǎn wǔshíwǔ (fēn) shàngkè. | Hôm nay tôi vào học lúc chín giờ năm mươi lăm (phút).
+海伦 | 你几点下课？ | Nǐ jǐ diǎn xiàkè? | Mấy giờ bạn tan học?
+欧文 | 十二点半。你呢？ | Shí'èr diǎn bàn. Nǐ ne? | Mười hai rưỡi. Còn bạn?
+海伦 | 我也是。 | Wǒ yě shì. | Tôi cũng vậy.
+欧文 | 中午我们一起吃饭吧。 | Zhōngwǔ wǒmen yìqǐ chīfàn ba. | Buổi trưa chúng ta cùng đi ăn nhé.
+海伦 | 好！我们吃什么？ | Hǎo! Wǒmen chī shénme? | Được! Chúng ta ăn gì?
+欧文 | 吃中国菜或者韩国菜吧。 | Chī Zhōngguó cài huòzhě Hánguó cài ba. | Ăn món Trung Quốc hoặc món Hàn Quốc nhé.
+海伦 | 好，中午十二点半在学校门口见！ | Hǎo, zhōngwǔ shí'èr diǎn bàn zài xuéxiào ménkǒu jiàn! | Được, trưa 12 rưỡi gặp ở cổng trường!
+欧文 | 十二点半见！ | Shí'èr diǎn bàn jiàn! | 12 rưỡi gặp nhé!
+
+=== 几点起床 | Mấy giờ thức dậy | | Quyển 2 - Bài 2 - Bài khóa 2
+海伦 | 欧文，你平时几点起床？ | Ōuwén, nǐ píngshí jǐ diǎn qǐchuáng? | Owen, bình thường mấy giờ bạn thức dậy?
+欧文 | 有时候七点左右，有时候八点左右。你呢？ | Yǒu shíhou qī diǎn zuǒyòu, yǒu shíhou bā diǎn zuǒyòu. Nǐ ne? | Có lúc khoảng bảy giờ, có lúc khoảng tám giờ. Còn bạn?
+海伦 | 我每天六点一刻起床。 | Wǒ měitiān liù diǎn yí kè qǐchuáng. | Mỗi ngày tôi dậy lúc sáu giờ mười lăm.
+欧文 | 这么早！你平时几点睡觉？ | Zhème zǎo! Nǐ píngshí jǐ diǎn shuìjiào? | Sớm thế! Bình thường mấy giờ bạn đi ngủ?
+海伦 | 九点或者十点左右睡。 | Jiǔ diǎn huòzhě shí diǎn zuǒyòu shuì. | Khoảng chín hoặc mười giờ thì ngủ.
+欧文 | 怎么这么早？ | Zěnme zhème zǎo? | Sao sớm vậy?
+海伦 | 因为我喜欢早睡早起。你呢？ | Yīnwèi wǒ xǐhuan zǎo shuì zǎo qǐ. Nǐ ne? | Vì tôi thích ngủ sớm dậy sớm. Còn bạn?
+欧文 | 我平时十二点左右睡觉。 | Wǒ píngshí shí'èr diǎn zuǒyòu shuìjiào. | Bình thường tôi ngủ khoảng mười hai giờ.
+海伦 | 怎么这么晚？ | Zěnme zhème wǎn? | Sao muộn vậy?
+欧文 | 因为我每天都有很多事。 | Yīnwèi wǒ měitiān dōu yǒu hěn duō shì. | Vì mỗi ngày tôi đều có rất nhiều việc.
+
+=== 电话号码 | Số điện thoại | | Quyển 2 - Bài 3 - Bài khóa 1
+田中 | 美京，我明天可以给你打电话吗？ | Měijīng, wǒ míngtiān kěyǐ gěi nǐ dǎ diànhuà ma? | Mỹ Kinh, ngày mai tôi gọi điện cho bạn được không?
+美京 | 可以。 | Kěyǐ. | Được.
+田中 | 可是我没有你的电话号码，你的手机号是多少？ | Kěshì wǒ méiyǒu nǐ de diànhuà hàomǎ, nǐ de shǒujī hào shì duōshao? | Nhưng tôi không có số điện thoại của bạn, số di động của bạn là bao nhiêu?
+美京 | 我的手机号是136-1847-2834。 | Wǒ de shǒujī hào shì yāo sān liù, yāo bā sì qī, èr bā sān sì. | Số di động của tôi là 136-1847-2834.
+田中 | 等一下，可以借一下你的笔吗？我写一下。 | Děng yíxià, kěyǐ jiè yíxià nǐ de bǐ ma? Wǒ xiě yíxià. | Đợi chút, cho tôi mượn bút của bạn được không? Tôi ghi lại.
+美京 | 可以。 | Kěyǐ. | Được.
+田中 | 谢谢。 | Xièxie. | Cảm ơn.
+美京 | 我的手机号是136-1847-2834。 | Wǒ de shǒujī hào shì yāo sān liù, yāo bā sì qī, èr bā sān sì. | Số di động của tôi là 136-1847-2834.
+田中 | 你慢一点儿。 | Nǐ màn yìdiǎnr. | Bạn nói chậm một chút.
+美京 | 136-1847-2834。 | Yāo sān liù, yāo bā sì qī, èr bā sān sì. | 136-1847-2834.
+田中 | 好，我明天给你打电话。 | Hǎo, wǒ míngtiān gěi nǐ dǎ diànhuà. | Được, ngày mai tôi sẽ gọi điện cho bạn.
+
+=== 借东西 | Mượn đồ | | Quyển 2 - Bài 3 - Bài khóa 2
+海伦 | 田中，可以用一下你的电脑吗？ | Tiánzhōng, kěyǐ yòng yíxià nǐ de diànnǎo ma? | Tanaka, tôi dùng máy tính của bạn một chút được không?
+田中 | 可以，你用吧。 | Kěyǐ, nǐ yòng ba. | Được, bạn dùng đi.
+海伦 | 谢谢！我用一下，很快就好。 | Xièxie! Wǒ yòng yíxià, hěn kuài jiù hǎo. | Cảm ơn! Tôi dùng một chút, sẽ xong ngay.
+田中 | 没关系，我现在不用。对了，可不可以借一下你的手机？我的手机没电了。 | Méi guānxi, wǒ xiànzài bú yòng. Duì le, kě bu kěyǐ jiè yíxià nǐ de shǒujī? Wǒ de shǒujī méi diàn le. | Không sao, bây giờ tôi không dùng. À đúng rồi, cho tôi mượn điện thoại của bạn một chút được không? Điện thoại tôi hết pin rồi.
+海伦 | 没关系，给。 | Méi guānxi, gěi. | Không sao, đây.
+田中 | 谢谢。我想给黄老师打个电话。 | Xièxie. Wǒ xiǎng gěi Huáng lǎoshī dǎ ge diànhuà. | Cảm ơn. Tôi muốn gọi điện cho thầy/cô Hoàng.
+海伦 | 你有黄老师的电话号码吗？ | Nǐ yǒu Huáng lǎoshī de diànhuà hàomǎ ma? | Bạn có số điện thoại của thầy/cô Hoàng không?
+田中 | 我没有，你有吗？ | Wǒ méiyǒu, nǐ yǒu ma? | Tôi không có, bạn có không?
+海伦 | 有，我找一下。……在这儿，你打吧。 | Yǒu, wǒ zhǎo yíxià. …… Zài zhèr, nǐ dǎ ba. | Có, để tôi tìm. …… Đây rồi, bạn gọi đi.
+田中 | 谢谢！ | Xièxie! | Cảm ơn!
+
+=== 买衬衫 | Mua áo sơ mi | | Quyển 2 - Bài 4 - Bài khóa 1
 营业员 | 先生，您想买什么衣服？ | Xiānsheng, nín xiǎng mǎi shénme yīfu? | Thưa ông, ông muốn mua quần áo gì ạ?
 田中 | 我想买一件衬衫。 | Wǒ xiǎng mǎi yí jiàn chènshān. | Tôi muốn mua một chiếc áo sơ mi.
 营业员 | 好的，我们有黑色的，红色的和蓝色的，您可以都试一下。 | Hǎo de, wǒmen yǒu hēisè de, hóngsè de hé lánsè de, nín kěyǐ dōu shì yíxià. | Vâng, chúng tôi có màu đen, màu đỏ và màu xanh dương, ông có thể thử hết.
@@ -154,7 +236,7 @@ a.level:hover { background: var(--accent-soft); }
 田中 | 我觉得都不太合适。谢谢。 | Wǒ juéde dōu bú tài héshì. Xièxie. | Tôi thấy đều không vừa lắm. Cảm ơn.
 营业员 | 不客气！ | Bú kèqi! | Không có gì ạ!
 
-=== 买鞋 | Bài khóa 2 · Mua giày |
+=== 买鞋 | Mua giày | | Quyển 2 - Bài 4 - Bài khóa 2
 美京 | 请问，这双鞋有没有蓝色的？ | Qǐngwèn, zhè shuāng xié yǒu méiyǒu lánsè de? | Xin hỏi, đôi giày này có màu xanh dương không?
 营业员 | 没有蓝的，只有黑的。 | Méiyǒu lán de, zhǐyǒu hēi de. | Không có màu xanh, chỉ có màu đen.
 美京 | 我可以试一下黑的吗？ | Wǒ kěyǐ shì yíxià hēi de ma? | Tôi thử đôi màu đen được không?
@@ -192,7 +274,10 @@ a.level:hover { background: var(--accent-soft); }
       if (!line || line.charAt(0) === '#') return;
       var p = line.split('|').map(function (x) { return x.trim(); });
       if (line.indexOf('===') === 0) {
-        cur = { han: p[0].replace(/^=+\s*/, ''), vi: p[1] || '', audio: p[2] || '', s: [] };
+        cur = { han: p[0].replace(/^=+\s*/, ''), vi: p[1] || '', audio: p[2] || '', label: p[3] || '', s: [] };
+        var lm = /Quy[ểe]n\s*(\d+)\s*-\s*B[àa]i\s*(\d+)\s*-\s*B[àa]i kh[óo]a\s*(\d+)/i.exec(cur.label);
+        cur.group = lm ? 'Quyển ' + lm[1] + ' · Bài ' + lm[2] : '';
+        cur.kh = lm ? 'Bài khóa ' + lm[3] : '';
         out.push(cur);
       } else if (cur && p.length >= 4) {
         cur.s.push({ who: p[0], han: p[1], py: p[2], vi: p[3], t: parseTime(p[4]) });
@@ -285,7 +370,7 @@ a.level:hover { background: var(--accent-soft); }
   function sayTTS(text, my, onEnd) {
     if (!synth || typeof SpeechSynthesisUtterance === 'undefined') { showNotice(NO_TTS); stopAll(); return; }
     try { synth.cancel(); } catch (e) {}
-    var u = new SpeechSynthesisUtterance(text.replace(/[…]+|\.{2,}/g, ' '));
+    var u = new SpeechSynthesisUtterance(text.replace(/[…]+|\.{2,}/g, ' ').replace(/\d+(?:-\d+)+/g, function (m) { return m.replace(/\d/g, function (d) { return d + ' '; }).replace(/-/g, '，'); }));
     u.lang = 'zh-CN';
     if (voice) u.voice = voice;
     u.rate = rate;
@@ -437,16 +522,19 @@ a.level:hover { background: var(--accent-soft); }
       '<h1>Luyện đọc Hán ngữ</h1>' +
       '<p class="lede">Đọc thẳng Hán tự và nghe theo từng câu. Pinyin và nghĩa tiếng Việt chỉ mở ra khi bạn cần kiểm tra lại.</p></header>' +
       '<div class="panel">' +
-      '<a class="level" href="#so-cap"><span class="lv-han" lang="zh-Hans">初级</span><span class="lv-txt"><b>Sơ cấp</b><small>HSK 2 → 3 · ' + LESSONS.length + ' bài khóa</small></span>' + ICON_NEXT + '</a>' +
+      '<a class="level" href="#so-cap"><span class="lv-han" lang="zh-Hans">初级</span><span class="lv-txt"><b>Sơ cấp</b><small>HSK 2 → 3 · ' + LESSONS.length + ' bài khóa · Quyển 2</small></span>' + ICON_NEXT + '</a>' +
       '<div class="level off" aria-disabled="true"><span class="lv-han" lang="zh-Hans">中级</span><span class="lv-txt"><b>Trung cấp</b><small>HSK 3 → 4</small></span><span class="soon">Sắp có</span></div>' +
       '<div class="level off" aria-disabled="true"><span class="lv-han" lang="zh-Hans">高级</span><span class="lv-txt"><b>Cao cấp</b><small>HSK 4 trở lên</small></span><span class="soon">Sắp có</span></div>' +
       '</div>';
   }
 
   function renderLevel() {
+    var lastG = null;
     var items = LESSONS.map(function (l, i) {
-      return '<a class="lesson" href="#bai-' + (i + 1) + '"><span class="n">' + (i + 1) + '</span>' +
-        '<span><span class="t-han" lang="zh-Hans">' + esc(l.han) + '</span><span class="t-vi">' + esc(l.vi) + '</span></span>' +
+      var head = '';
+      if (l.group && l.group !== lastG) { head = '<div class="grp-h">' + esc(l.group) + '</div>'; lastG = l.group; }
+      return head + '<a class="lesson" href="#bai-' + (i + 1) + '"><span class="n">' + (i + 1) + '</span>' +
+        '<span><span class="t-han" lang="zh-Hans">' + esc(l.han) + '</span><span class="t-vi">' + esc((l.kh ? l.kh + ' · ' : '') + l.vi) + '</span></span>' +
         '<span class="meta">' + l.s.length + ' câu' + (done[l.han] ? ICON_TICK : '') + '</span></a>';
     }).join('');
     view.innerHTML =
@@ -475,7 +563,7 @@ a.level:hover { background: var(--accent-soft); }
     view.innerHTML =
       '<div class="reader" id="reader">' +
       '<a class="back" href="#so-cap">' + ICON_BACK + 'Sơ cấp</a>' +
-      '<div class="reader-head"><h1 class="t-han" lang="zh-Hans">' + esc(l.han) + '</h1><p class="t-vi">' + esc(l.vi) + '</p>' +
+      '<div class="reader-head"><p class="eyebrow">' + esc(l.label) + '</p><h1 class="t-han" lang="zh-Hans">' + esc(l.han) + '</h1><p class="t-vi">' + esc(l.vi) + '</p>' +
       '<p class="hint">' + hint + ' Nút Py và TV bên phải mỗi câu chỉ mở pinyin hoặc nghĩa cho câu đó.</p></div>' +
       '<div class="opts">' + (showRate ? '<div class="grp"><span>Tốc độ</span><span class="seg">' + rb('Chậm', 0.7) + rb('Vừa', 0.85) + rb('Thường', 1) + '</span></div>' : '') +
       (l.audio && !l.timed ? '' : '<label class="chk"><input type="checkbox" id="shadow"' + (shadow ? ' checked' : '') + '>Chừa nhịp để nhẩm theo</label>') + '</div>' +
