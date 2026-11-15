@@ -67,7 +67,10 @@ const COBI_DATA = {
       },
       {
         id: "ttc-grammar", name: "Mê Trận Ngự Pháp", desc: "Ngữ pháp · Cấu trúc · Cách dùng", icon: "法",
-        path: "./tang-thu-cac/ngu-phap/index.html"
+         subModules: [
+          { id: "ttc-g1", name: "1. Thẻ lật Flashcard", path: "./tang-thu-cac/tu-vung/flashcard.html" },
+          { id: "ttc-g2", name: "2. Danh sách từ vựng", path: "./tang-thu-cac/tu-vung/danh-sach.html" }
+        ]
       },
       {
         id: "ttc-skill", name: "Bí Kíp Luyện Công", desc: "Bài giảng · Hán tự · Kỹ năng nền tảng", icon: "功",
