@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Câu so sánh – Bí Kíp & Luyện Công</title>
+<meta name="description" content="Ôn tập câu so sánh trong tiếng Trung: 比, 没有, 一样/像, 最. Chọn mục đã học để xem lại kiến thức và làm bài tập.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fbf6ea; --card:#fffdf7; --ink:#1d2640; --muted:#5d6580; --line:#e6dcc3;
+  --accent:#16336b; --accent-soft:#e4ebf7; --on-accent:#fff;
+  --gold:#a8770a; --gold-soft:#f6ecd0;
+  --ok:#1d7a46; --ok-soft:#e2f3e8; --bad:#8a4b00; --bad-soft:#fdf0dc; --blue:#3a62a8;
+  --shadow:0 1px 2px rgba(29,38,64,.06),0 6px 18px rgba(29,38,64,.06);
+  --zh:"Noto Serif SC","Songti SC","SimSun","Source Han Serif SC",serif;
+  --vi:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#141a2c; --card:#1b2238; --ink:#eee8d8; --muted:#a2a9c2; --line:#2e3855;
+    --accent:#9db9ff; --accent-soft:#1f2b49; --on-accent:#10183a;
+    --gold:#e5b94e; --gold-soft:#332d1c;
+    --ok:#6fd49a; --ok-soft:#183326; --bad:#ffb74d; --bad-soft:#3a2d17; --blue:#9bb8f0; --shadow:none;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--vi);-webkit-text-size-adjust:100%}
+.zh{font-family:var(--zh);font-weight:500}
+.py{color:var(--blue);font-size:.88em}
+body.nopy .py{display:none}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+a{color:var(--blue)}
+[hidden]{display:none!important}
+button{font:inherit}
+.kicker{font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(1.9rem,6vw,3rem);line-height:1.12;margin:8px 0 6px}
+h2{font-size:clamp(1.35rem,4vw,1.8rem);margin:0;line-height:1.25}
+h3{font-size:1.12rem;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 16px;max-width:46em}
+.muted{color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);min-width:0}
+.stack{display:grid;gap:16px}
+.stack>*{min-width:0}
+
+/* hero */
+header.hero{padding:30px 0 6px;position:relative;overflow:hidden}
+.hero .seal{display:inline-flex;align-items:center;gap:10px;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.hero .seal b{background:var(--accent);color:var(--on-accent);font-family:var(--zh);font-size:1rem;padding:4px 8px;border-radius:4px;letter-spacing:0;text-transform:none}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .ghost{position:absolute;right:-6px;top:-24px;font-family:var(--zh);font-size:min(42vw,260px);line-height:1;color:var(--gold);opacity:.1;pointer-events:none;user-select:none}
+
+/* home list */
+.ulist{display:grid;gap:12px;margin:18px 0}
+.unit{display:flex;align-items:center;gap:14px;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 16px;cursor:pointer;box-shadow:var(--shadow);position:relative;transition:border-color .15s,background .15s}
+.unit:hover{border-color:var(--accent)}
+.unit input{position:absolute;opacity:0;pointer-events:none}
+.unit.on{border-color:var(--accent);background:var(--accent-soft)}
+.unit:focus-within{outline:3px solid var(--gold);outline-offset:2px}
+.num{flex:none;width:44px;height:44px;border-radius:12px;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:1.3rem;display:grid;place-items:center}
+.ubody{flex:1;min-width:0}
+.uzh{font-size:1.35rem;font-weight:700;font-family:var(--zh);line-height:1.3}
+.utitle{display:block;font-weight:600}
+.udesc{display:block;color:var(--muted);font-size:.92rem}
+.tick{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-weight:700;color:transparent;background:var(--card)}
+.unit.on .tick{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.pickbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer;font-size:.9rem}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip:focus-visible,.btn:focus-visible,.tab:focus-visible,.tok:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.go{position:sticky;bottom:0;padding:22px 0 14px;background:linear-gradient(transparent,var(--paper) 35%);pointer-events:none;z-index:10}
+.go .in{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+.go .in>*{pointer-events:auto}
+.go .cnt{font-weight:600;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 16px}
+.btn{pointer-events:auto;font-weight:700;font-size:1.05rem;border:0;border-radius:12px;padding:12px 28px;cursor:pointer;background:var(--accent);color:var(--on-accent);box-shadow:0 4px 14px rgba(22,51,107,.3)}
+.btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line);box-shadow:none}
+.share{margin:6px 0 0;padding:14px 16px;border:1px dashed var(--gold);background:var(--gold-soft);border-radius:12px;font-size:.92rem}
+.share .row{display:flex;gap:8px;margin-top:8px}
+.share input{flex:1;min-width:0;font:inherit;font-size:.85rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+.share button{font-size:.88rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 14px;cursor:pointer}
+
+/* study */
+.studybar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-top:16px;padding-bottom:6px}
+.studybar .sp{flex:1}
+nav.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.top .wrap{padding-top:10px;padding-bottom:10px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tab{cursor:pointer;text-align:left;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:8px 14px;display:flex;flex-direction:column;position:relative;font-weight:700;font-size:1.1rem;line-height:1.25}
+.tab .zh{position:absolute;right:12px;top:6px;font-size:1.3rem;opacity:.35}
+.tab small{font-weight:400;font-size:.78rem;color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.tab[aria-selected="true"] small{color:inherit;opacity:.8}
+@media(max-width:560px){.tab .zh{display:none}}
+.usec{padding-top:26px}
+.uhead{display:flex;gap:14px;align-items:center;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.uhead .uzh{font-size:1.1rem;color:var(--accent)}
+
+/* content blocks */
+.formula{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 0}
+.formula span{background:var(--accent-soft);color:var(--accent);border-radius:8px;padding:4px 10px;font-weight:700;font-family:var(--zh)}
+.formula span.hl{background:var(--accent);color:var(--on-accent)}
+.formula i{font-style:normal;color:var(--muted)}
+.ex{margin:6px 0;padding:8px 12px;border-left:3px solid var(--gold);background:var(--gold-soft);border-radius:0 8px 8px 0}
+.ex .zh{font-size:1.15rem}
+.ex small{display:block;color:var(--muted)}
+.ex.yes{border-left-color:var(--ok);background:var(--ok-soft)}
+.ex.no{border-left-color:var(--bad);background:var(--bad-soft)}
+.ex .mk{font-weight:700;margin-right:6px;font-size:.85rem}
+.ex.yes .mk{color:var(--ok)} .ex.no .mk{color:var(--bad)}
+.note{background:var(--accent-soft);border-radius:10px;padding:10px 14px;margin:12px 0 0;font-size:.95rem}
+.note b{color:var(--accent)}
+.use{margin:10px 0;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%}
+table.gt{min-width:620px}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+th{background:var(--gold-soft)}
+td small{display:block;color:var(--muted)}
+.adjs{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.adjs span{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:2px 10px;font-size:.9rem}
+.adjs b{font-family:var(--zh);font-size:1.1rem;margin-right:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.two{grid-template-columns:1fr}}
+.pytool{display:flex;justify-content:flex-end;padding-top:12px}
+
+/* exercises */
+.name-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.name-row input{font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);min-width:220px}
+.q-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.q-card.right{border-color:var(--ok);background:var(--ok-soft)}
+.q-card.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.qn{font-weight:700;color:var(--accent);margin-right:6px}
+.qtext{font-size:1.05rem;margin-bottom:8px}
+.qtext .zh{font-size:1.2rem}
+.opts{display:grid;gap:8px;grid-template-columns:1fr 1fr}
+@media(max-width:620px){.opts{grid-template-columns:1fr}}
+.opt{display:flex;gap:10px;align-items:center;border:2px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer;background:var(--card)}
+.opt:hover{border-color:var(--accent)}
+.opt input{accent-color:var(--accent);width:18px;height:18px;flex:none}
+.opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.opt .lt{font-weight:700;color:var(--muted);flex:none}
+.opt .zh{font-size:1.15rem}
+.answer-line{min-height:54px;border:2px dashed var(--line);border-radius:10px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0;background:var(--paper)}
+.answer-line:empty::before{content:"Bấm vào các từ bên dưới theo đúng thứ tự…";color:var(--muted);font-size:.9rem}
+.tok{font-family:var(--zh);font-weight:700;font-size:1.15rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer}
+.tok:hover:not(:disabled){border-color:var(--blue);background:var(--accent-soft)}
+.tok.used{opacity:.25}
+.answer-line .tok{background:var(--accent-soft);border-color:var(--accent)}
+.tok:disabled{cursor:default}
+.minibtn{background:none;border:0;color:var(--blue);text-decoration:underline;cursor:pointer;padding:4px 0;font-size:.85rem}
+input.tr{width:100%;font-family:var(--zh);font-size:1.15rem;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);margin-top:6px}
+input.tr:focus{border-color:var(--accent);outline:none}
+input.tr:disabled,.opt input:disabled{opacity:1}
+.fb{margin-top:10px;font-size:.95rem}
+.fb .st{font-weight:700}
+.right .fb .st{color:var(--ok)} .wrong .fb .st{color:var(--bad)}
+.fb .your{color:var(--muted)}
+.fb .corr{margin:4px 0;padding:6px 10px;background:var(--card);border-radius:8px;border:1px solid var(--line)}
+.fb .corr .zh{font-size:1.2rem}
+.typ{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-left:6px}
+.submit-bar{position:sticky;bottom:0;pointer-events:none;background:linear-gradient(transparent,var(--paper) 30%);padding:24px 0 14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;z-index:10}
+.result{display:none;margin:20px 0;padding:22px;border-radius:16px;background:var(--ink);color:var(--paper);text-align:center}
+.result.show{display:block}
+.result .score{font-size:clamp(3rem,12vw,5rem);font-weight:700;line-height:1.1}
+.result .score small{font-size:.4em;opacity:.7}
+.result .msg{font-size:1.1rem;margin:4px 0 14px}
+.result .parts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.result .parts div{background:rgba(255,255,255,.14);border-radius:10px;padding:6px 14px;font-size:.92rem}
+.result .wrongs{margin-top:14px;font-size:.95rem}
+.result .wrongs a{color:#ffd9a0}
+.muted2{opacity:.75;font-size:.9rem}
+footer{padding:30px 0 60px;color:var(--muted);text-align:center;font-size:.9rem}
+
+/* accordion */
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 10px}
+.toolbar .sp{flex:1}
+.toolbar input{font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);min-width:200px}
+.acc{display:grid;gap:12px;margin-bottom:40px}
+.item{background:var(--card);border:2px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:clip}
+.item.open{border-color:var(--accent)}
+.ih{margin:0;font-size:1rem;font-weight:400;line-height:1.6}
+.ihb{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:14px;width:100%;padding:14px 16px;cursor:pointer}
+.ihb:hover{background:var(--accent-soft)}
+.ihb:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+.item.open .ihb{background:var(--accent-soft)}
+.chev{flex:none;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;border:2px solid var(--line);background:var(--card);font-size:1.1rem;transition:transform .2s;line-height:1}
+.item.open .chev{transform:rotate(180deg);border-color:var(--accent)}
+.ibody{padding:6px 16px 18px;border-top:1px solid var(--line);animation:fade .2s ease}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.tabs.sub{margin:12px 0 14px}
+.pane>.lead{margin-top:4px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="ghost zh" aria-hidden="true">比</div>
+  <div class="wrap">
+    <div class="seal"><b>比较句</b> Hán ngữ · Ngữ pháp</div>
+    <h1>Câu so sánh <em>·</em> Bí Kíp &amp; Luyện Công</h1>
+    <p class="lead">Bấm vào mục muốn học để xem kiến thức và làm bài tập. Bấm lần nữa để thu lại. Muốn học thêm mục nào cũng được.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="toolbar">
+    <label for="stuName">Tên của bạn (không bắt buộc):</label>
+    <input id="stuName" type="text" maxlength="40" placeholder="Nguyễn Văn A" autocomplete="name">
+    <span class="sp"></span>
+    <button class="chip" id="pyToggle" aria-pressed="true" type="button">Pinyin: Bật</button>
+  </div>
+  <div class="acc" id="acc"></div>
+</main>
+<footer><div class="wrap">Chúc bạn học tốt! <span class="zh">加油!</span></div></footer>
+
+<script>
+const $ = (s, r=document) => r.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- helpers dựng nội dung ---------- */
+const ex  = (zh,py,vi) => `<div class="ex"><span class="zh">${zh}</span><span class="py"><br>${py}</span><small>${vi}</small></div>`;
+const yes = (zh,py,vi) => `<div class="ex yes"><span class="mk">✓ ĐÚNG</span><span class="zh">${zh}</span><span class="py"><br>${py}</span><small>${vi}</small></div>`;
+const no  = (zh,vi)    => `<div class="ex no"><span class="mk">✗ SAI</span><span class="zh">${zh}</span><small>${vi}</small></div>`;
+const fm  = parts => '<div class="formula">'+parts.map(p=>p==='+'?'<i>+</i>':p.startsWith('!')?`<span class="hl">${p.slice(1)}</span>`:`<span>${p}</span>`).join('')+'</div>';
+const note = h => `<div class="note">${h}</div>`;
+const adjs = list => '<div class="adjs">'+list.map(a=>`<span><b>${a[0]}</b><span class="py">${a[1]}</span> ${a[2]}</span>`).join('')+'</div>';
+
+/* ---------- NỘI DUNG 5 MỤC ---------- */
+const UNITS = [
+{ id:1, zh:'A 比 B + TT', title:'Câu so sánh hơn với 比', desc:'Cấu trúc cơ bản nhất: A hơn B về một tính chất.',
+ html: () => `
+ <div class="stack">
+  <div class="card">
+    <h3>Cấu trúc</h3>
+    <p style="margin:0">Dùng <b>比 (bǐ)</b> để so sánh hơn: <b>A hơn B</b> về một tính chất. <b>比</b> đứng giữa A và B, <b>tính từ</b> đứng sau B.</p>
+    ${fm(['A','+','!比','+','B','+','TT'])}
+    ${ex('我比他高。','Wǒ bǐ tā gāo.','Tôi cao hơn anh ấy.')}
+    ${ex('今天比昨天热。','Jīntiān bǐ zuótiān rè.','Hôm nay nóng hơn hôm qua.')}
+    ${ex('这本书比那本书贵。','Zhè běn shū bǐ nà běn shū guì.','Quyển sách này đắt hơn quyển sách kia.')}
+    ${ex('哥哥比我大。','Gēge bǐ wǒ dà.','Anh trai lớn hơn tôi (hơn tuổi tôi).')}
+    <h3 style="margin-top:14px">Tính từ hay dùng</h3>
+    ${adjs([['高','gāo','cao'],['矮','ǎi','thấp'],['大','dà','to, lớn'],['小','xiǎo','nhỏ'],['贵','guì','đắt'],['便宜','piányi','rẻ'],['快','kuài','nhanh'],['慢','màn','chậm'],['好','hǎo','tốt'],['多','duō','nhiều'],['少','shǎo','ít'],['热','rè','nóng'],['冷','lěng','lạnh'],['漂亮','piàoliang','đẹp'],['难','nán','khó'],['容易','róngyì','dễ']])}
+  </div>
+
+  <div class="card">
+    <h3>Lưu ý ①: KHÔNG thêm 很 / 非常 / 太 / 真 trước tính từ</h3>
+    <p style="margin:0">Trong câu 比, tính từ đứng một mình, không có phó từ chỉ mức độ.</p>
+    ${no('我比他很高。','Có 很 trước tính từ.')}
+    ${yes('我比他高。','Wǒ bǐ tā gāo.','Tôi cao hơn anh ấy.')}
+    <p style="margin:12px 0 0">Muốn nhấn mạnh "<b>còn … hơn</b>" thì dùng <b>更 (gèng)</b> hoặc <b>还 (hái)</b> đặt trước tính từ:</p>
+    ${fm(['A','+','!比','+','B','+','!更 / 还','+','TT'])}
+    ${ex('今天比昨天更热。','Jīntiān bǐ zuótiān gèng rè.','Hôm nay còn nóng hơn hôm qua.')}
+    ${ex('他比我还高。','Tā bǐ wǒ hái gāo.','Anh ấy còn cao hơn cả tôi.')}
+  </div>
+
+  <div class="card">
+    <h3>Lưu ý ②: Lược bỏ danh từ lặp lại</h3>
+    <p style="margin:0">Khi B và A cùng loại, có thể bỏ danh từ ở B, chỉ giữ <b>你的 / 他的…</b></p>
+    ${ex('我的手机比你的贵。','Wǒ de shǒujī bǐ nǐ de guì.','Điện thoại của tôi đắt hơn (điện thoại) của bạn.')}
+    ${ex('这个房间比那个大。','Zhège fángjiān bǐ nàge dà.','Phòng này to hơn phòng kia.')}
+    ${note('<b>Nhớ:</b> muốn nói "không bằng" thì <b>không</b> dùng 比 ở dạng phủ định đơn giản, mà dùng <b>没有</b> (xem mục 3).')}
+  </div>
+ </div>`,
+ qs:[
+  {t:'mc', q:'Chọn câu <b>đúng</b>: "Hôm nay nóng hơn hôm qua."', o:['今天比昨天热。','今天比昨天很热。','今天昨天比热。','今天比昨天不热。'],
+   why:'Câu 比: A + 比 + B + TT. Không thêm 很 trước tính từ, và 比 phải nằm giữa A và B.'},
+  {t:'mc', q:'今天比昨天 ___ 热,我不想出去了。<br><span class="muted" style="font-size:.9rem">(còn nóng hơn)</span>', o:['更','很','非常','太'],
+   why:'Trong câu 比 không dùng 很 / 非常 / 太. Muốn nhấn "còn … hơn" thì dùng 更 hoặc 还.'},
+  {t:'mc', q:'Chọn câu <b>SAI</b>:', o:['她比我非常漂亮。','他比我大。','这本书比那本书贵。','今天比昨天冷。'],
+   why:'"她比我非常漂亮" sai vì có 非常 trong câu 比. Sửa: 她比我漂亮。(hoặc 她比我更漂亮。)'},
+  {t:'sort', vi:'Bắc Kinh lạnh hơn Hà Nội.', tokens:['北京','比','河内','冷'], ok:['北京比河内冷'], show:'北京比河内冷。',
+   why:'A + 比 + B + TT, với A = 北京, B = 河内, TT = 冷.'},
+  {t:'tr', vi:'Quyển sách này đắt hơn quyển sách kia.', tpl:['这{本书|本|个}比那{本书|本|个}贵'], show:'这本书比那本书贵。',
+   why:'这本书 (A) + 比 + 那本书 (B) + 贵 (TT). Lượng từ của sách là 本.'}
+ ]},
+
+{ id:2, zh:'A 比 B + TT + mức độ', title:'Hơn bao nhiêu? (一点儿 · 得多 · số lượng)', desc:'Nói rõ A hơn B một chút, hơn nhiều, hay hơn đúng bao nhiêu.',
+ html: () => `
+ <div class="stack">
+  <div class="card">
+    <h3>Cấu trúc: mức độ đứng SAU tính từ</h3>
+    <p style="margin:0">Muốn nói rõ <b>hơn bao nhiêu</b>, thêm thành phần chỉ mức độ <b>ngay sau tính từ</b>.</p>
+    ${fm(['A','+','!比','+','B','+','TT','+','!mức độ'])}
+    <div class="tw"><table class="gt">
+      <thead><tr><th>Mức độ</th><th>Thêm sau tính từ</th><th>Ví dụ</th></tr></thead>
+      <tbody>
+       <tr><td><b>① Hơn một chút</b></td><td class="zh">一点儿 / 一些</td>
+         <td><span class="zh">他比我高一点儿。</span><span class="py"><br>Tā bǐ wǒ gāo yìdiǎnr.</span><small>Anh ấy cao hơn tôi một chút.</small>
+             <span class="zh">这件衣服比那件便宜一些。</span><span class="py"><br>Zhè jiàn yīfu bǐ nà jiàn piányi yìxiē.</span><small>Cái áo này rẻ hơn cái kia một chút.</small></td></tr>
+       <tr><td><b>② Hơn nhiều</b></td><td class="zh">得多 / 多了</td>
+         <td><span class="zh">这个房间比那个房间大得多。</span><span class="py"><br>Zhège fángjiān bǐ nàge fángjiān dà de duō.</span><small>Phòng này to hơn phòng kia nhiều.</small>
+             <span class="zh">今天比昨天冷多了。</span><span class="py"><br>Jīntiān bǐ zuótiān lěng duō le.</span><small>Hôm nay lạnh hơn hôm qua nhiều.</small></td></tr>
+       <tr><td><b>③ Hơn một lượng cụ thể</b></td><td>Số lượng<br><span class="muted">(+ lượng từ)</span></td>
+         <td><span class="zh">他比我高五厘米。</span><span class="py"><br>Tā bǐ wǒ gāo wǔ límǐ.</span><small>Anh ấy cao hơn tôi 5 cm.</small>
+             <span class="zh">姐姐比我大三岁。</span><span class="py"><br>Jiějie bǐ wǒ dà sān suì.</span><small>Chị hơn tôi 3 tuổi.</small>
+             <span class="zh">这件衣服比那件贵一百块。</span><span class="py"><br>Zhè jiàn yīfu bǐ nà jiàn guì yìbǎi kuài.</span><small>Cái áo này đắt hơn cái kia 100 tệ.</small></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>Lỗi thường gặp</h3>
+    ${no('他比我一点儿高。','Đặt 一点儿 trước tính từ.')}
+    ${yes('他比我高一点儿。','Tā bǐ wǒ gāo yìdiǎnr.','Mức độ phải đứng sau tính từ.')}
+    ${no('他比我五厘米高。','Đặt số lượng trước tính từ.')}
+    ${yes('他比我高五厘米。','Tā bǐ wǒ gāo wǔ límǐ.','Số lượng đứng sau tính từ.')}
+    ${no('他比我很高得多。','Vừa có 很, vừa có 得多.')}
+    ${yes('他比我高得多。','Tā bǐ wǒ gāo de duō.','Không dùng 很 / 非常 / 太 trong câu 比.')}
+  </div>
+
+  <div class="card">
+    <h3>Mở rộng và cần nhớ</h3>
+    <div class="use"><b>Số 2 trước lượng từ dùng 两</b> (liǎng), không dùng 二:
+      ${ex('他比我小两岁。','Tā bǐ wǒ xiǎo liǎng suì.','Anh ấy nhỏ hơn tôi 2 tuổi.')}</div>
+    <div class="use"><b>多 / 少 + số lượng + danh từ</b> (nhiều hơn / ít hơn bao nhiêu):
+      ${ex('这个班比那个班多三个学生。','Zhège bān bǐ nàge bān duō sān ge xuésheng.','Lớp này nhiều hơn lớp kia 3 học sinh.')}</div>
+    <div class="use"><b>早 / 晚 + động từ + thời lượng</b> (sớm / muộn hơn bao lâu):
+      ${ex('他比我早到十分钟。','Tā bǐ wǒ zǎo dào shí fēnzhōng.','Anh ấy đến sớm hơn tôi 10 phút.')}</div>
+    ${note('<b>一点儿</b> và <b>一些</b> có nghĩa gần giống nhau; <b>一点儿</b> thường dùng trong khẩu ngữ. Cả hai đều chỉ chênh lệch <b>nhỏ</b>.')}
+  </div>
+ </div>`,
+ qs:[
+  {t:'mc', q:'Chọn câu <b>đúng</b>: "Anh ấy cao hơn tôi một chút."', o:['他比我高一点儿。','他比我一点儿高。','他比我很高一点儿。','他一点儿比我高。'],
+   why:'Mức độ (一点儿 / 一些) đứng sau tính từ: A + 比 + B + TT + 一点儿.'},
+  {t:'mc', q:'这个房间比那个房间大 ___。<br><span class="muted" style="font-size:.9rem">(lớn hơn nhiều)</span>', o:['得多','很','非常','太'],
+   why:'Hơn nhiều: TT + 得多 (hoặc 多了). Không dùng 很 / 非常 / 太 trong câu 比.'},
+  {t:'mc', q:'他比我小 ___ 岁。<br><span class="muted" style="font-size:.9rem">(nhỏ hơn tôi 2 tuổi)</span>', o:['两','二','双','俩'],
+   why:'Trước lượng từ (岁) số 2 dùng 两, không dùng 二: 小两岁.'},
+  {t:'sort', vi:'Cái áo này đắt hơn cái kia 100 tệ.', tokens:['这件','衣服','比','那件','贵','一百','块'], ok:['这件衣服比那件贵一百块'], show:'这件衣服比那件贵一百块。',
+   why:'Lượng chênh lệch đặt sau tính từ: A + 比 + B + 贵 + 一百块.'},
+  {t:'tr', vi:'Hôm nay lạnh hơn hôm qua nhiều.', tpl:['今天比昨天冷{得多|多了|很多}'], show:'今天比昨天冷得多。(hoặc 冷多了。)',
+   why:'A (今天) + 比 + B (昨天) + 冷 + 得多 / 多了. Mức độ đứng sau tính từ.'}
+ ]},
+
+{ id:3, zh:'A 没有 B + TT', title:'Câu so sánh kém hơn / không bằng với 没有', desc:'Nói A không bằng B. Đây là dạng phủ định của câu 比.',
+ html: () => `
+ <div class="stack">
+  <div class="card">
+    <h3>Cấu trúc</h3>
+    <p style="margin:0"><b>A 没有 B + TT</b> nghĩa là <b>A không (…) bằng B</b>. Dùng 没有 (méiyǒu) thay cho 比.</p>
+    ${fm(['A','+','!没有','+','B','+','(那么 / 这么)','+','TT'])}
+    ${ex('我没有他高。','Wǒ méiyǒu tā gāo.','Tôi không cao bằng anh ấy.')}
+    ${ex('今天没有昨天热。','Jīntiān méiyǒu zuótiān rè.','Hôm nay không nóng bằng hôm qua.')}
+    ${ex('弟弟没有哥哥那么高。','Dìdi méiyǒu gēge nàme gāo.','Em trai không cao bằng anh trai.')}
+    ${ex('这个手机没有那个手机贵。','Zhège shǒujī méiyǒu nàge shǒujī guì.','Cái điện thoại này không đắt bằng cái kia.')}
+    ${note('<b>那么 / 这么</b> (nàme / zhème = "như vậy") có thể thêm trước tính từ để câu mềm và tự nhiên hơn. Có hay không đều đúng.')}
+  </div>
+
+  <div class="card">
+    <h3>Chuyển từ câu 比 sang câu 没有</h3>
+    <p style="margin:0">Hai câu cùng một ý, nhưng <b>đảo vị trí A và B</b>: người "kém hơn" làm chủ ngữ.</p>
+    <div class="tw"><table class="gt">
+      <thead><tr><th>Câu 比 (A hơn B)</th><th>Câu 没有 (B không bằng A)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="zh">他比我高。</span><small>Anh ấy cao hơn tôi.</small></td><td><span class="zh">我没有他高。</span><small>Tôi không cao bằng anh ấy.</small></td></tr>
+        <tr><td><span class="zh">今天比昨天热。</span><small>Hôm nay nóng hơn hôm qua.</small></td><td><span class="zh">昨天没有今天热。</span><small>Hôm qua không nóng bằng hôm nay.</small></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>Lỗi thường gặp</h3>
+    ${no('我没有他很高。','Thêm 很 vào câu 没有.')}
+    ${no('我没有比他高。','Dùng cả 没有 và 比.')}
+    ${yes('我没有他高。','Wǒ méiyǒu tā gāo.','Chỉ dùng 没有 + B + TT.')}
+    ${note('Câu 没有 thường đi với tính từ chỉ hướng "nhiều / lớn" như <b>高、大、快、好、多、贵、热</b>.')}
+  </div>
+
+  <div class="card">
+    <h3>Mở rộng</h3>
+    <div class="use"><b>不比</b> (bù bǐ) = "<b>không hơn</b>" (có thể bằng hoặc kém), khác với 没有 là chắc chắn kém hơn:
+      ${ex('他不比我高。','Tā bù bǐ wǒ gāo.','Anh ấy không cao hơn tôi (cao bằng hoặc thấp hơn).')}
+      ${ex('他没有我高。','Tā méiyǒu wǒ gāo.','Anh ấy không cao bằng tôi (thấp hơn).')}</div>
+    <div class="use"><b>A 不如 B (+ TT)</b> (bùrú) = A không bằng B, nghe trang trọng hơn:
+      ${ex('我不如他高。','Wǒ bùrú tā gāo.','Tôi không cao bằng anh ấy.')}</div>
+    <div class="use"><b>A 有 B (那么) + TT</b> dùng khi <b>hỏi</b> "có … bằng không":
+      ${ex('你有你哥哥那么高吗?','Nǐ yǒu nǐ gēge nàme gāo ma?','Bạn có cao bằng anh trai bạn không?')}</div>
+  </div>
+ </div>`,
+ qs:[
+  {t:'mc', q:'Chọn câu <b>đúng</b>: "Tôi không cao bằng anh ấy."', o:['我没有他高。','我没有他很高。','我没有比他高。','我不有他高。'],
+   why:'Câu 没有: A + 没有 + B + TT. Không thêm 很, không dùng 比.'},
+  {t:'mc', q:'Anh trai 20 tuổi, tôi 18 tuổi. Câu nào <b>đúng</b>?', o:['我没有哥哥大。','我比哥哥大。','哥哥没有我大。','我没有大哥哥。'],
+   why:'Tôi nhỏ tuổi hơn nên "tôi không lớn bằng anh": 我没有哥哥大. Chủ ngữ là người kém hơn.'},
+  {t:'mc', q:'今天没有昨天 ___ 热。<br><span class="muted" style="font-size:.9rem">(không nóng như hôm qua)</span>', o:['那么','很','非常','太'],
+   why:'Trong câu 没有 có thể thêm 那么 / 这么 trước tính từ; không dùng 很 / 非常 / 太.'},
+  {t:'sort', vi:'Em trai không cao bằng anh trai.', tokens:['弟弟','没有','哥哥','那么','高'], ok:['弟弟没有哥哥那么高'], show:'弟弟没有哥哥那么高。',
+   why:'A (弟弟) + 没有 + B (哥哥) + 那么 + TT (高).'},
+  {t:'tr', vi:'Cái điện thoại này không đắt bằng cái điện thoại kia.', tpl:['这{个|个手机|部|部手机}没有那{个|个手机|部|部手机}{那么|}贵'], show:'这个手机没有那个手机贵。',
+   why:'A (这个手机) + 没有 + B (那个手机) + (那么) + 贵.'}
+ ]},
+
+{ id:4, zh:'A 跟 B 一样 / A 像 B', title:'So sánh bằng với 一样 và 像', desc:'Nói hai thứ giống nhau, bằng nhau, hoặc A giống / như B.',
+ html: () => `
+ <div class="stack">
+  <div class="card">
+    <h3>① A 跟 / 和 B 一样 (+ TT): bằng nhau, giống nhau</h3>
+    ${fm(['A','+','!跟 / 和','+','B','+','!一样','+','(TT)'])}
+    ${ex('我跟他一样高。','Wǒ gēn tā yíyàng gāo.','Tôi cao bằng anh ấy.')}
+    ${ex('这个和那个一样贵。','Zhège hé nàge yíyàng guì.','Cái này đắt bằng cái kia.')}
+    ${ex('我的手机跟你的一样。','Wǒ de shǒujī gēn nǐ de yíyàng.','Điện thoại của tôi giống của bạn.')}
+    ${ex('我们一样大。','Wǒmen yíyàng dà.','Chúng tôi bằng tuổi nhau.')}
+    <p style="margin:12px 0 0"><b>Phủ định:</b> thêm <b>不</b> trước 一样. <b>Câu hỏi:</b> dùng 吗 hoặc 一样不一样.</p>
+    ${ex('我跟他不一样高。','Wǒ gēn tā bù yíyàng gāo.','Tôi và anh ấy không cao bằng nhau.')}
+    ${ex('这两件衣服一样吗?','Zhè liǎng jiàn yīfu yíyàng ma?','Hai cái áo này giống nhau không?')}
+    ${ex('他和我差不多高。','Tā hé wǒ chàbuduō gāo.','Anh ấy và tôi cao gần bằng nhau.')}
+    ${note('Tính từ đứng <b>sau 一样</b> và không có 很: không nói 我跟他一样很高.')}
+  </div>
+
+  <div class="card">
+    <h3>② A 像 B: giống B</h3>
+    ${fm(['A','+','!像','+','B'])}
+    ${ex('他像他爸爸。','Tā xiàng tā bàba.','Anh ấy giống bố.')}
+    ${ex('他不像他妈妈。','Tā bú xiàng tā māma.','Anh ấy không giống mẹ.')}
+    <h3 style="margin-top:14px">A 像 B 一样 + TT: (tính chất) như B</h3>
+    ${fm(['A','+','!像','+','B','+','!一样','+','TT'])}
+    ${ex('他像他爸爸一样高。','Tā xiàng tā bàba yíyàng gāo.','Anh ấy cao như bố.')}
+    ${ex('她像花一样漂亮。','Tā xiàng huā yíyàng piàoliang.','Cô ấy đẹp như hoa.')}
+  </div>
+
+  <div class="card">
+    <h3>Phân biệt 跟…一样 và 像…一样</h3>
+    <div class="tw"><table class="gt">
+      <thead><tr><th></th><th>A 跟 B 一样 (+ TT)</th><th>A 像 B 一样 + TT</th></tr></thead>
+      <tbody>
+        <tr><td><b>Ý nghĩa</b></td><td>A và B <b>bằng / giống nhau</b> (so sánh hai đối tượng cùng loại)</td><td>A <b>như</b> B (hay dùng để ví von, hoặc lấy B làm chuẩn)</td></tr>
+        <tr><td><b>Ví dụ</b></td><td><span class="zh">我跟他一样高。</span><small>Tôi và anh ấy cao bằng nhau.</small></td><td><span class="zh">她像花一样漂亮。</span><small>Cô ấy đẹp như hoa.</small></td></tr>
+      </tbody>
+    </table></div>
+    ${note('<b>Nhớ:</b> <b>跟 / 和 / 与</b> đều dùng được trong "A 跟 B 一样". Còn <b>像</b> đứng ngay trước B, <b>không</b> có 跟/和.')}
+  </div>
+ </div>`,
+ qs:[
+  {t:'mc', q:'Chọn câu <b>đúng</b>: "Tôi cao bằng anh ấy."', o:['我跟他一样高。','我跟他高一样。','我一样跟他高。','我跟他一样很高。'],
+   why:'A + 跟/和 + B + 一样 + TT. Tính từ đứng sau 一样, không thêm 很.'},
+  {t:'mc', q:'他 ___ 他爸爸。<br><span class="muted" style="font-size:.9rem">(Anh ấy giống bố)</span>', o:['像','比','没有','一样'],
+   why:'像 (xiàng) = giống: A 像 B.'},
+  {t:'mc', q:'她像花 ___ 漂亮。<br><span class="muted" style="font-size:.9rem">(Cô ấy đẹp như hoa)</span>', o:['一样','一点儿','得多','没有'],
+   why:'Cấu trúc A 像 B 一样 + TT: A (tính từ) như B.'},
+  {t:'sort', vi:'Điện thoại của tôi giống của bạn.', tokens:['我的','手机','跟','你的','一样'], ok:['我的手机跟你的一样'], show:'我的手机跟你的一样。',
+   why:'A (我的手机) + 跟 + B (你的) + 一样. B lược bỏ danh từ 手机.'},
+  {t:'tr', vi:'Anh ấy và tôi cao bằng nhau.', tpl:['他{跟|和|与}我一样高','我{跟|和|与}他一样高','我们一样高'], show:'他跟我一样高。(hoặc 他和我一样高。)',
+   why:'A + 跟/和 + B + 一样 + TT.'}
+ ]},
+
+{ id:5, zh:'最 + TT', title:'So sánh nhất với 最', desc:'Nói A là nhất trong một phạm vi: 最 + tính từ.',
+ html: () => `
+ <div class="stack">
+  <div class="card">
+    <h3>Cấu trúc</h3>
+    <p style="margin:0"><b>最 (zuì)</b> = <b>nhất</b>, đặt <b>trước tính từ</b> (hoặc một số động từ chỉ tâm lý như 喜欢, 爱).</p>
+    ${fm(['A','+','!最','+','TT'])}
+    ${ex('他最高。','Tā zuì gāo.','Anh ấy cao nhất.')}
+    ${ex('在我们班,他最高。','Zài wǒmen bān, tā zuì gāo.','Trong lớp chúng tôi, anh ấy cao nhất.')}
+    ${ex('我最喜欢吃苹果。','Wǒ zuì xǐhuan chī píngguǒ.','Tôi thích ăn táo nhất.')}
+    ${note('<b>Phạm vi so sánh</b> thường đứng đầu câu: <span class="zh">在 + phạm vi + (里 / 中)</span>, ví dụ <span class="zh">在这些书里,这本最有意思。</span>')}
+  </div>
+
+  <div class="card">
+    <h3>Các mẫu hay dùng</h3>
+    <div class="use"><b>是 + phạm vi + 最 + TT + 的 (+ danh từ)</b>: "là … nhất"
+      ${ex('他是我们班最高的。','Tā shì wǒmen bān zuì gāo de.','Anh ấy là người cao nhất lớp chúng tôi.')}
+      ${ex('胡志明市是越南最大的城市。','Húzhìmíng Shì shì Yuènán zuì dà de chéngshì.','TP. Hồ Chí Minh là thành phố lớn nhất Việt Nam.')}
+      ${ex('这是我最好的朋友。','Zhè shì wǒ zuì hǎo de péngyou.','Đây là người bạn tốt nhất của tôi.')}</div>
+    <div class="use"><b>最 … 之一</b> (zhī yī): "một trong những … nhất"
+      ${ex('她是我最好的朋友之一。','Tā shì wǒ zuì hǎo de péngyou zhī yī.','Cô ấy là một trong những người bạn tốt nhất của tôi.')}</div>
+    <div class="use"><b>A 比 谁 / 哪个 都 + TT</b>: A hơn tất cả, nghĩa là "nhất"
+      ${ex('他比谁都高。','Tā bǐ shéi dōu gāo.','Anh ấy cao hơn bất cứ ai (cao nhất).')}</div>
+    <div class="use"><b>Phủ định:</b> 不是最 … 的
+      ${ex('他不是最高的。','Tā bú shì zuì gāo de.','Anh ấy không phải là người cao nhất.')}</div>
+  </div>
+
+  <div class="card">
+    <h3>Lỗi thường gặp</h3>
+    ${no('他很最高。','Dùng 很 cùng với 最.')}
+    ${no('他最比我们班高。','Dùng cả 最 và 比.')}
+    ${yes('他最高。','Tā zuì gāo.','Chỉ dùng 最 + TT, không thêm 很 / 更 / 比.')}
+  </div>
+ </div>`,
+ qs:[
+  {t:'mc', q:'Chọn câu <b>đúng</b>: "Anh ấy cao nhất lớp tôi."', o:['他是我们班最高的。','他是我们班很最高。','他比我们班最高。','他最比我们班高。'],
+   why:'Dùng 最 + TT, không thêm 很 hay 比. Mẫu "là … nhất": 是 + phạm vi + 最 + TT + 的.'},
+  {t:'mc', q:'"他比谁都高。" có nghĩa là gì?', o:['Anh ấy cao hơn bất cứ ai (cao nhất).','Anh ấy thấp hơn mọi người.','Anh ấy cao bằng mọi người.','Ai cũng cao hơn anh ấy.'],
+   why:'A 比 + 谁 / 哪个 + 都 + TT: A hơn tất cả mọi người, tức là "nhất".'},
+  {t:'mc', q:'Chọn câu <b>SAI</b>:', o:['他很最高。','他最高。','她最漂亮。','这是我最好的朋友。'],
+   why:'Không dùng 很 cùng với 最. Sửa: 他最高。'},
+  {t:'sort', vi:'Thành phố Hồ Chí Minh là thành phố lớn nhất Việt Nam.', tokens:['胡志明市','是','越南','最','大','的','城市'], ok:['胡志明市是越南最大的城市','越南最大的城市是胡志明市'], show:'胡志明市是越南最大的城市。',
+   why:'Mẫu: A 是 + phạm vi (越南) + 最 + TT (大) + 的 + 城市.'},
+  {t:'tr', vi:'Trong lớp tôi, anh ấy học giỏi nhất.', tpl:['{在|}我们班{里|中|}他学{习|得}最好','他是我们班学{习|得}最好的{人|}'], show:'在我们班,他学习最好。',
+   why:'Phạm vi (在我们班) + chủ ngữ (他) + 学习 + 最好. 最 đứng trước tính từ 好.'}
+ ]}
+];
+
+/* ---------- chuẩn hoá & mở rộng đáp án ---------- */
+const DIG='零一二三四五六七八九';
+const norm = s => String(s).replace(/幺/g,'一').replace(/[0-9]/g,d=>DIG[+d]).replace(/[^一-鿿A-Za-z]/g,'').toLowerCase();
+function expand(t){const m=t.match(/\{([^{}]*)\}/);if(!m)return[t];const o=[];m[1].split('|').forEach(x=>expand(t.slice(0,m.index)+x+t.slice(m.index+m[0].length)).forEach(y=>o.push(y)));return o;}
+UNITS.forEach(u=>u.qs.forEach(q=>{ if(q.t==='tr') q.set=new Set(q.tpl.flatMap(expand).map(norm)); if(q.t==='sort') q.set=new Set(q.ok.map(norm)); }));
+const shuffle=a=>{const r=a.map((t,i)=>({t,i}));for(let k=0;k<20;k++){for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}if(r.map(x=>x.t).join('|')!==a.join('|'))break;}return r;};
+const isZh = s => !/[A-Za-zÀ-ỹ]{3,}/.test(s);
+
+/* ---------- DANH SÁCH MỤC (xổ ra / thu lại) ---------- */
+const sortState={}, locked={};
+const uidOf = id => +id.slice(1).split('_')[0];
+const acc = $('#acc');
+
+function qHtml(u,q,i){
+  const id=`q${u.id}_${i}`, n=`${u.id}.${i+1}`;
+  if(q.t==='mc'){
+    q._opts = shuffle(q.o);   // o[0] là đáp án đúng
+    return `<div class="q-card" id="${id}"><div class="qtext"><span class="qn">${n}</span>${q.q}</div>
+      <div class="opts" role="radiogroup">${q._opts.map((o,k)=>`<label class="opt"><input type="radio" name="${id}" value="${o.i}"><span class="lt">${'ABCD'[k]}</span><span class="${isZh(o.t)?'zh':''}">${esc(o.t)}</span></label>`).join('')}</div>
+      <div class="fb" hidden></div></div>`;
+  }
+  if(q.t==='sort'){
+    sortState[id]={order:shuffle(q.tokens),picked:[]};
+    return `<div class="q-card" id="${id}"><div class="qtext"><span class="qn">${n}</span>Sắp xếp thành câu đúng<span class="typ">sắp xếp</span><br><span class="muted">${esc(q.vi)}</span></div>
+      <div class="answer-line" id="al_${id}"></div><div id="bl_${id}" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+      <button class="minibtn" type="button" data-clear="${id}">Xoá làm lại câu này</button><div class="fb" hidden></div></div>`;
+  }
+  return `<div class="q-card" id="${id}"><div class="qtext"><span class="qn">${n}</span>Dịch sang tiếng Trung<span class="typ">dịch câu</span><br><b>${esc(q.vi)}</b></div>
+    <input class="tr zh" id="t_${id}" type="text" lang="zh-CN" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Gõ câu tiếng Trung…" aria-label="Bản dịch câu ${n}">
+    <div class="fb" hidden></div></div>`;
+}
+function drawSort(id){
+  const st=sortState[id], lk=locked[uidOf(id)];
+  $('#al_'+id).innerHTML=st.picked.map(k=>`<button type="button" class="tok" data-id="${id}" data-k="${k}" ${lk?'disabled':''}>${esc(st.order[k].t)}</button>`).join('');
+  $('#bl_'+id).innerHTML=st.order.map((o,k)=>`<button type="button" class="tok ${st.picked.includes(k)?'used':''}" data-id="${id}" data-add="${k}" ${lk||st.picked.includes(k)?'disabled':''}>${esc(o.t)}</button>`).join('');
+}
+function luyenHtml(u){
+  locked[u.id]=false;
+  return `<p class="lead">Bài tập mục ${u.id}: <b>${u.qs.length} điểm</b> (mỗi câu 1 điểm). Làm xong bấm <b>Nộp bài</b> để xem điểm, đáp án đúng và giải thích cho những câu sai.</p>
+    ${u.qs.map((q,i)=>qHtml(u,q,i)).join('')}
+    <div class="submit-bar"><button class="btn" type="button" data-submit="${u.id}">Nộp bài</button><button class="btn ghost" type="button" data-reset="${u.id}" hidden>Làm lại</button></div>
+    <div class="result" id="res${u.id}" role="status" aria-live="polite"></div>`;
+}
+function drawUnitSorts(u){ u.qs.forEach((q,i)=>{ if(q.t==='sort') drawSort(`q${u.id}_${i}`); }); }
+
+acc.innerHTML = UNITS.map(u=>`
+  <section class="item" id="item${u.id}">
+    <h2 class="ih"><button class="ihb" type="button" id="hb${u.id}" aria-expanded="false" aria-controls="body${u.id}">
+      <span class="num">${u.id}</span>
+      <span class="ubody"><span class="uzh">${esc(u.zh)}</span><span class="utitle">${esc(u.title)}</span><span class="udesc">${esc(u.desc)}</span></span>
+      <span class="chev" aria-hidden="true">⌄</span></button></h2>
+    <div class="ibody" id="body${u.id}" role="region" aria-labelledby="hb${u.id}" hidden>
+      <div class="tabs sub" role="tablist">
+        <button class="tab" role="tab" type="button" data-u="${u.id}" data-t="kb" aria-selected="true"><span class="zh">秘笈</span>Bí Kíp<small>Kiến thức cần nhớ</small></button>
+        <button class="tab" role="tab" type="button" data-u="${u.id}" data-t="lc" aria-selected="false" tabindex="-1"><span class="zh">练习</span>Luyện Công<small>Bài tập &amp; chấm điểm</small></button>
+      </div>
+      <div class="pane" id="kb${u.id}">${u.html()}</div>
+      <div class="pane" id="lc${u.id}" hidden>${luyenHtml(u)}</div>
+    </div>
+  </section>`).join('');
+UNITS.forEach(drawUnitSorts);
+
+acc.addEventListener('click', e=>{
+  // mở / thu mục
+  const hb=e.target.closest('.ihb');
+  if(hb){
+    const open = hb.getAttribute('aria-expanded')==='true';
+    hb.setAttribute('aria-expanded', String(!open));
+    hb.closest('.item').classList.toggle('open', !open);
+    $('#'+hb.getAttribute('aria-controls')).hidden = open;
+    return;
+  }
+  // đổi tab Bí Kíp / Luyện Công trong mục
+  const tb=e.target.closest('.tab');
+  if(tb){
+    const u=tb.dataset.u, kb=tb.dataset.t==='kb';
+    tb.parentElement.querySelectorAll('.tab').forEach(x=>{const on=x===tb;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;});
+    $('#kb'+u).hidden=!kb; $('#lc'+u).hidden=kb;
+    return;
+  }
+  // sắp xếp câu
+  const add=e.target.closest('[data-add]'), rem=e.target.closest('.answer-line .tok'), clr=e.target.closest('[data-clear]');
+  if(add){const id=add.dataset.id; if(locked[uidOf(id)])return; sortState[id].picked.push(+add.dataset.add); drawSort(id); return;}
+  if(rem){const id=rem.dataset.id,k=+rem.dataset.k; if(locked[uidOf(id)])return; sortState[id].picked=sortState[id].picked.filter(x=>x!==k); drawSort(id); return;}
+  if(clr){const id=clr.dataset.clear; if(locked[uidOf(id)])return; sortState[id].picked=[]; drawSort(id); return;}
+  // nộp bài / làm lại / nhảy tới câu sai
+  const sb=e.target.closest('[data-submit]'); if(sb){submitUnit(+sb.dataset.submit);return;}
+  const rb=e.target.closest('[data-reset]'); if(rb){resetUnit(+rb.dataset.reset);return;}
+  const j=e.target.closest('[data-jump]'); if(j){e.preventDefault();$('#'+j.dataset.jump).scrollIntoView({behavior:'smooth',block:'center'});}
+});
+
+/* ---------- pinyin ---------- */
+$('#pyToggle').addEventListener('click',e=>{
+  const on=e.currentTarget.getAttribute('aria-pressed')==='true';
+  e.currentTarget.setAttribute('aria-pressed',String(!on));
+  e.currentTarget.textContent='Pinyin: '+(on?'Tắt':'Bật');
+  document.body.classList.toggle('nopy',on);
+});
+
+/* ---------- chấm điểm (từng mục) ---------- */
+function feedback(card,ok,yoursHtml,showHtml,why){
+  card.classList.add(ok?'right':'wrong');
+  const fb=card.querySelector('.fb'); fb.hidden=false;
+  fb.innerHTML = ok ? '<span class="st">✓ Chính xác! +1 điểm</span>' :
+   `<span class="st">✗ Chưa đúng</span>
+    <div class="your">Bạn trả lời: ${yoursHtml||'<i>(chưa trả lời)</i>'}</div>
+    <div class="corr">Đáp án đúng: ${showHtml}</div>
+    <div class="why"><b>Giải thích:</b> ${esc(why)}</div>`;
+}
+const zhSpan = s => `<span class="${isZh(s)?'zh':''}">${esc(s)}</span>`;
+function submitUnit(uid){
+  const u=UNITS.find(x=>x.id===uid); locked[uid]=true;
+  let s=0, blanks=0; const wrong=[];
+  u.qs.forEach((q,i)=>{
+    const id=`q${uid}_${i}`, card=$('#'+id); let ok=false;
+    if(q.t==='mc'){
+      const chosen=card.querySelector('input:checked');
+      card.querySelectorAll('input').forEach(x=>x.disabled=true);
+      if(!chosen) blanks++;
+      ok=!!chosen && chosen.value==='0';
+      const yours=chosen?q.o[+chosen.value]:'';
+      feedback(card,ok,yours?zhSpan(yours):'',`<b>${zhSpan(q.o[0])}</b>`,q.why);
+    } else if(q.t==='sort'){
+      const st=sortState[id]; const yours=st.picked.map(k=>st.order[k].t).join('');
+      if(!yours) blanks++;
+      ok=q.set.has(norm(yours)); drawSort(id);
+      feedback(card,ok,yours?`<span class="zh">${esc(yours)}</span>`:'',`<span class="zh"><b>${esc(q.show)}</b></span>`,q.why);
+    } else {
+      const inp=$('#t_'+id); inp.disabled=true; const yours=inp.value.trim();
+      if(!yours) blanks++;
+      ok=q.set.has(norm(yours));
+      feedback(card,ok,yours?`<span class="zh">${esc(yours)}</span>`:'',`<span class="zh"><b>${esc(q.show)}</b></span>`,q.why);
+    }
+    if(ok) s++; else wrong.push([`${uid}.${i+1}`,id]);
+  });
+  const max=u.qs.length;
+  const msg= s===max?'Tuyệt đối! Bạn nắm chắc mục này rồi 🎉': s>=max*0.8?'Rất tốt! Xem lại câu sai bên dưới nhé.': s>=max*0.5?'Khá ổn, đọc lại Bí Kíp rồi làm lại để lên điểm nhé.':'Cần ôn thêm. Đọc lại Bí Kíp rồi thử lại nhé, cố lên!';
+  const name=$('#stuName').value.trim();
+  const r=$('#res'+uid);
+  r.innerHTML=`${name?`<div style="opacity:.8">Học viên: <b>${esc(name)}</b></div>`:''}
+    <div class="muted2">Mục ${uid}</div>
+    <div class="score">${s}<small> / ${max}</small></div><div class="msg">${msg}</div>
+    ${blanks?`<div class="wrongs">Còn ${blanks} câu chưa làm (tính 0 điểm).</div>`:''}
+    ${wrong.length?`<div class="wrongs">Câu cần xem lại: ${wrong.map(w=>`<a href="#" data-jump="${w[1]}">${w[0]}</a>`).join(' · ')}</div>`:''}`;
+  r.classList.add('show');
+  const pane=$('#lc'+uid);
+  pane.querySelector('[data-submit]').hidden=true; pane.querySelector('[data-reset]').hidden=false;
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetUnit(uid){
+  const u=UNITS.find(x=>x.id===uid);
+  $('#lc'+uid).innerHTML=luyenHtml(u); drawUnitSorts(u);
+  $('#lc'+uid).scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>
