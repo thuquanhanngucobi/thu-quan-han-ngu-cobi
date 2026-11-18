@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bài tập ngữ pháp tiếng Trung</title>
+<style>
+:root{--bg:#faf6ef;--card:#fff;--ink:#2a2622;--muted:#6f675e;--line:#e6dccd;--accent:#1f3a5f;--ai:#fff;--soft:#e3eaf4;--ok:#2e7d4f;--oks:#e1f2e7;--bad:#9a6700;--bads:#fbf0d3;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171513;--card:#211e1b;--ink:#f1ebe3;--muted:#a89f94;--line:#3a352f;--accent:#8fb4e8;--ai:#0e1a2b;--soft:#1f2c40;--ok:#6cc58c;--oks:#1f3326;--bad:#e8b84a;--bads:#3a3015}}
+:root[data-theme="dark"]{--bg:#171513;--card:#211e1b;--ink:#f1ebe3;--muted:#a89f94;--line:#3a352f;--accent:#8fb4e8;--ai:#0e1a2b;--soft:#1f2c40;--ok:#6cc58c;--oks:#1f3326;--bad:#e8b84a;--bads:#3a3015}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:760px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:1.5rem;margin:6px 0}
+.sub{color:var(--muted);margin:0 0 14px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag{font-size:.78rem;padding:2px 10px;border-radius:99px;background:var(--soft);color:var(--accent)}
+.tag.lv{background:transparent;border:1px solid var(--line);color:var(--muted)}
+.set{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;color:var(--ink);font:inherit;cursor:pointer}
+.set b{font-size:1.15rem}.meta{color:var(--muted);font-size:.85rem}
+.back{background:none;border:0;color:var(--accent);font:inherit;cursor:pointer;padding:8px 0}
+input[type=search]{width:100%;padding:12px 14px;margin-bottom:14px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit}
+.st{font-size:1.05rem;margin:26px 0 10px;padding-left:10px;border-left:4px solid var(--accent)}
+.st small{color:var(--muted);font-weight:400;margin-left:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.card.ok{border-color:var(--ok)}.card.bad{border-color:var(--bad)}
+.qh{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.qn{font-weight:700;color:var(--accent)}
+.qt{font-size:1.2rem;margin:4px 0 10px}
+.blank{display:inline-block;min-width:3.2em;border-bottom:2px solid var(--ink)}
+.hint{color:var(--muted);font-size:.88rem;margin:0 0 8px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}
+.opt{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:1.1rem}
+.opt:hover{border-color:var(--accent)}.opt input{accent-color:var(--accent)}.opt .k{color:var(--muted);font-size:.85rem}
+.opt.right{background:var(--oks);border-color:var(--ok)}.opt.wrong{background:var(--bads);border-color:var(--bad)}
+.si{margin:10px 0}.si .ln{font-size:1.2rem}
+select,input[type=text]{font:inherit;font-size:1.1rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+input[type=text]{width:100%;padding:8px 10px}
+.sok{border-color:var(--ok)!important;background:var(--oks)!important}.sbad{border-color:var(--bad)!important;background:var(--bads)!important}
+.pool,.built{display:flex;flex-wrap:wrap;gap:8px;min-height:46px;padding:8px;border-radius:10px}
+.built{border:2px dashed var(--line);margin-bottom:10px}
+.tok{font:inherit;font-size:1.15rem;padding:6px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.tok:disabled{opacity:.3}.tok.in{background:var(--soft);border-color:var(--accent)}
+.ws{font-size:1.2rem;padding:8px 12px;border-radius:10px;background:var(--bads);margin-bottom:10px}
+.fb{margin-top:12px;padding:10px 12px;border-radius:10px;font-size:.95rem}
+.fb.ok{background:var(--oks);color:var(--ok)}.fb.bad{background:var(--bads);color:var(--bad)}
+.fb .ex{color:var(--ink);display:block;margin-top:4px}
+.btn{font:inherit;font-weight:600;border:0;border-radius:10px;padding:10px 20px;cursor:pointer;background:var(--accent);color:var(--ai)}
+.btn.g{background:transparent;color:var(--ink);border:1px solid var(--line)}.btn.s{padding:4px 12px;font-size:.85rem;font-weight:500}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.res{margin-top:20px;padding:18px;border-radius:14px;background:var(--soft);text-align:center}
+.res .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+.note{color:var(--muted);font-size:.9rem}
+.rc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 16px;margin:12px 0}.rc summary{cursor:pointer;font-weight:600}.rc h3{font-size:1rem;margin:14px 0 6px;color:var(--accent)}.rc table{width:100%;border-collapse:collapse;font-size:.95rem}.rc td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}.rc td.zh{font-size:1.05rem}
+.tok[draggable=true]{cursor:grab}.fb summary{cursor:pointer;color:var(--ok)}
+.tabs{display:flex;gap:8px;margin:12px 0 8px}.tab{flex:1;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;font-weight:600;cursor:pointer}.tab.on{background:var(--accent);color:var(--ai);border-color:var(--accent)}.exm{padding:8px 0;border-bottom:1px solid var(--line)}[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+/* ===== KHO DỮ LIỆU: thêm bài mới = thêm 1 khối vào SETS ===== */
+/* Bài trắc nghiệm đơn giản: mk({id,level,name,instr,words,rows:[[câu, đáp án (số thứ tự từ 0), giải thích]]}) */
+const mk=d=>({id:d.id,level:d.level,name:d.name,title:d.instr,sub:d.name,sections:[{title:d.instr,sub:'',items:d.rows.map(r=>({type:'mc',text:r[0],opts:d.words,ans:r[1],exp:r[2]}))}]});
+const _B=(t,a,e)=>({type:"build",hint:"Kéo thả (hoặc bấm) các từ để ghép thành câu hoàn chỉnh.",tokens:t,accept:a,exp:e});
+const _R=(src,pre,acc,e)=>({type:"rewrite",hint:"Viết lại bằng câu chữ 把, điền phần còn thiếu sau dấu →.",parts:[{src,pre,accept:acc}],exp:e});
+const _T=(vi,acc,show,e)=>({type:"trans",hint:"Dịch sang tiếng Trung bằng câu chữ 把.",parts:[{vi,accept:acc,show}],exp:e});
+const _F=(wrong,acc,show,e)=>({type:"fix",hint:"Tìm lỗi và viết lại thành câu chữ 把 đúng.",wrong,accept:acc,show,exp:e});
+const SETS=[
+{id:"hsk3-bonguu",level:"HSK3",name:"Bổ ngữ",title:"HSK 3B – Bài 8: Bài tập bổ ngữ",sub:"Bổ ngữ kết quả · khả năng · trạng thái · xu hướng.",
+ tags:["结果补语","可能补语","状态补语","趋向补语"],sections:[
+ {title:"一、选择正确答案",sub:"Chọn đáp án đúng",items:[
+  {type:"mc",topic:"结果补语",text:"作业我已经写____了,可以出去玩了。",opts:["完","懂","见","错"],ans:0,exp:"写完 = viết xong. 完 là bổ ngữ kết quả, chỉ động tác đã hoàn thành."},
+  {type:"mc",topic:"状态补语",text:"他汉语说____很流利。",opts:["的","得","地","了"],ans:1,exp:"说得很流利: động từ + 得 + bổ ngữ trạng thái (đánh giá mức độ, cách thức)."},
+  {type:"mc",topic:"趋向补语",text:"老师走____教室来,同学们都站了起来。",opts:["进","进来","进去","起来"],ans:0,exp:"走进教室: 进 là bổ ngữ xu hướng đơn. Nếu thêm 来/去 thì tân ngữ nơi chốn đứng giữa: 走进教室来."},
+  {type:"mc",topic:"可能补语",text:"这个箱子太小了,放____这么多东西。",opts:["不下","不到","不好","不见"],ans:0,exp:"放不下 = để không vừa. Phủ định của bổ ngữ khả năng: động từ + 不 + bổ ngữ."}]},
+ {title:"二、选词填空",sub:"Chọn từ điền vào chỗ trống",items:[
+  {type:"fill",topic:"结果补语",bank:["完","见","懂","错","对"],hint:"Từ cho sẵn: 完 / 见 / 懂 / 错 / 对. Mỗi từ chỉ dùng một lần, có 2 từ thừa.",
+   parts:[{pre:"对不起,我走",post:"路了,所以来晚了。",ans:"错"},{pre:"昨天我在超市看",post:"小李了,他说他下个月去中国。",ans:"见"},{pre:"老师讲了两遍,我才听",post:"。",ans:"懂"}],
+   exp:"走错 (đi nhầm), 看见 (nhìn thấy), 听懂 (nghe hiểu). Từ thừa: 完, 对."}]},
+ {title:"三、排序与改错",sub:"Sắp xếp câu và sửa lỗi sai",items:[
+  {type:"build",topic:"状态补语",level:"Trung bình",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["得","汉字","写","她","很漂亮"],accept:["她汉字写得很漂亮"],exp:"Có tân ngữ 汉字 thì đưa lên trước động từ: 她汉字写得很漂亮. (Cũng có thể lặp động từ: 她写汉字写得很漂亮.)"},
+  {type:"build",topic:"趋向补语",level:"Trung bình",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["回","她","来","家","了"],accept:["她回家来了"],exp:"Tân ngữ nơi chốn 家 đứng giữa 回 và 来: 她回家来了."},
+  {type:"fix",topic:"状态补语",level:"Khó",hint:"Tìm chỗ sai và viết lại cả câu cho đúng.",wrong:"他说汉语得很好,老师常常表扬他。",accept:["他汉语说得很好老师常常表扬他","他说汉语说得很好老师常常表扬他","他汉语说得很好","他说汉语说得很好"],show:"他汉语说得很好,老师常常表扬他。 / 他说汉语说得很好,老师常常表扬他。",exp:"Khi có tân ngữ, phải lặp động từ (说汉语说得很好) hoặc đưa tân ngữ lên trước (汉语说得很好). Không nói 说汉语得很好."},
+  {type:"fix",topic:"可能补语",level:"Khó",hint:"Tìm chỗ sai và viết lại cả câu cho đúng.",wrong:"我听见不老师的话,请你再说一遍。",accept:["我听不见老师的话请你再说一遍","我听不见老师的话"],show:"我听不见老师的话,请你再说一遍。",exp:"Phủ định của bổ ngữ khả năng: động từ + 不 + bổ ngữ (听不见), không nói 听见不."}]},
+ {title:"四、翻译",sub:"Dịch sang tiếng Trung",items:[
+  {type:"trans",topic:"综合",hint:"Mỗi câu kiểm tra một loại bổ ngữ: khả năng, trạng thái, kết quả, xu hướng.",parts:[
+   {vi:"Thầy nói nhanh quá, em nghe không hiểu.",accept:["老师说得太快了我没听懂","老师说得太快我没听懂"],show:"老师说得太快了,我听不懂。"},
+   {vi:"Cô ấy hát rất hay.",accept:["她唱得很好听","她唱得很好","她歌唱得很好","她歌唱得很好听","她唱歌唱得很好","她唱歌唱得很好听"],show:"她唱得很好听。 / 她歌唱得很好。"},
+   {vi:"Bài tập tôi làm xong rồi.",accept:["作业我做完了","我作业做完了","我做完作业了","我做完了作业","作业我写完了","我写完作业了","我写完了作业"],show:"我做完作业了。"},
+   {vi:"Anh ấy mang một cuốn sách đến.",accept:["他带来了一本书","他带来一本书","他带了一本书来","他带一本书来","他拿来了一本书","他拿来一本书","他拿了一本书来","他拿一本书来"],show:"他带来了一本书。 / 他拿来了一本书。"}],
+   exp:"Lần lượt là: 没听懂 (kết quả), 唱得很好听 (trạng thái), 做完 (kết quả), 带来 (xu hướng). Có thể còn cách diễn đạt đúng khác, hãy nhờ giáo viên kiểm tra."}]}
+]},
+{id:"hsk3-sosanh",level:"HSK3",name:"So sánh 比较句",title:"HSK 3 – So sánh 比较句",sub:"So sánh hơn (比), so sánh bằng (跟……一样), so sánh thua (没有 / 不如). Làm hết các bài rồi bấm “Nộp bài”.",
+ tags:["比","跟……一样","没有 / 不如"],
+ recap:[
+  {t:"1. So sánh hơn – 比",rows:[["A + 比 + B + tính từ","今天比昨天冷。"],["A + 比 + B + 更/还 + tính từ","他比我更认真。"],["A + 比 + B + tính từ + 一点儿","今天比昨天暖和一点儿。"],["A + 比 + B + tính từ + 得多/多了","他比我高得多。"],["A + 比 + B + động từ + 得 + tính từ","他比我跑得快。 / 他跑得比我快。"],["A + 比 + B + tính từ + số lượng","他比我大三岁。"]],notes:["Câu 比 không dùng 很、非常 trước tính từ.","Không đặt 不 / 没有 trực tiếp trước tính từ để tạo so sánh hơn."]},
+  {t:"2. So sánh bằng – 跟……一样",rows:[["A + 跟/和 + B + 一样 + tính từ","我跟他一样高。"],["A + 跟/和 + B + 一样 + động từ + tân ngữ","我跟他一样喜欢中文。"],["A + 跟/和 + B + 不一样","我的想法跟他不一样。"]]},
+  {t:"3. So sánh thua – 没有 / 不如",rows:[["A + 没有 + B + 那么/这么 + tính từ","我没有他那么高。"],["A + 不如 + B + tính từ","我不如他认真。"],["A + 不如 + B","这个手机不如那个手机。"]],notes:["A 比 B 高: A cao hơn B. A 没有 B 高: A không cao bằng B. A 不如 B 高: A kém B về chiều cao."]}
+ ],
+ sections:[
+ {title:"一、选择正确答案",sub:"Chọn từ hoặc cấu trúc thích hợp",items:[
+  {type:"mc",text:"我觉得今天____昨天冷。",opts:["跟","比","没有","一样"],ans:1,exp:"今天比昨天冷: Hôm nay lạnh hơn hôm qua."},
+  {type:"mc",text:"妹妹____我一样喜欢唱歌。",opts:["比","没有","跟","不如"],ans:2,exp:"跟……一样 là cấu trúc so sánh bằng."},
+  {type:"mc",text:"这个苹果没有那个苹果____甜。",opts:["比","那么","一样","更"],ans:1,exp:"没有……那么……: không … bằng …"},
+  {type:"mc",text:"他每天都学习中文,所以中文说得____我好。",opts:["跟","一样","比","没有"],ans:2,exp:"说得比我好: nói tốt hơn tôi. Vế trước nói anh ấy chăm học nên giỏi hơn, vì vậy không dùng 没有."},
+  {type:"mc",text:"我的房间____你的房间大,我的房间比较小。",opts:["比","没有","跟","一样"],ans:1,exp:"没有……大: không to bằng."},
+  {type:"mc",text:"今天的天气比昨天____多了。",opts:["好","很好","更好","好了"],ans:0,exp:"好多了: tính từ + 多了 = hơn nhiều. Không thêm 很/更 trước tính từ."},
+  {type:"mc",text:"这个问题不如那个问题____。",opts:["简单","很简单","简单得","简单了"],ans:0,exp:"不如……简单: không đơn giản bằng. Sau 不如 + B không dùng 很."},
+  {type:"mc",text:"我跟哥哥____高,但是我比他胖一点儿。",opts:["比","一样","没有","不如"],ans:1,exp:"跟哥哥一样高: cao bằng anh trai."},
+  {type:"mc",text:"这件衣服比那件衣服贵____。",opts:["三十块钱","三十块钱了","很三十块钱","得三十块钱"],ans:0,exp:"Số lượng chênh lệch đứng cuối câu: 贵三十块钱 = đắt hơn 30 tệ."},
+  {type:"mc",text:"他比我跑得____快。",opts:["很","更","非常","最"],ans:1,exp:"他比我跑得更快: 更 biểu thị mức độ cao hơn, đứng trước 快. Không nói 他比我更跑得快."}]},
+ {title:"二、选词填空",sub:"Điền từ thích hợp",items:[
+  {type:"fill",bank:["比","跟","一样","没有","那么","不如","一点儿","得多"],hint:"Từ cho sẵn: 比 / 跟 / 一样 / 没有 / 那么 / 不如 / 一点儿 / 得多. Mỗi từ có thể dùng một hoặc nhiều lần.",
+   parts:[
+    {pre:"今天15度,昨天10度,今天的天气",ans:"比",post:"昨天暖和。"},
+    {pre:"我",ans:"跟",mid:"妈妈",ans2:"一样",post:"喜欢做饭。"},
+    {pre:"这个箱子",ans:"没有",post:"那个箱子那么重,我可以自己拿。"},
+    {pre:"弟弟",ans:"没有",post:"哥哥那么高。"},
+    {pre:"我觉得,这本书",ans:["不如","没有"],post:"那本书有意思,我更想看那本。"},
+    {pre:"我的汉语水平比去年好",ans:"一点儿",post:",只进步了一点点。"},
+    {pre:"这次考试比上次难",ans:"得多",post:",很多同学都没及格。"},
+    {pre:"他",ans:"跟",post:"我一样,每天早上六点起床。"},
+    {pre:"这家饭店的菜",ans:["不如","没有"],post:"那家饭店好吃,所以我们去那家吧。"},
+    {pre:"上海的冬天",ans:"没有",post:"北京那么冷。"}],
+   exp:"比 = hơn; 跟……一样 = bằng; 没有……那么 / 不如 = thua. Câu 5 và 9 dùng 不如 hoặc 没有 đều đúng. Câu có 那么 thì dùng 没有."}]},
+ {title:"三、排序",sub:"Sắp xếp các từ thành câu đúng",items:[
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["比","我","他","高","一点儿"],accept:["我比他高一点儿","他比我高一点儿"],exp:"A + 比 + B + tính từ + 一点儿: 我比他高一点儿."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["一样","跟","妈妈","我","忙"],accept:["我跟妈妈一样忙","妈妈跟我一样忙"],exp:"A + 跟 + B + 一样 + tính từ: 我跟妈妈一样忙."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["那么","没有","今天","昨天","热"],accept:["今天没有昨天那么热","昨天没有今天那么热"],exp:"A + 没有 + B + 那么 + tính từ: 今天没有昨天那么热."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["他","比","我","更","喜欢","唱歌"],accept:["他比我更喜欢唱歌","我比他更喜欢唱歌"],exp:"A + 比 + B + 更 + động từ tâm lý: 他比我更喜欢唱歌."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["得多","这次","上次","考试","比","难"],accept:["这次考试比上次难得多","上次考试比这次难得多"],exp:"得多 đứng sau tính từ: 这次考试比上次难得多."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["不如","哥哥","我","认真"],accept:["我不如哥哥认真","哥哥不如我认真"],exp:"A + 不如 + B + tính từ: 我不如哥哥认真."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["三岁","比","弟弟","姐姐","大"],accept:["姐姐比弟弟大三岁"],exp:"Số lượng chênh lệch đứng cuối: 姐姐比弟弟大三岁."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["跟","不一样","我的","你的","想法"],accept:["我的想法跟你的不一样","你的想法跟我的不一样"],exp:"A + 跟 + B + 不一样: 我的想法跟你的不一样."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["跑得","比","快","我","他"],accept:["他跑得比我快","我跑得比他快","他比我跑得快","我比他跑得快"],exp:"Hai cách đều đúng: 他比我跑得快 / 他跑得比我快."},
+  {type:"build",hint:"Bấm vào các từ để ghép thành câu hoàn chỉnh.",tokens:["她","唱歌","跟","我","一样","好听"],accept:["她唱歌跟我一样好听","我唱歌跟她一样好听"],exp:"Có tân ngữ 唱歌 thì đặt trước cụm so sánh: 她唱歌跟我一样好听."}]},
+ {title:"四、找出并修改错误",sub:"Tìm và sửa lỗi sai",items:[
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"今天比昨天很冷。",accept:["今天比昨天冷","今天比昨天更冷","今天比昨天冷一点儿","今天比昨天冷得多","今天比昨天冷多了"],show:"今天比昨天冷。",exp:"Câu 比 không dùng 很 trước tính từ."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"我比他没有高。",accept:["我没有他高","我没有他那么高","我不如他高","他比我高"],show:"我没有他高。 / 我没有他那么高。",exp:"Không dùng 比 cùng với 没有. So sánh thua: A + 没有 + B + tính từ."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"妹妹跟我比一样大。",accept:["妹妹跟我一样大","妹妹和我一样大"],show:"妹妹跟我一样大。",exp:"So sánh bằng dùng 跟……一样, không thêm 比."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"这个房间没有那个房间一样大。",accept:["这个房间没有那个房间大","这个房间没有那个房间那么大","这个房间不如那个房间大"],show:"这个房间没有那个房间大。 / 这个房间没有那个房间那么大。",exp:"没有 đi với 那么 + tính từ (hoặc tính từ), không dùng 一样."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"他比我高三岁。",accept:["他比我大三岁"],show:"他比我大三岁。",exp:"Nói tuổi dùng 大 (hoặc 小), 高 dùng để nói chiều cao."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"我比哥哥喜欢中文。",accept:["我比哥哥更喜欢中文","我比哥哥还喜欢中文"],show:"我比哥哥更喜欢中文。",exp:"So sánh mức độ yêu thích: 比 + B + 更/还 + 喜欢."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"这本书比那本书非常有意思。",accept:["这本书比那本书有意思得多","这本书比那本书更有意思","这本书比那本书有意思多了","这本书比那本书有意思"],show:"这本书比那本书有意思得多。",exp:"Không dùng 非常/很 trong câu 比. Muốn nhấn mạnh dùng 得多, 多了 hoặc 更."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"他没有我那么不忙。",accept:["他没有我那么忙","他没有我忙"],show:"他没有我那么忙。",exp:"Không thêm 不 trước 忙. 没有……那么忙 = ít bận hơn tôi."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"这件衣服比那件衣服贵多得。",accept:["这件衣服比那件衣服贵得多","这件衣服比那件衣服贵多了"],show:"这件衣服比那件衣服贵得多。",exp:"得多 đứng sau tính từ: 贵得多 (hoặc 贵多了)."},
+  {type:"fix",hint:"Viết lại cả câu cho đúng.",wrong:"我的汉语水平跟去年一样比好。",accept:["我的汉语水平比去年好","我的汉语水平跟去年一样好"],show:"我的汉语水平比去年好。 / 我的汉语水平跟去年一样好。",exp:"Không kết hợp 比 với 跟……一样. Tùy ý: 比去年好 (tốt hơn) hoặc 跟去年一样好 (giống năm ngoái)."}]},
+ {title:"五、改写句子",sub:"Viết lại câu, nghĩa không đổi",items:[
+  {type:"rewrite",hint:"Viết phần còn thiếu sau dấu →.",parts:[
+   {src:"今天很冷,昨天不太冷。",pre:"今天比昨天",accept:["冷","冷一点儿","更冷","冷得多","冷多了"]},
+   {src:"小明一米七,小华一米七。",pre:"小明跟小华",accept:["一样高"]},
+   {src:"我没有哥哥那么高。",pre:"哥哥",accept:["比我高"]},
+   {src:"这本书比那本书有意思。",pre:"那本书",accept:["没有这本书有意思","没有这本书那么有意思","不如这本书有意思"]},
+   {src:"我的手机和你的手机一样新。",pre:"我的手机",accept:["跟你的手机一样新","和你的手机一样新","跟你的一样新"]},
+   {src:"妹妹比我小两岁。",pre:"我",accept:["比妹妹大两岁"]},
+   {src:"他跑得比我快。",pre:"我跑得",accept:["没有他快","没有他那么快","不如他快"]},
+   {src:"这个房间不如那个房间大。",pre:"这个房间没有那个房间",accept:["大","那么大"]}],
+   exp:"Chuyển đổi: A 比 B … ↔ B 没有/不如 A …; 跟……一样 = bằng nhau. Lưu ý 大 chỉ tuổi, 高 chỉ chiều cao."}]}
+ ]},
+{id:"hsk3-ba",level:"HSK3",name:"Câu chữ 把 (把字句)",title:"HSK 3 – Câu chữ 把",sub:"Cấu trúc S + 把 + O + V + thành phần khác. Làm hết 40 câu rồi bấm “Nộp bài”.",
+ tags:["把字句","结果补语","趋向补语","在 / 给 / 成"],
+ recap:[
+  {t:"1. Cấu trúc cơ bản",rows:[["S + 把 + O + V + thành phần khác","我把作业做完了。"]],notes:["O sau 把 phải xác định (这本书、那个苹果、我的手机…), không dùng 一本书.","Động từ không đứng một mình: sau V phải có 了, bổ ngữ, 一下… (không nói 我把作业做)."]},
+  {t:"2. Thành phần thường đi sau động từ",rows:[["V + 了","妈妈把衣服洗了。"],["V + bổ ngữ kết quả","我把作业做完了。 / 他把杯子打破了。"],["V + bổ ngữ xu hướng","他把椅子搬进来了。"],["V + 在 + nơi chốn","请把书放在桌子上。"],["V + 给 + người","他把礼物送给了朋友。"],["V + 成 + …","请把这个句子翻译成中文。"],["V + 一下 / lặp động từ","请你把房间打扫打扫。"]]},
+  {t:"3. Vị trí của phủ định, trợ động từ, trạng từ",rows:[["S + 没(有)/不 + 把 + O + V…","我没把作业做完。"],["S + 想/要/应该 + 把 + O + V…","我想把这本书还给他。"],["S + 已经/常常… + 把 + O + V…","我已经把衣服洗干净了。"]],notes:["Phủ định, trợ động từ và trạng từ đứng TRƯỚC 把, không đứng sau.","Không dùng 把 với động từ chỉ trạng thái, tâm lý, cảm giác như 是、有、在、喜欢、知道、觉得、看见、听见."]}
+ ],
+ sections:[
+ {title:"一、排序",sub:"Sắp xếp thành câu chữ 把",items:[
+  _B(["我","把","作业","做完","了"],["我把作业做完了"],"S + 把 + O + V + 结果补语 + 了: 我把作业做完了."),
+  _B(["请","把","书","放","在","桌子上"],["请把书放在桌子上"],"V + 在 + nơi chốn: 请把书放在桌子上."),
+  _B(["他","把","礼物","送给","了","朋友"],["他把礼物送给了朋友","他把礼物送给朋友了"],"V + 给 + người nhận: 他把礼物送给了朋友."),
+  _B(["妈妈","把","衣服","洗","干净","了"],["妈妈把衣服洗干净了"],"干净 là bổ ngữ kết quả: 妈妈把衣服洗干净了."),
+  _B(["请","把","门","关","上"],["请把门关上"],"Câu mệnh lệnh: 请把门关上. 上 là bổ ngữ kết quả."),
+  _B(["我","把","手机","忘","在","家里","了"],["我把手机忘在家里了"],"V + 在 + nơi chốn: 我把手机忘在家里了."),
+  _B(["他","把","椅子","搬","进来","了"],["他把椅子搬进来了"],"Bổ ngữ xu hướng 进来 đứng sau động từ: 他把椅子搬进来了."),
+  _B(["老师","把","这个句子","翻译","成","汉语"],["老师把这个句子翻译成汉语"],"V + 成 + …: 老师把这个句子翻译成汉语."),
+  _B(["我","没","把","作业","带来"],["我没把作业带来"],"Phủ định 没 đứng trước 把: 我没把作业带来."),
+  _B(["我","想","把","这本书","还给","他"],["我想把这本书还给他"],"Trợ động từ 想 đứng trước 把: 我想把这本书还给他.")]},
+ {title:"二、改写句子",sub:"Viết lại bằng câu chữ 把",items:[
+  _R("我做完作业了。","我把",["作业做完了"],"S + V完 + O → S + 把 + O + V完了: 我把作业做完了."),
+  _R("他吃完了那个苹果。","他把",["那个苹果吃完了"],"Tân ngữ 那个苹果 đưa lên sau 把: 他把那个苹果吃完了."),
+  _R("请关上门。","请把",["门关上"],"请把门关上: 关 + 上 là bổ ngữ kết quả."),
+  _R("妈妈洗干净了衣服。","妈妈把",["衣服洗干净了"],"妈妈把衣服洗干净了: 干净 là bổ ngữ kết quả."),
+  _R("我的手机忘在家里了。","我把",["手机忘在家里了","手机忘在家了"],"V + 在 + nơi chốn: 我把手机忘在家里了."),
+  _R("小李送了那份礼物给朋友。","小李把",["那份礼物送给了朋友","那份礼物送给朋友了"],"V + 给 + người nhận: 小李把那份礼物送给了朋友."),
+  _R("我吃了药。","我把",["药吃了"],"Sau 把 có thể dùng V + 了: 我把药吃了."),
+  _R("他拿出了那本书。","他把",["那本书拿出来了"],"Dùng bổ ngữ xu hướng: 他把那本书拿出来了."),
+  _R("他的书放在桌子上了。","他把",["书放在桌子上了"],"V + 在 + nơi chốn: 他把书放在桌子上了."),
+  _R("他还给了我那本书。","他把",["那本书还给了我","那本书还给我了"],"V + 给 + người nhận: 他把那本书还给了我.")]},
+ {title:"三、翻译",sub:"Dịch Việt – Trung bằng câu chữ 把",items:[
+  _T("Tôi làm xong bài tập rồi.",["我把作业做完了","我把作业写完了"],"我把作业做完了。","把 + O + V + 结果补语 + 了."),
+  _T("Xin hãy đóng cửa lại.",["请把门关上","请把门关好","请你把门关上","请你把门关好"],"请把门关上。","Câu mệnh lệnh: 请把 + O + V + bổ ngữ kết quả."),
+  _T("Anh ấy để quên điện thoại ở nhà rồi.",["他把手机忘在家里了","他把手机忘在家了","他把手机落在家里了"],"他把手机忘在家里了。","V + 在 + nơi chốn: 忘在家里."),
+  _T("Mẹ giặt sạch quần áo rồi.",["妈妈把衣服洗干净了","妈妈把衣服洗好了"],"妈妈把衣服洗干净了。","把 + O + V + 干净 + 了."),
+  _T("Xin hãy đặt quyển sách lên bàn.",["请把书放在桌子上","请把书放到桌子上","请把这本书放在桌子上","请把这本书放到桌子上","请你把书放在桌子上","请你把书放到桌子上"],"请把书放在桌子上。","V + 在/到 + nơi chốn."),
+  _T("Em đã trả sách cho thầy giáo rồi.",["我把书还给老师了","我把书还给了老师","我已经把书还给老师了","我把这本书还给老师了","我把这本书还给了老师","我已经把这本书还给老师了"],"我已经把书还给老师了。","V + 给 + người nhận: 还给老师. Trạng từ 已经 đứng trước 把."),
+  _T("Hãy dịch câu này sang tiếng Trung.",["把这个句子翻译成中文","请把这个句子翻译成中文","请你把这个句子翻译成中文","把这句话翻译成中文","请把这句话翻译成中文","请你把这句话翻译成中文","把这个句子翻译成汉语","请把这个句子翻译成汉语"],"请把这个句子翻译成中文。","V + 成 + …: 翻译成中文."),
+  _T("Anh ấy mang chiếc ghế vào rồi.",["他把椅子搬进来了","他把椅子拿进来了","他把椅子搬进去了","他把椅子拿进去了","他把那把椅子搬进来了","他把那把椅子拿进来了"],"他把椅子搬进来了。","Bổ ngữ xu hướng: 进来 hay 进去 tùy vị trí người nói."),
+  _T("Tôi muốn trả quyển sách này cho anh ấy.",["我想把这本书还给他","我要把这本书还给他"],"我想把这本书还给他。","Trợ động từ 想/要 đứng trước 把."),
+  _T("Tôi chưa làm xong bài tập.",["我没把作业做完","我还没把作业做完","我没有把作业做完","我还没有把作业做完"],"我没把作业做完。","Phủ định 没(有) đứng trước 把.")]},
+ {title:"四、Tìm lỗi sai và viết lại",sub:"Tìm lỗi sai, viết lại câu chữ 把 đúng",items:[
+  _F("我把作业做。",["我把作业做完了","我把作业做完","我把作业写完了","我把作业做好了"],"我把作业做完了。","Động từ sau 把 không đứng một mình, cần thêm 了 hoặc bổ ngữ (做完了)."),
+  _F("我把一本书买了。",["我把那本书买了","我把这本书买了","我把那本书买到了","我把这本书买到了"],"我把那本书买了。","Tân ngữ sau 把 phải xác định (那本书/这本书), không dùng 一本书."),
+  _F("我把作业没做完。",["我没把作业做完","我没有把作业做完"],"我没把作业做完。","Từ phủ định 没(有) phải đứng trước 把."),
+  _F("我把应该作业做完。",["我应该把作业做完","我应该把作业做完了"],"我应该把作业做完。","Trợ động từ 应该 đứng trước 把."),
+  _F("他把手机放桌子上。",["他把手机放在桌子上","他把手机放到桌子上"],"他把手机放在桌子上。","Thiếu 在 sau động từ: V + 在 + nơi chốn."),
+  _F("他把杯子打破。",["他把杯子打破了"],"他把杯子打破了。","Sau bổ ngữ kết quả cần 了 để chỉ hành động đã hoàn thành."),
+  _F("我把衣服已经洗干净了。",["我已经把衣服洗干净了","我已经把衣服洗好了"],"我已经把衣服洗干净了。","Trạng từ 已经 đứng trước 把."),
+  _F("他把礼物送了给朋友。",["他把礼物送给了朋友","他把礼物送给朋友了"],"他把礼物送给了朋友。","送给 là một khối, 了 đặt sau 送给 hoặc cuối câu."),
+  _F("请把这个句子翻译中文。",["请把这个句子翻译成中文","请把这个句子翻译成汉语"],"请把这个句子翻译成中文。","Thiếu 成: V + 成 + ngôn ngữ."),
+  _F("请把门不要关。",["请不要把门关上","请别把门关上","请不要把门关好","请别把门关好"],"请不要把门关上。","不要/别 đứng trước 把, và động từ cần có bổ ngữ (关上).")]}
+ ]},
+mk({id:"hsk3-shoudao-shoudao-dedao",level:"HSK3",name:"Phân biệt 收到 / 受到 / 得到",instr:"Chọn từ thích hợp",words:["得到","收到","受到"],rows:[
+ ["我昨天____了一封朋友寄来的信。",1,"收到信 = thư được gửi đến và tiếp nhận → 收到."],
+ ["通过努力,他终于____了大家的认可。",0,"得到认可 = có được sự công nhận."],
+ ["他的身体____了严重的伤害。",2,"受到伤害 = chịu tổn thương."],
+ ["这次活动让我____了很多启发。",0,"得到启发 = có được sự gợi mở, cảm hứng."],
+ ["学生应该____老师的尊重。",2,"受到尊重 là cách kết hợp rất tự nhiên."],
+ ["公司已经____了客户的投诉。",1,"收到投诉 = tiếp nhận đơn/khiếu nại."]]}),
+Object.assign(mk({id:"hsk3-yudao-jian",level:"HSK3",name:"Phân biệt 遇到 / 见",instr:"Chọn 遇到 hoặc 见",words:["遇到","见"],rows:[
+ ["我在路上____了一位老同学,真巧!",0,"Gặp tình cờ, bất ngờ (真巧) → 遇到."],
+ ["明天下午三点,我约了医生,我要去____他。",1,"Đã hẹn trước, có kế hoạch → 去见医生."],
+ ["他在工作中____了很多困难。",0,"遇到困难 = gặp phải khó khăn."],
+ ["我明天要去学校____老师,问他几个问题。",1,"Chủ động đi gặp thầy có mục đích → 见老师."],
+ ["旅行的时候,我们____了一场大雨。",0,"遇到 dùng với tình huống bất ngờ, ngoài ý muốn (大雨, 意外)."],
+ ["好久不____,你最近怎么样?",1,"好久不见 là cụm cố định, nghĩa là lâu rồi không gặp."],
+ ["我在商店里看____了我的朋友,可是他没看见我。",1,"看见 = nhìn thấy. 见 là bổ ngữ kết quả sau 看, không nói 看遇到."],
+ ["学习汉语的时候,你有没有____什么问题?",0,"遇到问题 = gặp phải vấn đề."],
+ ["他开车去机场的路上____了堵车。",0,"遇到堵车 = gặp tắc đường, tình huống bất ngờ."],
+ ["周末我想去____一个很久没见的老朋友。",1,"Chủ động đi thăm, có kế hoạch → 去见老朋友."]]}),
+ {recap:[{t:"Bảng so sánh",head:["Điểm","遇到 (yùdào)","见 (jiàn)"],rows:[
+  ["Ý nghĩa","Gặp phải, tình huống bất ngờ, khó khăn","Gặp, nhìn thấy (có mục đích)"],
+  ["Tính chất","Ngẫu nhiên, bất ngờ","Chủ động, có kế hoạch"],
+  ["Dùng với","人, 问题, 困难, 挑战, 意外","人, 医生, 老朋友, 看到"],
+  ["Ví dụ","遇到问题 / 遇到朋友","见老师 / 看见朋友"]],
+  notes:["Gặp tình cờ ngoài đường: 遇到朋友. Hẹn trước, đi gặp: 见朋友 / 见老师.","见 còn làm bổ ngữ kết quả sau 看/听: 看见 (nhìn thấy), 听见 (nghe thấy). Không nói 看遇到."]}]}),
+(()=>{const X=(a,b)=>a.flatMap(x=>b.map(y=>x+y));
+const M=(t,a,e)=>({type:"mc",text:t,opts:["为 (wèi)","为 (wéi)","为了"],ans:a,exp:e});
+const C=(t,o,a,e)=>({type:"mc",text:t,opts:o,ans:a,exp:e});
+const T=(vi,acc,show,e)=>({type:"trans",hint:"Dịch sang tiếng Trung, chú ý chọn 为 / 为了 hay từ phù hợp.",parts:[{vi,accept:acc,show}],exp:e});
+const ma=["帮我翻译这句话吗","帮我翻译这个句子吗","帮我翻译一下这句话吗","帮我翻译一下这个句子吗"];
+return{id:"hsk3-wei-weile",level:"HSK3",name:"Phân biệt 为 / 为了",title:"HSK 3 – Phân biệt 为 / 为了",sub:"Đọc Bí Kíp trước, rồi sang tab Luyện Công làm 20 câu và bấm “Nộp bài”.",
+ tags:["为","为了","wèi / wéi"],
+ recap:[
+  {t:"1. Điểm giống nhau",ps:["Cả hai đều có thể biểu thị mục đích, nghĩa là “để / vì”. Đây là lý do người học hay nhầm."]},
+  {t:"2. Điểm khác nhau cốt lõi",head:["","为了","为"],rows:[["Từ loại","Giới từ (chỉ dùng biểu thị mục đích)","Giới từ + động từ + nhiều nghĩa khác"],["Nghĩa","Để, nhằm (mục đích)","Vì / cho / làm (đối tượng, người được phục vụ)"],["Vị trí","Đầu câu hoặc trước động từ","Thường sau chủ ngữ, trước động từ"]]},
+  {t:"3. Cách dùng 为了",ps:["Chỉ biểu thị mục đích, có thể đứng đầu câu."],ex:[["为了学好汉语,我每天练习。","Để học giỏi tiếng Trung, mỗi ngày tôi luyện tập."],["我们为了赚钱,每天加班。","Chúng tôi vì kiếm tiền nên ngày nào cũng tăng ca."]]},
+  {t:"4. Cách dùng 为 ① Đối tượng được phục vụ (“cho”)",ex:[["妈妈为我做了一桌好菜。","Mẹ nấu cho tôi một bàn thức ăn ngon."]]},
+  {t:"4. Cách dùng 为 ② Nguyên nhân, cảm xúc (“vì”)",ex:[["我为你高兴。","Tôi mừng cho bạn."]]},
+  {t:"4. Cách dùng 为 ③ Mục đích (văn viết, trang trọng hơn 为了)",ex:[["为人民服务。","Phục vụ nhân dân."]]},
+  {t:"4. Cách dùng 为 ④ Động từ “làm / là” (đọc wéi)",ex:[["成为医生","trở thành bác sĩ"],["认为","cho rằng"],["以为","tưởng rằng"]]},
+  {t:"5. Phân biệt nhanh bằng mẹo",ps:["Mẹo 1: Có thể đứng đầu câu để nêu mục đích → dùng 为了.","Mẹo 2: Muốn nói “làm gì cho ai” → dùng 为.","Mẹo 3: Sau 为了 thường là mục đích (cụm động từ / mệnh đề); sau 为 thường là danh từ / đại từ (người, đối tượng). 为了 + học giỏi / 为 + bạn."],ex:[["✅ 为了健康,我每天跑步。","Mục đích nêu ở đầu câu."],["⚠ 为健康,我每天跑步。","Đúng ngữ pháp nhưng thiên về văn viết, rất ít dùng khi nói."],["✅ 我为你准备了礼物。","Chuẩn bị quà cho bạn."],["⚠ 我为了你准备了礼物。","Nghĩa đổi thành “vì lợi ích của bạn mà chuẩn bị”, nghe khác đi."]]},
+  {t:"6. Lưu ý quan trọng",notes:["为了 không làm động từ, không dùng trong 成为、认为、以为.","Khi biểu thị mục đích, hai từ nhiều khi thay thế được cho nhau, nhưng 为了 tự nhiên hơn trong khẩu ngữ.","为 có hai cách đọc: wèi (giới từ: cho / vì) và wéi (động từ: làm / là)."]},
+  {t:"Ghi nhớ nhanh",notes:["Nêu mục đích ở đầu câu → 为了.","Làm cho ai / vì ai (đối tượng) → 为 (wèi).","Trở thành, cho rằng, tưởng rằng → 为 (wéi)."]}
+ ],
+ sections:[
+ {title:"一、Chọn 为 (wèi) / 为 (wéi) / 为了",sub:"Điền từ thích hợp",items:[
+  M("____照顾孩子,她辞掉了工作。",2,"Mục đích, đứng đầu câu → 为了."),
+  M("老师____我们讲解了这个语法点。",0,"“Cho chúng tôi”: đối tượng được phục vụ → 为 (wèi)."),
+  M("他____自己的错误道歉了。",0,"“Vì lỗi của mình”: nguyên nhân/đối tượng → 为 (wèi)."),
+  M("____不迟到,我六点就起床了。",2,"Mục đích, đứng đầu câu → 为了."),
+  M("这件事大家都____你担心。",0,"“Lo lắng cho bạn”: đối tượng → 为 (wèi)."),
+  M("他一直想成____一名工程师。",1,"成为 = trở thành, là động từ → 为 (wéi)."),
+  M("她____家人准备了一份生日礼物。",0,"“Chuẩn bị quà cho gia đình”: làm gì cho ai → 为 (wèi)."),
+  M("____提高成绩,我报了一个补习班。",2,"Mục đích, đứng đầu câu → 为了."),
+  M("____让孩子有更好的生活,他们搬到了城市。",2,"Sau chỗ trống là một mục đích (cả mệnh đề) → 为了."),
+  M("我认____这个办法不太好。",1,"认为 = cho rằng, cụm cố định → 为 (wéi).")]},
+ {title:"二、Chọn câu đúng",sub:"Chọn câu A hoặc B theo ý cho sẵn",items:[
+  C("Ý: mua cà phê cho bạn (làm gì cho ai).",["我为你买了一杯咖啡。","我为了你买了一杯咖啡。"],0,"Làm gì cho ai → 为: 为你买. 为了你 mang nghĩa “vì lợi ích của bạn”, nghe khác đi."),
+  C("Ý: nêu mục đích ở đầu câu, nói tự nhiên.",["为了健康,他戒烟了。","为健康,他戒烟了。"],0,"为了健康 tự nhiên trong khẩu ngữ. 为健康 thiên về văn viết, ít dùng khi nói."),
+  C("Ý: hát tặng chúng tôi (làm gì cho ai).",["他为我们唱了一首歌。","他为了我们唱了一首歌。"],0,"“Hát cho chúng tôi nghe” → 为我们唱.")]},
+ {title:"三、翻译",sub:"Dịch Việt – Trung",items:[
+  T("Để học giỏi tiếng Trung, tôi mỗi ngày đều nghe và nói.",X(["为了学好汉语","为了学好中文"],["我每天都听和说","我每天听和说","我每天都听说","我每天听说","我天天听和说","我每天都练习听和说"]).concat(X(["我为了学好汉语","我为了学好中文"],["每天都听和说","每天听和说","每天都听说","每天听说"])),"为了学好汉语,我每天都听和说。","Nêu mục đích ở đầu câu → 为了."),
+  T("Mẹ nấu cho tôi một bữa cơm rất ngon.",X(["妈妈为我","我妈妈为我"],["做了一顿很好吃的饭","做了一顿好吃的饭","做了一顿非常好吃的饭","做了一顿很丰盛的饭","做了一顿很好吃的菜","煮了一顿很好吃的饭","做了一餐很好吃的饭","做了一桌好菜","做了一桌很好吃的菜"]),"妈妈为我做了一顿很好吃的饭。","Làm gì cho ai → 为: 妈妈为我做…"),
+  T("Tôi rất mừng cho bạn.",["我为你感到高兴","我为你高兴","我很为你高兴","我真为你高兴","我为你感到很高兴","我很为你感到高兴","我真为你感到高兴"],"我为你感到高兴。","为你高兴 / 为你感到高兴: mừng cho bạn."),
+  T("Để mua nhà, họ tiết kiệm rất nhiều tiền.",X(["为了买房子他们","为了买房他们","他们为了买房子","他们为了买房"],["存了很多钱","攒了很多钱","省了很多钱","存了不少钱","攒了不少钱","存了好多钱","省了不少钱"]),"为了买房子,他们存了很多钱。","Mục đích ở đầu câu → 为了."),
+  T("Anh ấy đã trở thành một bác sĩ nổi tiếng.",X(X(["他已经成为一名","他已经成为一位","他已经成为一个","他已经成为了一名","他已经成为了一位","他成为了一名","他成为了一位","他成为了一个"],["著名的医生","有名的医生","著名医生","有名医生"]),["","了"]),"他已经成为一名著名的医生。","成为 (wéi) = trở thành."),
+  T("Cô ấy vì con cái mà hy sinh tất cả.",X(["她为孩子","她为了孩子","她为孩子们","她为了孩子们","她为自己的孩子","她为了自己的孩子"],["牺牲了一切","牺牲一切","牺牲了所有","付出了一切","付出了所有"]).concat(["为了孩子她牺牲了一切","为了孩子她付出了一切","为了孩子她牺牲了所有","为了孩子们她牺牲了一切"]),"她为孩子牺牲了一切。 / 为了孩子,她牺牲了一切。","为孩子 (hy sinh cho con, đối tượng) hoặc 为了孩子 (nhấn mạnh mục đích) đều được."),
+  T("Bạn có thể giúp tôi dịch câu này không?",X(["你能","你可以","能","可以"],ma).concat(X(["你能不能","能不能","你可不可以","可不可以"],["帮我翻译这句话","帮我翻译这个句子","帮我翻译一下这句话","帮我翻译一下这个句子"])),"你能帮我翻译这句话吗?","Câu này dùng 帮 (帮我翻译), không dùng 为. Không phải câu nào có “giúp / cho” cũng dùng 为.")]}
+ ]}})()
+];
+/* ===== BỘ MÁY LÀM BÀI (dùng chung, không cần sửa khi thêm bài) ===== */
+const app=document.getElementById('app'),go=x=>{location.hash=x};
+const levels=[...new Set(SETS.map(s=>s.level))];
+function h(t,p){const e=document.createElement(t);p=p||{};for(const k in p){if(p[k]==null)continue;if(k==='class')e.className=p[k];else if(k.startsWith('on'))e.addEventListener(k.slice(2),p[k]);else e.setAttribute(k,p[k])}
+ for(let i=2;i<arguments.length;i++){const c=arguments[i];if(c!=null)e.append(c)}return e}
+const norm=s=>String(s||'').normalize('NFKC').replace(/[\s,.!?;:、。,!?;:"'“”‘’()()]/g,'');
+const shuffle=a=>{const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r};
+const fb=(ok,head,body)=>h('div',{class:'fb '+(ok?'ok':'bad')},h('b',null,head),body?(ok?h('details',{class:'ex'},h('summary',{class:'note'},'Xem giải thích'),body):h('span',{class:'ex'},body)):null);
+const blankText=t=>{const b=h('div',{class:'qt'});t.split('____').forEach((p,i,a)=>{b.append(p);if(i<a.length-1)b.append(h('span',{class:'blank'},' '))});return b};
+const T={
+mc(q,nm){let c=-1;const ls=[],o=h('div',{class:'opts'});
+ q.opts.forEach((x,i)=>{const l=h('label',{class:'opt'},h('input',{type:'radio',name:nm,onchange:()=>{c=i}}),h('span',{class:'k'},'ABCD'[i]+'.'),h('span',null,x));ls.push(l);o.append(l)});
+ return{body:[blankText(q.text),o],grade(){ls.forEach(l=>l.classList.remove('right','wrong'));ls[q.ans].classList.add('right');const ok=c===q.ans;if(c>=0&&!ok)ls[c].classList.add('wrong');
+  return{got:+ok,max:1,fb:fb(ok,ok?'✓ Chính xác.':(c<0?'✗ Chưa trả lời. ':'✗ Chưa đúng. ')+'Đáp án: '+'ABCD'[q.ans]+'. '+q.opts[q.ans],q.exp)}}}},
+fill(q){const bs=[],b=h('div');if(q.hint)b.append(h('p',{class:'hint'},q.hint));
+ const mkSel=()=>{const s=h('select',null,h('option',{value:''},'—'));q.bank.forEach(w=>s.append(h('option',{value:w},w)));return s};
+ q.parts.forEach((p,i)=>{const s=mkSel(),row=h('div',{class:'si'},h('span',{class:'qn'},(i+1)+'. '),h('span',{class:'ln'},p.pre),' ',s,' ');bs.push([s,p.ans]);
+  if(p.mid!==undefined){const s2=mkSel();bs.push([s2,p.ans2]);row.append(h('span',{class:'ln'},p.mid),' ',s2,' ')}
+  row.append(h('span',{class:'ln'},p.post));b.append(row)});
+ return{body:[b],grade(){let g=0;bs.forEach(([s,a])=>{const ok=[].concat(a).includes(s.value);s.classList.remove('sok','sbad');s.classList.add(ok?'sok':'sbad');if(ok)g++});
+  const all=g===bs.length;return{got:g,max:bs.length,fb:fb(all,all?'✓ Chính xác.':'✗ Đúng '+g+'/'+bs.length+'. Đáp án: '+q.parts.map((p,i)=>(i+1)+'. '+[].concat(p.ans).join('/')+(p.mid!==undefined?' + '+[].concat(p.ans2).join('/'):'')).join('   '),q.exp)}}}},
+build(q){let order=[];const pool=shuffle(q.tokens.map((t,i)=>i)),bt=h('div',{class:'built'}),pb=h('div',{class:'pool'});
+ const drop=(e,at)=>{e.preventDefault();e.stopPropagation();const d=(e.dataTransfer.getData('text')||'').split(':');
+  if(d[0]==='p'){const i=+d[1];if(!order.includes(i)){order.splice(at,0,i);r()}}else if(d[0]==='b'){const f=+d[1],it=order.splice(f,1)[0];order.splice(at>f?at-1:at,0,it);r()}};
+ bt.ondragover=e=>e.preventDefault();bt.ondrop=e=>drop(e,order.length);
+ pb.ondragover=e=>e.preventDefault();pb.ondrop=e=>{e.preventDefault();const d=(e.dataTransfer.getData('text')||'').split(':');if(d[0]==='b'){order.splice(+d[1],1);r()}};
+ const r=()=>{bt.textContent='';pb.textContent='';
+  order.forEach((i,pos)=>bt.append(h('button',{type:'button',class:'tok in',draggable:'true',ondragstart:e=>e.dataTransfer.setData('text','b:'+pos),ondragover:e=>e.preventDefault(),ondrop:e=>drop(e,pos),onclick:()=>{order.splice(pos,1);r()}},q.tokens[i])));
+  pool.forEach(i=>pb.append(h('button',{type:'button',class:'tok',draggable:'true',ondragstart:e=>e.dataTransfer.setData('text','p:'+i),disabled:order.includes(i)?'disabled':null,onclick:()=>{if(!order.includes(i)){order.push(i);r()}}},q.tokens[i])))};r();
+ return{body:[h('p',{class:'hint'},q.hint),bt,pb,h('div',{style:'margin-top:8px'},h('button',{type:'button',class:'btn g s',onclick:()=>{order=[];r()}},'Xóa hết'))],
+  grade(){const s=order.map(i=>q.tokens[i]).join(''),ok=q.accept.includes(norm(s));return{got:+ok,max:1,fb:fb(ok,ok?'✓ Chính xác.':(s?'✗ Chưa đúng. ':'✗ Chưa trả lời. ')+'Đáp án: '+q.accept[0]+'。',q.exp)}}}},
+fix(q){const i=h('input',{type:'text',autocomplete:'off',placeholder:'Viết lại câu đúng…'});
+ return{body:[h('p',{class:'hint'},q.hint),h('div',{class:'ws'},q.wrong),i],grade(){const v=norm(i.value),ok=q.accept.includes(v);i.classList.remove('sok','sbad');i.classList.add(ok?'sok':'sbad');
+  return{got:+ok,max:1,fb:fb(ok,ok?'✓ Chính xác.':(v?'✗ Chưa đúng. ':'✗ Chưa trả lời. ')+'Đáp án: '+q.show,q.exp)}}}},
+trans(q){const is=[],b=h('div');if(q.hint)b.append(h('p',{class:'hint'},q.hint));
+ q.parts.forEach((p,i)=>{const x=h('input',{type:'text',autocomplete:'off',placeholder:'用中文写…'});is.push(x);b.append(h('div',{class:'si'},h('p',{style:'margin:0 0 4px'},h('span',{class:'qn'},'('+(i+1)+') '),p.vi),x))});
+ return{body:[b],grade(){let g=0;const ln=[];q.parts.forEach((p,i)=>{const ok=p.accept.includes(norm(is[i].value));is[i].classList.remove('sok','sbad');is[i].classList.add(ok?'sok':'sbad');if(ok)g++;else ln.push('('+(i+1)+') '+p.show)});
+  const all=g===q.parts.length;return{got:g,max:q.parts.length,fb:fb(all,all?'✓ Chính xác.':'✗ Đúng '+g+'/'+q.parts.length+'. Đáp án gợi ý: '+ln.join('   '),q.exp)}}}},
+rewrite(q){const is=[],b=h('div');if(q.hint)b.append(h('p',{class:'hint'},q.hint));
+ q.parts.forEach((p,i)=>{const x=h('input',{type:'text',autocomplete:'off',placeholder:'…',style:'flex:1;min-width:140px;width:auto'});is.push(x);
+  b.append(h('div',{class:'si'},h('p',{style:'margin:0 0 4px'},h('span',{class:'qn'},(i+1)+'. '),p.src),h('div',{style:'display:flex;gap:6px;align-items:center;flex-wrap:wrap'},'→ ',h('span',{class:'ln'},p.pre),x)))});
+ return{body:[b],grade(){let g=0;const ln=[];q.parts.forEach((p,i)=>{let v=norm(is[i].value);const pn=norm(p.pre);if(pn&&v.startsWith(pn))v=v.slice(pn.length);const ok=p.accept.map(norm).includes(v);is[i].classList.remove('sok','sbad');is[i].classList.add(ok?'sok':'sbad');if(ok)g++;else ln.push((i+1)+'. '+p.pre+p.accept[0])});
+  const all=g===q.parts.length;return{got:g,max:q.parts.length,fb:fb(all,all?'✓ Chính xác.':'✗ Đúng '+g+'/'+q.parts.length+'. Đáp án gợi ý: '+ln.join('   '),q.exp)}}}}
+};
+const recapEl=r=>h('div',{class:'rc'},...r.map(g=>h('div',null,h('h3',null,g.t),...(g.ps||[]).map(x=>h('p',{style:'margin:4px 0'},x)),g.rows?h('table',null,g.head?h('tr',null,...g.head.map(c=>h('th',{style:'text-align:left;padding:6px 8px'},c))):null,...g.rows.map(x=>h('tr',null,...x.map((c,i)=>h('td',i?{class:'zh'}:null,c))))):null,...(g.ex||[]).map(x=>h('div',{class:'exm'},h('div',{style:'font-size:1.15rem'},x[0]),h('div',{class:'note'},x[1]))),...(g.notes||[]).map(n=>h('p',{class:'note'},'• '+n)))));
+function levelsView(){app.innerHTML='';app.append(h('h1',null,'Bài tập ngữ pháp tiếng Trung'),h('p',{class:'sub'},'Chọn cấp độ để xem danh sách bài tập.'),
+ ...levels.map(l=>h('button',{class:'set',onclick:()=>go('lv-'+l.toLowerCase())},h('b',null,l),h('div',{class:'meta'},SETS.filter(s=>s.level===l).length+' bài tập'))))}
+function listView(l){app.innerHTML='';const ls=h('div'),kw=h('input',{type:'search',placeholder:'Tìm bài tập…'});
+ const d=()=>{ls.textContent='';const k=kw.value.toLowerCase(),a=SETS.filter(s=>s.level===l&&s.name.toLowerCase().includes(k));
+  if(!a.length)ls.append(h('p',{class:'note'},'Không tìm thấy bài tập.'));a.forEach(s=>ls.append(h('button',{class:'set',onclick:()=>go(s.id)},h('b',null,s.name))))};
+ kw.oninput=d;d();app.append(h('button',{class:'back',onclick:()=>go('')},'← Cấp độ'),h('h1',null,l+' – Bài tập'),h('p',{class:'sub'},'Bấm vào tên bài tập để làm.'),kw,ls)}
+function quizView(s){app.innerHTML='';const qs=[],res=h('div'),box=h('div');
+ const init=()=>{box.textContent='';res.textContent='';qs.length=0;let n=0;
+  s.sections.forEach((sec,si)=>{box.append(h('h2',{class:'st'},sec.title,sec.sub?h('small',null,sec.sub):null));
+   sec.items.forEach((q,qi)=>{n++;const b=T[q.type](q,'q'+si+'_'+qi),c=h('div',{class:'card'},h('div',{class:'qh'},h('span',{class:'qn'},'第 '+n+' 题'),q.topic?h('span',{class:'tag'},q.topic):null,q.level?h('span',{class:'tag lv'},q.level):null));
+    b.body.forEach(x=>c.append(x));box.append(c);qs.push({c,b})})})};
+ const grade=()=>{let t=0;const wr=[];qs.forEach((it,ix)=>{const o=it.c.querySelector('.fb');if(o)o.remove();const r=it.b.grade();it.c.classList.remove('ok','bad');it.c.classList.add(r.got===r.max?'ok':'bad');it.c.append(r.fb);t+=r.got/r.max;if(r.got!==r.max)wr.push(ix+1)});
+  const sc=Math.round(t*10)/10,p=sc/qs.length;res.textContent='';res.append(h('div',{class:'res'},h('div',{class:'big'},sc+' / '+qs.length),h('div',null,p>=.9?'Xuất sắc!':p>=.7?'Khá tốt, ôn thêm các câu sai nhé.':p>=.5?'Cần ôn thêm.':'Hãy xem lại bài rồi làm lại nhé.'),h('div',{class:'note',style:'margin-top:6px'},wr.length?'Câu cần xem lại: '+wr.join(', ')+'. Xem giải thích ở từng câu phía trên.':'Bạn làm đúng hết!')));res.scrollIntoView({behavior:'smooth',block:'center'})};
+ init();
+ const prac=h('div',null,box,h('div',{class:'acts'},h('button',{class:'btn',onclick:grade},'Nộp bài'),h('button',{class:'btn g',onclick:()=>{init();scrollTo(0,0)}},'Làm lại')),res);
+ const head=[h('button',{class:'back',onclick:()=>go('lv-'+s.level.toLowerCase())},'← '+s.level+' – Bài tập'),h('h1',null,s.title),h('p',{class:'sub'},s.sub),s.tags?h('div',{class:'tags'},...s.tags.map(t=>h('span',{class:'tag'},t))):null];
+ if(!s.recap){app.append(...head,prac);return}
+ const kn=recapEl(s.recap),tb=h('div',{class:'tabs'});
+ const show=k=>{kn.hidden=k!==0;prac.hidden=k!==1;[...tb.children].forEach((b,i)=>b.classList.toggle('on',i===k));scrollTo(0,0)};
+ ['📖 Bí Kíp','✍️ Luyện Công'].forEach((t,i)=>tb.append(h('button',{class:'tab',onclick:()=>show(i)},t)));
+ app.append(...head,tb,kn,prac);show(0)}
+function route(){const x=location.hash.slice(1),s=SETS.find(a=>a.id===x),l=levels.find(a=>'lv-'+a.toLowerCase()===x);s?quizView(s):l?listView(l):levelsView();scrollTo(0,0)}
+addEventListener('hashchange',route);route();
+</script>
+</body>
+</html>
