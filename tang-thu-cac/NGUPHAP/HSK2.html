@@ -1,173 +1,11 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Bí Kíp Hán Ngữ</title>
+<title>Mê Trận Ngữ Pháp</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg: #EDF0EC;
-  --surface: #F8FAF7;
-  --ink: #18221E;
-  --muted: #5A6A63;
-  --line: #CBD4CE;
-  --yi: #16705A;
-  --yi-soft: #D5EBE3;
-  --you: #A8561A;
-  --you-soft: #F3E0CE;
-  --bad: #B3342B;
-  --bad-soft: #F4D9D5;
-  --font-body: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-han: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --font-display: "Noto Serif SC", "Songti SC", "SimSun", serif;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) {
-    --bg: #0F1613; --surface: #17211D; --ink: #E6EEE9; --muted: #9BAEA5; --line: #2A3832;
-    --yi: #4FC3A1; --yi-soft: #173A31; --you: #E39A5C; --you-soft: #3D2A18;
-    --bad: #F08278; --bad-soft: #3E1F1C;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg: #0F1613; --surface: #17211D; --ink: #E6EEE9; --muted: #9BAEA5; --line: #2A3832;
-  --yi: #4FC3A1; --yi-soft: #173A31; --you: #E39A5C; --you-soft: #3D2A18;
-  --bad: #F08278; --bad-soft: #3E1F1C;
-  color-scheme: dark;
-}
-*{ box-sizing: border-box; }
-body{
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.65;
-}
-body::before{
-  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
-  background: var(--bg); z-index: 10;
-}
-.t-yd .wrap{
-  max-width: 760px; margin: 0 auto;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 28px 56px;
-}
-.t-yd h1,.t-yd h2,.t-yd h3{ text-wrap: balance; line-height: 1.25; margin: 0; }
-.t-yd p{ margin: 0; }
-.t-yd .han{ font-family: var(--font-han); }
-.t-yd .py{ font-size: 13px; color: var(--muted); letter-spacing: .01em; }
-.t-yd b.you,.t-yd b.yi{ font-family: var(--font-han); font-weight: 700; padding: 0 3px; border-radius: 3px; }
-.t-yd b.you{ color: var(--you); background: var(--you-soft); }
-.t-yd b.yi{ color: var(--yi); background: var(--yi-soft); }
-.t-yd .eyebrow{ font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); font-weight: 600; }
-.t-yd .hero{ display: flex; flex-direction: column; gap: 14px; padding-bottom: 20px; }
-.t-yd .vs{ display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; font-family: var(--font-display); font-size: clamp(38px, 11vw, 68px); line-height: 1.1; }
-.t-yd .vs .a{ color: var(--you); }
-.t-yd .vs .b{ color: var(--yi); }
-.t-yd .vs .x{ font-family: var(--font-body); font-size: 15px; font-weight: 600; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
-.t-yd .lede{ color: var(--muted); max-width: 56ch; }
-.t-yd .tabs{
-  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
-  background: var(--bg); padding-block: 8px;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-  border-bottom: 1px solid var(--line);
-}
-.t-yd .tab{
-  font: inherit; color: var(--ink); background: transparent;
-  border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px;
-  display: flex; flex-direction: column; align-items: flex-start; gap: 0; cursor: pointer; text-align: left;
-}
-.t-yd .tab .t{ font-weight: 700; font-size: 16px; }
-.t-yd .tab .s{ font-size: 12px; color: var(--muted); }
-.t-yd .tab[aria-selected="true"]{ background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.t-yd .tab[aria-selected="true"] .s{ color: var(--bg); opacity: .75; }
-.t-yd .tab:focus-visible,.t-yd .opt:focus-visible,.t-yd .btn:focus-visible{ outline: 3px solid var(--yi); outline-offset: 2px; }
-.t-yd .panel{ padding-top: 28px; display: flex; flex-direction: column; gap: 36px; }
-.t-yd .sec{ display: flex; flex-direction: column; gap: 12px; }
-.t-yd .sec h2{ font-size: 21px; }
-.t-yd .sec h3{ font-size: 17px; }
-.t-yd .sec p{ max-width: 62ch; }
-.t-yd .tbl-wrap{ overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
-.t-yd table{ width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 14.5px; line-height: 1.5; }
-.t-yd th,.t-yd td{ text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
-.t-yd tr:last-child th,.t-yd tr:last-child td{ border-bottom: 0; }
-.t-yd thead th{ font-family: var(--font-han); font-size: 20px; }
-.t-yd thead th.you{ color: var(--you); }
-.t-yd thead th.yi{ color: var(--yi); }
-.t-yd thead th small{ display: block; font-family: var(--font-body); font-size: 12px; color: var(--muted); font-weight: 400; }
-.t-yd tbody th{ font-weight: 600; color: var(--muted); width: 22%; font-size: 13px; }
-.t-yd td.you{ background: color-mix(in srgb, var(--you-soft) 45%, transparent); }
-.t-yd td.yi{ background: color-mix(in srgb, var(--yi-soft) 45%, transparent); }
-.t-yd .rule{ display: flex; flex-direction: column; gap: 10px; padding-top: 22px; border-top: 1px solid var(--line); }
-.t-yd .chips{ display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-family: var(--font-han); font-size: 20px; }
-.t-yd .chip{ padding: 4px 12px; border-radius: 6px; border: 1px dashed var(--line); background: var(--surface); }
-.t-yd .chip.you{ background: var(--you-soft); color: var(--you); border: 1px solid transparent; font-weight: 700; }
-.t-yd .chip.yi{ background: var(--yi-soft); color: var(--yi); border: 1px solid transparent; font-weight: 700; }
-.t-yd .plus{ color: var(--muted); font-size: 16px; }
-.t-yd .ex{ background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; display: flex; flex-direction: column; gap: 1px; }
-.t-yd .ex .zh{ font-family: var(--font-han); font-size: 19px; line-height: 1.5; }
-.t-yd .ex .vi{ font-size: 14.5px; }
-.t-yd .exs{ display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 10px; }
-.t-yd .note{ font-size: 14.5px; color: var(--muted); }
-.t-yd .test{ display: flex; flex-direction: column; gap: 0; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
-.t-yd .test div{ padding: 12px 14px; display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: baseline; border-bottom: 1px solid var(--line); }
-.t-yd .test div:last-child{ border-bottom: 0; }
-.t-yd .test .go{ font-weight: 700; font-family: var(--font-han); font-size: 18px; }
-.t-yd .test .go.you{ color: var(--you); }
-.t-yd .test .go.yi{ color: var(--yi); }
-.t-yd .fix{ display: grid; grid-template-columns: 1fr; gap: 8px; }
-.t-yd .fix .row{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-@media (max-width: 520px){.t-yd .fix .row{ grid-template-columns: 1fr; gap: 4px; }}
-.t-yd .fix .no,.t-yd .fix .ok{ border-radius: 8px; padding: 8px 12px; font-family: var(--font-han); font-size: 18px; overflow-wrap: anywhere; }
-.t-yd .fix .no{ background: var(--bad-soft); color: var(--bad); text-decoration: line-through; text-decoration-thickness: 1px; }
-.t-yd .fix .ok{ background: var(--yi-soft); color: var(--yi); }
-.t-yd .fix small{ display: block; font-family: var(--font-body); font-size: 12.5px; text-decoration: none; opacity: .9; }
-.t-yd #quiz{ scroll-margin-top: 90px; display: flex; flex-direction: column; gap: 18px; }
-.t-yd .qhead{ display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; }
-.t-yd .bar{ height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
-.t-yd .bar i{ display: block; height: 100%; background: var(--yi); transition: width .25s ease; }
-.t-yd .prompt{ font-size: 14px; color: var(--muted); }
-.t-yd .sentence{ font-family: var(--font-han); font-size: clamp(22px, 6vw, 30px); line-height: 1.5; }
-.t-yd .blank{ display: inline-block; min-width: 3.2em; border-bottom: 2px solid var(--ink); text-align: center; line-height: 1.2; margin: 0 2px; }
-.t-yd .opts{ display: grid; gap: 10px; }
-.t-yd .opts.two{ grid-template-columns: 1fr 1fr; }
-.t-yd .opt{
-  font: inherit; color: var(--ink); background: var(--surface); border: 1.5px solid var(--line);
-  border-radius: 8px; padding: 14px 12px; cursor: pointer; text-align: center;
-  display: flex; flex-direction: column; align-items: center; gap: 2px;
-}
-.t-yd .opt .h{ font-family: var(--font-han); font-size: 24px; font-weight: 700; line-height: 1.3; }
-.t-yd .opt.row{ align-items: flex-start; text-align: left; flex-direction: row; gap: 12px; }
-.t-yd .opt.row .h{ font-size: 20px; font-weight: 500; }
-.t-yd .opt .k{ font-weight: 700; color: var(--muted); font-size: 14px; padding-top: 6px; }
-.t-yd .opt.k-you .h{ color: var(--you); }
-.t-yd .opt.k-yi .h{ color: var(--yi); }
-.t-yd .opt:hover{ border-color: var(--ink); }
-.t-yd .opt[aria-disabled="true"]{ cursor: default; }
-.t-yd .opt[aria-disabled="true"]:hover{ border-color: var(--line); }
-.t-yd .opt.ok{ border-color: var(--yi); background: var(--yi-soft); }
-.t-yd .opt.bad{ border-color: var(--bad); background: var(--bad-soft); }
-.t-yd .opt.dim{ opacity: .55; }
-.t-yd .fb{ border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
-.t-yd .fb .v{ font-weight: 700; }
-.t-yd .fb .v.ok{ color: var(--yi); }
-.t-yd .fb .v.bad{ color: var(--bad); }
-.t-yd .fb .zh{ font-family: var(--font-han); font-size: 21px; line-height: 1.5; }
-.t-yd .btn{
-  font: inherit; font-weight: 600; border: 0; border-radius: 8px; padding: 12px 18px; cursor: pointer;
-  background: var(--ink); color: var(--bg);
-}
-.t-yd .btn.ghost{ background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
-.t-yd .actions{ display: flex; flex-wrap: wrap; gap: 10px; }
-.t-yd .score{ display: flex; flex-direction: column; gap: 4px; }
-.t-yd .score .n{ font-family: var(--font-display); font-size: clamp(48px, 14vw, 80px); line-height: 1; font-variant-numeric: tabular-nums; }
-.t-yd .score .n small{ font-size: .4em; color: var(--muted); font-family: var(--font-body); font-weight: 500; }
-.t-yd .score .rank{ font-size: 19px; font-weight: 700; }
-.t-yd .rev{ display: flex; flex-direction: column; gap: 8px; }
-.t-yd .rev .ex .zh{ font-size: 18px; }
-@media (prefers-reduced-motion: reduce){.t-yd .bar i{ transition: none; }}
-body.v-ss{
   --paper:#fbf6ea; --card:#fffdf7; --ink:#1d2640; --muted:#5d6580; --line:#e6dcc3;
   --accent:#16336b; --accent-soft:#e4ebf7; --on-accent:#fff;
   --gold:#a8770a; --gold-soft:#f6ecd0;
@@ -175,589 +13,236 @@ body.v-ss{
   --shadow:0 1px 2px rgba(29,38,64,.06),0 6px 18px rgba(29,38,64,.06);
   --zh:"Noto Serif SC","Songti SC","SimSun","Source Han Serif SC",serif;
   --vi:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-;--bg:var(--paper)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body.v-ss{
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
     --paper:#141a2c; --card:#1b2238; --ink:#eee8d8; --muted:#a2a9c2; --line:#2e3855;
     --accent:#9db9ff; --accent-soft:#1f2b49; --on-accent:#10183a;
     --gold:#e5b94e; --gold-soft:#332d1c;
     --ok:#6fd49a; --ok-soft:#183326; --bad:#ffb74d; --bad-soft:#3a2d17; --blue:#9bb8f0; --shadow:none;
   ;color-scheme:dark}}
-:root[data-theme="dark"] body.v-ss{
+:root[data-theme="dark"]{
     --paper:#141a2c; --card:#1b2238; --ink:#eee8d8; --muted:#a2a9c2; --line:#2e3855;
     --accent:#9db9ff; --accent-soft:#1f2b49; --on-accent:#10183a;
     --gold:#e5b94e; --gold-soft:#332d1c;
     --ok:#6fd49a; --ok-soft:#183326; --bad:#ffb74d; --bad-soft:#3a2d17; --blue:#9bb8f0; --shadow:none;
   ;color-scheme:dark}
+*{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:96px}
-body.v-ss{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--vi);-webkit-text-size-adjust:100%}
-.t-ss .zh{font-family:var(--zh);font-weight:500}
-.t-ss .py{color:var(--blue);font-size:.88em}
-.t-ss.nopy .py{display:none}
-.t-ss .wrap{max-width:980px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
-.t-ss a{color:var(--blue)}
-.t-ss button{font:inherit}
-.t-ss .kicker{font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
-.t-ss h1{font-size:clamp(1.9rem,6vw,3rem);line-height:1.12;margin:8px 0 6px}
-.t-ss h2{font-size:clamp(1.35rem,4vw,1.8rem);margin:0;line-height:1.25}
-.t-ss h3{font-size:1.12rem;margin:0 0 8px}
-.t-ss .lead{color:var(--muted);margin:0 0 16px;max-width:46em}
-.t-ss .muted{color:var(--muted)}
-.t-ss .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);min-width:0}
-.t-ss .stack{display:grid;gap:16px}
-.t-ss .stack>*{min-width:0}
-.t-ss header.hero{padding:30px 0 6px;position:relative;overflow:hidden}
-.t-ss .hero .seal{display:inline-flex;align-items:center;gap:10px;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.t-ss .hero .seal b{background:var(--accent);color:var(--on-accent);font-family:var(--zh);font-size:1rem;padding:4px 8px;border-radius:4px;letter-spacing:0;text-transform:none}
-.t-ss .hero h1 em{font-style:normal;color:var(--accent)}
-.t-ss .hero .ghost{position:absolute;right:-6px;top:-24px;font-family:var(--zh);font-size:min(42vw,260px);line-height:1;color:var(--gold);opacity:.1;pointer-events:none;user-select:none}
-.t-ss .ulist{display:grid;gap:12px;margin:18px 0}
-.t-ss .unit{display:flex;align-items:center;gap:14px;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 16px;cursor:pointer;box-shadow:var(--shadow);position:relative;transition:border-color .15s,background .15s}
-.t-ss .unit:hover{border-color:var(--accent)}
-.t-ss .unit input{position:absolute;opacity:0;pointer-events:none}
-.t-ss .unit.on{border-color:var(--accent);background:var(--accent-soft)}
-.t-ss .unit:focus-within{outline:3px solid var(--gold);outline-offset:2px}
-.t-ss .num{flex:none;width:44px;height:44px;border-radius:12px;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:1.3rem;display:grid;place-items:center}
-.t-ss .ubody{flex:1;min-width:0}
-.t-ss .uzh{font-size:1.35rem;font-weight:700;font-family:var(--zh);line-height:1.3}
-.t-ss .utitle{display:block;font-weight:600}
-.t-ss .udesc{display:block;color:var(--muted);font-size:.92rem}
-.t-ss .tick{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-weight:700;color:transparent;background:var(--card)}
-.t-ss .unit.on .tick{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
-.t-ss .pickbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
-.t-ss .chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer;font-size:.9rem}
-.t-ss .chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.t-ss .chip:focus-visible,.t-ss .btn:focus-visible,.t-ss .tab:focus-visible,.t-ss .tok:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.t-ss .go{position:sticky;bottom:0;padding:22px 0 calc(14px + env(safe-area-inset-bottom,0px));background:linear-gradient(transparent,var(--paper) 35%);pointer-events:none;z-index:10}
-.t-ss .go .in{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
-.t-ss .go .in>*{pointer-events:auto}
-.t-ss .go .cnt{font-weight:600;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 16px}
-.t-ss .btn{pointer-events:auto;font-weight:700;font-size:1.05rem;border:0;border-radius:12px;padding:12px 28px;cursor:pointer;background:var(--accent);color:var(--on-accent);box-shadow:0 4px 14px rgba(22,51,107,.3)}
-.t-ss .btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
-.t-ss .btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line);box-shadow:none}
-.t-ss .share{margin:6px 0 0;padding:14px 16px;border:1px dashed var(--gold);background:var(--gold-soft);border-radius:12px;font-size:.92rem}
-.t-ss .share .row{display:flex;gap:8px;margin-top:8px}
-.t-ss .share input{flex:1;min-width:0;font:inherit;font-size:.85rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
-.t-ss .share button{font-size:.88rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 14px;cursor:pointer}
-.t-ss .studybar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-top:16px;padding-bottom:6px}
-.t-ss .studybar .sp{flex:1}
-.t-ss nav.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.t-ss nav.top .wrap{padding-top:10px;padding-bottom:10px}
-.t-ss .tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.t-ss .tab{cursor:pointer;text-align:left;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:8px 14px;display:flex;flex-direction:column;position:relative;font-weight:700;font-size:1.1rem;line-height:1.25}
-.t-ss .tab .zh{position:absolute;right:12px;top:6px;font-size:1.3rem;opacity:.35}
-.t-ss .tab small{font-weight:400;font-size:.78rem;color:var(--muted)}
-.t-ss .tab[aria-selected="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
-.t-ss .tab[aria-selected="true"] small{color:inherit;opacity:.8}
-@media(max-width:560px){.t-ss .tab .zh{display:none}}
-.t-ss .usec{padding-top:26px}
-.t-ss .uhead{display:flex;gap:14px;align-items:center;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
-.t-ss .uhead .uzh{font-size:1.1rem;color:var(--accent)}
-.t-ss .formula{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 0}
-.t-ss .formula span{background:var(--accent-soft);color:var(--accent);border-radius:8px;padding:4px 10px;font-weight:700;font-family:var(--zh)}
-.t-ss .formula span.hl{background:var(--accent);color:var(--on-accent)}
-.t-ss .formula i{font-style:normal;color:var(--muted)}
-.t-ss .ex{margin:6px 0;padding:8px 12px;border-left:3px solid var(--gold);background:var(--gold-soft);border-radius:0 8px 8px 0}
-.t-ss .ex .zh{font-size:1.15rem}
-.t-ss .ex small{display:block;color:var(--muted)}
-.t-ss .ex.yes{border-left-color:var(--ok);background:var(--ok-soft)}
-.t-ss .ex.no{border-left-color:var(--bad);background:var(--bad-soft)}
-.t-ss .ex .mk{font-weight:700;margin-right:6px;font-size:.85rem}
-.t-ss .ex.yes .mk{color:var(--ok)}
-.t-ss .ex.no .mk{color:var(--bad)}
-.t-ss .note{background:var(--accent-soft);border-radius:10px;padding:10px 14px;margin:12px 0 0;font-size:.95rem}
-.t-ss .note b{color:var(--accent)}
-.t-ss .use{margin:10px 0;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
-.t-ss .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.t-ss table{border-collapse:collapse;width:100%}
-.t-ss table.gt{min-width:620px}
-.t-ss th,.t-ss td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
-.t-ss th{background:var(--gold-soft)}
-.t-ss td small{display:block;color:var(--muted)}
-.t-ss .adjs{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
-.t-ss .adjs span{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:2px 10px;font-size:.9rem}
-.t-ss .adjs b{font-family:var(--zh);font-size:1.1rem;margin-right:4px}
-.t-ss .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:700px){.t-ss .two{grid-template-columns:1fr}}
-.t-ss .pytool{display:flex;justify-content:flex-end;padding-top:12px}
-.t-ss .name-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
-.t-ss .name-row input{font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);min-width:220px}
-.t-ss .q-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px}
-.t-ss .q-card.right{border-color:var(--ok);background:var(--ok-soft)}
-.t-ss .q-card.wrong{border-color:var(--bad);background:var(--bad-soft)}
-.t-ss .qn{font-weight:700;color:var(--accent);margin-right:6px}
-.t-ss .qtext{font-size:1.05rem;margin-bottom:8px}
-.t-ss .qtext .zh{font-size:1.2rem}
-.t-ss .opts{display:grid;gap:8px;grid-template-columns:1fr 1fr}
-@media(max-width:620px){.t-ss .opts{grid-template-columns:1fr}}
-.t-ss .opt{display:flex;gap:10px;align-items:center;border:2px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer;background:var(--card)}
-.t-ss .opt:hover{border-color:var(--accent)}
-.t-ss .opt input{accent-color:var(--accent);width:18px;height:18px;flex:none}
-.t-ss .opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
-.t-ss .opt .lt{font-weight:700;color:var(--muted);flex:none}
-.t-ss .opt .zh{font-size:1.15rem}
-.t-ss .answer-line{min-height:54px;border:2px dashed var(--line);border-radius:10px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0;background:var(--paper)}
-.t-ss .answer-line:empty::before{content:"Bấm vào các từ bên dưới theo đúng thứ tự…";color:var(--muted);font-size:.9rem}
-.t-ss .tok{font-family:var(--zh);font-weight:700;font-size:1.15rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer}
-.t-ss .tok:hover:not(:disabled){border-color:var(--blue);background:var(--accent-soft)}
-.t-ss .tok.used{opacity:.25}
-.t-ss .answer-line .tok{background:var(--accent-soft);border-color:var(--accent)}
-.t-ss .tok:disabled{cursor:default}
-.t-ss .minibtn{background:none;border:0;color:var(--blue);text-decoration:underline;cursor:pointer;padding:4px 0;font-size:.85rem}
-.t-ss input.tr{width:100%;font-family:var(--zh);font-size:1.15rem;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);margin-top:6px}
-.t-ss input.tr:focus{border-color:var(--accent);outline:none}
-.t-ss input.tr:disabled,.t-ss .opt input:disabled{opacity:1}
-.t-ss .fb{margin-top:10px;font-size:.95rem}
-.t-ss .fb .st{font-weight:700}
-.t-ss .right .fb .st{color:var(--ok)}
-.t-ss .wrong .fb .st{color:var(--bad)}
-.t-ss .fb .your{color:var(--muted)}
-.t-ss .fb .corr{margin:4px 0;padding:6px 10px;background:var(--card);border-radius:8px;border:1px solid var(--line)}
-.t-ss .fb .corr .zh{font-size:1.2rem}
-.t-ss .typ{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-left:6px}
-.t-ss .submit-bar{position:sticky;bottom:0;pointer-events:none;background:linear-gradient(transparent,var(--paper) 30%);padding:24px 0 calc(14px + env(safe-area-inset-bottom,0px));display:flex;gap:10px;justify-content:center;flex-wrap:wrap;z-index:10}
-.t-ss .result{display:none;margin:20px 0;padding:22px;border-radius:16px;background:var(--ink);color:var(--paper);text-align:center}
-.t-ss .result.show{display:block}
-.t-ss .result .score{font-size:clamp(3rem,12vw,5rem);font-weight:700;line-height:1.1}
-.t-ss .result .score small{font-size:.4em;opacity:.7}
-.t-ss .result .msg{font-size:1.1rem;margin:4px 0 14px}
-.t-ss .result .parts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.t-ss .result .parts div{background:rgba(255,255,255,.14);border-radius:10px;padding:6px 14px;font-size:.92rem}
-.t-ss .result .wrongs{margin-top:14px;font-size:.95rem}
-.t-ss .result .wrongs a{color:#ffd9a0}
-.t-ss .muted2{opacity:.75;font-size:.9rem}
-.t-ss footer{padding:30px 0 60px;color:var(--muted);text-align:center;font-size:.9rem}
-.t-ss .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 10px}
-.t-ss .toolbar .sp{flex:1}
-.t-ss .toolbar input{font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);min-width:200px}
-.t-ss .acc{display:grid;gap:12px;margin-bottom:40px}
-.t-ss .item{background:var(--card);border:2px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:clip}
-.t-ss .item.open{border-color:var(--accent)}
-.t-ss .ih{margin:0;font-size:1rem;font-weight:400;line-height:1.6}
-.t-ss .ihb{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:14px;width:100%;padding:14px 16px;cursor:pointer}
-.t-ss .ihb:hover{background:var(--accent-soft)}
-.t-ss .ihb:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
-.t-ss .item.open .ihb{background:var(--accent-soft)}
-.t-ss .chev{flex:none;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;border:2px solid var(--line);background:var(--card);font-size:1.1rem;transition:transform .2s;line-height:1}
-.t-ss .item.open .chev{transform:rotate(180deg);border-color:var(--accent)}
-.t-ss .ibody{padding:6px 16px 18px;border-top:1px solid var(--line);animation:fade .2s ease}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--vi);-webkit-text-size-adjust:100%}
+.zh{font-family:var(--zh);font-weight:500}
+.py{color:var(--blue);font-size:.88em}
+body.nopy .py{display:none}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--blue)}
+[hidden]{display:none!important}
+button{font:inherit}
+.kicker{font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(1.9rem,6vw,3rem);line-height:1.12;margin:8px 0 6px}
+h2{font-size:clamp(1.35rem,4vw,1.8rem);margin:0;line-height:1.25}
+h3{font-size:1.12rem;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 16px;max-width:46em}
+.muted{color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);min-width:0}
+.stack{display:grid;gap:16px}
+.stack>*{min-width:0}
+
+/* hero */
+header.hero{padding:30px 0 6px;position:relative;overflow:hidden}
+.hero .seal{display:inline-flex;align-items:center;gap:10px;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.hero .seal b{background:var(--accent);color:var(--on-accent);font-family:var(--zh);font-size:1rem;padding:4px 8px;border-radius:4px;letter-spacing:0;text-transform:none}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .ghost{position:absolute;right:-6px;top:-24px;font-family:var(--zh);font-size:min(42vw,260px);line-height:1;color:var(--gold);opacity:.1;pointer-events:none;user-select:none}
+
+/* home list */
+.ulist{display:grid;gap:12px;margin:18px 0}
+.unit{display:flex;align-items:center;gap:14px;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 16px;cursor:pointer;box-shadow:var(--shadow);position:relative;transition:border-color .15s,background .15s}
+.unit:hover{border-color:var(--accent)}
+.unit input{position:absolute;opacity:0;pointer-events:none}
+.unit.on{border-color:var(--accent);background:var(--accent-soft)}
+.unit:focus-within{outline:3px solid var(--gold);outline-offset:2px}
+.num{flex:none;width:44px;height:44px;border-radius:12px;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:1.3rem;display:grid;place-items:center}
+.ubody{flex:1;min-width:0}
+.uzh{font-size:1.35rem;font-weight:700;font-family:var(--zh);line-height:1.3}
+.utitle{display:block;font-weight:600}
+.udesc{display:block;color:var(--muted);font-size:.92rem}
+.tick{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-weight:700;color:transparent;background:var(--card)}
+.unit.on .tick{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.pickbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer;font-size:.9rem}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip:focus-visible,.btn:focus-visible,.tab:focus-visible,.tok:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.go{position:sticky;bottom:0;padding:22px 0 14px;background:linear-gradient(transparent,var(--paper) 35%);pointer-events:none;z-index:10}
+.go .in{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+.go .in>*{pointer-events:auto}
+.go .cnt{font-weight:600;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 16px}
+.btn{pointer-events:auto;font-weight:700;font-size:1.05rem;border:0;border-radius:12px;padding:12px 28px;cursor:pointer;background:var(--accent);color:var(--on-accent);box-shadow:0 4px 14px rgba(22,51,107,.3)}
+.btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line);box-shadow:none}
+.share{margin:6px 0 0;padding:14px 16px;border:1px dashed var(--gold);background:var(--gold-soft);border-radius:12px;font-size:.92rem}
+.share .row{display:flex;gap:8px;margin-top:8px}
+.share input{flex:1;min-width:0;font:inherit;font-size:.85rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+.share button{font-size:.88rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 14px;cursor:pointer}
+
+/* study */
+.studybar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-top:16px;padding-bottom:6px}
+.studybar .sp{flex:1}
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.top .wrap{padding-top:10px;padding-bottom:10px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tab{cursor:pointer;text-align:left;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:8px 14px;display:flex;flex-direction:column;position:relative;font-weight:700;font-size:1.1rem;line-height:1.25}
+.tab .zh{position:absolute;right:12px;top:6px;font-size:1.3rem;opacity:.35}
+.tab small{font-weight:400;font-size:.78rem;color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.tab[aria-selected="true"] small{color:inherit;opacity:.8}
+@media(max-width:560px){.tab .zh{display:none}}
+.usec{padding-top:26px}
+.uhead{display:flex;gap:14px;align-items:center;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.uhead .uzh{font-size:1.1rem;color:var(--accent)}
+
+/* content blocks */
+.formula{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 0}
+.formula span{background:var(--accent-soft);color:var(--accent);border-radius:8px;padding:4px 10px;font-weight:700;font-family:var(--zh)}
+.formula span.hl{background:var(--accent);color:var(--on-accent)}
+.formula i{font-style:normal;color:var(--muted)}
+.ex{margin:6px 0;padding:8px 12px;border-left:3px solid var(--gold);background:var(--gold-soft);border-radius:0 8px 8px 0}
+.ex .zh{font-size:1.15rem}
+.ex small{display:block;color:var(--muted)}
+.ex.yes{border-left-color:var(--ok);background:var(--ok-soft)}
+.ex.no{border-left-color:var(--bad);background:var(--bad-soft)}
+.ex .mk{font-weight:700;margin-right:6px;font-size:.85rem}
+.ex.yes .mk{color:var(--ok)} .ex.no .mk{color:var(--bad)}
+.note{background:var(--accent-soft);border-radius:10px;padding:10px 14px;margin:12px 0 0;font-size:.95rem}
+.note b{color:var(--accent)}
+.use{margin:10px 0;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%}
+table.gt{min-width:560px}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+th{background:var(--gold-soft)}
+td small{display:block;color:var(--muted)}
+.adjs{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.adjs span{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:2px 10px;font-size:.9rem}
+.adjs b{font-family:var(--zh);font-size:1.1rem;margin-right:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.two{grid-template-columns:1fr}}
+.pytool{display:flex;justify-content:flex-end;padding-top:12px}
+
+/* exercises */
+.name-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.name-row input{font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);min-width:220px}
+.q-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.q-card.right{border-color:var(--ok);background:var(--ok-soft)}
+.q-card.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.qn{font-weight:700;color:var(--accent);margin-right:6px}
+.qtext{font-size:1.05rem;margin-bottom:8px}
+.qtext .zh{font-size:1.2rem}
+.opts{display:grid;gap:8px;grid-template-columns:1fr 1fr}
+@media(max-width:620px){.opts{grid-template-columns:1fr}}
+.opt{display:flex;gap:10px;align-items:center;border:2px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer;background:var(--card)}
+.opt:hover{border-color:var(--accent)}
+.opt input{accent-color:var(--accent);width:18px;height:18px;flex:none}
+.opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.opt .lt{font-weight:700;color:var(--muted);flex:none}
+.opt .zh{font-size:1.15rem}
+.answer-line{min-height:54px;border:2px dashed var(--line);border-radius:10px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0;background:var(--paper)}
+.answer-line:empty::before{content:"Bấm vào các từ bên dưới theo đúng thứ tự…";color:var(--muted);font-size:.9rem}
+.tok{font-family:var(--zh);font-weight:700;font-size:1.15rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer}
+.tok:hover:not(:disabled){border-color:var(--blue);background:var(--accent-soft)}
+.tok.used{opacity:.25}
+.answer-line .tok{background:var(--accent-soft);border-color:var(--accent)}
+.tok:disabled{cursor:default}
+.minibtn{background:none;border:0;color:var(--blue);text-decoration:underline;cursor:pointer;padding:4px 0;font-size:.85rem}
+input.tr{width:100%;font-family:var(--zh);font-size:1.15rem;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);margin-top:6px}
+input.tr:focus{border-color:var(--accent);outline:none}
+input.tr:disabled,.opt input:disabled{opacity:1}
+.fb{margin-top:10px;font-size:.95rem}
+.fb .st{font-weight:700}
+.right .fb .st{color:var(--ok)} .wrong .fb .st{color:var(--bad)}
+.fb .your{color:var(--muted)}
+.fb .corr{margin:4px 0;padding:6px 10px;background:var(--card);border-radius:8px;border:1px solid var(--line)}
+.fb .corr .zh{font-size:1.2rem}
+.typ{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-left:6px}
+.submit-bar{position:sticky;bottom:0;pointer-events:none;background:linear-gradient(transparent,var(--paper) 30%);padding:24px 0 calc(14px + env(safe-area-inset-bottom,0px));display:flex;gap:10px;justify-content:center;flex-wrap:wrap;z-index:10}
+.result{display:none;margin:20px 0;padding:22px;border-radius:16px;background:var(--ink);color:var(--paper);text-align:center}
+.result.show{display:block}
+.result .score{font-size:clamp(3rem,12vw,5rem);font-weight:700;line-height:1.1}
+.result .score small{font-size:.4em;opacity:.7}
+.result .msg{font-size:1.1rem;margin:4px 0 14px}
+.result .parts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.result .parts div{background:rgba(255,255,255,.14);border-radius:10px;padding:6px 14px;font-size:.92rem}
+.result .wrongs{margin-top:14px;font-size:.95rem}
+.result .wrongs a{color:#ffd9a0}
+.muted2{opacity:.75;font-size:.9rem}
+footer{padding:30px 0 60px;color:var(--muted);text-align:center;font-size:.9rem}
+
+/* accordion */
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 10px}
+.toolbar .sp{flex:1}
+.toolbar input{font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);min-width:200px}
+.acc{display:grid;gap:12px;margin-bottom:40px}
+.item{background:var(--card);border:2px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:clip}
+.item.open{border-color:var(--accent)}
+.ih{margin:0;font-size:1rem;font-weight:400;line-height:1.6}
+.ihb{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:14px;width:100%;padding:14px 16px;cursor:pointer}
+.ihb:hover{background:var(--accent-soft)}
+.ihb:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+.item.open .ihb{background:var(--accent-soft)}
+.chev{flex:none;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;border:2px solid var(--line);background:var(--card);font-size:1.1rem;transition:transform .2s;line-height:1}
+.item.open .chev{transform:rotate(180deg);border-color:var(--accent)}
+.ibody{padding:6px 16px 18px;border-top:1px solid var(--line);animation:fade .2s ease}
 @keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
-.t-ss .tabs.sub{margin:12px 0 14px}
-.t-ss .pane>.lead{margin-top:4px}
-
-.hub{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:44px 64px;display:flex;flex-direction:column;gap:28px}
-.hub-head{display:flex;flex-direction:column;gap:12px}
-.hub-eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:600}
-.hub-title{font-family:var(--font-display);font-size:clamp(34px,9vw,54px);line-height:1.15;margin:0;text-wrap:balance}
-.hub-lede{color:var(--muted);max-width:52ch;margin:0}
-.hub-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.hub-item{font:inherit;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--line);width:100%;text-align:left;cursor:pointer;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;padding:18px 6px}
-.hub-item:hover{background:var(--surface)}
-.hub-item:focus-visible,.topbar-back:focus-visible{outline:3px solid var(--yi);outline-offset:2px}
-.hub-glyph{width:56px;height:56px;border-radius:8px;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-family:var(--font-display);font-size:30px}
-.hub-text{display:flex;flex-direction:column;gap:2px;min-width:0}
-.hub-name{font-weight:700;font-size:18px;line-height:1.35}
-.hub-desc{color:var(--muted);font-size:14.5px;line-height:1.5}
-.hub-meta{font-size:12.5px;color:var(--muted);letter-spacing:.02em;padding-top:2px}
-.hub-go{font-size:22px;color:var(--muted)}
-.topbar{display:flex;align-items:center;gap:12px;background:var(--bg);color:var(--ink);border-bottom:1px solid var(--line);padding-block:8px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));font-family:"Be Vietnam Pro",system-ui,sans-serif;font-size:14px}
-.topbar-back{font:inherit;font-weight:600;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
-.topbar-back:hover{border-color:var(--ink)}
-.topbar-name{color:var(--muted);min-width:0;overflow-wrap:anywhere}
-
+.tabs.sub{margin:12px 0 14px}
+.pane>.lead{margin-top:4px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--paper)}
+.ya{color:var(--gold);font-weight:700}
+.yb{color:var(--accent);font-weight:700}
+.ex .ya,.ex .yb{font-family:inherit}
+table.cmp{table-layout:fixed;font-size:.92rem}
+table.cmp th:first-child{width:22%}
+table.cmp td,table.cmp th{overflow-wrap:anywhere;padding:6px 8px}
+a.unit{color:inherit;text-decoration:none}
+a.unit:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.arr{flex:none;font-size:2rem;line-height:1;color:var(--muted)}
+.cnt2{margin-top:2px;font-size:.82rem}
+#q{flex:1 1 240px;min-width:0}
+.bar{display:flex;align-items:center;gap:10px}
+.bar .sp{flex:1}
+a.btn{text-decoration:none;display:inline-block}
+.back{padding:8px 16px;font-size:.95rem}
+.subt{font-size:1.25rem;margin:18px 0 4px}
+.unitpane>.lead{margin-bottom:6px}
+.topic .pickbar{margin:0 0 4px}
+.topic .pickbar .zh{font-size:1rem}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 </style>
-
-<div id="hub" class="hub">
-  <header class="hub-head">
-    <div class="hub-eyebrow">Thư Quán Hán Ngữ CoBi</div>
-    <h1 class="hub-title">Mê Trận Ngự Pháp</h1>
-    <p class="hub-lede">Chọn một chủ điểm để xem Bí Kíp (kiến thức) và làm Luyện Công (bài tập).</p>
-  </header>
-  <ul class="hub-list">
-    <li><button class="hub-item" type="button" data-open="yidianr-youdianr">
-      <span class="hub-glyph" aria-hidden="true">点</span>
-      <span class="hub-text">
-        <span class="hub-name">Phân biệt 一点儿 vs 有点儿</span>
-        <span class="hub-desc">Cùng nghĩa "một chút" nhưng khác vị trí và khác sắc thái.</span>
-        <span class="hub-meta">Bí Kíp · 12 câu Luyện Công</span>
-      </span>
-      <span class="hub-go" aria-hidden="true">&rarr;</span>
-    </button></li>
-    <li><button class="hub-item" type="button" data-open="cau-so-sanh">
-      <span class="hub-glyph" aria-hidden="true">比</span>
-      <span class="hub-text">
-        <span class="hub-name">Câu so sánh</span>
-        <span class="hub-desc">比, 没有, 跟…一样, 像, 最: năm mẫu so sánh, mỗi mẫu có bài tập riêng.</span>
-        <span class="hub-meta">5 mục · 25 câu Luyện Công</span>
-      </span>
-      <span class="hub-go" aria-hidden="true">&rarr;</span>
-    </button></li>
-  </ul>
-</div>
-
-<div class="t-yd" id="view-yd" hidden>
-<div class="topbar"><button class="topbar-back" type="button" data-home>&larr; Danh sách</button><span class="topbar-name">Phân biệt 一点儿 vs 有点儿</span></div>
-
-
-<div class="wrap">
-  <header class="hero">
-    <div class="eyebrow">Ngữ pháp tiếng Trung · Sơ cấp</div>
-    <h1 class="vs" aria-label="有点儿 so với 一点儿"><span class="a">有点儿</span><span class="x">vs</span><span class="b">一点儿</span></h1>
-    <p class="lede">Cả hai đều dịch là "một chút", nhưng đứng ở vị trí khác nhau và nói lên hai thái độ khác nhau. Đọc bí kíp rồi vào luyện công để kiểm tra.</p>
-  </header>
-
-  <nav class="tabs" role="tablist" aria-label="Chọn phần học">
-    <button class="tab" role="tab" id="tab-bi-kip" aria-controls="panel-bi-kip" aria-selected="true" data-tab="bi-kip">
-      <span class="t">Bí Kíp</span><span class="s han">秘籍 · Kiến thức</span>
-    </button>
-    <button class="tab" role="tab" id="tab-luyen-cong" aria-controls="panel-luyen-cong" aria-selected="false" data-tab="luyen-cong">
-      <span class="t">Luyện Công</span><span class="s han">练功 · Bài tập</span>
-    </button>
-  </nav>
-
-  <!-- ===================== BÍ KÍP ===================== -->
-  <section class="panel" id="panel-bi-kip" role="tabpanel" aria-labelledby="tab-bi-kip">
-
-    <div class="sec">
-      <h2>Tóm gọn một bảng</h2>
-      <div class="tbl-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th class="you">有点儿<small>yǒudiǎnr</small></th>
-              <th class="yi">一点儿<small>yìdiǎnr</small></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><th>Vị trí</th><td class="you">Đứng trước tính từ hoặc động từ: <span class="han">有点儿 + 贵</span></td><td class="yi">Đứng sau tính từ: <span class="han">贵 + 一点儿</span>. Đứng trước danh từ: <span class="han">一点儿 + 水</span></td></tr>
-            <tr><th>Nghĩa</th><td class="you">Hơi… (cảm nhận của người nói)</td><td class="yi">Một chút, một ít; hơn một chút</td></tr>
-            <tr><th>Sắc thái</th><td class="you">Thường chê, không hài lòng</td><td class="yi">Trung tính, không chê</td></tr>
-            <tr><th>Dùng để</th><td class="you">Tả tình trạng đang có</td><td class="yi">Đề nghị, yêu cầu, so sánh</td></tr>
-            <tr><th>Với 比</th><td class="you">Không dùng</td><td class="yi">Dùng được</td></tr>
-            <tr><th>Phủ định</th><td class="you"><span class="han">有点儿不…</span> (hơi không…)</td><td class="yi"><span class="han">一点儿也不…</span> (không… chút nào)</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="sec">
-      <h2>Năm chiêu cần nhớ</h2>
-
-      <div class="rule">
-        <h3>Vị trí: trước hay sau tính từ</h3>
-        <div class="chips" aria-label="Công thức">
-          <span class="chip you">有点儿</span><span class="plus">+</span><span class="chip">Adj</span>
-          <span class="plus" style="margin-inline: 8px;">|</span>
-          <span class="chip">Adj</span><span class="plus">+</span><span class="chip yi">一点儿</span>
-        </div>
-        <div class="exs">
-          <div class="ex"><span class="zh">这件衣服<b class="you">有点儿</b>贵。</span><span class="py">Zhè jiàn yīfu yǒudiǎnr guì.</span><span class="vi">Cái áo này hơi đắt.</span></div>
-          <div class="ex"><span class="zh">能便宜<b class="yi">一点儿</b>吗?</span><span class="py">Néng piányi yìdiǎnr ma?</span><span class="vi">Có thể rẻ hơn chút được không?</span></div>
-        </div>
-      </div>
-
-      <div class="rule">
-        <h3>Sắc thái: chê hay trung tính</h3>
-        <p><b class="you">有点儿</b> thường đi với điều người nói không thích: <span class="han">贵、冷、累、难、不舒服</span>. Với tính từ mang nghĩa tốt, người Trung Quốc thường chọn <span class="han">很、挺、比较</span> thay vì 有点儿. <b class="yi">一点儿</b> chỉ nói về mức độ hoặc số lượng, không kèm lời chê.</p>
-        <div class="exs">
-          <div class="ex"><span class="zh">我<b class="you">有点儿</b>累。</span><span class="py">Wǒ yǒudiǎnr lèi.</span><span class="vi">Tôi hơi mệt.</span></div>
-          <div class="ex"><span class="zh">我<b class="you">有点儿</b>不舒服。</span><span class="py">Wǒ yǒudiǎnr bù shūfu.</span><span class="vi">Tôi hơi khó chịu trong người.</span></div>
-        </div>
-      </div>
-
-      <div class="rule">
-        <h3>Đề nghị và so sánh: chỉ dùng 一点儿</h3>
-        <p>Muốn nhờ ai đó thay đổi, hoặc nói A hơn B một chút (câu có <span class="han">比</span>), dùng Adj + <b class="yi">一点儿</b>. 有点儿 không dùng được trong hai trường hợp này.</p>
-        <div class="exs">
-          <div class="ex"><span class="zh">请说慢<b class="yi">一点儿</b>。</span><span class="py">Qǐng shuō màn yìdiǎnr.</span><span class="vi">Xin nói chậm lại một chút.</span></div>
-          <div class="ex"><span class="zh">他比我高<b class="yi">一点儿</b>。</span><span class="py">Tā bǐ wǒ gāo yìdiǎnr.</span><span class="vi">Anh ấy cao hơn tôi một chút.</span></div>
-        </div>
-      </div>
-
-      <div class="rule">
-        <h3>Trước danh từ: 一点儿 nghĩa là "một ít"</h3>
-        <p>Cấu trúc <span class="han">Động từ + 一点儿 + Danh từ</span> nói về số lượng. Trong khẩu ngữ, chữ <span class="han">一</span> hay được bỏ: <span class="han">快点儿、便宜点儿</span>.</p>
-        <div class="exs">
-          <div class="ex"><span class="zh">我想喝<b class="yi">一点儿</b>水。</span><span class="py">Wǒ xiǎng hē yìdiǎnr shuǐ.</span><span class="vi">Tôi muốn uống chút nước.</span></div>
-          <div class="ex"><span class="zh">我想买<b class="yi">一点儿</b>水果。</span><span class="py">Wǒ xiǎng mǎi yìdiǎnr shuǐguǒ.</span><span class="vi">Tôi muốn mua một ít trái cây.</span></div>
-        </div>
-      </div>
-
-      <div class="rule">
-        <h3>Phủ định: hai cách nói khác nhau</h3>
-        <p><b class="you">有点儿</b> + <span class="han">不</span> + Adj nghĩa là "hơi không…", vẫn mang ý chê. <b class="yi">一点儿</b> + <span class="han">也/都</span> + <span class="han">不/没</span> nghĩa là "không… chút nào", phủ định hoàn toàn.</p>
-        <div class="exs">
-          <div class="ex"><span class="zh">这个菜<b class="you">有点儿</b>不好吃。</span><span class="py">Zhège cài yǒudiǎnr bù hǎochī.</span><span class="vi">Món này hơi không ngon.</span></div>
-          <div class="ex"><span class="zh">这个菜<b class="yi">一点儿</b>也不辣。</span><span class="py">Zhège cài yìdiǎnr yě bù là.</span><span class="vi">Món này chẳng cay chút nào.</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sec">
-      <h2>Ba câu hỏi để chọn nhanh</h2>
-      <div class="test">
-        <div><span>Câu có <span class="han">比</span>, hoặc là lời nhờ, đề nghị?</span><span class="go yi">一点儿</span></div>
-        <div><span>Có <span class="han">一点儿也/都 + 不/没</span> (không… chút nào)?</span><span class="go yi">一点儿</span></div>
-        <div><span>Đang nhận xét tình trạng hiện tại và hơi không hài lòng?</span><span class="go you">有点儿</span></div>
-      </div>
-      <p class="note">Mẹo thứ tự: <b class="you">有点儿</b> chạy trước tính từ, <b class="yi">一点儿</b> theo sau tính từ.</p>
-    </div>
-
-    <div class="sec">
-      <h2>Lỗi hay gặp</h2>
-      <div class="fix">
-        <div class="row"><div class="no">请你有点儿慢说。<small>Dùng 有点儿 để nhờ vả</small></div><div class="ok">请你说慢一点儿。<small>Nhờ vả dùng Adj + 一点儿</small></div></div>
-        <div class="row"><div class="no">他比我有点儿高。<small>Không đặt 有点儿 sau 比</small></div><div class="ok">他比我高一点儿。<small>So sánh dùng Adj + 一点儿</small></div></div>
-        <div class="row"><div class="no">我一点儿累。<small>Thiếu 也/都 và 不, hoặc nhầm vị trí</small></div><div class="ok">我有点儿累。<small>Tả cảm giác hiện tại dùng 有点儿</small></div></div>
-        <div class="row"><div class="no">这个有点儿也不贵。<small>Nhầm 有点儿 với 一点儿也不</small></div><div class="ok">这个一点儿也不贵。<small>Không… chút nào = 一点儿也不</small></div></div>
-      </div>
-    </div>
-
-    <div class="actions"><button class="btn" data-goto="luyen-cong">Sang Luyện Công</button></div>
-  </section>
-
-  <!-- ===================== LUYỆN CÔNG ===================== -->
-  <section class="panel" id="panel-luyen-cong" role="tabpanel" aria-labelledby="tab-luyen-cong" hidden>
-    <div id="quiz" aria-live="polite"></div>
-  </section>
-</div>
-
-
-</div>
-<div class="t-ss" id="view-ss" hidden>
-<div class="topbar"><button class="topbar-back" type="button" data-home>&larr; Danh sách</button><span class="topbar-name">Câu so sánh</span></div>
-
-
-<header class="hero">
-  <div class="ghost zh" aria-hidden="true">比</div>
+<header class="hero" id="hero">
+  <div class="ghost zh" aria-hidden="true">语</div>
   <div class="wrap">
-    <div class="seal"><b>比较句</b> Hán ngữ · Ngữ pháp</div>
-    <h1>Câu so sánh <em>·</em> Bí Kíp &amp; Luyện Công</h1>
-    <p class="lead">Bấm vào mục muốn học để xem kiến thức và làm bài tập. Bấm lần nữa để thu lại. Muốn học thêm mục nào cũng được.</p>
+    <div class="seal">Thư quán Hán ngữ Cobi</div>
+    <h1>Mê Trận Ngữ Pháp</h1>
+    <p class="lead">Chọn một chủ điểm để xem Bí Kíp (kiến thức) và làm Luyện Công (bài tập).</p>
   </div>
 </header>
 
-<main class="wrap">
+<main class="wrap" id="listView">
   <div class="toolbar">
-    <label for="stuName">Tên của bạn (không bắt buộc):</label>
-    <input id="stuName" type="text" maxlength="40" placeholder="Nguyễn Văn A" autocomplete="name">
-    <span class="sp"></span>
-    <button class="chip" id="pyToggle" aria-pressed="true" type="button">Pinyin: Bật</button>
+    <label class="sr" for="q">Tìm ngữ pháp</label>
+    <input id="q" type="search" placeholder="Tìm ngữ pháp… (vd: 比, so sánh, youdianr)" autocomplete="off">
+    <button class="chip pyToggle" aria-pressed="true" type="button">Pinyin: Bật</button>
   </div>
-  <div class="acc" id="acc"></div>
+  <div class="ulist" id="list"></div>
+  <p class="muted" id="noRes" hidden>Không tìm thấy ngữ pháp nào khớp. Thử gõ từ khác nhé.</p>
 </main>
+<div id="topicView" hidden>
+  <nav class="top"><div class="wrap bar">
+    <a class="btn ghost back" href="#list">← Danh sách</a><span class="sp"></span>
+    <button class="chip pyToggle" aria-pressed="true" type="button">Pinyin: Bật</button>
+  </div></nav>
+  <div class="wrap" id="topicBody"></div>
+</div>
 <footer><div class="wrap">Chúc bạn học tốt! <span class="zh">加油!</span></div></footer>
 
-
-</div>
 <script>
-(function () {
-
-(function () {
-  /* ---------- Tabs ---------- */
-  var NAMES = ['bi-kip', 'luyen-cong'];
-  function show(name) {
-    if (NAMES.indexOf(name) < 0) name = 'bi-kip';
-    NAMES.forEach(function (n) {
-      var on = n === name;
-      document.getElementById('panel-' + n).hidden = !on;
-      document.getElementById('tab-' + n).setAttribute('aria-selected', on ? 'true' : 'false');
-    });
-  }
-  function go(name) {
-    show(name);
-    try { window.scrollTo(0, 0); } catch (e) {}
-  }
-  document.getElementById('view-yd').addEventListener('click', function (e) {
-    var t = e.target.closest('[data-tab],[data-goto]');
-    if (!t) return;
-    go(t.getAttribute('data-tab') || t.getAttribute('data-goto'));
-  });
-  show('bi-kip');
-
-  /* ---------- Quiz data ---------- */
-  var FILL = [
-    { k: 'you', h: '有点儿', p: 'yǒudiǎnr' },
-    { k: 'yi', h: '一点儿', p: 'yìdiǎnr' }
-  ];
-  var QUIZ = [
-    { t: 'fill', s: '这件衣服＿＿贵,我不想买。', a: 'you',
-      zh: '这件衣服有点儿贵,我不想买。', py: 'Zhè jiàn yīfu yǒudiǎnr guì, wǒ bù xiǎng mǎi.',
-      vi: 'Cái áo này hơi đắt, tôi không muốn mua.',
-      why: '有点儿 đứng trước tính từ 贵, diễn tả cảm nhận "hơi đắt" và người nói không hài lòng.' },
-    { t: 'fill', s: '请你说得慢＿＿。', a: 'yi',
-      zh: '请你说得慢一点儿。', py: 'Qǐng nǐ shuō de màn yìdiǎnr.',
-      vi: 'Xin bạn nói chậm lại một chút.',
-      why: 'Đây là lời nhờ. Lời nhờ dùng Adj + 一点儿, còn 有点儿 không dùng trong câu cầu khiến.' },
-    { t: 'fill', s: '我今天＿＿累,想早点儿休息。', a: 'you',
-      zh: '我今天有点儿累,想早点儿休息。', py: 'Wǒ jīntiān yǒudiǎnr lèi, xiǎng zǎodiǎnr xiūxi.',
-      vi: 'Hôm nay tôi hơi mệt, muốn nghỉ sớm một chút.',
-      why: 'Tả cảm giác mệt đang có, đứng trước tính từ 累, mang sắc thái không dễ chịu.' },
-    { t: 'fill', s: '他比我高＿＿。', a: 'yi',
-      zh: '他比我高一点儿。', py: 'Tā bǐ wǒ gāo yìdiǎnr.',
-      vi: 'Anh ấy cao hơn tôi một chút.',
-      why: 'Câu so sánh với 比 dùng Adj + 一点儿 để chỉ mức chênh lệch nhỏ. Không dùng 有点儿 ở đây.' },
-    { t: 'fill', s: '我想买＿＿水果。', a: 'yi',
-      zh: '我想买一点儿水果。', py: 'Wǒ xiǎng mǎi yìdiǎnr shuǐguǒ.',
-      vi: 'Tôi muốn mua một ít trái cây.',
-      why: 'Động từ + 一点儿 + Danh từ nghĩa là "một ít". 有点儿 là trạng từ, không đứng trước danh từ theo cách này.' },
-    { t: 'fill', s: '这个菜＿＿咸,我吃不下。', a: 'you',
-      zh: '这个菜有点儿咸,我吃不下。', py: 'Zhège cài yǒudiǎnr xián, wǒ chī bu xià.',
-      vi: 'Món này hơi mặn, tôi ăn không nổi.',
-      why: 'Nhận xét tình trạng không như mong muốn (quá mặn), đứng trước tính từ nên chọn 有点儿.' },
-    { t: 'fill', s: '这个菜＿＿也不辣,你放心吃吧。', a: 'yi',
-      zh: '这个菜一点儿也不辣,你放心吃吧。', py: 'Zhège cài yìdiǎnr yě bù là, nǐ fàngxīn chī ba.',
-      vi: 'Món này chẳng cay chút nào, bạn cứ yên tâm ăn đi.',
-      why: 'Cấu trúc 一点儿也不… nghĩa là "không… chút nào", phủ định hoàn toàn.' },
-    { t: 'fill', s: '便宜＿＿吧,我就买了。', a: 'yi',
-      zh: '便宜一点儿吧,我就买了。', py: 'Piányi yìdiǎnr ba, wǒ jiù mǎi le.',
-      vi: 'Rẻ chút đi, tôi sẽ mua.',
-      why: 'Lời đề nghị trả giá. Adj + 一点儿 dùng để yêu cầu thay đổi.' },
-    { t: 'fill', s: '我＿＿不舒服,想去医院。', a: 'you',
-      zh: '我有点儿不舒服,想去医院。', py: 'Wǒ yǒudiǎnr bù shūfu, xiǎng qù yīyuàn.',
-      vi: 'Tôi hơi khó chịu trong người, muốn đi bệnh viện.',
-      why: '有点儿 + 不 + Adj nghĩa là "hơi không…", tả cảm giác khó chịu hiện tại.' },
-    { t: 'pick', s: 'Chọn câu đúng: "Bạn đi nhanh lên một chút nhé."',
-      opts: [ { k: 'A', h: '你有点儿快走吧。' }, { k: 'B', h: '你走快一点儿吧。' } ], a: 'B',
-      zh: '你走快一点儿吧。', py: 'Nǐ zǒu kuài yìdiǎnr ba.',
-      vi: 'Bạn đi nhanh lên một chút nhé.',
-      why: 'Đây là lời đề nghị nên dùng Adj + 一点儿. 有点儿 không dùng trong câu cầu khiến.' },
-    { t: 'pick', s: 'Chọn câu đúng: "Căn phòng hơi nhỏ."',
-      opts: [ { k: 'A', h: '房间有点儿小。' }, { k: 'B', h: '房间小有点儿。' } ], a: 'A',
-      zh: '房间有点儿小。', py: 'Fángjiān yǒudiǎnr xiǎo.',
-      vi: 'Căn phòng hơi nhỏ.',
-      why: '有点儿 luôn đứng trước tính từ. Không thể đặt sau tính từ.' },
-    { t: 'pick', s: 'Chọn câu đúng: "Tôi hơi buồn."',
-      opts: [ { k: 'A', h: '我有点儿难过。' }, { k: 'B', h: '我难过一点儿。' } ], a: 'A',
-      zh: '我有点儿难过。', py: 'Wǒ yǒudiǎnr nánguò.',
-      vi: 'Tôi hơi buồn.',
-      why: 'Tả cảm giác hiện tại không vui nên dùng 有点儿 + Adj. 难过一点儿 nghe như so sánh hoặc yêu cầu, không đúng nghĩa.' }
-  ];
-
-  /* ---------- Quiz logic ---------- */
-  var el = document.getElementById('quiz');
-  var q = { order: [], i: 0, score: 0, wrong: [], picked: null };
-
-  function best() { try { return parseInt(localStorage.getItem('ydr-best') || '0', 10) || 0; } catch (e) { return 0; } }
-  function saveBest(n) { try { if (n > best()) localStorage.setItem('ydr-best', String(n)); } catch (e) {} }
-  function hl(s) {
-    return s.replace(/有点儿/g, '<b class="you">有点儿</b>').replace(/一点儿/g, '<b class="yi">一点儿</b>');
-  }
-  function allIdx() { return QUIZ.map(function (_, i) { return i; }); }
-  function start(order) {
-    q.order = order; q.i = 0; q.score = 0; q.wrong = []; q.picked = null;
-    draw();
-    try { el.scrollIntoView({ block: 'start' }); } catch (e) {}
-  }
-
-  function draw() {
-    if (q.i >= q.order.length) { drawResult(); return; }
-    var item = QUIZ[q.order[q.i]];
-    var total = q.order.length;
-    var answered = q.picked !== null;
-    var pct = Math.round(((q.i + (answered ? 1 : 0)) / total) * 100);
-    var html = '<div class="qhead"><span>Câu ' + (q.i + 1) + '/' + total + '</span><span>Đúng ' + q.score + '</span></div>' +
-               '<div class="bar"><i style="width:' + pct + '%"></i></div>';
-
-    if (item.t === 'fill') {
-      var filled = answered
-        ? '<span class="blank">' + (item.a === 'you' ? '<b class="you">有点儿</b>' : '<b class="yi">一点儿</b>') + '</span>'
-        : '<span class="blank">&nbsp;</span>';
-      html += '<p class="prompt">Điền 有点儿 hoặc 一点儿 vào chỗ trống.</p>' +
-              '<p class="sentence">' + item.s.replace('＿＿', filled) + '</p>' +
-              '<div class="opts two">' + FILL.map(function (o) {
-                return optBtn(o.k, 'k-' + o.k, '<span class="h">' + o.h + '</span><span class="py">' + o.p + '</span>', item, answered, '');
-              }).join('') + '</div>';
-    } else {
-      html += '<p class="prompt">' + item.s + '</p>' +
-              '<div class="opts">' + item.opts.map(function (o) {
-                return optBtn(o.k, 'row', '<span class="k">' + o.k + '</span><span class="h">' + o.h + '</span>', item, answered, 'row');
-              }).join('') + '</div>';
-    }
-
-    if (answered) {
-      var okNow = q.picked === item.a;
-      html += '<div class="fb">' +
-              '<p class="v ' + (okNow ? 'ok' : 'bad') + '">' + (okNow ? 'Chính xác' : 'Chưa đúng, đáp án đã được đánh dấu') + '</p>' +
-              '<p class="zh">' + hl(item.zh) + '</p>' +
-              '<p class="py">' + item.py + '</p>' +
-              '<p>' + item.vi + '</p>' +
-              '<p class="note">' + item.why + '</p>' +
-              '</div>' +
-              '<div class="actions"><button class="btn" data-act="next">' + (q.i + 1 >= total ? 'Xem kết quả' : 'Câu tiếp') + '</button></div>';
-    }
-    el.innerHTML = html;
-  }
-
-  function optBtn(k, cls, inner, item, answered, extra) {
-    var c = 'opt ' + cls + (extra && cls !== extra ? ' ' + extra : '');
-    if (answered) {
-      if (k === item.a) c += ' ok';
-      else if (k === q.picked) c += ' bad';
-      else c += ' dim';
-    }
-    return '<button class="' + c + '" data-act="pick" data-k="' + k + '" aria-disabled="' + (answered ? 'true' : 'false') + '">' + inner + '</button>';
-  }
-
-  function rankOf(n, total) {
-    var r = n / total;
-    if (r === 1) return 'Tông sư. Hai cụm này không còn làm khó bạn.';
-    if (r >= 0.75) return 'Cao thủ. Chỉ còn vài chiêu cần mài thêm.';
-    if (r >= 0.5) return 'Đệ tử. Đọc lại Bí Kíp rồi luyện thêm một lượt.';
-    return 'Tân thủ. Quay lại Bí Kíp, đọc kỹ bảng tóm tắt rồi thử lại.';
-  }
-
-  function drawResult() {
-    var total = q.order.length;
-    var full = total === QUIZ.length;
-    if (full) saveBest(q.score);
-    var html = '<div class="score"><p class="eyebrow">Kết quả</p>' +
-               '<p class="n">' + q.score + '<small> / ' + total + '</small></p>' +
-               '<p class="rank">' + rankOf(q.score, total) + '</p>' +
-               (full ? '<p class="note">Điểm cao nhất trên máy này: ' + best() + ' / ' + QUIZ.length + '</p>' : '') +
-               '</div>';
-    if (q.wrong.length) {
-      html += '<div class="sec"><h3>Các câu cần xem lại</h3><div class="rev">' + q.wrong.map(function (idx) {
-        var it = QUIZ[idx];
-        return '<div class="ex"><span class="zh">' + hl(it.zh) + '</span><span class="py">' + it.py + '</span><span class="vi">' + it.vi + '</span><span class="note">' + it.why + '</span></div>';
-      }).join('') + '</div></div>';
-    }
-    html += '<div class="actions">' +
-            (q.wrong.length ? '<button class="btn" data-act="wrong">Làm lại câu sai</button>' : '') +
-            '<button class="btn ghost" data-act="again">Luyện lại từ đầu</button>' +
-            '<button class="btn ghost" data-goto="bi-kip">Đọc lại Bí Kíp</button>' +
-            '</div>';
-    el.innerHTML = html;
-  }
-
-  el.addEventListener('click', function (e) {
-    var b = e.target.closest('[data-act]');
-    if (!b) return;
-    var act = b.getAttribute('data-act');
-    if (act === 'pick') {
-      if (q.picked !== null) return;
-      var item = QUIZ[q.order[q.i]];
-      q.picked = b.getAttribute('data-k');
-      if (q.picked === item.a) q.score++; else q.wrong.push(q.order[q.i]);
-      draw();
-    } else if (act === 'next') {
-      q.i++; q.picked = null; draw();
-      try { el.scrollIntoView({ block: 'start' }); } catch (err) {}
-    } else if (act === 'again') {
-      start(allIdx());
-    } else if (act === 'wrong') {
-      start(q.wrong.slice());
-    }
-  });
-
-  q.order = allIdx(); draw();
-})();
-
-})();
-</script>
-<script>
-(function () {
-
 const $ = (s, r=document) => r.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -771,6 +256,105 @@ const adjs = list => '<div class="adjs">'+list.map(a=>`<span><b>${a[0]}</b><span
 
 /* ---------- NỘI DUNG 5 MỤC ---------- */
 const UNITS = [
+{ id:10, zh:'有点儿 / 一点儿', title:'Phân biệt 有点儿 và 一点儿', desc:'Cùng dịch là "một chút" nhưng khác vị trí và khác sắc thái.',
+ html: () => `
+ <div class="stack">
+  <div class="card">
+    <h3>Tóm gọn một bảng</h3>
+    <div class="tw"><table class="cmp">
+      <thead><tr><th></th><th class="zh">有点儿 <span class="py">yǒudiǎnr</span></th><th class="zh">一点儿 <span class="py">yìdiǎnr</span></th></tr></thead>
+      <tbody>
+        <tr><td><b>Vị trí</b></td><td>Đứng <b>trước</b> tính từ / động từ:<br><span class="zh">有点儿 + 贵</span></td><td>Đứng <b>sau</b> tính từ: <span class="zh">贵 + 一点儿</span><br>Hoặc trước danh từ: <span class="zh">一点儿 + 水</span></td></tr>
+        <tr><td><b>Nghĩa</b></td><td>Hơi… (cảm nhận của người nói)</td><td>Một chút, một ít; hơn một chút</td></tr>
+        <tr><td><b>Sắc thái</b></td><td>Thường là chê, không hài lòng</td><td>Trung tính, không chê</td></tr>
+        <tr><td><b>Dùng để</b></td><td>Tả tình trạng đang có</td><td>Đề nghị, yêu cầu, so sánh</td></tr>
+        <tr><td><b>Câu 比</b></td><td>Không dùng</td><td>Dùng được</td></tr>
+        <tr><td><b>Phủ định</b></td><td class="zh">有点儿不… <small>hơi không…</small></td><td class="zh">一点儿也不… <small>không… chút nào</small></td></tr>
+      </tbody>
+    </table></div>
+    ${note('<b>Mẹo thứ tự:</b> <b class="ya">有点儿</b> chạy <b>trước</b> tính từ, <b class="yb">一点儿</b> đi <b>sau</b> tính từ.')}
+  </div>
+
+  <div class="card">
+    <h3>Chiêu ①: Vị trí, trước hay sau tính từ</h3>
+    ${fm(['!有点儿','+','TT'])}
+    ${fm(['TT','+','!一点儿'])}
+    ${ex('这件衣服<b class="ya">有点儿</b>贵。','Zhè jiàn yīfu yǒudiǎnr guì.','Cái áo này hơi đắt.')}
+    ${ex('能便宜<b class="yb">一点儿</b>吗?','Néng piányi yìdiǎnr ma?','Có thể rẻ hơn chút được không?')}
+  </div>
+
+  <div class="card">
+    <h3>Chiêu ②: Sắc thái, chê hay trung tính</h3>
+    <p style="margin:0"><b class="ya">有点儿</b> thường đi với điều người nói <b>không thích</b>: <span class="zh">贵、冷、累、难、不舒服</span>. Với tính từ mang nghĩa tốt, người Trung Quốc thường chọn <span class="zh">很、挺、比较</span>. <b class="yb">一点儿</b> chỉ nói về mức độ hoặc số lượng, không kèm lời chê.</p>
+    ${ex('我<b class="ya">有点儿</b>累。','Wǒ yǒudiǎnr lèi.','Tôi hơi mệt.')}
+    ${ex('今天<b class="ya">有点儿</b>冷。','Jīntiān yǒudiǎnr lěng.','Hôm nay hơi lạnh.')}
+  </div>
+
+  <div class="card">
+    <h3>Chiêu ③: Đề nghị và so sánh, chỉ dùng 一点儿</h3>
+    <p style="margin:0">Muốn <b>nhờ</b> ai thay đổi, hoặc nói A <b>hơn</b> B một chút (câu có <span class="zh">比</span>), dùng TT + <b class="yb">一点儿</b>. <b class="ya">有点儿</b> không dùng được trong hai trường hợp này.</p>
+    ${ex('请说慢<b class="yb">一点儿</b>。','Qǐng shuō màn yìdiǎnr.','Xin nói chậm lại một chút.')}
+    ${ex('他比我高<b class="yb">一点儿</b>。','Tā bǐ wǒ gāo yìdiǎnr.','Anh ấy cao hơn tôi một chút.')}
+  </div>
+
+  <div class="card">
+    <h3>Chiêu ④: Trước danh từ, 一点儿 nghĩa là "một ít"</h3>
+    ${fm(['Động từ','+','!一点儿','+','Danh từ'])}
+    ${ex('我想喝<b class="yb">一点儿</b>水。','Wǒ xiǎng hē yìdiǎnr shuǐ.','Tôi muốn uống chút nước.')}
+    ${ex('我想买<b class="yb">一点儿</b>水果。','Wǒ xiǎng mǎi yìdiǎnr shuǐguǒ.','Tôi muốn mua một ít trái cây.')}
+    ${note('Trong khẩu ngữ, chữ <b>一</b> hay được bỏ: <span class="zh">快点儿、便宜点儿、早点儿</span>.')}
+  </div>
+
+  <div class="card">
+    <h3>Chiêu ⑤: Phủ định, hai cách khác nhau</h3>
+    <p style="margin:0"><b class="ya">有点儿</b> + <span class="zh">不</span> + TT nghĩa là "hơi không…", vẫn có ý chê. <b class="yb">一点儿</b> + <span class="zh">也 / 都</span> + <span class="zh">不 / 没</span> nghĩa là "không… chút nào", phủ định hoàn toàn.</p>
+    ${ex('这个菜<b class="ya">有点儿</b>不好吃。','Zhège cài yǒudiǎnr bù hǎochī.','Món này hơi không ngon.')}
+    ${ex('这个菜<b class="yb">一点儿</b>也不辣。','Zhège cài yìdiǎnr yě bù là.','Món này chẳng cay chút nào.')}
+  </div>
+
+  <div class="card">
+    <h3>Ba câu hỏi để chọn nhanh</h3>
+    <div class="use">Câu có <span class="zh">比</span>, hoặc là lời nhờ, lời đề nghị? <b class="yb">→ 一点儿</b></div>
+    <div class="use">Có <span class="zh">一点儿也 / 都 + 不 / 没</span> (không… chút nào)? <b class="yb">→ 一点儿</b></div>
+    <div class="use">Đang nhận xét tình trạng hiện tại và hơi không hài lòng? <b class="ya">→ 有点儿</b></div>
+  </div>
+
+  <div class="card">
+    <h3>Lỗi thường gặp</h3>
+    ${no('请你有点儿慢说。','Dùng 有点儿 để nhờ vả.')}
+    ${yes('请你说慢一点儿。','Qǐng nǐ shuō màn yìdiǎnr.','Nhờ vả dùng TT + 一点儿.')}
+    ${no('他比我有点儿高。','Đặt 有点儿 trong câu 比.')}
+    ${yes('他比我高一点儿。','Tā bǐ wǒ gāo yìdiǎnr.','So sánh dùng TT + 一点儿.')}
+    ${no('这个有点儿也不贵。','Nhầm 有点儿 với 一点儿也不.')}
+    ${yes('这个一点儿也不贵。','Zhège yìdiǎnr yě bú guì.','"Không… chút nào" là 一点儿也不.')}
+  </div>
+ </div>`,
+ qs:[
+  {t:'mc', q:'这件衣服 ___ 贵,我不想买。<br><span class="muted" style="font-size:.9rem">(Cái áo này hơi đắt)</span>', o:['有点儿','一点儿'],
+   why:'有点儿 đứng trước tính từ 贵, diễn tả cảm nhận "hơi đắt" và người nói không hài lòng.'},
+  {t:'mc', q:'请你说得慢 ___。<br><span class="muted" style="font-size:.9rem">(Xin nói chậm lại một chút)</span>', o:['一点儿','有点儿'],
+   why:'Đây là lời nhờ. Lời nhờ dùng TT + 一点儿; 有点儿 không dùng trong câu cầu khiến.'},
+  {t:'mc', q:'我今天 ___ 累,想早点儿休息。<br><span class="muted" style="font-size:.9rem">(Hôm nay tôi hơi mệt)</span>', o:['有点儿','一点儿'],
+   why:'Tả cảm giác mệt đang có, đứng trước tính từ 累, mang sắc thái không dễ chịu.'},
+  {t:'mc', q:'他比我高 ___。<br><span class="muted" style="font-size:.9rem">(Anh ấy cao hơn tôi một chút)</span>', o:['一点儿','有点儿'],
+   why:'Câu so sánh với 比 dùng TT + 一点儿 để chỉ mức chênh lệch nhỏ. Không dùng 有点儿 ở đây.'},
+  {t:'mc', q:'我想买 ___ 水果。<br><span class="muted" style="font-size:.9rem">(Tôi muốn mua một ít trái cây)</span>', o:['一点儿','有点儿'],
+   why:'Động từ + 一点儿 + danh từ nghĩa là "một ít". 有点儿 là trạng từ đứng trước tính từ hoặc động từ, không có nghĩa "một ít".'},
+  {t:'mc', q:'这个菜 ___ 也不辣,你放心吃吧。<br><span class="muted" style="font-size:.9rem">(Món này chẳng cay chút nào)</span>', o:['一点儿','有点儿'],
+   why:'Cấu trúc 一点儿也不… nghĩa là "không… chút nào", phủ định hoàn toàn.'},
+  {t:'mc', q:'Chọn câu <b>đúng</b>: "Căn phòng hơi nhỏ."', o:['房间有点儿小。','房间小有点儿。','房间一点儿小。'],
+   why:'有点儿 luôn đứng trước tính từ, không đặt sau tính từ. 一点儿 cũng không đứng trước tính từ.'},
+  {t:'mc', q:'Chọn câu <b>SAI</b>:', o:['他比我有点儿高。','他比我高一点儿。','我有点儿累。','请说慢一点儿。'],
+   why:'Câu 比 không dùng 有点儿. Sửa: 他比我高一点儿。'},
+  {t:'sort', vi:'Anh ấy cao hơn tôi một chút.', tokens:['他','比','我','高','一点儿'], ok:['他比我高一点儿'], show:'他比我高一点儿。',
+   why:'A + 比 + B + TT + 一点儿. 一点儿 đứng sau tính từ.'},
+  {t:'sort', vi:'Tôi hơi không thoải mái.', tokens:['我','有点儿','不','舒服'], ok:['我有点儿不舒服'], show:'我有点儿不舒服。',
+   why:'有点儿 + 不 + TT nghĩa là "hơi không…". 有点儿 đứng trước 不.'},
+  {t:'tr', vi:'Xin nói chậm lại một chút.', tpl:['请{你|}说{得|}慢一点儿'], show:'请说慢一点儿。(hoặc 请说得慢一点儿。)',
+   why:'Lời nhờ dùng TT + 一点儿: 慢一点儿.'},
+  {t:'tr', vi:'Món này hơi không ngon.', tpl:['这个菜有点儿不好吃','这道菜有点儿不好吃','这菜有点儿不好吃'], show:'这个菜有点儿不好吃。',
+   why:'Nhận xét không hài lòng, dùng 有点儿 + 不 + TT.'}
+ ]},
 { id:1, zh:'A 比 B + TT', title:'Câu so sánh hơn với 比', desc:'Cấu trúc cơ bản nhất: A hơn B về một tính chất.',
  html: () => `
  <div class="stack">
@@ -1080,24 +664,96 @@ function luyenHtml(u){
 }
 function drawUnitSorts(u){ u.qs.forEach((q,i)=>{ if(q.t==='sort') drawSort(`q${u.id}_${i}`); }); }
 
-acc.innerHTML = UNITS.map(u=>`
-  <section class="item" id="item${u.id}">
-    <h2 class="ih"><button class="ihb" type="button" id="hb${u.id}" aria-expanded="false" aria-controls="body${u.id}">
-      <span class="num">${u.id}</span>
-      <span class="ubody"><span class="uzh">${esc(u.zh)}</span><span class="utitle">${esc(u.title)}</span><span class="udesc">${esc(u.desc)}</span></span>
-      <span class="chev" aria-hidden="true">⌄</span></button></h2>
-    <div class="ibody" id="body${u.id}" role="region" aria-labelledby="hb${u.id}" hidden>
-      <div class="tabs sub" role="tablist">
-        <button class="tab" role="tab" type="button" data-u="${u.id}" data-t="kb" aria-selected="true"><span class="zh">秘笈</span>Bí Kíp<small>Kiến thức cần nhớ</small></button>
-        <button class="tab" role="tab" type="button" data-u="${u.id}" data-t="lc" aria-selected="false" tabindex="-1"><span class="zh">练习</span>Luyện Công<small>Bài tập &amp; chấm điểm</small></button>
-      </div>
-      <div class="pane" id="kb${u.id}">${u.html()}</div>
-      <div class="pane" id="lc${u.id}" hidden>${luyenHtml(u)}</div>
+/* ---------- DANH SÁCH CHỦ ĐỀ ----------
+   Thêm ngữ pháp mới: viết unit mới trong UNITS (id duy nhất), rồi thêm một dòng vào TOPICS.
+   kw = từ khoá phụ để tìm kiếm (pinyin, tiếng Việt). Chủ đề nhiều unit sẽ có hàng nút chọn mục con. */
+const TOPICS = [
+  { id:1, zh:'有点儿 vs 一点儿', title:'Phân biệt 有点儿 và 一点儿', desc:'Cùng là "một chút" nhưng khác vị trí và sắc thái.', units:[10],
+    kw:'you dian r yi dian r youdianr yidianr yodianr hoi mot chut phan biet' },
+  { id:2, zh:'比较句', title:'Câu so sánh', desc:'比, 没有, 一样 / 像, 最: năm cấu trúc, mỗi cấu trúc có kiến thức và bài tập riêng.', units:[1,2,3,4,5],
+    kw:'bi bijiao meiyou yiyang xiang zui so sanh hon kem bang nhat' }
+];
+const unitsOf = t => t.units.map(id=>UNITS.find(u=>u.id===id));
+const sn = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/g,'d').toLowerCase();
+
+function unitTabs(u){
+  return `<div class="tabs sub" role="tablist">
+      <button class="tab" role="tab" type="button" data-u="${u.id}" data-t="kb" aria-selected="true"><span class="zh">秘笈</span>Bí Kíp<small>Kiến thức cần nhớ</small></button>
+      <button class="tab" role="tab" type="button" data-u="${u.id}" data-t="lc" aria-selected="false" tabindex="-1"><span class="zh">练习</span>Luyện Công<small>Bài tập &amp; chấm điểm</small></button>
     </div>
-  </section>`).join('');
+    <div class="pane" id="kb${u.id}">${u.html()}</div>
+    <div class="pane" id="lc${u.id}" hidden>${luyenHtml(u)}</div>`;
+}
+function accItem(key,num,zh,title,desc,inner){
+  return `<section class="item" id="item${key}">
+    <h2 class="ih"><button class="ihb" type="button" id="hb${key}" aria-expanded="false" aria-controls="body${key}">
+      <span class="num">${num}</span>
+      <span class="ubody"><span class="uzh">${esc(zh)}</span><span class="utitle">${esc(title)}</span><span class="udesc">${esc(desc)}</span></span>
+      <span class="chev" aria-hidden="true">⌄</span></button></h2>
+    <div class="ibody" id="body${key}" role="region" aria-labelledby="hb${key}" hidden>${inner}</div>
+  </section>`;
+}
+/* Chủ đề 1 unit: hiện thẳng Bí Kíp / Luyện Công.
+   Chủ đề nhiều unit: giữ đúng cấu trúc gốc, danh sách mục xổ ra / thu lại, mỗi mục có Bí Kíp / Luyện Công. */
+function topicHtml(t){
+  const us = unitsOf(t);
+  const inner = us.length===1
+    ? `<p class="lead">${esc(us[0].desc)}</p>${unitTabs(us[0])}`
+    : `<div class="acc">${us.map(u=>accItem('U'+u.id,u.id,u.zh,u.title,u.desc,unitTabs(u))).join('')}</div>`;
+  return `<div class="usec"><div class="uhead"><span class="num">${t.id}</span>
+      <div class="ubody"><span class="uzh">${esc(t.zh)}</span><span class="utitle">${esc(t.title)}</span></div></div>
+    ${inner}</div>`;
+}
+
+const listEl=$('#list'), lv=$('#listView'), tv=$('#topicView'), hero=$('#hero');
+listEl.innerHTML = TOPICS.map(t=>{
+  const us=unitsOf(t), n=us.reduce((a,u)=>a+u.qs.length,0);
+  t._hay = sn([t.zh,t.title,t.desc,t.kw,...us.map(u=>u.zh+' '+u.title+' '+u.desc)].join(' '));
+  return `<a class="unit" id="li${t.id}" href="#t${t.id}"><span class="num">${t.id}</span>
+    <span class="ubody"><span class="uzh">${esc(t.zh)}</span><span class="utitle">${esc(t.title)}</span><span class="udesc">${esc(t.desc)}</span>
+    <span class="udesc cnt2">${us.length>1?us.length+' mục · ':''}${n} câu bài tập</span></span><span class="arr" aria-hidden="true">›</span></a>`;
+}).join('');
+$('#topicBody').innerHTML = TOPICS.map(t=>`<div class="topic" id="tp${t.id}" hidden>${topicHtml(t)}</div>`).join('');
 UNITS.forEach(drawUnitSorts);
 
-acc.addEventListener('click', e=>{
+/* tìm kiếm */
+function filter(){
+  const terms = sn($('#q').value).split(/\s+/).filter(Boolean);
+  let shown=0;
+  TOPICS.forEach(t=>{ const ok=terms.every(w=>t._hay.includes(w)); $('#li'+t.id).hidden=!ok; if(ok) shown++; });
+  $('#noRes').hidden = shown>0;
+}
+$('#q').addEventListener('input',filter);
+
+/* chuyển trang danh sách <-> trang chủ đề (theo #t1, #t2…) */
+function route(){
+  const m=/^t(\d+)$/.exec(location.hash.slice(1));
+  const t=m&&TOPICS.find(x=>x.id===+m[1]);
+  lv.hidden=!!t; hero.hidden=!!t; tv.hidden=!t;
+  TOPICS.forEach(x=>{ $('#tp'+x.id).hidden = !t || x.id!==t.id; });
+  try{ window.scrollTo(0,0); }catch(e){}
+}
+window.addEventListener('hashchange',route);
+route();
+
+/* chọn mục con, bật / tắt pinyin */
+document.addEventListener('click',e=>{
+  const p=e.target.closest('[data-pick]');
+  if(p){
+    const tp=$('#tp'+p.dataset.topic);
+    tp.querySelectorAll('[data-pick]').forEach(x=>x.setAttribute('aria-pressed',String(x===p)));
+    tp.querySelectorAll('.unitpane').forEach(x=>{ x.hidden = x.id!=='up'+p.dataset.pick; });
+    return;
+  }
+  const b=e.target.closest('.pyToggle');
+  if(b){
+    const on=b.getAttribute('aria-pressed')==='true';
+    document.body.classList.toggle('nopy',on);
+    document.querySelectorAll('.pyToggle').forEach(x=>{ x.setAttribute('aria-pressed',String(!on)); x.textContent='Pinyin: '+(on?'Tắt':'Bật'); });
+  }
+});
+
+document.addEventListener('click', e=>{
   // mở / thu mục
   const hb=e.target.closest('.ihb');
   if(hb){
@@ -1124,14 +780,6 @@ acc.addEventListener('click', e=>{
   const sb=e.target.closest('[data-submit]'); if(sb){submitUnit(+sb.dataset.submit);return;}
   const rb=e.target.closest('[data-reset]'); if(rb){resetUnit(+rb.dataset.reset);return;}
   const j=e.target.closest('[data-jump]'); if(j){e.preventDefault();$('#'+j.dataset.jump).scrollIntoView({behavior:'smooth',block:'center'});}
-});
-
-/* ---------- pinyin ---------- */
-$('#pyToggle').addEventListener('click',e=>{
-  const on=e.currentTarget.getAttribute('aria-pressed')==='true';
-  e.currentTarget.setAttribute('aria-pressed',String(!on));
-  e.currentTarget.textContent='Pinyin: '+(on?'Tắt':'Bật');
-  document.querySelector('.t-ss').classList.toggle('nopy',on);
 });
 
 /* ---------- chấm điểm (từng mục) ---------- */
@@ -1171,10 +819,9 @@ function submitUnit(uid){
     if(ok) s++; else wrong.push([`${uid}.${i+1}`,id]);
   });
   const max=u.qs.length;
-  const msg= s===max?'Tuyệt đối! Bạn nắm chắc mục này rồi 🎉': s>=max*0.8?'Rất tốt! Xem lại câu sai bên dưới nhé.': s>=max*0.5?'Khá ổn, đọc lại Bí Kíp rồi làm lại để lên điểm nhé.':'Cần ôn thêm. Đọc lại Bí Kíp rồi thử lại nhé, cố lên!';
-  const name=$('#stuName').value.trim();
+  const msg= s===max?'Tuyệt đối! Bạn nắm chắc mục này rồi': s>=max*0.8?'Rất tốt! Xem lại câu sai bên dưới nhé.': s>=max*0.5?'Khá ổn, đọc lại Bí Kíp rồi làm lại để lên điểm nhé.':'Cần ôn thêm. Đọc lại Bí Kíp rồi thử lại nhé, cố lên!';
   const r=$('#res'+uid);
-  r.innerHTML=`${name?`<div style="opacity:.8">Học viên: <b>${esc(name)}</b></div>`:''}
+  r.innerHTML=`
     <div class="muted2">Mục ${uid}</div>
     <div class="score">${s}<small> / ${max}</small></div><div class="msg">${msg}</div>
     ${blanks?`<div class="wrongs">Còn ${blanks} câu chưa làm (tính 0 điểm).</div>`:''}
@@ -1189,40 +836,6 @@ function resetUnit(uid){
   $('#lc'+uid).innerHTML=luyenHtml(u); drawUnitSorts(u);
   $('#lc'+uid).scrollIntoView({behavior:'smooth',block:'start'});
 }
-
-})();
-</script>
-<script>
-
-(function () {
-  var VIEWS = {
-    'yidianr-youdianr': { el: 'view-yd', cls: 'v-yd' },
-    'cau-so-sanh': { el: 'view-ss', cls: 'v-ss' }
-  };
-  function route() {
-    var h = location.hash.replace('#', '');
-    var known = Object.prototype.hasOwnProperty.call(VIEWS, h);
-    document.getElementById('hub').hidden = known;
-    Object.keys(VIEWS).forEach(function (k) {
-      var on = known && k === h;
-      document.getElementById(VIEWS[k].el).hidden = !on;
-      document.body.classList.toggle(VIEWS[k].cls, on);
-    });
-    try { window.scrollTo(0, 0); } catch (e) {}
-  }
-  function nav(name) {
-    try { location.hash = name; } catch (e) {}
-    route();
-  }
-  document.addEventListener('click', function (e) {
-    var o = e.target.closest('[data-open]');
-    if (o) { nav(o.getAttribute('data-open')); return; }
-    if (e.target.closest('[data-home]')) nav('danh-sach');
-  });
-  window.addEventListener('hashchange', route);
-  route();
-})();
-
 </script>
 
 </body></html>

@@ -56,6 +56,7 @@ input[type=text]{width:100%;padding:8px 10px}
 .rc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 16px;margin:12px 0}.rc summary{cursor:pointer;font-weight:600}.rc h3{font-size:1rem;margin:14px 0 6px;color:var(--accent)}.rc table{width:100%;border-collapse:collapse;font-size:.95rem}.rc td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}.rc td.zh{font-size:1.05rem}
 .tok[draggable=true]{cursor:grab}.fb summary{cursor:pointer;color:var(--ok)}
 .tabs{display:flex;gap:8px;margin:12px 0 8px}.tab{flex:1;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;font-weight:600;cursor:pointer}.tab.on{background:var(--accent);color:var(--ai);border-color:var(--accent)}.exm{padding:8px 0;border-bottom:1px solid var(--line)}[hidden]{display:none!important}
+.rc{background:none;border:0;padding:0;margin:8px 0}.rg{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:8px}.rg summary{padding:12px 14px;cursor:pointer;font-weight:600;color:var(--accent)}.rb{padding:0 14px 12px}
 </style>
 </head>
 <body>
@@ -70,7 +71,17 @@ const _T=(vi,acc,show,e)=>({type:"trans",hint:"Dịch sang tiếng Trung bằng 
 const _F=(wrong,acc,show,e)=>({type:"fix",hint:"Tìm lỗi và viết lại thành câu chữ 把 đúng.",wrong,accept:acc,show,exp:e});
 const SETS=[
 {id:"hsk3-bonguu",level:"HSK3",name:"Bổ ngữ",title:"HSK 3B – Bài 8: Bài tập bổ ngữ",sub:"Bổ ngữ kết quả · khả năng · trạng thái · xu hướng.",
- tags:["结果补语","可能补语","状态补语","趋向补语"],sections:[
+ tags:["结果补语","可能补语","状态补语","趋向补语"],
+ recap:[
+  {t:"Tổng quan các loại bổ ngữ (补语)",open:true,ps:["Bổ ngữ đứng sau động từ (hoặc tính từ) để bổ sung ý nghĩa về kết quả, xu hướng, khả năng, trạng thái, mức độ hoặc số lượng. Bấm vào từng loại bên dưới để xem kiến thức cốt lõi."],head:["Loại","Cấu trúc","Ví dụ"],rows:[["结果补语 (kết quả)","V + 完/懂/见/错…","我听懂了。"],["趋向补语 (xu hướng)","V + 来/去/进来…","他走进来了。"],["可能补语 (khả năng)","V + 得/不 + bổ ngữ","我听不懂。"],["状态补语 (trạng thái)","V + 得 + tính từ","他说得很好。"],["程度补语 (mức độ)","Adj + 极了/死了/多了","累死了。"],["数量补语 (số lượng)","V + thời gian / số lần","我学了两年。"]]},
+  {t:"1. 结果补语 – Bổ ngữ kết quả",ps:["Cho biết kết quả của động tác. Cấu trúc: V + bổ ngữ (động từ / tính từ) + 了."],head:["Bổ ngữ","Nghĩa","Ví dụ"],rows:[["完","xong","写完作业"],["好","xong, tốt","准备好了"],["懂","hiểu","听懂了"],["见","cảm nhận được (nhìn / nghe thấy)","看见他 / 听见声音"],["到","đạt được, tới","找到钥匙"],["错","sai, nhầm","走错路"],["对","đúng","说对了"],["在","ở (nơi chốn)","放在桌子上"],["给","cho, đưa tới","送给朋友"]],ex:[["我听懂了。 / 我没听懂。","Tôi nghe hiểu rồi. / Tôi chưa nghe hiểu."],["你看见小李了吗?","Bạn có thấy Tiểu Lý không?"]],notes:["Phủ định dùng 没(有) + V + bổ ngữ (bỏ 了), không dùng 不: 我没听懂.","Có tân ngữ: V + bổ ngữ + O (我写完作业了) hoặc dùng 把 (我把作业写完了)."]},
+  {t:"2. 趋向补语 – Bổ ngữ xu hướng",ps:["Chỉ hướng của động tác. 来: hướng về phía người nói; 去: hướng ra xa người nói."],head:["","上","下","进","出","回","过","起"],rows:[["+ 来","上来","下来","进来","出来","回来","过来","起来"],["+ 去","上去","下去","进去","出去","回去","过去","—"]],ex:[["老师走进教室来了。","Thầy giáo đi vào lớp rồi."],["他带来了一本书。","Anh ấy mang một cuốn sách đến."]],notes:["Tân ngữ chỉ nơi chốn đứng giữa động từ và 来/去: 走进教室来, 他回家去了(không nói 走进来教室).","Tân ngữ là vật: 他带来了一本书 hoặc 他带了一本书来.","Nghĩa mở rộng: 看起来 (trông có vẻ), 说下去 (nói tiếp), 听出来 (nhận ra khi nghe)."]},
+  {t:"3. 可能补语 – Bổ ngữ khả năng",ps:["Cho biết có thể hay không thể đạt được kết quả / xu hướng nào đó. Cấu trúc: V + 得 + bổ ngữ (có thể); V + 不 + bổ ngữ (không thể)."],head:["Khẳng định","Phủ định","Nghĩa"],rows:[["看得懂","看不懂","xem / đọc có hiểu được hay không"],["听得见","听不见","nghe thấy được hay không"],["回得来","回不来","về được hay không"],["放得下","放不下","để vừa hay không vừa"],["吃得了","吃不了","ăn hết được hay không hết"]],ex:[["这个箱子太小了,放不下这么多东西。","Cái vali này nhỏ quá, để không vừa nhiều đồ như vậy."],["老师说得太快了,我听不懂。","Thầy nói nhanh quá, tôi nghe không hiểu."]],notes:["Dạng phủ định dùng nhiều hơn dạng khẳng định.","Đặt 不 giữa động từ và bổ ngữ: 我听不见老师的话 ✓ (không nói 听见不).","Không dùng với 把.","得了 / 不了 (liǎo) = có thể / không thể làm được: 去不了, 吃不了.","听不懂 = không đủ khả năng hiểu; 没听懂 = thực tế đã nghe mà chưa hiểu."]},
+  {t:"4. 状态补语 – Bổ ngữ trạng thái",ps:["Miêu tả hoặc đánh giá cách thức, mức độ của động tác. Cấu trúc: V + 得 + tính từ / cụm từ."],head:["Dạng câu","Cấu trúc","Ví dụ"],rows:[["Không có tân ngữ","S + V + 得 + adj","他说得很流利。"],["Có tân ngữ (lặp động từ)","S + V + O + V + 得 + adj","他说汉语说得很流利。"],["Có tân ngữ (đưa lên trước)","S + O + V + 得 + adj","他汉语说得很流利。"],["Phủ định","S + V + 得 + 不 + adj","他跑得不快。"],["Nghi vấn","V + 得 + 怎么样? / V + 得 + adj + 吗?","他说得怎么样? / 他说得好吗?"],["So sánh","S + V + 得 + 比 + B + adj","他跑得比我快。"]],ex:[["她汉字写得很漂亮。","Cô ấy viết chữ Hán rất đẹp."]],notes:["Không nói 他说汉语得很好: khi có tân ngữ phải lặp động từ hoặc đưa tân ngữ lên trước.","Phủ định đặt 不 trước tính từ, không đặt trước động từ: 跑得不快.","他跑得比我快 = 他比我跑得快."]},
+  {t:"5. 程度补语 – Bổ ngữ mức độ",ps:["Biểu thị mức độ rất cao của tính chất hoặc trạng thái, thường đứng sau tính từ (hoặc động từ chỉ cảm giác)."],head:["Mẫu","Ví dụ","Nghĩa"],rows:[["Adj + 极了","好极了","cực kỳ tốt"],["Adj + 死了","累死了","mệt chết đi được"],["Adj + 坏了","高兴坏了","vui điên lên"],["Adj + 多了","好多了","khá hơn nhiều"],["Adj + 得多","高得多","cao hơn nhiều (trong câu so sánh)"],["Adj + 得很","好得很","rất tốt (khẩu ngữ)"]],notes:["Không thêm 很 / 非常 trước tính từ khi đã có bổ ngữ mức độ (không nói 很好极了).","Trong câu so sánh: 今天比昨天好多了 / 这次考试比上次难得多."]},
+  {t:"6. 数量补语 – Bổ ngữ số lượng",ps:["Cho biết thời gian kéo dài (时量) hoặc số lần của động tác (动量)."],head:["Loại","Cấu trúc","Ví dụ"],rows:[["Thời lượng","S + V + 了 + thời gian + O","我学了两年汉语。"],["Thời lượng (lặp động từ)","S + V + O + V + 了 + thời gian","我学汉语学了两年。"],["Số lần (tân ngữ là danh từ)","S + V + 了/过 + số lần + O","我去过三次北京。"],["Số lần (tân ngữ là đại từ)","S + V + O (đại từ) + số lần","我找过他两次。"],["Động tác nhẹ, thử","V + 一下","请等一下。"]],notes:["Nếu hành động còn tiếp diễn, thêm 了 cuối câu: 我学了两年汉语了 (vẫn đang học).","Tân ngữ là đại từ đứng trước số lần: 我见过他一次 (không nói 我见过一次他)."]}
+ ],
+ sections:[
  {title:"一、选择正确答案",sub:"Chọn đáp án đúng",items:[
   {type:"mc",topic:"结果补语",text:"作业我已经写____了,可以出去玩了。",opts:["完","懂","见","错"],ans:0,exp:"写完 = viết xong. 完 là bổ ngữ kết quả, chỉ động tác đã hoàn thành."},
   {type:"mc",topic:"状态补语",text:"他汉语说____很流利。",opts:["的","得","地","了"],ans:1,exp:"说得很流利: động từ + 得 + bổ ngữ trạng thái (đánh giá mức độ, cách thức)."},
@@ -213,13 +224,21 @@ const SETS=[
   _F("请把这个句子翻译中文。",["请把这个句子翻译成中文","请把这个句子翻译成汉语"],"请把这个句子翻译成中文。","Thiếu 成: V + 成 + ngôn ngữ."),
   _F("请把门不要关。",["请不要把门关上","请别把门关上","请不要把门关好","请别把门关好"],"请不要把门关上。","不要/别 đứng trước 把, và động từ cần có bổ ngữ (关上).")]}
  ]},
-mk({id:"hsk3-shoudao-shoudao-dedao",level:"HSK3",name:"Phân biệt 收到 / 受到 / 得到",instr:"Chọn từ thích hợp",words:["得到","收到","受到"],rows:[
+Object.assign(mk({id:"hsk3-shoudao-shoudao-dedao",level:"HSK3",name:"Phân biệt 收到 / 受到 / 得到",instr:"Chọn từ thích hợp",words:["得到","收到","受到"],rows:[
  ["我昨天____了一封朋友寄来的信。",1,"收到信 = thư được gửi đến và tiếp nhận → 收到."],
- ["通过努力,他终于____了大家的认可。",0,"得到认可 = có được sự công nhận."],
+ ["通过努力,他终于____了大家的认可。",0,"得到认可 = có được sự công nhận nhờ nỗ lực. Lưu ý: 受到认可 cũng gặp, nhưng ở đây nhấn mạnh việc “đạt được” nên chọn 得到."],
  ["他的身体____了严重的伤害。",2,"受到伤害 = chịu tổn thương."],
- ["这次活动让我____了很多启发。",0,"得到启发 = có được sự gợi mở, cảm hứng."],
- ["学生应该____老师的尊重。",2,"受到尊重 là cách kết hợp rất tự nhiên."],
+ ["这次活动让我____了很多启发。",0,"得到启发 = có được sự gợi mở, cảm hứng. Lưu ý: 受到启发 cũng rất thường dùng; trong bài này chọn 得到 (có được nhiều gợi mở)."],
+ ["学生应该____老师的尊重。",2,"受到尊重 là cách kết hợp rất tự nhiên (được người khác đối xử tôn trọng). 得到尊重 cũng nói được, nhưng nhấn mạnh việc giành được."],
  ["公司已经____了客户的投诉。",1,"收到投诉 = tiếp nhận đơn/khiếu nại."]]}),
+{recap:[
+  {t:"1. Bảng so sánh",open:true,head:["","收到 (shōudào)","受到 (shòudào)","得到 (dédào)"],rows:[["Nghĩa","Nhận được (vật / thông tin gửi đến)","Chịu, được (tác động từ người khác)","Đạt được, có được"],["Thường đi với","信, 邮件, 礼物, 通知书, 消息, 投诉","欢迎, 尊重, 伤害, 影响, 批评, 表扬, 重视","认可, 帮助, 机会, 答案, 经验, 支持, 允许"],["Sắc thái","Cụ thể, vật được tiếp nhận","Bị tác động, có thể tốt hoặc xấu","Chủ thể có được, thường là điều tích cực"],["Ví dụ","我收到了一封信。","他受到了严重的伤害。","他得到了大家的认可。"]]},
+  {t:"2. 收到 – Nhận được",ps:["Dùng với vật cụ thể hoặc thông tin được gửi đến và tiếp nhận."],ex:[["我昨天收到了一封朋友寄来的信。","Hôm qua tôi nhận được một lá thư bạn gửi tới."],["公司已经收到了客户的投诉。","Công ty đã nhận được khiếu nại của khách hàng."]]},
+  {t:"3. 受到 – Chịu / được",ps:["Chủ thể chịu sự tác động, đối xử từ người khác hoặc từ sự việc. Thường đi với danh từ trừu tượng, có thể tích cực (欢迎, 尊重, 表扬) hoặc tiêu cực (伤害, 批评)."],ex:[["这部电影受到了很多观众的欢迎。","Bộ phim này được nhiều khán giả đón nhận."],["他的身体受到了严重的伤害。","Cơ thể anh ấy bị tổn thương nghiêm trọng."]]},
+  {t:"4. 得到 – Đạt được, có được",ps:["Chủ thể có được thứ mình mong muốn hoặc kết quả của nỗ lực."],ex:[["通过努力,他终于得到了大家的认可。","Nhờ nỗ lực, cuối cùng anh ấy đã có được sự công nhận của mọi người."],["我得到了老师的帮助。","Tôi đã nhận được sự giúp đỡ của thầy cô."]]},
+  {t:"5. Dễ nhầm: 受到 và 得到",ps:["Một số danh từ đi được với cả hai: 尊重, 启发, 认可. Khác biệt về sắc thái: 受到 nhấn mạnh tác động / thái độ từ người khác; 得到 nhấn mạnh việc chủ thể đạt được."],notes:["收到 chỉ dùng với vật hoặc thông tin gửi đến: không nói 受到信 hay 得到信.","受到伤害 / 受到批评: dùng 受到, không dùng 得到."]},
+  {t:"6. Mẹo nhớ nhanh",notes:["Thư, quà, thông báo, khiếu nại được gửi đến → 收到.","Bị / được tác động (欢迎, 尊重, 伤害, 影响) → 受到.","Có được, đạt được (认可, 帮助, 机会, 经验) → 得到."]}
+ ]}),
 Object.assign(mk({id:"hsk3-yudao-jian",level:"HSK3",name:"Phân biệt 遇到 / 见",instr:"Chọn 遇到 hoặc 见",words:["遇到","见"],rows:[
  ["我在路上____了一位老同学,真巧!",0,"Gặp tình cờ, bất ngờ (真巧) → 遇到."],
  ["明天下午三点,我约了医生,我要去____他。",1,"Đã hẹn trước, có kế hoạch → 去见医生."],
@@ -280,6 +299,63 @@ return{id:"hsk3-wei-weile",level:"HSK3",name:"Phân biệt 为 / 为了",title:"
   T("Anh ấy đã trở thành một bác sĩ nổi tiếng.",X(X(["他已经成为一名","他已经成为一位","他已经成为一个","他已经成为了一名","他已经成为了一位","他成为了一名","他成为了一位","他成为了一个"],["著名的医生","有名的医生","著名医生","有名医生"]),["","了"]),"他已经成为一名著名的医生。","成为 (wéi) = trở thành."),
   T("Cô ấy vì con cái mà hy sinh tất cả.",X(["她为孩子","她为了孩子","她为孩子们","她为了孩子们","她为自己的孩子","她为了自己的孩子"],["牺牲了一切","牺牲一切","牺牲了所有","付出了一切","付出了所有"]).concat(["为了孩子她牺牲了一切","为了孩子她付出了一切","为了孩子她牺牲了所有","为了孩子们她牺牲了一切"]),"她为孩子牺牲了一切。 / 为了孩子,她牺牲了一切。","为孩子 (hy sinh cho con, đối tượng) hoặc 为了孩子 (nhấn mạnh mục đích) đều được."),
   T("Bạn có thể giúp tôi dịch câu này không?",X(["你能","你可以","能","可以"],ma).concat(X(["你能不能","能不能","你可不可以","可不可以"],["帮我翻译这句话","帮我翻译这个句子","帮我翻译一下这句话","帮我翻译一下这个句子"])),"你能帮我翻译这句话吗?","Câu này dùng 帮 (帮我翻译), không dùng 为. Không phải câu nào có “giúp / cho” cũng dùng 为.")]}
+ ]}})(),
+(()=>{const X=(a,b)=>a.flatMap(x=>b.map(y=>x+y));
+const C=(t,a,e)=>({type:"mc",text:t,opts:["刚","刚才"],ans:a,exp:e});
+const T=(vi,acc,show,e)=>({type:"trans",hint:"Dịch sang tiếng Trung, chú ý chọn 刚 hay 刚才.",parts:[{vi,accept:acc,show}],exp:e});
+return{id:"hsk3-gang-gangcai",level:"HSK3",name:"Phân biệt 刚 / 刚才",title:"HSK 3 – Phân biệt 刚 / 刚才",sub:"Đọc Bí Kíp trước, rồi sang tab Luyện Công làm 10 câu và bấm “Nộp bài”.",
+ tags:["刚","刚才"],
+ recap:[
+  {t:"1. Điểm giống nhau",ps:["Cả hai đều chỉ việc vừa mới xảy ra trong quá khứ gần. Nhưng khác nhau hoàn toàn về từ loại."]},
+  {t:"2. Điểm khác nhau cốt lõi",open:true,head:["","刚","刚才"],rows:[["Từ loại","Phó từ","Danh từ chỉ thời gian"],["Nghĩa","Vừa mới (hành động vừa xảy ra)","Lúc nãy, ban nãy (một thời điểm)"],["Vị trí","Chỉ đứng sau chủ ngữ, trước động từ","Đứng đầu câu hoặc sau chủ ngữ đều được"],["Dùng với 了","Thường không cần 了","Thường đi với 了"],["Khoảng thời gian","Có thể là vài phút, vài tháng, vài năm trước đó","Chỉ khoảng thời gian rất ngắn, trong vòng hôm nay"]]},
+  {t:"3. Cách dùng 刚",ps:["Là phó từ, nhấn mạnh hành động vừa mới xảy ra, nên chỉ đứng trước động từ.","刚 có thể dùng với khoảng thời gian dài hơn, miễn người nói cảm thấy “mới”."],ex:[["他刚走。","Anh ấy vừa mới đi."],["我刚到家。","Tôi vừa mới về đến nhà."],["我刚来中国一个月。","Tôi mới đến Trung Quốc được một tháng."],["他刚毕业两年。","Anh ấy mới tốt nghiệp hai năm."]]},
+  {t:"4. Cách dùng 刚才",ps:["Là danh từ thời gian, chỉ một thời điểm ngay trước lúc nói. Vì là danh từ nên có thể đứng đầu câu, hoặc làm định ngữ (刚才的话)."],ex:[["刚才谁来了?","Lúc nãy ai đến vậy?"],["你刚才去哪儿了?","Ban nãy bạn đi đâu thế?"],["刚才的话你听到了吗?","Lời lúc nãy bạn nghe thấy không?"]]},
+  {t:"5. Lưu ý quan trọng",notes:["刚 còn mang nghĩa “vừa đúng, vừa vặn”: 这件衣服刚合适 (Cái áo này vừa vặn). Khẩu ngữ hay nói 刚好 / 刚刚好. 刚才 không có nghĩa này.","刚 là phó từ nên không đứng trước chủ ngữ (không nói 刚我到家).","刚才 đứng được trước 的: 刚才的话. 刚 thì không (không nói 刚的话). Nhưng 刚 + động từ vẫn làm định ngữ được: 你刚说的话 = 你刚才说的话.","Khi có phủ định 没, chỉ một thời điểm ngắn lúc nãy, thường dùng 刚才: 你刚才没来上课."]},
+  {t:"6. Mẹo nhớ nhanh",notes:["Đứng đầu câu, đứng trước 的, hoặc nói về “lúc nãy” → 刚才.","Đứng sau chủ ngữ, trước động từ, nhấn mạnh “vừa mới”, đi với khoảng thời gian (一个月, 两年) → 刚.","Nghĩa “vừa vặn” → 刚."]}
+ ],
+ sections:[
+ {title:"A. Điền 刚 / 刚才",sub:"Chọn từ thích hợp",items:[
+  C("____谁在敲门?",1,"刚才 là danh từ thời gian, đứng đầu câu được. 刚 không đứng trước chủ ngữ."),
+  C("我____到北京两个月。",0,"刚 + khoảng thời gian (两个月): vừa mới đến Bắc Kinh được hai tháng."),
+  C("你____的话,我都听到了。",1,"刚才 + 的 làm định ngữ: 刚才的话 = lời lúc nãy. 刚 không đứng trước 的."),
+  C("这双鞋的大小____合适。",0,"刚 = vừa đúng, vừa vặn (刚合适). 刚才 không có nghĩa này."),
+  C("你____没来上课,去哪儿了?",1,"Có phủ định 没, chỉ một thời điểm ngắn lúc nãy → 刚才.")]},
+ {title:"B. Dịch Việt → Trung",sub:"Chọn 刚 hoặc 刚才 cho phù hợp",items:[
+  T("Tôi vừa mới về đến nhà.",X(["我刚","我刚刚"],["到家","回到家","回家","到家了","回到家了","回家了"]).concat(X(["我刚才"],["到家了","回到家了","回家了"])),"我刚到家。","刚 + động từ: vừa mới. (我刚才到家了 cũng nói được, nhưng 刚 nhấn mạnh “vừa mới”.)"),
+  T("Lúc nãy ai gọi điện cho bạn vậy?",X(["刚才","刚才是"],["谁给你打电话了","谁给你打电话","谁打电话给你了","谁打电话给你","谁给你打电话的","谁给你打的电话","谁给你打了电话"]).concat(["谁刚才给你打电话了","谁刚才给你打电话","谁刚才打电话给你了","谁刚才给你打了电话"]),"刚才谁给你打电话了?","Hỏi về thời điểm lúc nãy → 刚才, đứng đầu câu."),
+  T("Anh ấy mới học tiếng Trung được ba tháng.",X(["他刚学汉语","他刚学中文","他刚刚学汉语","他刚刚学中文"],["三个月","三个月了"]).concat(["他刚学了三个月汉语","他刚学了三个月中文","他刚学了三个月的汉语","他刚学了三个月的中文"]),"他刚学了三个月汉语。 / 他刚学汉语三个月。","刚 + khoảng thời gian: mới học được ba tháng."),
+  T("Những lời lúc nãy của bạn, tôi đều nghe thấy rồi.",X(["你刚才的话","你刚才说的话","刚才你说的话","刚才你的话","刚才的话","你刚才说的那些话","刚才你说的那些话","你刚说的话","你刚刚说的话"],["我都听到了","我都听见了","我全都听到了","我全都听见了","我全听到了","我全听见了"]),"你刚才的话,我都听到了。","刚才 + 的 làm định ngữ. (你刚说的话 cũng đúng.)"),
+  T("Chiếc áo này vừa vặn, phù hợp.",X(["这件衣服","这件衣服我穿","这件衣服我穿着","这件衣服穿在我身上"],["刚合适","刚好合适","正合适","正好合适"]),"这件衣服刚合适。","刚 = vừa vặn. Khẩu ngữ hay nói 刚好 / 刚刚好.")]}
+ ]}})(),
+(()=>{const X=(a,b)=>a.flatMap(x=>b.map(y=>x+y));
+const C=(t,o,a,e)=>({type:"mc",text:t,opts:o,ans:a,exp:e});
+const T=(vi,acc,show,e)=>({type:"trans",hint:"Dịch sang tiếng Trung, chú ý cấu trúc mượn / cho mượn.",parts:[{vi,accept:acc,show}],exp:e});
+const std=["借","给","跟","向"],alt=["借","对","跟","向"];
+const t7=["借我一支笔","借给我一支笔","借我这支笔","借给我这支笔","借我那支笔","借给我那支笔","借我笔","借给我笔","把笔借给我","把这支笔借给我","把那支笔借给我"];
+return{id:"hsk3-jie",level:"HSK3",name:"借 (jiè): mượn / cho mượn",title:"HSK 3 – 借: mượn / cho mượn",sub:"Đọc Bí Kíp trước, rồi sang tab Luyện Công làm 10 câu và bấm “Nộp bài”.",
+ tags:["借","跟 / 向","借给"],
+ recap:[
+  {t:"1. Điểm cốt lõi",open:true,ps:["借 là một từ có hai chiều nghĩa, phân biệt bằng cấu trúc câu."],head:["Nghĩa","Cấu trúc","Ví dụ"],rows:[["Mượn (vào)","跟 / 向 + người + 借 + vật","我跟他借了一本书。 (Tôi mượn anh ấy một cuốn sách.)"],["Cho mượn (ra)","借给 + người + vật","我借给他一本书。 (Tôi cho anh ấy mượn một cuốn sách.)"]]},
+  {t:"2. 跟 và 向 – Mượn của ai",ps:["向 trang trọng hơn 跟. Mượn của cơ quan, tổ chức thì thường dùng 向."],ex:[["向图书馆借书","Mượn sách ở thư viện"],["他向银行借了一笔钱。","Anh ấy vay ngân hàng một khoản tiền."]]},
+  {t:"3. 借 + 我 + vật  và  借 + người + 的 + vật",ps:["借 + 我 + vật thường hiểu là “cho tôi mượn”.","借 + người + 的 + vật là “mượn của ai”."],ex:[["借我一支笔。","Cho tôi mượn một cây bút."],["我借了他的车。","Tôi đã mượn xe của anh ấy."]]},
+  {t:"4. Câu chữ 把 diễn đạt “cho mượn”",ps:["把 + vật + 借给 + người (借给 là một khối)."],ex:[["我把车借给他了。","Tôi đã cho anh ấy mượn xe."]]},
+  {t:"5. Từ liên quan",head:["Từ","Nghĩa","Ví dụ"],rows:[["借钱","mượn / vay tiền (cho vay: 借给…钱)","借钱要还。"],["借口","cái cớ, lý do thoái thác","别找借口。"],["借光","xin nhường đường, xin nhờ chút","劳驾,借光。"],["还","trả","有借有还。"]],notes:["Mượn rồi phải 还 (trả): 有借有还."]},
+  {t:"6. 借 và 租",notes:["借: mượn, không tính phí. 租: thuê, có trả phí."],ex:[["我借了一本书。","Tôi mượn một cuốn sách (miễn phí)."],["我租了一套房子。","Tôi thuê một căn nhà (có trả phí)."]]},
+  {t:"7. Mẹo nhớ nhanh",notes:["Thấy “mượn của ai” → 跟/向 + người + 借.","Thấy “cho ai mượn” → 借给 + người."]}
+ ],
+ sections:[
+ {title:"A. Điền từ",sub:"Chọn 借 / 给 / 跟 / 向 (hoặc từ phù hợp)",items:[
+  C("我____同学借了一支笔。",alt,[2,3],"Mượn của bạn học: 跟/向 + người + 借. 跟 và 向 đều đúng."),
+  C("我把词典借____他了。",std,1,"借给 = cho mượn: 把 + vật + 借给 + người."),
+  C("你能____我一本书吗?",["借","跟","向","对"],0,"借我 = cho tôi mượn: 借 + 我 + vật."),
+  C("你____了我的钱,什么时候还?",std,0,"借了我的钱 = mượn tiền của tôi: 借 + người + 的 + vật."),
+  C("他____银行借了一笔钱。",alt,[3,2],"Mượn của ngân hàng: 向 (trang trọng hơn) hoặc 跟 đều đúng.")]},
+ {title:"B. Dịch Việt → Trung",sub:"Dịch sang tiếng Trung",items:[
+  T("Tôi mượn bạn một cuốn sách.",X(["我跟你","我向你","我从你那儿","我从你那里"],["借了一本书","借一本书"]),"我跟你借了一本书。","Mượn của ai: 跟/向 + người + 借 + vật."),
+  T("Bạn có thể cho tôi mượn cây bút không?",X(["你能","你可以","能","可以"],t7.map(x=>x+"吗")).concat(X(["你能不能","能不能","你可不可以","可不可以"],t7)),"你能借我一支笔吗?","借我 = cho tôi mượn. Cũng có thể nói 你能把笔借给我吗?"),
+  T("Anh ấy cho tôi mượn xe đạp.",X(["他把自行车","他把那辆自行车","他把他的自行车","他把自己的自行车","他把单车","他把那辆单车"],["借给我了","借给了我","借给我"]).concat(X(["他借给我","他借给了我"],["一辆自行车","自行车","一辆单车","单车","他的自行车","他的单车"])),"他把自行车借给我了。 / 他借给我一辆自行车。","Cho mượn: 借给 + người, hoặc 把 + vật + 借给 + người."),
+  T("Tôi mượn của thư viện ba cuốn sách.",X(["我向图书馆","我跟图书馆","我从图书馆"],["借了三本书","借了三本","借三本书"]),"我向图书馆借了三本书。","Mượn của cơ quan, tổ chức thường dùng 向."),
+  T("Mượn tiền thì phải trả.",X(["借钱","借了钱","借钱的话","借了钱就","借钱就","向别人借钱","向别人借钱就","跟别人借钱","跟别人借钱就","借别人的钱","借别人的钱就"],["要还","得还","必须还","应该还","要还钱","得还钱","必须还钱","应该还钱","必须要还","需要还"]),"借钱要还。","Mượn rồi phải 还 (trả): 有借有还.")]}
  ]}})()
 ];
 /* ===== BỘ MÁY LÀM BÀI (dùng chung, không cần sửa khi thêm bài) ===== */
@@ -294,8 +370,8 @@ const blankText=t=>{const b=h('div',{class:'qt'});t.split('____').forEach((p,i,a
 const T={
 mc(q,nm){let c=-1;const ls=[],o=h('div',{class:'opts'});
  q.opts.forEach((x,i)=>{const l=h('label',{class:'opt'},h('input',{type:'radio',name:nm,onchange:()=>{c=i}}),h('span',{class:'k'},'ABCD'[i]+'.'),h('span',null,x));ls.push(l);o.append(l)});
- return{body:[blankText(q.text),o],grade(){ls.forEach(l=>l.classList.remove('right','wrong'));ls[q.ans].classList.add('right');const ok=c===q.ans;if(c>=0&&!ok)ls[c].classList.add('wrong');
-  return{got:+ok,max:1,fb:fb(ok,ok?'✓ Chính xác.':(c<0?'✗ Chưa trả lời. ':'✗ Chưa đúng. ')+'Đáp án: '+'ABCD'[q.ans]+'. '+q.opts[q.ans],q.exp)}}}},
+ return{body:[blankText(q.text),o],grade(){ls.forEach(l=>l.classList.remove('right','wrong'));[].concat(q.ans).forEach(k=>ls[k].classList.add('right'));const ok=[].concat(q.ans).includes(c);if(c>=0&&!ok)ls[c].classList.add('wrong');
+  return{got:+ok,max:1,fb:fb(ok,ok?'✓ Chính xác.':(c<0?'✗ Chưa trả lời. ':'✗ Chưa đúng. ')+'Đáp án: '+[].concat(q.ans).map(k=>'ABCD'[k]+'. '+q.opts[k]).join(' hoặc '),q.exp)}}}},
 fill(q){const bs=[],b=h('div');if(q.hint)b.append(h('p',{class:'hint'},q.hint));
  const mkSel=()=>{const s=h('select',null,h('option',{value:''},'—'));q.bank.forEach(w=>s.append(h('option',{value:w},w)));return s};
  q.parts.forEach((p,i)=>{const s=mkSel(),row=h('div',{class:'si'},h('span',{class:'qn'},(i+1)+'. '),h('span',{class:'ln'},p.pre),' ',s,' ');bs.push([s,p.ans]);
@@ -326,7 +402,13 @@ rewrite(q){const is=[],b=h('div');if(q.hint)b.append(h('p',{class:'hint'},q.hint
  return{body:[b],grade(){let g=0;const ln=[];q.parts.forEach((p,i)=>{let v=norm(is[i].value);const pn=norm(p.pre);if(pn&&v.startsWith(pn))v=v.slice(pn.length);const ok=p.accept.map(norm).includes(v);is[i].classList.remove('sok','sbad');is[i].classList.add(ok?'sok':'sbad');if(ok)g++;else ln.push((i+1)+'. '+p.pre+p.accept[0])});
   const all=g===q.parts.length;return{got:g,max:q.parts.length,fb:fb(all,all?'✓ Chính xác.':'✗ Đúng '+g+'/'+q.parts.length+'. Đáp án gợi ý: '+ln.join('   '),q.exp)}}}}
 };
-const recapEl=r=>h('div',{class:'rc'},...r.map(g=>h('div',null,h('h3',null,g.t),...(g.ps||[]).map(x=>h('p',{style:'margin:4px 0'},x)),g.rows?h('table',null,g.head?h('tr',null,...g.head.map(c=>h('th',{style:'text-align:left;padding:6px 8px'},c))):null,...g.rows.map(x=>h('tr',null,...x.map((c,i)=>h('td',i?{class:'zh'}:null,c))))):null,...(g.ex||[]).map(x=>h('div',{class:'exm'},h('div',{style:'font-size:1.15rem'},x[0]),h('div',{class:'note'},x[1]))),...(g.notes||[]).map(n=>h('p',{class:'note'},'• '+n)))));
+const recapEl=r=>{const bx=h('div',{class:'rc'});
+ const bt=h('button',{type:'button',class:'btn g s',onclick:()=>{const ds=[...bx.querySelectorAll('details')],o=ds.every(d=>d.open);ds.forEach(d=>d.open=!o);bt.textContent=o?'Mở tất cả':'Thu gọn tất cả'}},'Mở tất cả');
+ bx.append(h('div',{style:'text-align:right;margin-bottom:8px'},bt),...r.map(g=>h('details',{class:'rg',open:g.open?'':null},h('summary',null,g.t),
+  h('div',{class:'rb'},...(g.ps||[]).map(x=>h('p',{style:'margin:4px 0 8px'},x)),
+   g.rows?h('div',{style:'overflow-x:auto'},h('table',null,g.head?h('tr',null,...g.head.map(c=>h('th',{style:'text-align:left;padding:6px 8px'},c))):null,...g.rows.map(x=>h('tr',null,...x.map((c,i)=>h('td',i?{class:'zh'}:null,c)))))):null,
+   ...(g.ex||[]).map(x=>h('div',{class:'exm'},h('div',{style:'font-size:1.15rem'},x[0]),h('div',{class:'note'},x[1]))),
+   ...(g.notes||[]).map(n=>h('p',{class:'note'},'• '+n))))));return bx};
 function levelsView(){app.innerHTML='';app.append(h('h1',null,'Bài tập ngữ pháp tiếng Trung'),h('p',{class:'sub'},'Chọn cấp độ để xem danh sách bài tập.'),
  ...levels.map(l=>h('button',{class:'set',onclick:()=>go('lv-'+l.toLowerCase())},h('b',null,l),h('div',{class:'meta'},SETS.filter(s=>s.level===l).length+' bài tập'))))}
 function listView(l){app.innerHTML='';const ls=h('div'),kw=h('input',{type:'search',placeholder:'Tìm bài tập…'});
