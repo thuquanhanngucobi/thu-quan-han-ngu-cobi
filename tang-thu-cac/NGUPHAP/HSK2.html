@@ -3,29 +3,21 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=Source+Serif+4:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
+
 :root{
-  --paper:#fbf6ea; --card:#fffdf7; --ink:#1d2640; --muted:#5d6580; --line:#e6dcc3;
-  --accent:#16336b; --accent-soft:#e4ebf7; --on-accent:#fff;
-  --gold:#a8770a; --gold-soft:#f6ecd0;
-  --ok:#1d7a46; --ok-soft:#e2f3e8; --bad:#8a4b00; --bad-soft:#fdf0dc; --blue:#3a62a8;
-  --shadow:0 1px 2px rgba(29,38,64,.06),0 6px 18px rgba(29,38,64,.06);
+  --paper:#F0E1B6; --card:#FAF1D6; --ink:#2B2314; --muted:#6B5A38; --line:#D6BE86;
+  --accent:#1F3566; --accent-soft:#E6DCB0; --on-accent:#FFF8E6;
+  --gold:#8A5A00; --gold-soft:#F3DFA2;
+  --ok:#2E6B3F; --ok-soft:#DDE7BC; --bad:#8A4300; --bad-soft:#F6D9A6; --blue:#33508F;
+  --shadow:0 1px 2px rgba(80,55,10,.08),0 6px 18px rgba(80,55,10,.08);
   --zh:"Noto Serif SC","Songti SC","SimSun","Source Han Serif SC",serif;
   --vi:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --disp:"Source Serif 4","Noto Serif SC",Georgia,"Times New Roman",serif;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-    --paper:#141a2c; --card:#1b2238; --ink:#eee8d8; --muted:#a2a9c2; --line:#2e3855;
-    --accent:#9db9ff; --accent-soft:#1f2b49; --on-accent:#10183a;
-    --gold:#e5b94e; --gold-soft:#332d1c;
-    --ok:#6fd49a; --ok-soft:#183326; --bad:#ffb74d; --bad-soft:#3a2d17; --blue:#9bb8f0; --shadow:none;
-  ;color-scheme:dark}}
-:root[data-theme="dark"]{
-    --paper:#141a2c; --card:#1b2238; --ink:#eee8d8; --muted:#a2a9c2; --line:#2e3855;
-    --accent:#9db9ff; --accent-soft:#1f2b49; --on-accent:#10183a;
-    --gold:#e5b94e; --gold-soft:#332d1c;
-    --ok:#6fd49a; --ok-soft:#183326; --bad:#ffb74d; --bad-soft:#3a2d17; --blue:#9bb8f0; --shadow:none;
-  ;color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#1F1912;--card:#2B2318;--ink:#F1E7CD;--muted:#BBA980;--line:#4C3F27;--accent:#E8C66F;--accent-soft:#3B2F18;--on-accent:#1F1912;--gold:#DCA64A;--gold-soft:#3D3015;--ok:#A3D395;--ok-soft:#26361F;--bad:#FFB66E;--bad-soft:#40301A;--blue:#A5BDEE;--shadow:none;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#1F1912;--card:#2B2318;--ink:#F1E7CD;--muted:#BBA980;--line:#4C3F27;--accent:#E8C66F;--accent-soft:#3B2F18;--on-accent:#1F1912;--gold:#DCA64A;--gold-soft:#3D3015;--ok:#A3D395;--ok-soft:#26361F;--bad:#FFB66E;--bad-soft:#40301A;--blue:#A5BDEE;--shadow:none;color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:96px}
 body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--vi);-webkit-text-size-adjust:100%}
@@ -213,6 +205,11 @@ a.btn{text-decoration:none;display:inline-block}
 .unitpane>.lead{margin-bottom:6px}
 .topic .pickbar{margin:0 0 4px}
 .topic .pickbar .zh{font-size:1rem}
+h1,h3,.utitle,.subt{font-family:var(--disp)}
+h1{font-weight:600;letter-spacing:-.015em;font-size:clamp(2.2rem,8vw,3.5rem);line-height:1.08}
+h3{font-weight:600}
+.utitle{font-size:1.18rem;font-weight:600;line-height:1.3}
+.result .score{font-family:var(--disp)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 </style>
 <header class="hero" id="hero">
@@ -354,6 +351,105 @@ const UNITS = [
    why:'Lời nhờ dùng TT + 一点儿: 慢一点儿.'},
   {t:'tr', vi:'Món này hơi không ngon.', tpl:['这个菜有点儿不好吃','这道菜有点儿不好吃','这菜有点儿不好吃'], show:'这个菜有点儿不好吃。',
    why:'Nhận xét không hài lòng, dùng 有点儿 + 不 + TT.'}
+ ]},
+{ id:11, zh:'的 · 地 · 得', title:'Ba trợ từ 的 · 地 · 得 (de)', desc:'Cùng đọc "de" nhưng khác chữ, khác vị trí và khác vai trò trong câu.',
+ html: () => `
+ <div class="stack">
+  <div class="card">
+    <h3>Tóm gọn một bảng</h3>
+    <div class="tw"><table class="cmp">
+      <thead><tr><th></th><th class="zh">的</th><th class="zh">地</th><th class="zh">得</th></tr></thead>
+      <tbody>
+        <tr><td><b>Vai trò</b></td><td>Định ngữ</td><td>Trạng ngữ</td><td>Bổ ngữ</td></tr>
+        <tr><td><b>Công thức</b></td><td>Định ngữ + <b class="yb zh">的</b> + Danh từ</td><td>Trạng ngữ + <b class="yb zh">地</b> + Động từ</td><td>Động từ + <b class="yb zh">得</b> + Bổ ngữ</td></tr>
+        <tr><td><b>Vị trí</b></td><td>Ngay trước danh từ</td><td>Ngay trước động từ</td><td>Ngay sau động từ</td></tr>
+        <tr><td><b>Ví dụ</b></td><td class="zh">漂亮<b class="yb">的</b>衣服</td><td class="zh">高兴<b class="yb">地</b>说</td><td class="zh">说<b class="yb">得</b>很好</td></tr>
+        <tr><td><b>Nghĩa</b></td><td>Quần áo đẹp</td><td>Vui vẻ nói</td><td>Nói rất tốt</td></tr>
+      </tbody>
+    </table></div>
+    ${note('<b>Mẹo nhớ:</b> nhìn xem từ đứng <b>ngay sau</b> chữ de là gì. Sau là <b>danh từ</b> thì viết <b class="zh">的</b>. Sau là <b>động từ</b> thì viết <b class="zh">地</b>. Đứng <b>sau động từ</b> để miêu tả kết quả hoặc mức độ thì viết <b class="zh">得</b>.')}
+  </div>
+
+  <div class="card">
+    <h3>① 的: nối định ngữ với danh từ</h3>
+    ${fm(['Định ngữ','+','!的','+','Danh từ'])}
+    <p style="margin:0">Phần đứng trước 的 bổ nghĩa cho danh từ phía sau. Định ngữ có thể là:</p>
+    ${ex('<b class="yb">我的</b>书','wǒ de shū','Sách của tôi (sở hữu).')}
+    ${ex('<b class="yb">漂亮的</b>衣服','piàoliang de yīfu','Quần áo đẹp (tính từ).')}
+    ${ex('<b class="yb">他买的</b>手机','tā mǎi de shǒujī','Chiếc điện thoại anh ấy mua (cụm động từ).')}
+    ${ex('这本书是<b class="yb">我的</b>。','Zhè běn shū shì wǒ de.','Quyển sách này là của tôi (bỏ danh từ, chỉ giữ 我的).')}
+    ${note('<b>Được bỏ 的:</b> tính từ đơn âm tiết ghép trực tiếp với danh từ (<span class="zh">好书、大房子</span>), và khi nói về người thân hoặc nơi thân thuộc (<span class="zh">我妈妈、我们学校</span>). Tính từ hai âm tiết thường giữ 的: <span class="zh">漂亮的女孩</span>.')}
+  </div>
+
+  <div class="card">
+    <h3>② 地: nối trạng ngữ với động từ</h3>
+    ${fm(['Trạng ngữ','+','!地','+','Động từ'])}
+    <p style="margin:0">Phần đứng trước 地 miêu tả <b>cách thức</b> của hành động, thường là tính từ hai âm tiết hoặc từ lặp.</p>
+    ${ex('他<b class="yb">高兴地</b>说。','Tā gāoxìng de shuō.','Anh ấy vui vẻ nói.')}
+    ${ex('她<b class="yb">认真地</b>学习。','Tā rènzhēn de xuéxí.','Cô ấy học tập một cách nghiêm túc.')}
+    ${ex('孩子们<b class="yb">开心地</b>唱歌。','Háizimen kāixīn de chànggē.','Bọn trẻ vui vẻ hát.')}
+    ${ex('老人<b class="yb">慢慢地</b>走。','Lǎorén mànmàn de zǒu.','Ông cụ chậm rãi đi.')}
+    ${note('Với từ lặp như <span class="zh">慢慢、好好</span> và trạng từ ngắn, người Trung Quốc thường bỏ 地: <span class="zh">慢慢走、好好学习</span>.')}
+  </div>
+
+  <div class="card">
+    <h3>③ 得: nối động từ với bổ ngữ</h3>
+    ${fm(['Động từ','+','!得','+','Bổ ngữ'])}
+    <p style="margin:0">Phần sau 得 nói <b>hành động diễn ra như thế nào</b> (nhanh, chậm, tốt, xấu…). Bổ ngữ thường có <span class="zh">很</span> hoặc phó từ chỉ mức độ.</p>
+    ${ex('他跑<b class="yb">得</b>很快。','Tā pǎo de hěn kuài.','Anh ấy chạy rất nhanh.')}
+    ${ex('她唱<b class="yb">得</b>很好。','Tā chàng de hěn hǎo.','Cô ấy hát rất hay.')}
+    ${ex('你写<b class="yb">得</b>真漂亮。','Nǐ xiě de zhēn piàoliang.','Bạn viết đẹp thật.')}
+    <h3 style="margin-top:14px">Khi có tân ngữ: lặp động từ</h3>
+    ${fm(['Động từ','+','Tân ngữ','+','Động từ','+','!得','+','Bổ ngữ'])}
+    ${ex('他说汉语说<b class="yb">得</b>很流利。','Tā shuō Hànyǔ shuō de hěn liúlì.','Anh ấy nói tiếng Trung rất trôi chảy.')}
+    ${ex('他汉语说<b class="yb">得</b>很流利。','Tā Hànyǔ shuō de hěn liúlì.','Có thể đưa tân ngữ lên trước, chỉ giữ một động từ.')}
+    <h3 style="margin-top:14px">Phủ định và câu hỏi</h3>
+    ${ex('我睡<b class="yb">得</b>不好。','Wǒ shuì de bù hǎo.','Tôi ngủ không ngon. (Phủ định đặt 不 trước bổ ngữ, không đặt trước động từ.)')}
+    ${ex('他跑<b class="yb">得</b>快不快?','Tā pǎo de kuài bu kuài?','Anh ấy chạy có nhanh không?')}
+    ${note('<b>Mở rộng:</b> 得 còn nằm giữa động từ và kết quả để nói <b>khả năng</b>: <span class="zh">看得懂</span> (xem hiểu được), <span class="zh">听不懂</span> (nghe không hiểu).')}
+  </div>
+
+  <div class="card">
+    <h3>Lỗi thường gặp</h3>
+    ${no('他高兴的说。','Dùng 的 trước động từ.')}
+    ${yes('他高兴地说。','Tā gāoxìng de shuō.','Trước động từ dùng 地.')}
+    ${no('他跑的很快。','Dùng 的 cho bổ ngữ sau động từ.')}
+    ${yes('他跑得很快。','Tā pǎo de hěn kuài.','Sau động từ dùng 得.')}
+    ${no('漂亮地衣服','Dùng 地 trước danh từ.')}
+    ${yes('漂亮的衣服','piàoliang de yīfu','Trước danh từ dùng 的.')}
+    ${no('他说得汉语很流利。','Đặt tân ngữ ngay sau 得.')}
+    ${yes('他说汉语说得很流利。','Tā shuō Hànyǔ shuō de hěn liúlì.','Có tân ngữ thì lặp động từ trước 得.')}
+  </div>
+ </div>`,
+ qs:[
+  {t:'mc', q:'我 ___ 手机很贵。<br><span class="muted" style="font-size:.9rem">(Điện thoại của tôi rất đắt)</span>', o:['的','地','得'],
+   why:'我 + 的 + 手机: 的 nối định ngữ (sở hữu) với danh từ 手机.'},
+  {t:'mc', q:'他高兴 ___ 说:"我通过了!"<br><span class="muted" style="font-size:.9rem">(Anh ấy vui vẻ nói)</span>', o:['地','的','得'],
+   why:'高兴 miêu tả cách nói, đứng trước động từ 说, nên dùng 地.'},
+  {t:'mc', q:'她唱歌唱 ___ 很好。<br><span class="muted" style="font-size:.9rem">(Cô ấy hát rất hay)</span>', o:['得','的','地'],
+   why:'很好 là bổ ngữ đứng sau động từ 唱, nên dùng 得.'},
+  {t:'mc', q:'这是一本很有意思 ___ 书。<br><span class="muted" style="font-size:.9rem">(Đây là một quyển sách rất thú vị)</span>', o:['的','地','得'],
+   why:'很有意思 bổ nghĩa cho danh từ 书, nên dùng 的.'},
+  {t:'mc', q:'孩子们开心 ___ 玩儿。<br><span class="muted" style="font-size:.9rem">(Bọn trẻ vui vẻ chơi)</span>', o:['地','的','得'],
+   why:'开心 miêu tả cách chơi, đứng trước động từ 玩儿, nên dùng 地.'},
+  {t:'mc', q:'他汉语说 ___ 很流利。<br><span class="muted" style="font-size:.9rem">(Anh ấy nói tiếng Trung rất trôi chảy)</span>', o:['得','的','地'],
+   why:'很流利 là bổ ngữ sau động từ 说, nên dùng 得.'},
+  {t:'mc', q:'请你认真 ___ 听。<br><span class="muted" style="font-size:.9rem">(Xin bạn nghe chăm chú)</span>', o:['地','的','得'],
+   why:'认真 miêu tả cách nghe, đứng trước động từ 听, nên dùng 地.'},
+  {t:'mc', q:'昨天来 ___ 那个人是我的老师。<br><span class="muted" style="font-size:.9rem">(Người đến hôm qua là thầy giáo tôi)</span>', o:['的','地','得'],
+   why:'昨天来 bổ nghĩa cho danh từ 那个人, nên dùng 的.'},
+  {t:'mc', q:'Chọn câu <b>đúng</b>: "Anh ấy chạy rất nhanh."', o:['他跑得很快。','他跑的很快。','他跑地很快。'],
+   why:'很快 là bổ ngữ sau động từ 跑, nên dùng 得.'},
+  {t:'mc', q:'Chọn câu <b>SAI</b>:', o:['她认真的学习。','她认真地学习。','她学习得很认真。','这是她的书。'],
+   why:'认真 đứng trước động từ 学习 nên phải dùng 地. Sửa: 她认真地学习。'},
+  {t:'sort', vi:'Cô ấy hát rất hay.', tokens:['她','唱','得','很','好'], ok:['她唱得很好'], show:'她唱得很好。',
+   why:'Động từ (唱) + 得 + bổ ngữ (很好).'},
+  {t:'sort', vi:'Anh ấy vui vẻ nói.', tokens:['他','高兴','地','说'], ok:['他高兴地说'], show:'他高兴地说。',
+   why:'Trạng ngữ (高兴) + 地 + động từ (说).'},
+  {t:'tr', vi:'Anh ấy nói tiếng Trung rất trôi chảy.', tpl:['他{说{汉语|中文}|{汉语|中文}}说得很{流利|好}'], show:'他说汉语说得很流利。(hoặc 他汉语说得很流利。)',
+   why:'Có tân ngữ nên lặp động từ: 说汉语说得…, hoặc đưa tân ngữ lên trước: 汉语说得….'},
+  {t:'tr', vi:'Cô ấy học tập một cách nghiêm túc.', tpl:['她{认真|努力}地学习'], show:'她认真地学习。',
+   why:'Trạng ngữ (认真) + 地 + động từ (学习).'}
  ]},
 { id:1, zh:'A 比 B + TT', title:'Câu so sánh hơn với 比', desc:'Cấu trúc cơ bản nhất: A hơn B về một tính chất.',
  html: () => `
@@ -671,7 +767,9 @@ const TOPICS = [
   { id:1, zh:'有点儿 vs 一点儿', title:'Phân biệt 有点儿 và 一点儿', desc:'Cùng là "một chút" nhưng khác vị trí và sắc thái.', units:[10],
     kw:'you dian r yi dian r youdianr yidianr yodianr hoi mot chut phan biet' },
   { id:2, zh:'比较句', title:'Câu so sánh', desc:'比, 没有, 一样 / 像, 最: năm cấu trúc, mỗi cấu trúc có kiến thức và bài tập riêng.', units:[1,2,3,4,5],
-    kw:'bi bijiao meiyou yiyang xiang zui so sanh hon kem bang nhat' }
+    kw:'bi bijiao meiyou yiyang xiang zui so sanh hon kem bang nhat' },
+  { id:3, zh:'的 · 地 · 得', title:'Ba trợ từ 的 · 地 · 得 (de)', desc:'Cùng đọc "de" nhưng khác chữ, khác vị trí: trước danh từ, trước động từ, sau động từ.', units:[11],
+    kw:'de de de tro tu dinh ngu trang ngu bo ngu' }
 ];
 const unitsOf = t => t.units.map(id=>UNITS.find(u=>u.id===id));
 const sn = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/g,'d').toLowerCase();
