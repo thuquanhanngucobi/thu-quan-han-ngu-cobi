@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mê Trận Ngự Pháp HSK1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fdf8ec; --paper2:#fbefc8; --card:#fffdf7; --ink:#2b3440; --muted:#6a7482;
+  --red:#2a6f9b; --red2:#1d5780; --gold:#f4dc93; --golddk:#a97f1d; --jade:#3a8a6e; --bad:#c0392b; --line:#ece0b9;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; color:var(--ink);
+  font-family:"Noto Sans SC",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(900px 420px at 0% -60px,rgba(173,216,240,.38) 0,transparent 70%),
+    radial-gradient(900px 420px at 100% -60px,rgba(248,222,140,.42) 0,transparent 70%),
+    var(--paper);
+  line-height:1.6;
+}
+.cn,.hz{font-family:"Noto Serif SC","Songti SC","SimSun",serif}
+#app{max-width:900px;margin:0 auto;padding:0 16px 48px}
+[hidden]{display:none!important}
+button{font:inherit;cursor:pointer}
+a{color:inherit}
+
+/* HOME */
+.hero{text-align:center;padding:44px 8px 24px;position:relative}
+.seal{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:10px;background:var(--red);color:#fff6df;font-family:"Noto Serif SC",serif;font-weight:700;font-size:22px;box-shadow:0 3px 0 var(--red2),0 8px 18px rgba(42,111,155,.3);transform:rotate(-4deg)}
+.hero h1{font-family:"Noto Serif SC","Songti SC",serif;font-size:clamp(28px,6vw,44px);margin:18px 0 4px;letter-spacing:.5px}
+.hero .cnt{font-family:"Noto Serif SC",serif;color:var(--golddk);letter-spacing:6px;font-size:15px}
+.hero p{color:var(--muted);margin:10px auto 0;max-width:520px}
+.list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+@media(max-width:640px){.list{grid-template-columns:1fr}}
+.item{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:14px;text-decoration:none;box-shadow:0 2px 0 var(--line);transition:transform .12s,box-shadow .12s,border-color .12s}
+.item:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--line);border-color:var(--gold)}
+.item .no{flex:none;width:40px;height:40px;border-radius:50%;background:var(--gold);color:var(--red2);display:flex;align-items:center;justify-content:center;font-weight:700}
+.item .tt{font-weight:700;line-height:1.3}
+.item .sub{font-size:13px;color:var(--muted);padding:0;border:none;background:none;border-radius:0;font-weight:400}
+.item .prog{margin-left:auto;font-size:12px;color:var(--jade);white-space:nowrap;text-align:right}
+
+/* TOPIC */
+.topbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;padding:10px 0;background:linear-gradient(var(--paper) 75%,transparent)}
+.back{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--line);background:var(--card);border-radius:999px;text-decoration:none;font-weight:600;font-size:14px}
+.back:hover{border-color:var(--red);color:var(--red)}
+.crumb{color:var(--muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.thead{display:flex;align-items:center;gap:16px;margin:10px 0 16px}
+.thead .no{flex:none;width:52px;height:52px;border-radius:10px;background:var(--gold);color:var(--red2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px;transform:rotate(-3deg);box-shadow:0 3px 0 #e3c868}
+.thead h2{margin:0;font-family:"Noto Serif SC","Songti SC",serif;font-size:clamp(20px,4.5vw,28px);line-height:1.25}
+.cnsub{color:var(--golddk);font-family:"Noto Serif SC",serif;letter-spacing:2px;font-size:14px}
+.tabs{display:flex;gap:8px;border-bottom:2px solid var(--line);margin-bottom:18px}
+.tab{padding:10px 18px;border:1px solid var(--line);border-bottom:none;border-radius:12px 12px 0 0;background:var(--paper2);color:var(--muted);font-weight:700;margin-bottom:-2px}
+.tab small{font-family:"Noto Serif SC",serif;font-weight:500;margin-left:4px;opacity:.8}
+.tab[aria-selected=true]{background:var(--card);color:var(--red);border-color:var(--line);border-bottom:2px solid var(--card)}
+
+/* BI KIP */
+.panel h3{font-family:"Noto Serif SC","Songti SC",serif;font-size:19px;margin:26px 0 8px;padding-left:12px;border-left:4px solid var(--gold)}
+.panel h3:first-child{margin-top:4px}
+.lead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:8px 0 14px}
+.tbw{overflow-x:auto;margin:10px 0 14px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table.tb{border-collapse:collapse;width:100%;min-width:520px;font-size:15px}
+.tb th{background:var(--red);color:#fff6df;text-align:left;padding:9px 12px;font-weight:700;white-space:nowrap}
+.tb td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+.tb tr:nth-child(even) td{background:#fdf7e2}
+.tb .fm{font-weight:700;color:var(--red2);white-space:nowrap}
+.ex{display:block;margin:2px 0 6px}
+.ex .cn{font-size:18px;font-weight:700}
+.ex .py{display:block;font-size:13px;color:var(--muted)}
+.ex .vi{display:block;font-size:14px}
+.ex:last-child{margin-bottom:0}
+.note,.tip{border-radius:12px;padding:10px 14px;margin:12px 0;font-size:15px}
+.note{background:#fbf1d9;border:1px solid #e6cf94;border-left:5px solid var(--gold)}
+.tip{background:#eaf4ef;border:1px solid #b9d8c9;border-left:5px solid var(--jade)}
+.bad{color:var(--bad);text-decoration:line-through}
+.good{color:var(--jade);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.pill{display:inline-flex;flex-direction:column;align-items:center;padding:6px 12px;background:var(--card);border:1px solid var(--line);border-radius:10px;line-height:1.3}
+.pill b{font-family:"Noto Serif SC",serif;font-size:18px}
+.pill span{font-size:12px;color:var(--muted)}
+ul.ul{margin:6px 0;padding-left:20px}
+ul.ul li{margin:4px 0}
+
+/* LUYEN CONG */
+.subtabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.sub{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--paper2);font-weight:600;font-size:14px}
+.sub[aria-selected=true]{background:var(--red);color:#fff6df;border-color:var(--red)}
+.scorebar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:6px}
+.score{font-weight:700;color:var(--jade)}
+.gt{margin:22px 0 8px;font-family:"Noto Serif SC","Songti SC",serif;font-size:17px;color:var(--golddk)}
+.q{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}
+.q.ok{border-color:var(--jade);box-shadow:inset 4px 0 0 var(--jade)}
+.q.wrong{border-color:var(--bad);box-shadow:inset 4px 0 0 var(--bad)}
+.q.shown{border-color:var(--gold);box-shadow:inset 4px 0 0 var(--gold)}
+.qn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--paper2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.qb{flex:1;min-width:0}
+.prompt{margin-bottom:8px;font-size:16px}
+.prompt .vi{font-weight:600}
+.line{min-height:46px;display:flex;flex-wrap:wrap;gap:8px;padding:8px;border:2px dashed var(--line);border-radius:10px;background:#fffdf7;margin-bottom:8px}
+.pool{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.chip{padding:6px 12px;border:1px solid var(--gold);border-radius:8px;background:#fff3d2;font-family:"Noto Serif SC","Songti SC",serif;font-size:18px;font-weight:700;box-shadow:0 2px 0 var(--gold)}
+.chip:active{transform:translateY(1px);box-shadow:0 1px 0 var(--gold)}
+.fillrow{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:18px;font-family:"Noto Serif SC","Songti SC",serif;font-weight:700;margin-bottom:8px}
+.fillrow .hint{font-family:"Noto Sans SC",system-ui,sans-serif;font-weight:400;font-size:14px;color:var(--muted);margin-left:4px}
+input.fi{width:84px;padding:5px 8px;border:none;border-bottom:2px solid var(--red);background:#fff3d2;font:inherit;text-align:center;border-radius:6px 6px 0 0}
+input.ti{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:10px;font-size:18px;font-family:"Noto Serif SC","Noto Sans SC",sans-serif;background:#fffdf7;margin-bottom:8px}
+input:focus{outline:2px solid var(--gold)}
+.qbar{display:flex;flex-wrap:wrap;gap:8px}
+.btn{padding:7px 14px;border-radius:10px;border:1px solid var(--red);font-weight:700;font-size:14px}
+.btn.primary{background:var(--red);color:#fff6df;box-shadow:0 2px 0 var(--red2)}
+.btn.primary:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--red)}
+.btn.plain{border-color:var(--line);color:var(--muted);background:var(--paper2)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;background:#fffdf7;border:1px solid var(--line);font-size:15px}
+.fb .res{font-weight:700;margin-bottom:4px}
+.fb .res.ok{color:var(--jade)} .fb .res.no{color:var(--bad)} .fb .res.sh{color:var(--golddk)}
+.fb .ans{font-family:"Noto Serif SC","Songti SC",serif;font-size:19px;font-weight:700;margin:2px 0}
+.fb .alt{font-size:13px;color:var(--muted)}
+.fb .why{margin-top:6px;padding-top:6px;border-top:1px dashed var(--line)}
+
+.acc{border:1px solid var(--line);border-radius:14px;background:var(--card);margin:12px 0;overflow:hidden}
+.acc-h{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;background:var(--paper2);border:none;text-align:left;font-family:"Noto Serif SC","Songti SC",serif;font-weight:700;font-size:17px;color:var(--red2)}
+.acc-h .chev{transition:transform .2s;font-size:18px}
+.acc.open .acc-h{background:var(--red);color:#fff6df}
+.acc.open .chev{transform:rotate(180deg)}
+.acc-b{padding:6px 16px 16px}
+.pnav{display:flex;justify-content:space-between;gap:10px;margin-top:34px;padding-top:16px;border-top:2px solid var(--line);flex-wrap:wrap}
+.pnav a{padding:9px 16px;border:1px solid var(--line);border-radius:999px;background:var(--card);text-decoration:none;font-weight:600;font-size:14px}
+.pnav a:hover{border-color:var(--red);color:var(--red)}
+.sh{font-weight:700;color:var(--red2);margin:20px 0 6px;font-family:"Noto Serif SC","Songti SC",serif;font-size:16px}
+.sh:first-child{margin-top:6px}
+.figwrap{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0}
+.fig{flex:1 1 320px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 8px}
+.fig:first-child{flex-basis:400px}
+.fig svg{width:100%;height:auto;display:block}
+.figtitle{text-align:center;font-weight:700;color:var(--red2);letter-spacing:.5px}
+.figsub{text-align:center;font-size:13px;color:var(--muted);margin-bottom:2px}
+.leaves{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:50}
+.lf{position:absolute;top:-50px;opacity:.6;animation:fall linear infinite}
+.lf>svg{display:block;width:100%;height:auto;animation:sway ease-in-out infinite alternate}
+@keyframes fall{0%{transform:translate3d(0,-8vh,0)}100%{transform:translate3d(var(--dx,40px),110vh,0)}}
+@keyframes sway{0%{transform:rotate(-35deg) translateX(-12px)}100%{transform:rotate(35deg) translateX(12px)}}
+.pend{position:absolute;top:-8px;transform-origin:50% 0;display:flex;flex-direction:column;align-items:center;margin-left:-15px;animation:swing var(--d,4s) ease-in-out infinite alternate;pointer-events:none}
+.pend .str{display:block;width:1.5px;background:#cdb877}
+.pend .pl{display:block}
+.pend .pl svg{display:block;width:100%;height:auto;transform:rotate(180deg)}
+@keyframes swing{0%{transform:rotate(calc(var(--r,8deg)*-1))}100%{transform:rotate(var(--r,8deg))}}
+@media(max-width:560px){.pend.in{display:none}}
+@media(prefers-reduced-motion:reduce){.lf,.lf>svg,.pend{animation:none}.leaves{display:none}}
+</style>
+</head>
+<body>
+<div id="app">
+  <section id="home">
+    <div class="hero">
+      <div class="seal">HSK1</div>
+      <h1>Mê Trận Ngự Pháp</h1>
+      <div class="cnt">迷阵御法 · 语法</div>
+      <p>Chọn một môn công pháp bên dưới. Mỗi mục có <b>Bí Kíp</b> để ôn kiến thức và <b>Luyện Công</b> để làm bài tập, tự xem đáp án và lời giải.</p>
+    </div>
+    <div class="list" id="list"></div>
+  </section>
+  <div id="pages"></div>
+</div>
+
+<script>
+/* ---------- helpers ---------- */
+const E=(cn,py,vi)=>`<span class="ex"><span class="cn">${cn}</span><span class="py">${py}</span><span class="vi">${vi}</span></span>`;
+const S=(w,a,e)=>({k:"s",w,a:[].concat(a),e});
+const F=(q,a,e)=>({k:"f",q,a:[].concat(a),e});
+const T=(q,a,e)=>({k:"t",q,a:[].concat(a),e});
+const G=(t,q)=>({t,q});
+const SORT="Sắp xếp câu", FILL="Điền vào chỗ trống", TRANS="Dịch Việt – Trung";
+
+const P=(cn,py)=>`<b class="cn">${cn}</b><br><small style="color:var(--muted)">${py}</small>`;
+const BXDEFS=`<defs>
+<g id="bxT"><polygon points="40,4 78,22 40,40 2,22" fill="#f8e7bd" stroke="#b9904f" stroke-width="1.5" stroke-linejoin="round"/><path d="M21 13 L59 31" stroke="#e2c27c" stroke-width="5" opacity=".8"/></g>
+<g id="bxF"><polygon points="2,22 40,40 40,80 2,62" fill="#e8c78d" stroke="#b9904f" stroke-width="1.5" stroke-linejoin="round"/><polygon points="40,40 78,22 78,62 40,80" fill="#d5ab6f" stroke="#b9904f" stroke-width="1.5" stroke-linejoin="round"/></g>
+<g id="bxO"><polygon points="2,22 40,4 34,-12 -4,6" fill="#f1dcae" stroke="#b9904f" stroke-width="1.5" stroke-linejoin="round"/><polygon points="40,4 78,22 84,6 46,-12" fill="#ecd3a0" stroke="#b9904f" stroke-width="1.5" stroke-linejoin="round"/><polygon points="2,22 40,4 78,22 40,40" fill="#bf9560" stroke="#b9904f" stroke-width="1.5" stroke-linejoin="round"/></g>
+<g id="boy"><rect x="12" y="46" width="7" height="14" rx="2" fill="#6a93c0"/><rect x="21" y="46" width="7" height="14" rx="2" fill="#6a93c0"/><ellipse cx="15" cy="61" rx="6" ry="2.5" fill="#fff" stroke="#9aa7b8" stroke-width=".8"/><ellipse cx="25" cy="61" rx="6" ry="2.5" fill="#fff" stroke="#9aa7b8" stroke-width=".8"/><line x1="11" y1="31" x2="4" y2="43" stroke="#f6d3a8" stroke-width="5" stroke-linecap="round"/><line x1="29" y1="31" x2="36" y2="43" stroke="#f6d3a8" stroke-width="5" stroke-linecap="round"/><rect x="10" y="26" width="20" height="23" rx="6" fill="#86cfc8"/><circle cx="20" cy="14" r="11" fill="#f6d3a8"/><path d="M8.5 13 Q9 2 20 2.5 Q31 2 31.5 13 Q26 7 20 8 Q14 7 8.5 13Z" fill="#7a5638"/><circle cx="16" cy="15" r="1.4" fill="#2b3440"/><circle cx="24" cy="15" r="1.4" fill="#2b3440"/><path d="M16.5 19.5 Q20 22.5 23.5 19.5" stroke="#2b3440" stroke-width="1.3" fill="none" stroke-linecap="round"/><circle cx="12.5" cy="18.5" r="2" fill="#f4a8a0" opacity=".6"/><circle cx="27.5" cy="18.5" r="2" fill="#f4a8a0" opacity=".6"/></g>
+<g id="ball"><circle r="14" fill="#fff" stroke="#2b3440" stroke-width="1.5"/><polygon points="0,-6 5.7,-1.9 3.5,4.9 -3.5,4.9 -5.7,-1.9" fill="#2b3440"/><path d="M0 -6 V-13 M5.7 -1.9 L12 -4 M3.5 4.9 L8 10 M-3.5 4.9 L-8 10 M-5.7 -1.9 L-12 -4" stroke="#2b3440" stroke-width="1.2"/></g>
+</defs>`;
+const _bx=(x,y,s=.85)=>`<g transform="translate(${x},${y}) scale(${s})"><use href="#bxT"/><use href="#bxF"/></g>`;
+const _bxo=(x,y,s=.85,mid="")=>`<g transform="translate(${x},${y}) scale(${s})"><use href="#bxO"/>${mid}<use href="#bxF"/></g>`;
+const _boy=(x,y,s=.95)=>`<g transform="translate(${x},${y}) scale(${s})"><use href="#boy"/></g>`;
+const _ball=(x,y)=>`<g transform="translate(${x},${y})"><use href="#ball"/></g>`;
+const _arr=(x,y,d,c="#9fd0ec")=>`<path d="M${x} ${y} l${-14*d} -9 v5 h${-16*d} v8 h${16*d} v5 z" fill="${c}" stroke="#5f9fc7" stroke-width="1" stroke-linejoin="round"/>`;
+const _lab=(x,y,cn,py,vi)=>`<text x="${x}" y="${y}" text-anchor="middle" font-size="15" fill="#4c5968" font-family="sans-serif"><tspan font-family="'Noto Serif SC',serif" font-size="22" font-weight="700" fill="#1d5780">${cn}</tspan> (${py}) - ${vi}</text>`;
+const _SCN={
+ left:(cx,t)=>_arr(cx-77,t+66,-1)+_boy(cx-39,t+38)+_bx(cx+5,t+28),
+ right:(cx,t)=>_bx(cx-77,t+28)+_boy(cx+1,t+38)+_arr(cx+77,t+66,1),
+ front:(cx,t)=>_bx(cx-34,t+18,.85)+_boy(cx-22,t+42),
+ back:(cx,t)=>_boy(cx+4,t+12)+_bx(cx-38,t+28,.9),
+ inside:(cx,t)=>_bxo(cx-38,t+32,.95,`<g transform="translate(20,-4)"><use href="#boy"/></g>`),
+ outside:(cx,t)=>_bxo(cx-72,t+36,.9)+_boy(cx+16,t+42),
+ up:(cx,t)=>_bx(cx-34,t+42,.85)+_ball(cx,t+50),
+ down:(cx,t)=>_bx(cx-34,t+12,.85)+`<ellipse cx="${cx}" cy="${t+116}" rx="18" ry="4" fill="rgba(60,70,90,.14)"/>`+_ball(cx,t+100)
+};
+const _ROWS=[[["left",150,"左","zuǒ","Trái"],["right",410,"右","yòu","Phải"]],[["front",95,"前","qián","Trước"],["back",280,"后","hòu","Sau"],["inside",465,"里","lǐ","Trong"]],[["outside",95,"外","wài","Ngoài"],["up",280,"上","shàng","Trên"],["down",465,"下","xià","Dưới"]]];
+const _TOPS=[4,168,332];
+const _SCENES=_ROWS.map((r,i)=>r.map(([k,cx,cn,py,vi])=>`<g>${_SCN[k](cx,_TOPS[i])}${_lab(cx,_TOPS[i]+134,cn,py,vi)}</g>`).join("")).join("");
+const _cl=(x,y,cn,py,vi)=>`<text x="${x}" y="${y}" text-anchor="middle" font-size="32" font-weight="700" fill="#2b3440" font-family="'Noto Serif SC',serif">${cn}</text><text x="${x}" y="${y+20}" text-anchor="middle" font-size="13" fill="#4c5968" font-family="sans-serif">(${py}) - ${vi}</text>`;
+const FIG8=`<div class="figwrap">
+<div class="fig"><div class="figtitle">VỊ TRÍ · 位置 (wèizhì)</div>
+<svg viewBox="0 0 560 480" role="img" aria-label="Tám cảnh minh hoạ: trái, phải, trước, sau, trong, ngoài, trên, dưới">${BXDEFS}${_SCENES}</svg></div>
+<div class="fig"><div class="figtitle">PHƯƠNG HƯỚNG · 方向 (fāngxiàng)</div><div class="figsub">Đông - Tây - Nam - Bắc (东、西、南、北)</div>
+<svg viewBox="0 0 380 490" role="img" aria-label="La bàn: Bắc ở trên, Nam ở dưới, Đông bên phải, Tây bên trái">
+<rect x="162" y="90" width="56" height="320" rx="6" fill="#93aac4"/><rect x="70" y="222" width="240" height="56" rx="6" fill="#93aac4"/>
+<line x1="190" y1="98" x2="190" y2="402" stroke="#eef3f9" stroke-width="2" stroke-dasharray="9 8"/><line x1="78" y1="250" x2="302" y2="250" stroke="#eef3f9" stroke-width="2" stroke-dasharray="9 8"/>
+<circle cx="190" cy="250" r="46" fill="#aabfd6" stroke="#6f8cab" stroke-width="3"/><circle cx="190" cy="250" r="32" fill="#f1f5fa" stroke="#8aa2bd" stroke-width="1.5"/>
+<polygon points="154,250 190,244 190,256" fill="#cdd8e5"/><polygon points="226,250 190,244 190,256" fill="#cdd8e5"/>
+<polygon points="190,212 198,250 182,250" fill="#ea7f68"/><polygon points="190,288 198,250 182,250" fill="#fff" stroke="#8aa2bd" stroke-width="1"/><circle cx="190" cy="250" r="3" fill="#2b3440"/>
+<polygon points="190,100 214,134 199,134 199,172 181,172 181,134 166,134" fill="#f8e08e" stroke="#d6b04e" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="190,400 214,366 199,366 199,328 181,328 181,366 166,366" fill="#f8e08e" stroke="#d6b04e" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="300,250 266,226 266,241 228,241 228,259 266,259 266,274" fill="#f9d39a" stroke="#d9a554" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="80,250 114,226 114,241 152,241 152,259 114,259 114,274" fill="#a9d6ef" stroke="#5f9fc7" stroke-width="1.5" stroke-linejoin="round"/>
+${_cl(190,50,"北","běi","Bắc")}${_cl(190,452,"南","nán","Nam")}${_cl(40,244,"西","xī","Tây")}${_cl(340,244,"东","dōng","Đông")}
+</svg></div></div>
+<p style="text-align:center;font-size:14px;color:var(--muted);margin:6px 0 0">Trái / phải tính theo người đứng nhìn. Các từ này là <b>từ vựng nền</b> để học phần Chỉ đường và Vị trí bên dưới.</p>`;
+
+
+/* ---------- DATA ---------- */
+const TOPICS=[
+
+/* 1 ============ CẤU TRÚC CÂU CƠ BẢN ============ */
+{id:"t1",vi:"Cấu trúc câu cơ bản trong tiếng Trung",cn:"基本句型",parts:[{name:"",
+k:`
+<p class="lead">Câu tiếng Trung cơ bản gồm <b>Chủ ngữ (S) + Vị ngữ</b>. Vị ngữ có thể là <b>động từ</b>, <b>tính từ</b> hoặc <b>danh từ</b>.</p>
+<div class="tbw"><table class="tb"><thead><tr><th>Loại câu</th><th>Cấu trúc</th><th>Ví dụ</th></tr></thead><tbody>
+<tr><td>Vị ngữ là <b>động từ</b></td><td class="fm">S + V + O</td><td>${E("我叫CoBi。","Wǒ jiào CoBi.","Tôi tên là CoBi.")}${E("你叫什么名字？","Nǐ jiào shénme míngzi?","Bạn tên là gì?")}</td></tr>
+<tr><td>Vị ngữ là <b>tính từ</b></td><td class="fm">S + 很 + Adj</td><td>${E("她很高。","Tā hěn gāo.","Cô ấy (rất) cao.")}</td></tr>
+<tr><td>Vị ngữ là <b>danh từ</b></td><td class="fm">S + 是 + N</td><td>${E("我是越南人。","Wǒ shì Yuènán rén.","Tôi là người Việt Nam.")}${E("他是老师。","Tā shì lǎoshī.","Anh ấy là giáo viên.")}</td></tr>
+<tr><td>Vị ngữ là danh từ (<b>bỏ 是</b>)</td><td class="fm">S + số lượng (tuổi, giá tiền…)</td><td>${E("我二十岁。","Wǒ èrshí suì.","Tôi 20 tuổi.")}</td></tr>
+</tbody></table></div>
+<div class="note"><b>Lưu ý:</b>
+<ul class="ul">
+<li>Trước tính từ <b>không dùng 是</b>: <span class="bad">她是高</span> → <span class="good">她很高</span>.</li>
+<li><b>很</b> ở đây chỉ để nối câu, nghĩa "rất" đã nhạt đi. Khi phủ định thì dùng 不 và bỏ 很: 她不高。</li>
+</ul></div>
+<div class="tip"><b>Mẫu giới thiệu bản thân:</b> 我叫 ＿＿。 / 我是 ＿＿人。 / 我 ＿＿ 岁。</div>
+`,
+g:[
+G(SORT,[
+ S(["我","叫","CoBi"],"我叫CoBi。","我(S) + 叫(V) + CoBi(O). Mẫu giới thiệu tên: <b>我叫 + tên</b>."),
+ S(["你","什么","叫","名字"],"你叫什么名字？","什么 (gì) đứng ngay trước 名字 (tên), đúng vị trí của phần được hỏi. Cấu trúc: 你 + 叫 + 什么名字？"),
+ S(["我","越南人","是"],"我是越南人。","Vị ngữ là danh từ (越南人) nên dùng <b>是</b>: S + 是 + N."),
+ S(["她","是","中国人"],"她是中国人。","S + 是 + N: 她(S) + 是 + 中国人(N)."),
+]),
+G(FILL,[
+ F("我___Anna。(tên là)","叫","我叫Anna。— 叫 (jiào) = tên là / gọi là."),
+ F("你叫___名字？(gì)","什么","你叫什么名字？— 什么 (shénme) = gì, cái gì."),
+ F("他___美国人。(là)","是","他是美国人。— Vị ngữ là danh từ 美国人 nên cần 是."),
+ F("我是日本___。(người)","人","我是日本人。— 人 (rén) = người. Tên nước + 人 = người nước đó."),
+]),
+G(TRANS,[
+ T("Tôi tên là Linh.","我叫Linh。","Tên là = 叫. Mẫu: 我叫 + tên. Tên riêng giữ nguyên."),
+ T("Cô ấy tên là Mai.","她叫Mai。","她 = cô ấy. Mẫu: 她叫 + tên."),
+ T("Anh ấy là người Hàn Quốc.","他是韩国人。","他 = anh ấy; 韩国 = Hàn Quốc. Mẫu: S + 是 + nước + 人."),
+ T("Tôi là người Mỹ.","我是美国人。","美国 = Mỹ."),
+]),
+]}]},
+
+/* 2 ============ CÂU PHỦ ĐỊNH ============ */
+{id:"t2",vi:"Câu phủ định",cn:"否定句：不 / 没",parts:[{name:"",
+k:`
+<p class="lead">Cả <b>不</b> và <b>没</b> đều đứng <b>ngay trước động từ hoặc tính từ</b>: S + 不/没 + V/Adj.</p>
+<div class="tbw"><table class="tb"><thead><tr><th></th><th>不 (bù)</th><th>没 (méi)</th></tr></thead><tbody>
+<tr><td><b>Dùng khi</b></td><td>Hiện tại, tương lai, thói quen, ý muốn; phủ định tính chất</td><td>Hành động <b>chưa / đã không</b> xảy ra (quá khứ)</td></tr>
+<tr><td><b>Ví dụ</b></td><td>${E("我不喝茶。","Wǒ bù hē chá.","Tôi không uống trà.")}</td><td>${E("我没去学校。","Wǒ méi qù xuéxiào.","Tôi đã không đến trường.")}</td></tr>
+<tr><td><b>Với 是</b></td><td>${E("她不是老师。","Tā bú shì lǎoshī.","Cô ấy không phải giáo viên.")}</td><td>—</td></tr>
+<tr><td><b>Với 有</b></td><td>—</td><td>${E("我没有哥哥。","Wǒ méiyǒu gēge.","Tôi không có anh trai.")}</td></tr>
+<tr><td><b>Với tính từ</b></td><td>${E("他不忙。","Tā bù máng.","Anh ấy không bận.")}</td><td>—</td></tr>
+</tbody></table></div>
+<div class="note"><b>Lưu ý:</b>
+<ul class="ul">
+<li>Phủ định của 有 luôn là <b>没有</b>, <span class="bad">không nói 不有</span>. Phủ định của 是 là <b>不是</b>.</li>
+<li><b>不</b> đứng trước thanh 4 thì đọc thanh 2: 不是 <b>bú</b> shì, 不去 <b>bú</b> qù.</li>
+<li>Khi đã dùng 没 thì <b>bỏ 了</b>: 我没去学校 (không nói 我没去学校了).</li>
+</ul></div>
+<div class="tip"><b>Mẹo chọn nhanh:</b> có từ chỉ quá khứ (昨天, 上周…) hoặc hỏi "đã làm chưa?" → <b>没</b>. Còn lại (không phải, không muốn, không làm thường xuyên, tính chất) → <b>不</b>.</div>
+`,
+g:[
+G(SORT,[
+ S(["不","我","喝","咖啡"],"我不喝咖啡。","不 đứng ngay trước động từ 喝: S + 不 + V + O."),
+ S(["没","他","去","学校"],"他没去学校。","没 + động từ: hành động chưa/đã không xảy ra. 没 đứng ngay trước 去."),
+ S(["没有","我","哥哥"],"我没有哥哥。","Phủ định của 有 là 没有 (không nói 不有)."),
+ S(["不","是","她","老师"],"她不是老师。","Phủ định của 是 là 不是: S + 不是 + N."),
+]),
+G(FILL+" (不 hoặc 没)",[
+ F("我___是医生。","不","我不是医生。— Phủ định của 是 luôn là 不是."),
+ F("他___有钱。","没","他没有钱。— Phủ định của 有 luôn là 没有."),
+ F("昨天我___看电视。","没","昨天我没看电视。— 昨天 (hôm qua) là quá khứ → dùng 没."),
+ F("今天天气___好。","不","今天天气不好。— Phủ định tính từ ở hiện tại dùng 不."),
+]),
+G(TRANS,[
+ T("Tôi không ăn thịt.","我不吃肉。","吃肉 = ăn thịt; 不 + V diễn tả không làm / không ăn (thói quen, ý muốn)."),
+ T("Tôi không có tiền.","我没有钱。","Không có = 没有."),
+ T("Hôm qua tôi không đi làm.",["昨天我没去上班。","我昨天没去上班。","昨天我没上班。","我昨天没上班。"],"昨天 là quá khứ → 没 + 去上班. Trạng ngữ thời gian có thể đứng trước hoặc sau chủ ngữ."),
+ T("Anh ấy không phải người Trung Quốc.","他不是中国人。","Không phải = 不是."),
+]),
+]}]},
+
+/* 3 ============ CÂU HỎI ============ */
+{id:"t3",vi:"Câu hỏi",cn:"疑问句",parts:[
+/* 3A */
+{name:"Câu hỏi với 吗",
+k:`
+<p class="lead">Có <b>4 cách</b> đặt câu hỏi ở HSK1. Mỗi câu chỉ dùng <b>một</b> cách, không trộn với nhau.</p>
+<div class="tbw"><table class="tb"><thead><tr><th>Cách hỏi</th><th>Cấu trúc</th><th>Ví dụ</th><th>Trả lời</th></tr></thead><tbody>
+<tr><td>Với <b>吗</b></td><td class="fm">Câu trần thuật + 吗？</td><td>你是学生吗？</td><td>是 / 不是</td></tr>
+<tr><td><b>Chính phản</b></td><td class="fm">V + 不 + V</td><td>你是不是学生？</td><td>是 / 不是</td></tr>
+<tr><td><b>Đại từ nghi vấn</b></td><td class="fm">Từ hỏi đúng vị trí cần hỏi</td><td>你叫什么名字？</td><td>Trả lời đúng chỗ đó</td></tr>
+<tr><td><b>还是</b></td><td class="fm">A 还是 B？</td><td>你喝茶还是咖啡？</td><td>Chọn một vế</td></tr>
+</tbody></table></div>
+<h3>1. Hỏi "có … không?" với 吗</h3>
+<p><b>Câu trần thuật + 吗？</b> Trật tự từ giữ nguyên, chỉ thêm 吗 ở cuối câu.</p>
+${E("你是学生吗？","Nǐ shì xuésheng ma?","Bạn là học sinh à?")}
+${E("你好吗？","Nǐ hǎo ma?","Bạn khỏe không?")}
+<ul class="ul">
+<li>Trả lời: 是，我是学生。/ 不是，我不是学生。</li>
+<li>Có thể trả lời bằng cách lặp lại động từ: 你喝茶吗？→ <b>喝。</b> / <b>不喝。</b></li>
+</ul>
+<div class="note"><b>Lưu ý:</b> 吗 <b>không dùng cùng</b> đại từ nghi vấn (什么、谁、哪儿…), không dùng cùng câu chính phản và không dùng cùng 还是.</div>
+`,
+g:[
+G(SORT,[
+ S(["吗","你","好"],"你好吗？","Câu trần thuật 你好 + 吗 ở cuối → câu hỏi có/không."),
+ S(["汉语","吗","你","学"],"你学汉语吗？","S + V + O + 吗: 你(S) 学(V) 汉语(O) 吗."),
+ S(["是","他","老师","吗"],"他是老师吗？","S + 是 + N rồi thêm 吗 ở cuối câu."),
+ S(["吃","你","米饭","吗"],"你吃米饭吗？","你 + 吃 + 米饭 + 吗. Trật tự từ không đổi so với câu trần thuật."),
+]),
+G(FILL,[
+ F("你是中国人___？","吗","你是中国人吗？— hỏi có/không thì thêm 吗 cuối câu."),
+ F("你喝茶___？","吗","你喝茶吗？— Trả lời: 喝 / 不喝."),
+ F("你___汉语吗？(nói)","说","你说汉语吗？— 说 (shuō) = nói; 说汉语 = nói tiếng Trung."),
+ F("你有哥哥___？","吗","你有哥哥吗？— Câu có 有 vẫn thêm 吗. Trả lời: 有 / 没有."),
+]),
+G(TRANS,[
+ T("Bạn khỏe không?","你好吗？","你好 + 吗 = Bạn khỏe không?"),
+ T("Bạn đi học không?",["你去学校吗？","你去上学吗？"],"去学校 = đi đến trường (hoặc 去上学 = đi học). Thêm 吗 cuối câu."),
+ T("Cô ấy là bác sĩ à?","她是医生吗？","她 = cô ấy; 医生 = bác sĩ. S + 是 + N + 吗."),
+ T("Bạn có bút không?","你有笔吗？","有 = có; 笔 = bút. 你有笔 + 吗."),
+]),
+]},
+/* 3B */
+{name:"Câu chính phản",
+k:`
+<h3>2. Câu chính phản (V不V)</h3>
+<p>Xếp <b>khẳng định + phủ định</b> của cùng một từ cạnh nhau để hỏi "có … hay không?". <b>Không dùng thêm 吗.</b></p>
+<ul class="ul">
+<li><b>Động từ:</b> V + 不 + V (+ O) — ${E("你喝不喝茶？","Nǐ hē bu hē chá?","Bạn có uống trà không?")}</li>
+<li><b>Tính từ:</b> Adj + 不 + Adj — ${E("他忙不忙？","Tā máng bu máng?","Anh ấy có bận không?")}</li>
+<li><b>是 / 有:</b> 是不是, 有没有 — ${E("你有没有哥哥？","Nǐ yǒu méiyǒu gēge?","Bạn có anh trai không?")}</li>
+<li><b>Từ hai âm tiết:</b> 喜欢不喜欢 (hoặc rút gọn: 喜不喜欢) — ${E("你喜欢不喜欢这个？","Nǐ xǐhuan bu xǐhuan zhège?","Bạn có thích cái này không?")}</li>
+<li><b>Trả lời:</b> lặp lại động từ khẳng định hoặc phủ định: 喝。/ 不喝。</li>
+</ul>
+<div class="note"><b>Lưu ý:</b> phủ định của 有 là 没有 nên chính phản là <b>有没有</b>, <span class="bad">không nói 有不有</span>.</div>
+`,
+g:[
+G(SORT,[
+ S(["你","是","不","是","学生"],"你是不是学生？","Cấu trúc 是 + 不 + 是. Không thêm 吗."),
+ S(["喝","不","你","茶","喝"],"你喝不喝茶？","V + 不 + V + O: 喝不喝茶."),
+ S(["有","没","你","有","哥哥"],"你有没有哥哥？","Phủ định của 有 là 没, nên chính phản là 有没有 (không phải 有不有)."),
+ S(["忙","不","他","忙"],"他忙不忙？","Tính từ cũng dùng được: Adj + 不 + Adj."),
+]),
+G(FILL,[
+ F("你去___去学校？","不","你去不去学校？— 去 + 不 + 去."),
+ F("他有___有钱？","没","他有没有钱？— Với 有 phải dùng 有没有."),
+ F("你喜欢___喜欢这个？","不","你喜欢不喜欢这个？— 喜欢 là từ hai âm tiết, lặp lại cả từ."),
+ F("你___不___老师？(2 chỗ trống, cùng một từ)","是是","你是不是老师？— Cấu trúc 是不是, điền 是 vào cả hai chỗ trống."),
+]),
+G(TRANS,[
+ T("Bạn có ăn cơm không?",["你吃不吃米饭？","你吃不吃饭？"],"吃 → 吃不吃. 米饭 (cơm) hoặc 饭 (bữa ăn) đều được."),
+ T("Bạn có phải là bác sĩ không?","你是不是医生？","是不是 = có phải là … không."),
+ T("Bạn có em gái không?","你有没有妹妹？","妹妹 = em gái. 有没有 + N."),
+ T("Hôm nay bạn có đi học không?",["今天你去不去学校？","你今天去不去学校？","今天你去不去上学？","你今天去不去上学？"],"Từ chỉ thời gian (今天) đứng trước động từ. 去不去学校 = có đến trường không."),
+]),
+]},
+/* 3C */
+{name:"Câu hỏi với đại từ nghi vấn",
+k:`
+<h3>3. Câu hỏi với đại từ nghi vấn</h3>
+<div class="tip"><b>Quy tắc vàng:</b> đại từ nghi vấn đứng <b>đúng vị trí của phần được hỏi</b>, không đảo lên đầu câu, và <b>không dùng 吗</b>.</div>
+<div class="tbw"><table class="tb"><thead><tr><th>Từ</th><th>Nghĩa</th><th>Ví dụ</th></tr></thead><tbody>
+<tr><td><b>谁</b> shéi</td><td>ai</td><td>${E("他是谁？","Tā shì shéi?","Anh ấy là ai?")}</td></tr>
+<tr><td><b>什么</b> shénme</td><td>cái gì</td><td>${E("你喝什么？","Nǐ hē shénme?","Bạn uống gì?")}</td></tr>
+<tr><td><b>哪 / 哪儿</b> nǎ / nǎr</td><td>nào / ở đâu</td><td>${E("你去哪儿？","Nǐ qù nǎr?","Bạn đi đâu?")}</td></tr>
+<tr><td><b>几</b> jǐ</td><td>mấy (số nhỏ, dưới 10; cần lượng từ)</td><td>${E("你家有几个人？","Nǐ jiā yǒu jǐ ge rén?","Nhà bạn có mấy người?")}</td></tr>
+<tr><td><b>多少</b> duōshao</td><td>bao nhiêu (số bất kỳ)</td><td>${E("这个多少钱？","Zhège duōshao qián?","Cái này bao nhiêu tiền?")}</td></tr>
+<tr><td><b>怎么样</b> zěnmeyàng</td><td>thế nào</td><td>${E("今天天气怎么样？","Jīntiān tiānqì zěnmeyàng?","Hôm nay thời tiết thế nào?")}</td></tr>
+<tr><td><b>怎么</b> zěnme</td><td>làm sao, như thế nào (hỏi cách làm)</td><td>${E("这个字怎么读？","Zhège zì zěnme dú?","Chữ này đọc thế nào?")}</td></tr>
+<tr><td><b>什么时候</b> shénme shíhou</td><td>khi nào</td><td>${E("你什么时候去学校？","Nǐ shénme shíhou qù xuéxiào?","Khi nào bạn đi học?")}</td></tr>
+<tr><td><b>多大</b> duō dà</td><td>bao nhiêu tuổi</td><td>${E("你多大？","Nǐ duō dà?","Bạn bao nhiêu tuổi?")}</td></tr>
+</tbody></table></div>
+<div class="tip"><b>Mẹo:</b> 几 + lượng từ + N (几个人); 多少 + N, có thể bỏ lượng từ (多少人). Hỏi tuổi trẻ nhỏ thường dùng <b>你几岁？</b>. <b>怎么样</b> hỏi tình trạng, đánh giá; <b>怎么</b> hỏi cách thức, đứng trước động từ.</div>
+`,
+g:[
+G(SORT,[
+ S(["他","是","谁"],"他是谁？","谁 (ai) thay cho người cần hỏi và đứng đúng vị trí của tân ngữ, cuối câu."),
+ S(["你","去","哪儿"],"你去哪儿？","哪儿 (đâu) thay cho nơi chốn và đứng sau 去. Không đảo lên đầu câu."),
+ S(["你","什么时候","去","学校"],["你什么时候去学校？","什么时候你去学校？"],"Từ chỉ thời gian đứng trước động từ: S + 什么时候 + V + O."),
+ S(["你","爸爸","多大"],"你爸爸多大？","多大 hỏi tuổi. Cấu trúc: S + 多大？"),
+]),
+G(FILL,[
+ F("你喝___？(gì)","什么","你喝什么？— 什么 thay cho đồ vật được uống, đứng sau động từ."),
+ F("你家有___个人？(mấy)","几","你家有几个人？— Số người trong gia đình nhỏ → 几 + lượng từ 个."),
+ F("这个___钱？(bao nhiêu)","多少","这个多少钱？— Hỏi giá dùng 多少钱."),
+ F("今天天气___？(thế nào)","怎么样","今天天气怎么样？— 怎么样 hỏi tình trạng, đánh giá."),
+]),
+G(TRANS,[
+ T("Bạn tên là gì?","你叫什么名字？","叫什么名字 = tên là gì."),
+ T("Bạn bao nhiêu tuổi?",["你多大？","你多大了？","你几岁？"],"多大 dùng cho người lớn / ngang tuổi. Với trẻ nhỏ thường nói 你几岁？."),
+ T("Khi nào bạn đi làm?",["你什么时候去上班？","什么时候你去上班？"],"什么时候 đứng trước động từ 去上班."),
+ T("Đi đến trường như thế nào?",["去学校怎么走？","怎么去学校？"],"怎么 hỏi cách thức, đứng trước động từ: 怎么走 (đi như thế nào) / 怎么去 (đi bằng cách nào)."),
+]),
+]},
+/* 3D */
+{name:"Câu hỏi lựa chọn với 还是",
+k:`
+<h3>4. Câu hỏi lựa chọn với 还是</h3>
+<p><b>还是</b> (háishi) nghĩa là "<b>hay là</b>", dùng để hỏi lựa chọn: <b>A 还是 B？</b></p>
+${E("你喝茶还是咖啡？","Nǐ hē chá háishi kāfēi?","Bạn uống trà hay cà phê?")}
+${E("他是老师还是学生？","Tā shì lǎoshī háishi xuésheng?","Anh ấy là giáo viên hay học sinh?")}
+${E("你今天去还是明天去？","Nǐ jīntiān qù háishi míngtiān qù?","Bạn hôm nay đi hay ngày mai đi?")}
+<ul class="ul">
+<li>Khi hai vế cùng động từ, có thể lặp lại động từ cho rõ nghĩa.</li>
+<li>Trả lời bằng cách chọn một vế: 我喝茶。</li>
+</ul>
+<div class="note"><b>Lưu ý:</b> câu có 还是 <b>không thêm 吗</b>. Còn "hoặc" trong câu trần thuật dùng <b>或者</b>: ${E("我喝茶或者咖啡。","Wǒ hē chá huòzhě kāfēi.","Tôi uống trà hoặc cà phê.")}</div>
+`,
+g:[
+G(SORT,[
+ S(["你","咖啡","茶","还是","喝"],["你喝茶还是咖啡？","你喝咖啡还是茶？"],"你喝 + A + 还是 + B. Hai vế có thể đổi chỗ cho nhau."),
+ S(["他","老师","是","还是","学生"],["他是老师还是学生？","他是学生还是老师？"],"他是 A 还是 B: 还是 nằm giữa hai lựa chọn."),
+ S(["你","今天","去","还是","明天","去"],["你今天去还是明天去？","你明天去还是今天去？"],"Hai vế cùng động từ 去 nên lặp lại: 今天去 还是 明天去."),
+ S(["他","在","家","还是","学校","在"],["他在家还是在学校？","他在学校还是在家？"],"在家 还是 在学校: mỗi vế đều có 在 (ở)."),
+]),
+G(FILL+" (还是 hoặc 吗)",[
+ F("你喝茶___咖啡？","还是","你喝茶还是咖啡？— Hỏi chọn một trong hai → 还是."),
+ F("你想看电影___看电视？","还是","你想看电影还是看电视？— Có hai lựa chọn → 还是."),
+ F("你去学校___去医院？","还是","你去学校还是去医院？— 去学校 还是 去医院."),
+ F("你是越南人___？(hỏi có / không)","吗","你是越南人吗？— Hỏi có/không dùng 吗, không có hai lựa chọn nên không dùng 还是."),
+]),
+G(TRANS,[
+ T("Bạn muốn ăn cơm hay ăn mì?",["你想吃米饭还是面条？","你想吃饭还是吃面条？"],"想 = muốn; 面条 = mì. 想吃 A 还是 B."),
+ T("Anh ấy là người Trung Quốc hay người Việt Nam?",["他是中国人还是越南人？","他是越南人还是中国人？"],"他是 A 还是 B."),
+ T("Đây là sách của bạn hay của anh ấy?",["这是你的书还是他的书？","这是你的还是他的？"],"你的书 还是 他的书: có thể rút gọn 你的 还是 他的."),
+ T("Bạn thích mèo hay chó?",["你喜欢猫还是狗？","你喜欢狗还是猫？"],"喜欢 = thích; 猫 = mèo; 狗 = chó."),
+]),
+]},
+]},
+
+/* 4 ============ 呢 ============ */
+{id:"t4",vi:"Trợ từ 呢",cn:"语气助词 呢",parts:[{name:"",
+k:`
+<p class="lead"><b>呢</b> (ne) là trợ từ ngữ khí đứng <b>cuối câu</b>, đọc nhẹ. Ở HSK1 có <b>ba cách dùng</b>:</p>
+<div class="tbw"><table class="tb"><thead><tr><th>Cách dùng</th><th>Cấu trúc</th><th>Ví dụ</th></tr></thead><tbody>
+<tr><td><b>1. Hỏi lại</b><br>"còn … thì sao?"</td><td class="fm">Mệnh đề, S + 呢？</td><td>${E("我很好，你呢？","Wǒ hěn hǎo, nǐ ne?","Tôi khỏe, còn bạn?")}</td></tr>
+<tr><td><b>2. Hỏi vị trí</b><br>"… đâu rồi?"</td><td class="fm">Danh từ + 呢？</td><td>${E("我的书呢？","Wǒ de shū ne?","Sách của tôi đâu?")}</td></tr>
+<tr><td><b>3. Đang diễn ra</b><br>nhấn mạnh hành động</td><td class="fm">S + 在 + V + (O) + 呢</td><td>${E("他在看书呢。","Tā zài kàn shū ne.","Anh ấy đang xem sách đấy.")}</td></tr>
+</tbody></table></div>
+<div class="note"><b>Lưu ý:</b>
+<ul class="ul">
+<li>Cách 1 cần có <b>ngữ cảnh</b>: phải nói về mình trước rồi mới hỏi lại "còn bạn?".</li>
+<li>呢 không dùng cùng 吗 trong một câu.</li>
+</ul></div>
+`,
+g:[
+G(SORT,[
+ S(["你","呢","我","很好"],"我很好，你呢？","Nói về mình trước (我很好), rồi dùng 你呢 để hỏi lại \"còn bạn thì sao?\"."),
+ S(["呢","我的","书"],"我的书呢？","Danh từ + 呢？ hỏi vị trí: \"… đâu rồi?\"."),
+ S(["呢","他","看","在","书"],"他在看书呢。","在 + V cho biết đang làm gì; 呢 cuối câu nhấn mạnh hành động đang diễn ra."),
+ S(["你","妈妈","呢"],"你妈妈呢？","Danh từ + 呢: hỏi \"còn mẹ bạn thì sao / đâu rồi?\" tuỳ ngữ cảnh."),
+]),
+G(FILL,[
+ F("我是学生，你___？","呢","我是学生，你呢？— Hỏi lại \"còn bạn?\"."),
+ F("我喝茶，他___？","呢","我喝茶，他呢？— Nói về mình rồi hỏi người khác: \"còn anh ấy?\"."),
+ F("我的手机___？(đâu)","呢","我的手机呢？— Hỏi vị trí đồ vật."),
+ F("他在吃饭___。","呢","他在吃饭呢。— 在…呢 diễn tả hành động đang diễn ra."),
+]),
+G(TRANS,[
+ T("Tôi khỏe, còn bạn?","我很好，你呢？","Câu nói về mình + 你呢？."),
+ T("Bố đâu rồi?","爸爸呢？","爸爸 = bố. Danh từ + 呢 để hỏi vị trí."),
+ T("Tôi là người Việt Nam, còn bạn?","我是越南人，你呢？","Mệnh đề giới thiệu + 你呢？."),
+ T("Cô ấy đang xem ti vi.",["她在看电视呢。","她在看电视。"],"在 + V = đang làm gì; thêm 呢 cuối câu để nhấn mạnh (không bắt buộc)."),
+]),
+]}]},
+
+/* 5 ============ 这 / 那 / 哪 ============ */
+{id:"t5",vi:"这 / 那 / 哪",cn:"指示代词与疑问代词",parts:[{name:"",
+k:`
+<p class="lead"><b>这</b> (gần) · <b>那</b> (xa) · <b>哪</b> (hỏi "nào"). Cả ba có cùng cách kết hợp.</p>
+<div class="tbw"><table class="tb"><thead><tr><th>Từ</th><th>Nghĩa</th><th>+ 儿 / 里</th><th>+ 是</th><th>+ lượng từ (+ danh từ)</th></tr></thead><tbody>
+<tr><td><b>这</b> zhè</td><td>này, đây</td><td>这儿 / 这里<br>(ở đây)</td><td>这是…<br>(đây là…)</td><td>这个人 (người này)<br>这本书 (quyển sách này)</td></tr>
+<tr><td><b>那</b> nà</td><td>kia, đó</td><td>那儿 / 那里<br>(ở kia)</td><td>那是…<br>(kia là…)</td><td>那个人 (người kia)<br>那本书 (quyển sách kia)</td></tr>
+<tr><td><b>哪</b> nǎ</td><td>nào (hỏi)</td><td>哪儿 / 哪里<br>(ở đâu)</td><td>哪个是…<br>(cái nào là…)</td><td>哪个人？(người nào?)<br>哪本书？(quyển sách nào?)</td></tr>
+</tbody></table></div>
+${E("这是书。","Zhè shì shū.","Đây là sách.")}
+${E("那里是医院。","Nàlǐ shì yīyuàn.","Ở kia là bệnh viện.")}
+${E("你是哪国人？","Nǐ shì nǎ guó rén?","Bạn là người nước nào?")}
+<div class="note"><b>Lưu ý:</b>
+<ul class="ul">
+<li>哪 <b>không đứng một mình</b> trước 是; nói <b>哪个是…</b> (cái nào là…).</li>
+<li>这 / 那 / 哪 trước danh từ thường cần <b>lượng từ</b>: 这<b>个</b>人, 那<b>本</b>书 (không nói <span class="bad">这人</span> trong câu cơ bản).</li>
+<li>Hỏi quốc tịch: 你是哪国人？</li>
+</ul></div>
+`,
+g:[
+G(SORT,[
+ S(["是","这","书"],"这是书。","这 + 是 + N: Đây là …"),
+ S(["医院","那里","是"],"那里是医院。","那里 (ở kia) làm chủ ngữ: Nơi + 是 + N."),
+ S(["个","这","人","是","越南人"],"这个人是越南人。","这 + 个 + 人 = người này; làm chủ ngữ, sau đó 是 + 越南人."),
+ S(["你","国","哪","是","人"],"你是哪国人？","哪国人 = người nước nào. 哪 đứng đúng vị trí của phần được hỏi."),
+]),
+G(FILL,[
+ F("___是书。(đây là)","这","这是书。— 这 (zhè) = đây."),
+ F("那___是学校。(ở kia: 儿 / 里)",["儿","里"],"那儿是学校 / 那里是学校。— 儿 hoặc 里 đều chỉ nơi chốn."),
+ F("___个人是中国人。(người kia)","那","那个人是中国人。— 那 (nà) = kia, đó."),
+ F("___个人是你朋友？(người nào)","哪","哪个人是你朋友？— 哪 (nǎ) = nào, dùng để hỏi."),
+]),
+G(TRANS,[
+ T("Đây là Việt Nam, kia là Trung Quốc.","这是越南，那是中国。","这是 + N, 那是 + N. 越南 = Việt Nam; 中国 = Trung Quốc."),
+ T("Ở đây là trường học.",["这里是学校。","这儿是学校。"],"这里 / 这儿 = ở đây; 学校 = trường học."),
+ T("Người kia là bạn tôi.",["那个人是我朋友。","那个人是我的朋友。"],"那个人 = người kia. 我朋友 có thể bỏ 的 vì là quan hệ thân thuộc."),
+ T("Người này là người Trung Quốc, người kia là người Việt Nam.","这个人是中国人，那个人是越南人。","两个分句 đối xứng: 这个人… , 那个人… ."),
+]),
+]}]},
+
+/* 6 ============ 的 ============ */
+{id:"t6",vi:"的",cn:"结构助词 的",
+intro:`<p class="lead"><b>的</b> (de) đứng giữa <b>định ngữ</b> (phần bổ nghĩa) và <b>trung tâm ngữ</b> (danh từ chính). Phần bổ nghĩa luôn đứng <b>trước</b> 的. Có <b>2 cách dùng</b>, bấm vào từng phần để xem:</p>`,
+bk:[
+["1. Sở hữu (của)",`
+<p><b>Cấu trúc:</b> Người sở hữu + <b>的</b> + danh từ</p>
+${E("我的名字","wǒ de míngzi","tên của tôi")}
+${E("他的老师","tā de lǎoshī","thầy giáo của anh ấy")}
+${E("老师的名片","lǎoshī de míngpiàn","danh thiếp của thầy")}
+<div class="note"><b>Lưu ý:</b> quan hệ <b>thân thuộc</b> có thể bỏ 的: 我妈妈, 我朋友.</div>`],
+["2. Định ngữ (bổ nghĩa)",`
+<p><b>Cấu trúc:</b> Định ngữ + <b>的</b> + trung tâm ngữ</p>
+${E("漂亮的女生","piàoliang de nǚshēng","nữ sinh xinh đẹp")}
+${E("我妈妈买的书","wǒ māma mǎi de shū","quyển sách mẹ tôi mua")}
+<p><b>Phân tích câu:</b></p>
+<div class="tbw"><table class="tb"><thead><tr><th>Định ngữ</th><th>的</th><th>Trung tâm ngữ</th></tr></thead><tbody>
+<tr><td class="cn">漂亮</td><td class="cn">的</td><td class="cn">女生</td></tr>
+<tr><td class="cn">我妈妈买</td><td class="cn">的</td><td class="cn">书</td></tr>
+</tbody></table></div>`]
+],
+outro:`<div class="tip"><b>Mẹo:</b> tiếng Việt nói "danh từ + của / mà + phần bổ nghĩa"; tiếng Trung <b>đảo ngược</b>: phần bổ nghĩa + 的 + danh từ.</div>`,
+parts:[{name:"",
+k:`
+<p class="lead"><b>的</b> (de) đứng giữa <b>định ngữ</b> (phần bổ nghĩa) và <b>trung tâm ngữ</b> (danh từ chính). Phần bổ nghĩa luôn đứng <b>trước</b> 的.</p>
+<div class="tbw"><table class="tb"><thead><tr><th>Cách dùng</th><th>Cấu trúc</th><th>Ví dụ</th></tr></thead><tbody>
+<tr><td><b>1. Sở hữu</b> (của)</td><td class="fm">Người sở hữu + 的 + danh từ</td><td>${E("我的名字","wǒ de míngzi","tên của tôi")}${E("他的老师","tā de lǎoshī","thầy giáo của anh ấy")}${E("老师的名片","lǎoshī de míngpiàn","danh thiếp của thầy")}</td></tr>
+<tr><td><b>2. Định ngữ</b> (bổ nghĩa)</td><td class="fm">Định ngữ + 的 + trung tâm ngữ</td><td>${E("漂亮的女生","piàoliang de nǚshēng","nữ sinh xinh đẹp")}${E("我妈妈买的书","wǒ māma mǎi de shū","quyển sách mẹ tôi mua")}</td></tr>
+</tbody></table></div>
+<h3>Phân tích câu</h3>
+<div class="tbw"><table class="tb"><thead><tr><th>Định ngữ</th><th>的</th><th>Trung tâm ngữ</th></tr></thead><tbody>
+<tr><td class="cn">漂亮</td><td class="cn">的</td><td class="cn">女生</td></tr>
+<tr><td class="cn">我妈妈买</td><td class="cn">的</td><td class="cn">书</td></tr>
+</tbody></table></div>
+<div class="tip"><b>Mẹo:</b> tiếng Việt nói "danh từ + của / mà + phần bổ nghĩa"; tiếng Trung <b>đảo ngược</b>: phần bổ nghĩa + 的 + danh từ.</div>
+<div class="note"><b>Lưu ý:</b> quan hệ <b>thân thuộc</b> có thể bỏ 的: 我妈妈, 我朋友.</div>
+`,
+g:[
+G(SORT,[
+ S(["这","是","我","的","名字"],"这是我的名字。","我 + 的 + 名字 = tên của tôi (sở hữu). Cả cụm làm tân ngữ sau 是."),
+ S(["他","的","老师","是","中国人"],"他的老师是中国人。","他的老师 = thầy giáo của anh ấy, làm chủ ngữ."),
+ S(["漂亮","的","女生","她","是"],"她是漂亮的女生。","漂亮的女生 = nữ sinh xinh đẹp. Định ngữ (漂亮) + 的 + trung tâm ngữ (女生)."),
+ S(["这","是","我妈妈","买","的","书"],"这是我妈妈买的书。","我妈妈买 là định ngữ, 书 là trung tâm ngữ: 我妈妈买 + 的 + 书."),
+]),
+G(FILL+" (的, hoặc × nếu không cần)",[
+ F("这是老师___名片。","的","这是老师的名片。— Sở hữu: người sở hữu + 的 + danh từ."),
+ F("我___妈妈是老师。(gõ × nếu không cần)",["×","x"],"我妈妈是老师。— Quan hệ thân thuộc thường bỏ 的. (Thêm 的 cũng không sai nhưng người bản xứ hay bỏ.)"),
+ F("她是漂亮___女生。","的","她是漂亮的女生。— Tính từ bổ nghĩa danh từ: Adj + 的 + N."),
+ F("这是我爸爸买___书。","的","这是我爸爸买的书。— Cụm động từ bổ nghĩa danh từ cũng cần 的."),
+]),
+G(TRANS,[
+ T("Đây là danh thiếp của thầy giáo.","这是老师的名片。","老师的名片: sở hữu → 的."),
+ T("Bạn của tôi là người Việt Nam.",["我的朋友是越南人。","我朋友是越南人。"],"Cả hai cách đều đúng: 朋友 là quan hệ thân thuộc nên có thể bỏ 的."),
+ T("Kia là nữ sinh xinh đẹp.","那是漂亮的女生。","漂亮的女生 = nữ sinh xinh đẹp."),
+ T("Quyển sách bố tôi mua là sách tiếng Trung.","我爸爸买的书是汉语书。","我爸爸买的书 = quyển sách bố tôi mua (làm chủ ngữ); 汉语书 = sách tiếng Trung."),
+]),
+]}]},
+
+/* 7 ============ 在 ============ */
+{id:"t7a",vi:"Vị trí của giới từ và phó từ trong câu",cn:"介词与副词的位置",
+intro:`<p class="lead">Trật tự từ là chìa khoá của câu tiếng Trung. Bấm vào từng phần để xem <b>phó từ</b> và <b>giới từ</b> đứng ở đâu.</p>`,
+bk:[
+["1. Phó từ (副词) đứng ở đâu?",`
+<p>Phó từ đứng <b>sau chủ ngữ</b> và <b>ngay trước động từ / tính từ</b> mà nó bổ nghĩa.</p>
+<div class="tip"><b>Cấu trúc:</b> S + <b>phó từ</b> + V / Adj</div>
+<div class="tbw"><table class="tb"><thead><tr><th>Phó từ</th><th>Nghĩa</th><th>Ví dụ</th></tr></thead><tbody>
+<tr><td>${P("很","hěn")}</td><td>rất</td><td>${E("我很忙。","Wǒ hěn máng.","Tôi rất bận.")}</td></tr>
+<tr><td>${P("太","tài")}</td><td>quá</td><td>${E("她太漂亮了。","Tā tài piàoliang le.","Cô ấy đẹp quá.")}</td></tr>
+<tr><td>${P("也","yě")}</td><td>cũng</td><td>${E("我也是学生。","Wǒ yě shì xuésheng.","Tôi cũng là học sinh.")}</td></tr>
+<tr><td>${P("都","dōu")}</td><td>đều</td><td>${E("他们都是学生。","Tāmen dōu shì xuésheng.","Họ đều là học sinh.")}</td></tr>
+<tr><td>${P("不","bù")}</td><td>không</td><td>${E("我不喝茶。","Wǒ bù hē chá.","Tôi không uống trà.")}</td></tr>
+<tr><td>${P("没","méi")}</td><td>chưa / không</td><td>${E("我没去学校。","Wǒ méi qù xuéxiào.","Tôi đã không đến trường.")}</td></tr>
+</tbody></table></div>
+<div class="note"><b>Lưu ý:</b>
+<ul class="ul">
+<li>Phó từ <b>không đứng trước chủ ngữ</b>: <span class="bad">很我忙</span> → <span class="good">我很忙</span>.</li>
+<li>Nhiều phó từ đi cùng nhau thì theo thứ tự: <b>也 → 都 → 不 / 没</b>. Ví dụ: ${E("我们也都不去。","Wǒmen yě dōu bú qù.","Chúng tôi cũng đều không đi.")}</li>
+</ul></div>`],
+["2. Giới từ (介词) đứng ở đâu?",`
+<p>Giới từ + danh từ tạo thành <b>cụm giới từ</b>, đứng <b>sau chủ ngữ</b> và <b>ngay trước động từ chính</b>.</p>
+<div class="sh">a) Cấu trúc chung</div>
+<div class="tip"><b>S + giới từ + O1 + V + O2</b></div>
+<div class="tbw"><table class="tb"><thead><tr><th>S</th><th>Giới từ</th><th>O1</th><th>V</th><th>O2</th></tr></thead><tbody>
+<tr><td>Chủ ngữ</td><td>giới từ</td><td>tân ngữ của giới từ<br>(địa điểm / người)</td><td>động từ</td><td>tân ngữ của động từ</td></tr>
+</tbody></table></div>
+<div class="note"><b>Lưu ý:</b> tiếng Việt nói "ăn cơm <i>ở nhà</i>" (nơi chốn đứng sau động từ), tiếng Trung đảo ngược: <b>ở nhà + ăn cơm</b>. <span class="bad">我吃饭在家</span> → <span class="good">我在家吃饭</span>.</div>
+
+<div class="sh">b) Giới từ 在 (ở, tại)</div>
+<div class="tip"><b>S + 在 + địa điểm + V + O</b></div>
+<div class="tbw"><table class="tb"><thead><tr><th>S</th><th>在</th><th>địa điểm</th><th>V</th><th>O</th></tr></thead><tbody>
+<tr><td class="cn">我</td><td class="cn"><b>在</b></td><td class="cn">学校</td><td class="cn">学习</td><td class="cn">汉语</td></tr>
+<tr><td class="cn">他</td><td class="cn"><b>在</b></td><td class="cn">家</td><td class="cn">吃</td><td class="cn">饭</td></tr>
+</tbody></table></div>
+${E("我在学校学习汉语。","Wǒ zài xuéxiào xuéxí Hànyǔ.","Tôi học tiếng Trung ở trường.")}
+${E("他在家吃饭。","Tā zài jiā chī fàn.","Anh ấy ăn cơm ở nhà.")}
+
+<div class="sh">c) Giới từ 给 (cho)</div>
+<div class="tip"><b>S + 给 + ai đó + V + O</b></div>
+<div class="tbw"><table class="tb"><thead><tr><th>S</th><th>给</th><th>ai đó</th><th>V</th><th>O</th></tr></thead><tbody>
+<tr><td class="cn">我</td><td class="cn"><b>给</b></td><td class="cn">妈妈</td><td class="cn">打</td><td class="cn">电话</td></tr>
+</tbody></table></div>
+${E("我给妈妈打电话。","Wǒ gěi māma dǎ diànhuà.","Tôi gọi điện cho mẹ.")}
+
+<div class="sh">d) Giới từ 和 / 跟 (cùng với)</div>
+<div class="tip"><b>S + 和 / 跟 + ai đó + V + O</b></div>
+${E("我和朋友去学校。","Wǒ hé péngyou qù xuéxiào.","Tôi cùng bạn đi đến trường.")}
+${E("我跟老师学汉语。","Wǒ gēn lǎoshī xué Hànyǔ.","Tôi học tiếng Trung với thầy giáo.")}
+
+<div class="sh">e) Giới từ 往 (về phía)</div>
+<div class="tip"><b>S + 往 + phương hướng + V</b></div>
+${E("你往前走。","Nǐ wǎng qián zǒu.","Bạn đi về phía trước.")}
+${E("往左拐。","Wǎng zuǒ guǎi.","Rẽ trái. (câu chỉ đường thường lược chủ ngữ)")}`],
+["3. Trật tự tổng hợp trong câu",`
+<div class="tip"><b>Công thức:</b> S + (thời gian) + <b>phó từ</b> + <b>giới từ + nơi chốn</b> + V + O</div>
+<div class="tbw"><table class="tb" style="min-width:640px"><thead><tr><th>Chủ ngữ</th><th>Thời gian</th><th>Phó từ</th><th>Giới từ + nơi</th><th>Động từ</th><th>Tân ngữ</th></tr></thead><tbody>
+<tr><td class="cn">我</td><td class="cn">明天</td><td class="cn">不</td><td class="cn">在家</td><td class="cn">吃</td><td class="cn">饭</td></tr>
+<tr><td class="cn">我们</td><td class="cn">今天</td><td class="cn">都</td><td class="cn">在学校</td><td class="cn">学习</td><td class="cn">汉语</td></tr>
+<tr><td class="cn">他</td><td>—</td><td class="cn">也</td><td class="cn">在医院</td><td class="cn">工作</td><td>—</td></tr>
+</tbody></table></div>
+${E("我明天不在家吃饭。","Wǒ míngtiān bú zài jiā chī fàn.","Ngày mai tôi không ăn cơm ở nhà.")}
+${E("我们今天都在学校学习汉语。","Wǒmen jīntiān dōu zài xuéxiào xuéxí Hànyǔ.","Hôm nay chúng tôi đều học tiếng Trung ở trường.")}
+${E("他也在医院工作。","Tā yě zài yīyuàn gōngzuò.","Anh ấy cũng làm việc ở bệnh viện.")}
+<div class="note"><b>Lưu ý:</b>
+<ul class="ul">
+<li>Phó từ <b>luôn đứng trước giới từ</b>: 也 / 都 / 不 + 在 + nơi chốn.</li>
+<li>Từ chỉ thời gian có thể đứng trước chủ ngữ: 明天我不在家吃饭。</li>
+</ul></div>`]
+],
+parts:[{name:"",
+k:"",
+g:[
+G(SORT,[
+ S(["我","很","忙"],"我很忙。","Phó từ 很 đứng sau chủ ngữ, ngay trước tính từ 忙."),
+ S(["他们","都","是","学生"],"他们都是学生。","都 đứng sau chủ ngữ 他们, ngay trước động từ 是."),
+ S(["我","吃饭","在","家"],"我在家吃饭。","Cụm giới từ 在家 đứng trước động từ 吃饭: S + 在 + nơi + V."),
+ S(["我们","也","在","学校","学习","汉语"],"我们也在学校学习汉语。","Phó từ 也 đứng trước giới từ 在: S + 也 + 在 + nơi + V + O."),
+ S(["我","妈妈","给","打电话"],"我给妈妈打电话。","S + 给 + ai đó + V + O: 给妈妈 (cho mẹ) đứng trước động từ 打电话."),
+]),
+G(FILL,[
+ F("我___是学生。(cũng)","也","我也是学生。— 也 (cũng) đứng sau chủ ngữ, trước động từ 是."),
+ F("我们___在家吃饭。(đều)","都","我们都在家吃饭。— 都 (đều) đứng trước giới từ 在."),
+ F("他___家看电视。(ở)","在","他在家看电视。— 在 + nơi chốn đứng trước động từ 看."),
+ F("我们都___在学校。(không)","不","我们都不在学校。— Thứ tự: 都 → 不 → 在."),
+]),
+G(TRANS,[
+ T("Tôi cũng là học sinh.","我也是学生。","也 đứng sau chủ ngữ và trước 是."),
+ T("Chúng tôi đều học ở trường.",["我们都在学校学习。","我们都在学校学习汉语。"],"都 → 在学校 → 学习: phó từ trước giới từ, giới từ trước động từ."),
+ T("Ngày mai tôi không ăn cơm ở nhà.",["明天我不在家吃饭。","我明天不在家吃饭。"],"Thời gian → phó từ 不 → 在家 → 吃饭."),
+ T("Họ đều không ở nhà.","他们都不在家。","都 đứng trước 不, rồi đến 在家."),
+ T("Tôi gọi điện cho mẹ.","我给妈妈打电话。","S + 给 + ai đó + V + O: 我 + 给妈妈 + 打电话."),
+]),
+]}]},
+
+{id:"t7",vi:"在",cn:"在：动词 · 介词",
+intro:`<p class="lead"><b>在</b> (zài) có <b>3 cách dùng</b>. Bấm vào từng phần để xem:</p>`,
+bk:[
+["1. 在 là động từ — “ở, có mặt tại”",`
+<p><b>Cấu trúc:</b> S + 在 + địa điểm</p>
+${E("我在家。","Wǒ zài jiā.","Tôi ở nhà.")}
+${E("爸爸不在家。","Bàba bú zài jiā.","Bố không ở nhà.")}
+${E("你在哪儿？","Nǐ zài nǎr?","Bạn ở đâu?")}
+<div class="note"><b>Lưu ý:</b> phủ định dùng <b>不在</b>; hỏi nơi chốn dùng 在哪儿.</div>`],
+["2. 在 là giới từ — “làm gì ở đâu”",`
+<p><b>Cấu trúc:</b> S + 在 + địa điểm + V + O</p>
+${E("我在学校学习汉语。","Wǒ zài xuéxiào xuéxí Hànyǔ.","Tôi học tiếng Trung ở trường.")}
+${E("我不在家吃饭。","Wǒ bú zài jiā chī fàn.","Tôi không ăn cơm ở nhà.")}
+<div class="note"><b>Lưu ý:</b> <b>địa điểm đứng trước động từ</b>, khác với tiếng Việt ("học tiếng Trung <i>ở trường</i>"). Phủ định: 不 đặt trước 在.</div>`],
+["3. 在 + V — “đang làm gì”",`
+<p><b>Cấu trúc:</b> S + 在 + V + O</p>
+${E("我在学习汉语。","Wǒ zài xuéxí Hànyǔ.","Tôi đang học tiếng Trung.")}
+${E("他在看书呢。","Tā zài kàn shū ne.","Anh ấy đang xem sách đấy.")}
+<div class="note"><b>Lưu ý:</b> có thể thêm 呢 cuối câu để nhấn mạnh. Phủ định dùng <b>没(有)在</b>: 我没在看电视。</div>`]
+],
+parts:[{name:"",
+k:`
+<div class="tbw"><table class="tb"><thead><tr><th>Cách dùng</th><th>Cấu trúc</th><th>Ví dụ</th></tr></thead><tbody>
+<tr><td><b>1. 在 là động từ</b><br>"ở, có mặt tại"</td><td class="fm">S + 在 + địa điểm</td><td>${E("我在家。","Wǒ zài jiā.","Tôi ở nhà.")}${E("爸爸不在家。","Bàba bú zài jiā.","Bố không ở nhà.")}${E("你在哪儿？","Nǐ zài nǎr?","Bạn ở đâu?")}</td></tr>
+<tr><td><b>2. 在 là giới từ</b><br>"làm gì ở đâu"</td><td class="fm">S + 在 + địa điểm + V + O</td><td>${E("我在学校学习汉语。","Wǒ zài xuéxiào xuéxí Hànyǔ.","Tôi học tiếng Trung ở trường.")}${E("我不在家吃饭。","Wǒ bú zài jiā chī fàn.","Tôi không ăn cơm ở nhà.")}</td></tr>
+<tr><td><b>3. 在 + V</b><br>"đang làm gì"</td><td class="fm">S + 在 + V + O</td><td>${E("我在学习汉语。","Wǒ zài xuéxí Hànyǔ.","Tôi đang học tiếng Trung.")}</td></tr>
+</tbody></table></div>
+<div class="note"><b>Lưu ý:</b>
+<ul class="ul">
+<li>Ở cách 2, <b>địa điểm đứng trước động từ</b>, khác với tiếng Việt ("học tiếng Trung <i>ở trường</i>").</li>
+<li>Phủ định: <b>不</b> đặt trước 在 (不在家, 不在家吃饭). Phủ định của "đang làm" (cách 3) dùng <b>没(有)在</b>: 我没在看电视。</li>
+<li>Cách 3 có thể thêm 呢 cuối câu: 我在学习汉语呢。</li>
+</ul></div>
+`,
+g:[
+G(SORT,[
+ S(["我","家","在"],"我在家。","S + 在 + địa điểm: 我(S) 在 家(địa điểm)."),
+ S(["在","爸爸","不","家"],"爸爸不在家。","不 đặt trước 在: 爸爸 + 不在 + 家."),
+ S(["在","学习","我","学校","汉语"],"我在学校学习汉语。","S + 在 + địa điểm + V + O: địa điểm (在学校) đứng trước động từ (学习)."),
+ S(["他","在","饭","家","吃"],"他在家吃饭。","他 + 在家 + 吃饭: ăn cơm ở nhà. Địa điểm trước động từ."),
+]),
+G(FILL,[
+ F("你___哪儿工作？(ở)","在","你在哪儿工作？— 在 + địa điểm đứng trước động từ 工作."),
+ F("我妈妈___在家。(không)","不","我妈妈不在家。— Phủ định của 在 là 不在."),
+ F("我在家___电视。(xem)","看","我在家看电视。— 看 = xem; 看电视 = xem ti vi."),
+ F("他在饭店___饭。(ăn)","吃","他在饭店吃饭。— 吃饭 = ăn cơm; 在饭店 (ở nhà hàng) đứng trước động từ."),
+ F("我___学习汉语。(đang)","在","我在学习汉语。— 在 + V = đang làm gì."),
+ F("她___看电视呢。(đang)","在","她在看电视呢。— 在 + V (+ 呢) diễn tả hành động đang diễn ra."),
+]),
+G(TRANS,[
+ T("Bạn ở đâu?","你在哪儿？","在 (ở) + 哪儿 (đâu). 哪儿 đứng đúng vị trí của địa điểm."),
+ T("Bố tôi không ở trường.","我爸爸不在学校。","不在 + địa điểm = không ở …"),
+ T("Cô ấy làm việc ở bệnh viện.","她在医院工作。","在医院 (ở bệnh viện) đứng trước 工作 (làm việc)."),
+ T("Hôm nay tôi ăn cơm ở nhà.",["今天我在家吃饭。","我今天在家吃饭。"],"Thời gian (今天) → địa điểm (在家) → động từ (吃饭)."),
+ T("Tôi đang học tiếng Trung.","我在学习汉语。","在 + V = đang làm gì; 学习汉语 = học tiếng Trung."),
+ T("Mẹ đang ăn cơm.",["妈妈在吃饭。","妈妈在吃饭呢。"],"妈妈 + 在 + 吃饭: đang ăn cơm. Thêm 呢 cuối câu cũng được."),
+]),
+]}]},
+
+/* 8 ============ CHỈ ĐƯỜNG ============ */
+{id:"t8",vi:"Chỉ đường và Phương hướng",cn:"问路与方位",
+intro:`<h3>1. Từ vựng: vị trí và phương hướng</h3>${FIG8}`,
+bk:[
+["2. Chỉ đường",`
+<div class="sh">a) Công thức chỉ đường</div>
+<div class="tip"><b>往 + phương hướng + động từ</b></div>
+<div class="tbw"><table class="tb"><thead><tr><th>往</th><th>Phương hướng</th><th>Động từ</th><th>Câu hoàn chỉnh</th><th>Nghĩa</th></tr></thead><tbody>
+<tr><td class="cn"><b>往</b></td><td class="cn">前</td><td class="cn">走</td><td>${P("往前走","wǎng qián zǒu")}</td><td>đi thẳng, đi tới</td></tr>
+<tr><td class="cn"><b>往</b></td><td class="cn">左</td><td class="cn">拐</td><td>${P("往左拐","wǎng zuǒ guǎi")}</td><td>rẽ trái</td></tr>
+<tr><td class="cn"><b>往</b></td><td class="cn">右</td><td class="cn">拐</td><td>${P("往右拐","wǎng yòu guǎi")}</td><td>rẽ phải</td></tr>
+<tr><td class="cn"><b>往</b></td><td class="cn">后</td><td class="cn">退</td><td>${P("往后退","wǎng hòu tuì")}</td><td>lùi lại</td></tr>
+<tr><td class="cn"><b>往</b></td><td class="cn">东</td><td class="cn">走</td><td>${P("往东走","wǎng dōng zǒu")}</td><td>đi về phía đông</td></tr>
+<tr><td class="cn"><b>往</b></td><td class="cn">北</td><td class="cn">跑</td><td>${P("往北跑","wǎng běi pǎo")}</td><td>chạy về phía bắc</td></tr>
+<tr><td class="cn"><b>往</b></td><td class="cn">前</td><td class="cn">冲</td><td>${P("往前冲","wǎng qián chōng")}</td><td>xông tới</td></tr>
+</tbody></table></div>
+<div class="note"><b>Lưu ý:</b> thêm <b>一直</b> (thẳng một mạch): 一直往前走. Nói thứ tự bước: <b>先…，再…</b> (trước tiên …, rồi …).</div>
+
+<div class="sh">b) Bảng phương hướng</div>
+<div class="tbw"><table class="tb"><thead><tr><th>Nhóm</th><th>Từ</th><th>Pinyin</th><th>Nghĩa</th></tr></thead><tbody>
+<tr><td rowspan="2"><b>Trước – sau</b></td><td class="cn">前</td><td>qián</td><td>phía trước</td></tr>
+<tr><td class="cn">后</td><td>hòu</td><td>phía sau</td></tr>
+<tr><td rowspan="2"><b>Trái – phải</b></td><td class="cn">左</td><td>zuǒ</td><td>bên trái</td></tr>
+<tr><td class="cn">右</td><td>yòu</td><td>bên phải</td></tr>
+<tr><td rowspan="4"><b>La bàn</b></td><td class="cn">东</td><td>dōng</td><td>đông</td></tr>
+<tr><td class="cn">西</td><td>xī</td><td>tây</td></tr>
+<tr><td class="cn">南</td><td>nán</td><td>nam</td></tr>
+<tr><td class="cn">北</td><td>běi</td><td>bắc</td></tr>
+<tr><td rowspan="2"><b>Lên – xuống</b></td><td class="cn">上</td><td>shàng</td><td>lên / trên</td></tr>
+<tr><td class="cn">下</td><td>xià</td><td>xuống / dưới</td></tr>
+<tr><td rowspan="2"><b>Vào – ra</b></td><td class="cn">里</td><td>lǐ</td><td>trong / vào</td></tr>
+<tr><td class="cn">外</td><td>wài</td><td>ngoài / ra</td></tr>
+</tbody></table></div>
+
+<div class="sh">c) Bảng động từ di chuyển</div>
+<div class="tbw"><table class="tb"><thead><tr><th>Động từ</th><th>Pinyin</th><th>Nghĩa</th><th>Ví dụ</th></tr></thead><tbody>
+<tr><td class="cn"><b>走</b></td><td>zǒu</td><td>đi (bộ)</td><td class="cn">往前走</td></tr>
+<tr><td class="cn"><b>去 / 来</b></td><td>qù / lái</td><td>đi (đến) / đến, lại</td><td class="cn">去学校 · 来这儿</td></tr>
+<tr><td class="cn"><b>拐</b></td><td>guǎi</td><td>quẹo, rẽ</td><td class="cn">往左拐</td></tr>
+<tr><td class="cn"><b>转</b></td><td>zhuǎn</td><td>rẽ, quay</td><td class="cn">往右转</td></tr>
+<tr><td class="cn"><b>跑</b></td><td>pǎo</td><td>chạy</td><td class="cn">往前跑</td></tr>
+<tr><td class="cn"><b>退</b></td><td>tuì</td><td>lùi</td><td class="cn">往后退</td></tr>
+<tr><td class="cn"><b>冲</b></td><td>chōng</td><td>xông, lao tới</td><td class="cn">往前冲</td></tr>
+<tr><td class="cn"><b>进 / 出</b></td><td>jìn / chū</td><td>vào / ra</td><td class="cn">进教室 · 出门</td></tr>
+<tr><td class="cn"><b>过</b></td><td>guò</td><td>đi qua, băng qua</td><td class="cn">过马路</td></tr>
+<tr><td class="cn"><b>回</b></td><td>huí</td><td>về</td><td class="cn">回家</td></tr>
+</tbody></table></div>
+<p style="font-size:14px;color:var(--muted)">Một số động từ như 拐, 转, 跑, 退, 冲 vượt ngoài từ vựng HSK1, chỉ cần nhận biết để học viên mở rộng thêm.</p>
+
+<div class="sh">d) Cụm từ để nhớ</div>
+<div class="tbw"><table class="tb"><thead><tr><th>Cụm từ</th><th>Pinyin</th><th>Nghĩa</th></tr></thead><tbody>
+<tr><td class="cn"><b>一直往前走</b></td><td>yìzhí wǎng qián zǒu</td><td>đi thẳng</td></tr>
+<tr><td class="cn"><b>往左拐 / 往右拐</b></td><td>wǎng zuǒ guǎi / wǎng yòu guǎi</td><td>rẽ trái / rẽ phải</td></tr>
+<tr><td class="cn"><b>往前走 / 往后退</b></td><td>wǎng qián zǒu / wǎng hòu tuì</td><td>đi tới / lùi lại</td></tr>
+<tr><td class="cn"><b>往东走 / 往北走</b></td><td>wǎng dōng zǒu / wǎng běi zǒu</td><td>đi về phía đông / bắc</td></tr>
+<tr><td class="cn"><b>往前跑 / 往前冲</b></td><td>wǎng qián pǎo / wǎng qián chōng</td><td>chạy tới / xông tới</td></tr>
+<tr><td class="cn"><b>过马路</b></td><td>guò mǎlù</td><td>băng qua đường</td></tr>
+<tr><td class="cn"><b>先往前走，再往左拐</b></td><td>xiān wǎng qián zǒu, zài wǎng zuǒ guǎi</td><td>trước tiên đi thẳng, rồi rẽ trái</td></tr>
+</tbody></table></div>
+
+<div class="sh">e) Cách chỉ đường</div>
+<div class="tbw"><table class="tb"><thead><tr><th>Bước</th><th>Câu</th><th>Nghĩa</th></tr></thead><tbody>
+<tr><td><b>1. Hỏi đường</b></td><td>${P("请问，医院在哪儿？","Qǐngwèn, yīyuàn zài nǎr?")}${P("去医院怎么走？","Qù yīyuàn zěnme zǒu?")}</td><td>Xin hỏi, bệnh viện ở đâu? / Đi đến bệnh viện như thế nào?</td></tr>
+<tr><td><b>2. Đi thẳng</b></td><td>${P("一直往前走。","Yìzhí wǎng qián zǒu.")}</td><td>Cứ đi thẳng.</td></tr>
+<tr><td><b>3. Rẽ</b></td><td>${P("再往左拐。","Zài wǎng zuǒ guǎi.")}</td><td>Rồi rẽ trái.</td></tr>
+<tr><td><b>4. Nói vị trí đích</b></td><td>${P("医院在学校后面。","Yīyuàn zài xuéxiào hòumiàn.")}</td><td>Bệnh viện ở sau trường học.</td></tr>
+<tr><td><b>5. Cảm ơn</b></td><td>${P("谢谢！/ 不客气。","Xièxie! / Bú kèqi.")}</td><td>Cảm ơn! / Không có gì.</td></tr>
+</tbody></table></div>
+<div class="tip"><b>Hội thoại mẫu:</b>
+${E("A：请问，医院在哪儿？","Qǐngwèn, yīyuàn zài nǎr?","A: Xin hỏi, bệnh viện ở đâu?")}
+${E("B：一直往前走，再往左拐。医院在学校后面。","Yìzhí wǎng qián zǒu, zài wǎng zuǒ guǎi. Yīyuàn zài xuéxiào hòumiàn.","B: Đi thẳng, rồi rẽ trái. Bệnh viện ở sau trường học.")}
+${E("A：谢谢！　B：不客气。","Xièxie! Bú kèqi.","A: Cảm ơn! B: Không có gì.")}</div>
+`],
+["3. Vị trí",`
+<div class="sh">a) Phương vị: từ chỉ hướng + 边 / 面</div>
+<div class="tbw"><table class="tb"><thead><tr><th>Cặp từ</th><th>Cách nói đầy đủ</th><th>Nghĩa</th></tr></thead><tbody>
+<tr><td class="cn">左 – 右</td><td class="cn">左边 zuǒbian · 右边 yòubian</td><td>bên trái · bên phải</td></tr>
+<tr><td class="cn">前 – 后</td><td class="cn">前面 qiánmiàn · 后面 hòumiàn</td><td>phía trước · phía sau</td></tr>
+<tr><td class="cn">上 – 下</td><td class="cn">上面 shàngmiàn · 下面 xiàmiàn</td><td>phía trên · phía dưới</td></tr>
+<tr><td class="cn">里 – 外</td><td class="cn">里面 lǐmiàn · 外面 wàimiàn</td><td>bên trong · bên ngoài</td></tr>
+<tr><td class="cn">东 – 西 – 南 – 北</td><td class="cn">东边 dōngbian · 西边 xībian · 南边 nánbian · 北边 běibian</td><td>phía đông · tây · nam · bắc</td></tr>
+</tbody></table></div>
+<div class="sh">b) Nơi chốn + phương vị</div>
+<div class="tbw"><table class="tb"><thead><tr><th>Cách ghép</th><th>Ví dụ</th></tr></thead><tbody>
+<tr><td><b>上 / 里</b> gắn trực tiếp sau danh từ</td><td>${E("桌子上","zhuōzi shang","trên bàn")}${E("家里","jiā li","trong nhà")}</td></tr>
+<tr><td><b>前 / 后 / 左 / 右</b> cần thêm 边 / 面</td><td>${E("学校后面","xuéxiào hòumiàn","sau trường học")}${E("医院左边","yīyuàn zuǒbian","bên trái bệnh viện")}</td></tr>
+</tbody></table></div>
+<div class="sh">c) Câu chỉ vị trí</div>
+<div class="tbw"><table class="tb"><thead><tr><th>Cấu trúc</th><th>Ví dụ</th><th>Dùng khi</th></tr></thead><tbody>
+<tr><td class="fm">Vật / người + <b>在</b> + nơi + phương vị</td><td>${E("书在桌子上。","Shū zài zhuōzi shang.","Sách ở trên bàn.")}${E("我家在学校后面。","Wǒ jiā zài xuéxiào hòumiàn.","Nhà tôi ở sau trường.")}</td><td>Biết vật / người, nói nó <b>ở đâu</b></td></tr>
+<tr><td class="fm">Nơi + <b>有</b> + vật / người</td><td>${E("桌子上有一本书。","Zhuōzi shang yǒu yì běn shū.","Trên bàn có một quyển sách.")}${E("家里有三个人。","Jiā li yǒu sān ge rén.","Trong nhà có ba người.")}</td><td>Biết nơi, nói ở đó <b>có gì</b></td></tr>
+</tbody></table></div>
+<div class="tip"><b>Mẹo:</b> 在 → "<i>cái gì</i> ở đâu" (vật đứng đầu câu). 有 → "<i>ở đâu</i> có cái gì" (nơi chốn đứng đầu câu).</div>
+`]
+],
+parts:[
+{name:"Chỉ đường",k:"",g:[
+G(SORT,[
+ S(["往","前","一直","走"],"一直往前走。","一直 (thẳng) + 往前 (về phía trước) + 走 (đi): đi thẳng."),
+ S(["往","拐","左"],"往左拐。","往 + phương hướng + động từ: 往左拐 (rẽ trái)."),
+ S(["往","东","走"],"往东走。","往 + 东 (phía đông) + 走: đi về phía đông."),
+]),
+G(FILL,[
+ F("一直往前___。(đi)","走","一直往前走。— 走 (zǒu) = đi."),
+ F("往右___。(rẽ)","拐","往右拐。— 拐 (guǎi) = rẽ."),
+]),
+G(TRANS,[
+ T("Xin hỏi, bệnh viện ở đâu?",["请问，医院在哪儿？","请问，医院在哪里？","请问医院在哪儿？"],"请问 = xin hỏi; 医院在哪儿 = bệnh viện ở đâu."),
+ T("Đi thẳng rồi rẽ trái.",["一直往前走，再往左拐。","一直往前走，然后往左拐。","往前走，再往左拐。"],"一直往前走 (đi thẳng), 再 (rồi), 往左拐 (rẽ trái)."),
+ T("Lùi lại!",["往后退！","往后退。"],"往 + 后 (phía sau) + 退 (lùi): lùi về phía sau."),
+]),
+]},
+{name:"Vị trí",k:"",g:[
+G(SORT,[
+ S(["在","桌子","书","上"],"书在桌子上。","Vật + 在 + nơi + phương vị: 书 + 在 + 桌子 + 上."),
+ S(["学校","医院","后面","在"],"学校在医院后面。","学校 + 在 + 医院后面: trường nằm ở sau bệnh viện."),
+]),
+G(FILL,[
+ F("桌子上___一本书。(có)","有","桌子上有一本书。— Nơi + 有 + vật: nói ở đó có gì."),
+ F("我家在学校___。(bên phải)",["右边","右面"],"我家在学校右边。— 右 + 边 (hoặc 面) = bên phải."),
+]),
+G(TRANS,[
+ T("Nhà tôi ở sau trường học.",["我家在学校后面。","我家在学校后边。"],"Vật + 在 + nơi + phương vị: 我家 + 在 + 学校 + 后面."),
+ T("Trong nhà có ba người.","家里有三个人。","Nơi + 有 + số lượng + người: 家里 (trong nhà) + 有 + 三个人."),
+]),
+]},
+]},
+
+/* 9 ============ 了 ============ */
+{id:"t9",vi:"Trợ từ 了",cn:"语气助词 / 动态助词 了",parts:[{name:"",
+k:`
+<p class="lead"><b>了</b> (le) cho biết một việc <b>đã hoàn thành</b> hoặc một <b>tình huống mới / sự thay đổi</b>. Nó <b>không phải</b> dấu hiệu của "thì quá khứ".</p>
+<div class="tbw"><table class="tb"><thead><tr><th>Cách dùng</th><th>Cấu trúc</th><th>Ví dụ</th></tr></thead><tbody>
+<tr><td><b>1. 了 cuối câu</b><br>việc đã xảy ra / tình huống mới</td><td class="fm">S + V (+ O) + 了</td><td>${E("我吃饭了。","Wǒ chī fàn le.","Tôi ăn cơm rồi.")}${E("下雨了。","Xià yǔ le.","Trời mưa rồi.")}${E("现在十二点了。","Xiànzài shí'èr diǎn le.","Bây giờ 12 giờ rồi.")}</td></tr>
+<tr><td><b>1b. 了 cuối câu</b><br>thể hiện <b>sự thay đổi</b></td><td class="fm">S + Adj / số / danh từ + 了</td><td>${E("我二十岁了。","Wǒ èrshí suì le.","Tôi 20 tuổi rồi.")}${E("他高了。","Tā gāo le.","Anh ấy cao lên rồi.")}</td></tr>
+<tr><td><b>2. 了 sau động từ</b><br>hành động hoàn thành (có số lượng)</td><td class="fm">S + V + 了 + số lượng + O</td><td>${E("我买了三本书。","Wǒ mǎi le sān běn shū.","Tôi đã mua ba quyển sách.")}</td></tr>
+<tr><td><b>3. 太…了</b><br>quá … rồi</td><td class="fm">太 + Adj + 了</td><td>${E("太好了！","Tài hǎo le!","Tốt quá!")}</td></tr>
+<tr><td><b>4. 不…了</b><br>không … nữa</td><td class="fm">S + 不 + V + 了</td><td>${E("我不去了。","Wǒ bú qù le.","Tôi không đi nữa.")}</td></tr>
+</tbody></table></div>
+<h3>Phủ định và câu hỏi</h3>
+<div class="tbw"><table class="tb"><thead><tr><th></th><th>Cấu trúc</th><th>Ví dụ</th></tr></thead><tbody>
+<tr><td><b>Phủ định</b></td><td class="fm">S + 没(有) + V &nbsp;(không dùng 了)</td><td>${E("我没吃饭。","Wǒ méi chī fàn.","Tôi chưa ăn cơm.")}</td></tr>
+<tr><td><b>Câu hỏi</b></td><td class="fm">…了吗？ / …了没有？</td><td>${E("你吃饭了吗？","Nǐ chī fàn le ma?","Bạn ăn cơm chưa?")}${E("你吃饭了没有？","Nǐ chī fàn le méiyǒu?","Bạn ăn cơm chưa?")}</td></tr>
+</tbody></table></div>
+<div class="note"><b>Lưu ý:</b>
+<ul class="ul">
+<li>Khi tân ngữ <b>không có số lượng</b> (吃饭, 喝茶…), thường đặt <b>了 ở cuối câu</b>: 我吃饭了。 Nếu có số lượng thì để 了 sau động từ: 我买<b>了</b>三本书。</li>
+<li><b>没</b> không đi với <b>了</b>: <span class="good">我没吃饭</span> ✓ &nbsp; <span class="bad">我没吃饭了</span> ✗</li>
+<li>Không dùng 了 với thói quen lặp lại: 我每天喝茶 (không thêm 了).</li>
+</ul></div>
+`,
+g:[
+G(SORT,[
+ S(["吃","你","了","吗","饭"],"你吃饭了吗？","Tân ngữ 饭 không có số lượng nên 了 đặt cuối câu, rồi thêm 吗: 你吃饭了吗？"),
+ S(["今天","下雨","了"],"今天下雨了。","了 cuối câu: tình huống mới (trời mưa rồi)."),
+ S(["我","买","三","了","本","书"],"我买了三本书。","Có số lượng (三本) nên 了 đứng ngay sau động từ: 买了三本书."),
+ S(["太","了","好"],"太好了！","Mẫu cố định: 太 + Adj + 了 = quá … rồi / … quá."),
+]),
+G(FILL+" (了, hoặc × nếu không cần)",[
+ F("我昨天没去学校___。(gõ × nếu không cần)",["×","x"],"我昨天没去学校。— 没 không đi với 了."),
+ F("你吃饭___吗？","了","你吃饭了吗？— Hỏi một việc đã xảy ra chưa: …了吗？."),
+ F("现在十二点___。","了","现在十二点了。— 了 cuối câu diễn tả sự thay đổi: đã đến 12 giờ rồi."),
+ F("他买___三个苹果。(了 đứng sau động từ)","了","他买了三个苹果。— Có số lượng (三个) nên 了 đứng ngay sau động từ 买."),
+]),
+G(TRANS,[
+ T("Tôi ăn cơm rồi.",["我吃饭了。","我吃了。"],"了 cuối câu: việc đã xảy ra. Tân ngữ không có số lượng nên 了 để cuối câu."),
+ T("Hôm nay tôi mua một quyển sách.",["今天我买了一本书。","我今天买了一本书。"],"有数量 (一本) → 买了一本书. 了 đứng sau động từ."),
+ T("Bạn uống trà chưa?",["你喝茶了吗？","你喝茶了没有？"],"Hỏi việc đã làm chưa: …了吗？ hoặc …了没有？."),
+ T("Trời mưa rồi.","下雨了。","了 cuối câu: tình huống mới xuất hiện."),
+]),
+]}]},
+];
+
+/* ---------- logic ---------- */
+const norm=s=>String(s).toLowerCase().replace(/[\s\u3000，。？！、；：,.?!;:…·"'“”‘’（）()\-—~～]/g,"").replace(/^x$/,"×");
+const mk=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e};
+const shuffle=a=>{const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r};
+
+function buildQuestion(q,num,onChange){
+  const el=mk("div","q");
+  const qn=mk("div","qn",num);
+  const qb=mk("div","qb");
+  const fb=mk("div","fb");fb.hidden=true;
+  let status=null, getVal, resetInput;
+
+  const prompt=mk("div","prompt");
+  if(q.k==="s"){
+    prompt.textContent="Chạm vào các từ để xếp thành câu hoàn chỉnh:";
+    const line=mk("div","line"), pool=mk("div","pool");
+    const mkChip=t=>{const c=mk("button","chip");c.type="button";c.textContent=t;c.onclick=()=>{ if(el.dataset.lock)return; c.parentNode===pool?line.appendChild(c):pool.appendChild(c)};return c};
+    resetInput=()=>{line.innerHTML="";pool.innerHTML="";let s=shuffle(q.w),n=0;while(s.join("")===q.w.join("")&&q.w.length>1&&n++<10)s=shuffle(q.w);s.forEach(t=>pool.appendChild(mkChip(t)))};
+    getVal=()=>[...line.children].map(c=>c.textContent).join("");
+    qb.append(prompt,line,pool);
+  } else if(q.k==="f"){
+    const m=q.q.match(/^(.*?)(\(.*\))?$/s); 
+    const hintMatch=q.q.match(/\(([^()]*)\)\s*$/); 
+    const hint=hintMatch?hintMatch[0].trim():"";
+    const main=hintMatch?q.q.slice(0,hintMatch.index).trim():q.q;
+    const row=mk("div","fillrow");
+    const parts=main.split("___");
+    const inputs=[];
+    parts.forEach((p,i)=>{
+      if(p)row.appendChild(document.createTextNode(p));
+      if(i<parts.length-1){const inp=mk("input","fi");inp.type="text";inp.setAttribute("autocomplete","off");inp.setAttribute("autocapitalize","off");inp.spellcheck=false;inp.setAttribute("lang","zh");
+        inp.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.isComposing)check()});inputs.push(inp);row.appendChild(inp)}
+    });
+    if(hint)row.appendChild(mk("span","hint",hint));
+    prompt.textContent="Điền từ còn thiếu:";
+    getVal=()=>inputs.map(i=>i.value).join("");
+    resetInput=()=>inputs.forEach(i=>{i.value="";i.disabled=false});
+    el._lock=v=>inputs.forEach(i=>i.disabled=v);
+    qb.append(prompt,row);
+  } else {
+    prompt.innerHTML=`Dịch sang tiếng Trung: <span class="vi">${q.q}</span>`;
+    const inp=mk("input","ti");inp.type="text";inp.placeholder="Nhập câu tiếng Trung…";inp.setAttribute("autocomplete","off");inp.spellcheck=false;inp.setAttribute("lang","zh");
+    inp.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.isComposing)check()});
+    getVal=()=>inp.value;
+    resetInput=()=>{inp.value="";inp.disabled=false};
+    el._lock=v=>inp.disabled=v;
+    qb.append(prompt,inp);
+  }
+
+  const bar=mk("div","qbar");
+  const bC=mk("button","btn primary","Kiểm tra"),bS=mk("button","btn ghost","Xem đáp án"),bR=mk("button","btn plain","Làm lại");
+  [bC,bS,bR].forEach(b=>b.type="button");
+  bar.append(bC,bS,bR);qb.append(bar,fb);
+  el.append(qn,qb);
+
+  const answerHtml=()=>{
+    const alt=q.a.slice(1);
+    return `<div class="ans">${q.a[0]}</div>`+(alt.length?`<div class="alt">Cách viết khác: ${alt.join(" / ")}</div>`:"");
+  };
+  const lock=v=>{ if(q.k==="s"){ if(v)el.dataset.lock="1";else delete el.dataset.lock } else el._lock&&el._lock(v) };
+  const setStatus=s=>{status=s;el.classList.remove("ok","wrong","shown");if(s==="ok")el.classList.add("ok");if(s==="wrong")el.classList.add("wrong");if(s==="shown")el.classList.add("shown");onChange()};
+
+  function check(){
+    if(status==="ok"||status==="shown")return;
+    const v=getVal();
+    if(!norm(v)){fb.hidden=false;fb.innerHTML=`<div class="res no">Hãy nhập / sắp xếp câu trả lời trước nhé.</div>`;return}
+    const ok=q.a.some(a=>norm(a)===norm(v));
+    fb.hidden=false;
+    if(ok){
+      fb.innerHTML=`<div class="res ok">✓ Chính xác!</div>${answerHtml()}<div class="why"><b>Giải thích:</b> ${q.e}</div>`;
+      lock(true);bC.disabled=true;setStatus("ok");
+    } else {
+      const msg=q.k==="t"?"Chưa khớp với đáp án mẫu. Bạn có thể đã viết đúng theo cách khác. Hãy thử lại hoặc bấm “Xem đáp án” để so sánh.":"✗ Chưa đúng, hãy thử lại hoặc bấm “Xem đáp án”.";
+      fb.innerHTML=`<div class="res no">${msg}</div>`;
+      setStatus("wrong");
+    }
+  }
+  function show(){
+    fb.hidden=false;
+    fb.innerHTML=`<div class="res sh">Đáp án</div>${answerHtml()}<div class="why"><b>Giải thích:</b> ${q.e}</div>`;
+    lock(true);bC.disabled=true;setStatus("shown");
+  }
+  function reset(){
+    resetInput();lock(false);bC.disabled=false;fb.hidden=true;fb.innerHTML="";setStatus(null);
+  }
+  bC.onclick=check;bS.onclick=show;bR.onclick=reset;
+  resetInput();
+  el._status=()=>status;el._reset=reset;el._check=check;
+  return el;
+}
+
+const topicState={}; // id -> {correct,total}
+function buildTopic(t,idx){
+  const page=mk("section");page.id=t.id;page.hidden=true;
+  const prev=TOPICS[idx-1],next=TOPICS[idx+1];
+  page.innerHTML=`
+   <div class="topbar"><a class="back" href="#/">← Quay lại danh sách</a><span class="crumb">${idx+1}. ${t.vi}</span></div>
+   <header class="thead"><div class="no">${idx+1}</div><div><h2>${t.vi}</h2><div class="cnsub">${t.cn}</div></div></header>
+   <div class="tabs" role="tablist">
+     <a class="tab" role="tab" data-tab="bikip" href="#/${t.id}/bikip" style="text-decoration:none">Bí Kíp <small>秘笈</small></a>
+     <a class="tab" role="tab" data-tab="luyen" href="#/${t.id}/luyen" style="text-decoration:none">Luyện Công <small>练功</small></a>
+   </div>`;
+  const pBi=mk("div","panel");pBi.dataset.p="bikip";
+  const pLu=mk("div","panel");pLu.dataset.p="luyen";pLu.hidden=true;
+
+  const multi=t.parts.length>1;
+  const accordion=(title,content)=>{
+    const w=mk("div","acc");
+    const h=mk("button","acc-h",`<span>${title}</span><span class="chev">▾</span>`);h.type="button";h.setAttribute("aria-expanded","false");
+    const b=mk("div","acc-b");b.hidden=true;
+    if(typeof content==="string")b.innerHTML=content;else b.append(content);
+    h.onclick=()=>{const open=b.hidden;b.hidden=!open;h.setAttribute("aria-expanded",open);w.classList.toggle("open",open)};
+    w.append(h,b);return w;
+  };
+
+  // Bi kip
+  if(t.html){ pBi.insertAdjacentHTML("beforeend",t.html); }
+  else if(t.bk){
+    if(t.intro)pBi.insertAdjacentHTML("beforeend",t.intro);
+    t.bk.forEach(x=>pBi.append(accordion(x[0],x[1])));
+    if(t.outro)pBi.insertAdjacentHTML("beforeend",t.outro);
+  }
+  else if(!multi){ pBi.insertAdjacentHTML("beforeend",t.parts[0].k); }
+  else{
+    t.parts.forEach((p,pi)=>{
+      let k=p.k;
+      if(pi===0){const cut=k.indexOf("<h3>");if(cut>0){pBi.insertAdjacentHTML("beforeend",k.slice(0,cut));k=k.slice(cut)}}
+      k=k.replace(/<h3>.*?<\/h3>/s,"");
+      pBi.append(accordion(`${pi+1}. ${p.name}`,k));
+    });
+  }
+
+  // Luyen cong
+  const total=t.parts.reduce((a,p)=>a+p.g.reduce((b,g)=>b+g.q.length,0),0); topicState[t.id]={correct:0,total};
+  const subtabs=mk("div","subtabs");
+  const holders=[];
+  const updateTopic=()=>{
+    let c=0;holders.forEach(h=>c+=h.correct());
+    topicState[t.id].correct=c;updateHome();
+  };
+  t.parts.forEach((p,pi)=>{
+    const holder=mk("div");
+    const qs=[];
+    const bar=mk("div","scorebar");
+    const score=mk("span","score");
+    const btns=mk("div","qbar");
+    const bAll=mk("button","btn primary","Kiểm tra tất cả");
+    const bRe=mk("button","btn plain","Làm lại cả phần");
+    [bAll,bRe].forEach(b=>b.type="button");
+    btns.append(bAll,bRe);bar.append(score,btns);
+    const upd=()=>{const c=qs.filter(q=>q._status()==="ok").length;score.textContent=`Đúng: ${c}/${qs.length}`;updateTopic()};
+    holder.append(bar);
+    let n=0;
+    p.g.forEach(g=>{
+      holder.append(mk("div","gt",g.t));
+      g.q.forEach(q=>{const qe=buildQuestion(q,++n,upd);qs.push(qe);holder.append(qe)});
+    });
+    bAll.onclick=()=>qs.forEach(q=>q._check());
+    bRe.onclick=()=>qs.forEach(q=>q._reset());
+    holder.correct=()=>qs.filter(q=>q._status()==="ok").length;
+    score.textContent=`Đúng: 0/${qs.length}`;
+    holders.push(holder);
+    pLu.append(multi?accordion((t.bk&&t.bk[pi])?t.bk[pi][0]:`${pi+1}. ${p.name}`,holder):holder);
+  });
+
+  page.append(pBi,pLu);
+  page.insertAdjacentHTML("beforeend",`<nav class="pnav">
+    ${prev?`<a href="#/${prev.id}/bikip">← ${idx}. ${prev.vi}</a>`:`<span></span>`}
+    <a href="#/">☰ Danh sách</a>
+    ${next?`<a href="#/${next.id}/bikip">${idx+2}. ${next.vi} →</a>`:`<span></span>`}
+  </nav>`);
+  return page;
+}
+
+/* ---------- build UI ---------- */
+const listEl=document.getElementById("list"),pagesEl=document.getElementById("pages"),homeEl=document.getElementById("home");
+const pageMap={};
+TOPICS.forEach((t,i)=>{
+  const a=mk("a","item");a.href=`#/${t.id}/bikip`;
+  a.innerHTML=`<div class="no">${i+1}</div><div><div class="tt">${t.vi}</div><div class="sub cn">${t.cn}</div></div><div class="prog" data-prog="${t.id}"></div>`;
+  listEl.append(a);
+  const pg=buildTopic(t,i);pagesEl.append(pg);pageMap[t.id]=pg;
+});
+function updateHome(){
+  document.querySelectorAll("[data-prog]").forEach(e=>{
+    const s=topicState[e.dataset.prog];
+    e.textContent=s.correct?`${s.correct}/${s.total} ✓`:"";
+  });
+}
+
+/* ---------- falling leaves & hanging leaves ---------- */
+const LEAF={
+ maple:c=>`<svg viewBox="0 0 40 46"><path d="M20 2 L24 11 L32 8 L29 17 L38 17 L31 24 L35 31 L26 29 L20 38 L14 29 L5 31 L9 24 L2 17 L11 17 L8 8 L16 11 Z" fill="${c}"/><path d="M20 38 L20 45" stroke="${c}" stroke-width="2.5" stroke-linecap="round"/><path d="M20 8 V34 M20 24 L10 17 M20 24 L30 17" stroke="rgba(255,255,255,.5)" stroke-width="1" fill="none"/></svg>`,
+ ginkgo:c=>`<svg viewBox="0 0 40 46"><path d="M20 32 C8 30 2 18 4 8 C10 12 16 10 20 14 C24 10 30 12 36 8 C38 18 32 30 20 32 Z" fill="${c}"/><path d="M20 32 L20 44" stroke="${c}" stroke-width="2.5" stroke-linecap="round"/><path d="M20 32 L11 12 M20 32 L20 17 M20 32 L29 12" stroke="rgba(255,255,255,.5)" stroke-width="1" fill="none"/></svg>`
+};
+const MAPLE=["#e8624a","#f08a4b","#d9483b","#f4a259"],GINKGO=["#f6d365","#f2c94c","#fbe08a"];
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+(function(){
+  const box=document.createElement("div");box.className="leaves";box.setAttribute("aria-hidden","true");
+  for(let i=0;i<5;i++){
+    const kind=i%2?"maple":"ginkgo",w=18+Math.random()*16;
+    const d=document.createElement("div");d.className="lf";
+    d.style.cssText=`left:${(Math.random()*100).toFixed(1)}%;width:${w.toFixed(0)}px;--dx:${(Math.random()*200-60).toFixed(0)}px;animation-duration:${(22+Math.random()*12).toFixed(1)}s;animation-delay:-${(Math.random()*34).toFixed(1)}s`;
+    d.innerHTML=LEAF[kind](pick(kind==="maple"?MAPLE:GINKGO));
+    const sv=d.firstChild;
+    if(sv&&sv.style){sv.style.animationDuration=(3+Math.random()*3).toFixed(1)+"s";sv.style.animationDelay="-"+(Math.random()*4).toFixed(1)+"s"}
+    box.append(d);
+  }
+  document.body.append(box);
+  const hero=homeEl.querySelector(".hero");
+  const pend=(left,len,kind,r,dur,cls)=>`<div class="pend ${cls||""}" style="left:${left};--r:${r}deg;--d:${dur}s"><span class="str" style="height:${len}px"></span><span class="pl" style="width:30px">${LEAF[kind](pick(kind==="maple"?MAPLE:GINKGO))}</span></div>`;
+  if(hero)hero.insertAdjacentHTML("afterbegin",pend("4%",70,"maple",8,4.6)+pend("13%",36,"ginkgo",11,3.6,"in")+pend("86%",44,"ginkgo",10,4.1,"in")+pend("95%",80,"maple",7,5));
+})();
+
+/* ---------- router ---------- */
+function route(hash){
+  const h=(hash||"").replace(/^#\/?/,"").split("/");
+  const id=h[0],tab=h[1]==="luyen"?"luyen":"bikip";
+  const pg=pageMap[id];
+  homeEl.hidden=!!pg;
+  Object.values(pageMap).forEach(p=>p.hidden=p!==pg);
+  if(pg){
+    pg.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===tab));
+    pg.querySelectorAll(".panel").forEach(p=>p.hidden=p.dataset.p!==tab);
+    document.title=`${TOPICS.find(t=>t.id===id).vi} · Mê Trận Ngự Pháp HSK1`;
+  } else document.title="Mê Trận Ngự Pháp HSK1";
+  window.scrollTo(0,0);
+}
+document.addEventListener("click",e=>{
+  const a=e.target.closest&&e.target.closest('a[href^="#/"]');
+  if(!a)return;
+  e.preventDefault();
+  const h=a.getAttribute("href");
+  try{history.pushState(null,"",h)}catch(err){}
+  route(h);
+});
+window.addEventListener("popstate",()=>route(location.hash));
+window.addEventListener("hashchange",()=>route(location.hash));
+let startHash="";try{startHash=location.hash}catch(err){}
+route(startHash);
+</script>
+</body>
+</html>
