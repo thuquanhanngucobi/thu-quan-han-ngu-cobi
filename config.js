@@ -68,8 +68,9 @@ const COBI_DATA = {
       {
         id: "ttc-grammar", name: "Mê Trận Ngự Pháp", desc: "Ngữ pháp · Cấu trúc · Cách dùng", icon: "法",
          subModules: [
-          { id: "ttc-g1", name: "TRÚC CƠ - HSK2", path: "./tang-thu-cac/NGUPHAP/HSK2.html" },
-          { id: "ttc-g2", name: "KIM ĐAN - HSK3", path: "./tang-thu-cac/NGUPHAP/HSK3.html" }
+          { id: "ttc-g1", name: "LUYỆN KHÍ - HSK1", path: "./tang-thu-cac/NGUPHAP/HSK1.html" },
+          { id: "ttc-g2", name: "TRÚC CƠ - HSK2", path: "./tang-thu-cac/NGUPHAP/HSK2.html" },
+          { id: "ttc-g3", name: "KIM ĐAN - HSK3", path: "./tang-thu-cac/NGUPHAP/HSK3.html" }
         ]
       },
       {
