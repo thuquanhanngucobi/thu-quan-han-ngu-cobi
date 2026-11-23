@@ -150,6 +150,16 @@ input:focus{outline:2px solid var(--gold)}
 @keyframes swing{0%{transform:rotate(calc(var(--r,8deg)*-1))}100%{transform:rotate(var(--r,8deg))}}
 @media(max-width:560px){.pend.in{display:none}}
 @media(prefers-reduced-motion:reduce){.lf,.lf>svg,.pend{animation:none}.leaves{display:none}}
+ruby{ruby-position:over}
+rt{display:none;font-family:"Noto Sans SC",system-ui,sans-serif;font-weight:400;font-size:.5em;color:var(--muted);letter-spacing:0;text-align:center}
+body.show-py rt{display:ruby-text}
+.fillrow .hint{display:none}
+body.show-hint .fillrow .hint,.fillrow .hint.instr{display:inline}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.opt{display:inline-flex;gap:8px;align-items:center;padding:7px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-weight:600;font-size:14px;color:var(--muted)}
+.opt .st{font-size:11px;padding:1px 8px;border-radius:999px;background:var(--paper2)}
+.opt[aria-pressed=true]{background:var(--red);color:#fff;border-color:var(--red)}
+.opt[aria-pressed=true] .st{background:rgba(255,255,255,.25)}
 </style>
 </head>
 <body>
@@ -914,6 +924,51 @@ G(TRANS,[
 ];
 
 /* ---------- logic ---------- */
+/* ---------- pinyin ---------- */
+const PYS="我 wǒ,叫 jiào,你 nǐ,什 shén,么 me,名 míng,字 zì,越 yuè,南 nán,人 rén,是 shì,她 tā,中 zhōng,国 guó,他 tā,美 měi,日 rì,本 běn,韩 hán,不 bù,喝 hē,咖 kā,啡 fēi,没 méi,去 qù,学 xué,校 xiào,有 yǒu,哥 gē,老 lǎo,师 shī,医 yī,生 shēng,钱 qián,昨 zuó,天 tiān,看 kàn,电 diàn,视 shì,今 jīn,气 qì,好 hǎo,吃 chī,肉 ròu,上 shàng,班 bān,吗 ma,汉 hàn,语 yǔ,米 mǐ,饭 fàn,茶 chá,说 shuō,笔 bǐ,忙 máng,喜 xǐ,欢 huan,这 zhè,个 gè,妹 mèi,谁 shéi,哪 nǎ,儿 ér,时 shí,候 hòu,爸 bà,多 duō,大 dà,家 jiā,几 jǐ,少 shǎo,怎 zěn,样 yàng,了 le,岁 suì,走 zǒu,还 hái,明 míng,在 zài,想 xiǎng,影 yǐng,院 yuàn,面 miàn,条 tiáo,的 de,书 shū,猫 māo,狗 gǒu,呢 ne,很 hěn,妈 mā,手 shǒu,机 jī,那 nà,里 lǐ,朋 péng,友 yǒu,两 liǎng,分 fēn,句 jù,漂 piào,亮 liàng,女 nǚ,买 mǎi,片 piàn,们 men,都 dōu,也 yě,习 xí,给 gěi,打 dǎ,话 huà,工 gōng,作 zuò,店 diàn,往 wǎng,前 qián,一 yī,直 zhí,拐 guǎi,左 zuǒ,东 dōng,右 yòu,请 qǐng,问 wèn,再 zài,然 rán,后 hòu,退 tuì,桌 zhuō,子 zi,边 biān,三 sān,下 xià,雨 yǔ,太 tài,现 xiàn,十 shí,二 èr,点 diǎn,苹 píng,果 guǒ,数 shù,量 liàng,跟 gēn,和 hé,电 diàn,苹 píng";
+const PWS="什么 shén me,名字 míng zi,学生 xué sheng,妈妈 mā ma,爸爸 bà ba,哥哥 gē ge,妹妹 mèi mei,朋友 péng you,喜欢 xǐ huan,桌子 zhuō zi,时候 shí hou,多少 duō shao,漂亮 piào liang,哪儿 nǎ r,那儿 nà r,这儿 zhè r,还是 hái shi,怎么样 zěn me yàng,怎么 zěn me,左边 zuǒ bian,右边 yòu bian,前边 qián bian,后边 hòu bian,老师 lǎo shī";
+const PY={},PW={};
+PYS.split(",").forEach(x=>{const [c,p]=x.split(" ");PY[c]=p});
+PWS.split(",").forEach(x=>{const i=x.indexOf(" ");PW[x.slice(0,i)]=x.slice(i+1)});
+const HAN=/[一-鿿]/;
+const pyTone=sy=>{const m=["āáǎà","ēéěè","īíǐì","ōóǒò","ūúǔù","ǖǘǚǜ"];for(const g of m)for(let j=0;j<4;j++)if(sy.includes(g[j]))return j+1;return 0};
+function pinText(str){
+  const out=[];let i=0;
+  while(i<str.length){
+    const ch=str[i];
+    if(!HAN.test(ch)){out.push({t:ch});i++;continue}
+    let hit=null;
+    for(let L=4;L>=2&&!hit;L--){const w=str.substr(i,L);if(PW[w])hit=w}
+    if(hit){const sy=PW[hit].split(" ");[...hit].forEach((c,k)=>out.push({c,p:sy[k]}));i+=hit.length;continue}
+    out.push({c:ch,p:PY[ch]||""});i++;
+  }
+  out.forEach((o,k)=>{
+    if(!o.c)return;
+    const nx=out[k+1]&&out[k+1].c?out[k+1]:null;
+    const t=nx?pyTone(nx.p):-1;
+    if(o.c==="不"&&t===4)o.p="bú";
+    if(o.c==="一"&&nx)o.p=t===4?"yí":"yì";
+  });
+  return out.map(o=>o.c?`<ruby>${o.c}<rt>${o.p}</rt></ruby>`:o.t).join("");
+}
+const pin=html=>String(html).split(/(<[^>]*>)/).map(seg=>seg[0]==="<"?seg:pinText(seg)).join("");
+const OPT={py:false,hint:false};
+try{OPT.py=localStorage.getItem("hsk1py")==="1";OPT.hint=localStorage.getItem("hsk1hint")==="1"}catch(e){}
+function applyOpts(){
+  document.body.classList.toggle("show-py",OPT.py);document.body.classList.toggle("show-hint",OPT.hint);
+  document.querySelectorAll(".opt").forEach(b=>{const on=OPT[b.dataset.k];b.setAttribute("aria-pressed",on);b.querySelector(".st").textContent=on?"BẬT":"TẮT"});
+}
+function makeOpts(){
+  const w=mk("div","opts");
+  [["py","Pinyin"],["hint","Gợi ý nghĩa"]].forEach(([k,l])=>{
+    const b=mk("button","opt",`<span>${l}</span><span class="st"></span>`);b.type="button";b.dataset.k=k;
+    b.onclick=()=>{OPT[k]=!OPT[k];try{localStorage.setItem(k==="py"?"hsk1py":"hsk1hint",OPT[k]?"1":"0")}catch(e){}applyOpts()};
+    w.append(b);
+  });
+  return w;
+}
+
+
 const norm=s=>String(s).toLowerCase().replace(/[\s\u3000，。？！、；：,.?!;:…·"'“”‘’（）()\-—~～]/g,"").replace(/^x$/,"×");
 const mk=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e};
 const shuffle=a=>{const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r};
@@ -929,9 +984,9 @@ function buildQuestion(q,num,onChange){
   if(q.k==="s"){
     prompt.textContent="Chạm vào các từ để xếp thành câu hoàn chỉnh:";
     const line=mk("div","line"), pool=mk("div","pool");
-    const mkChip=t=>{const c=mk("button","chip");c.type="button";c.textContent=t;c.onclick=()=>{ if(el.dataset.lock)return; c.parentNode===pool?line.appendChild(c):pool.appendChild(c)};return c};
+    const mkChip=t=>{const c=mk("button","chip");c.type="button";c.innerHTML=pin(t);c.dataset.w=t;c.onclick=()=>{ if(el.dataset.lock)return; c.parentNode===pool?line.appendChild(c):pool.appendChild(c)};return c};
     resetInput=()=>{line.innerHTML="";pool.innerHTML="";let s=shuffle(q.w),n=0;while(s.join("")===q.w.join("")&&q.w.length>1&&n++<10)s=shuffle(q.w);s.forEach(t=>pool.appendChild(mkChip(t)))};
-    getVal=()=>[...line.children].map(c=>c.textContent).join("");
+    getVal=()=>[...line.children].map(c=>c.dataset.w).join("");
     qb.append(prompt,line,pool);
   } else if(q.k==="f"){
     const m=q.q.match(/^(.*?)(\(.*\))?$/s); 
@@ -942,11 +997,11 @@ function buildQuestion(q,num,onChange){
     const parts=main.split("___");
     const inputs=[];
     parts.forEach((p,i)=>{
-      if(p)row.appendChild(document.createTextNode(p));
+      if(p)row.appendChild(mk("span","",pin(p)));
       if(i<parts.length-1){const inp=mk("input","fi");inp.type="text";inp.setAttribute("autocomplete","off");inp.setAttribute("autocapitalize","off");inp.spellcheck=false;inp.setAttribute("lang","zh");
         inp.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.isComposing)check()});inputs.push(inp);row.appendChild(inp)}
     });
-    if(hint)row.appendChild(mk("span","hint",hint));
+    if(hint)row.appendChild(mk("span","hint"+(/chỗ trống|gõ|hỏi có|[\u4e00-\u9fff]|đứng sau/.test(hint)?" instr":""),hint));
     prompt.textContent="Điền từ còn thiếu:";
     getVal=()=>inputs.map(i=>i.value).join("");
     resetInput=()=>inputs.forEach(i=>{i.value="";i.disabled=false});
@@ -970,7 +1025,7 @@ function buildQuestion(q,num,onChange){
 
   const answerHtml=()=>{
     const alt=q.a.slice(1);
-    return `<div class="ans">${q.a[0]}</div>`+(alt.length?`<div class="alt">Cách viết khác: ${alt.join(" / ")}</div>`:"");
+    return `<div class="ans">${pin(q.a[0])}</div>`+(alt.length?`<div class="alt">Cách viết khác: ${pin(alt.join(" / "))}</div>`:"");
   };
   const lock=v=>{ if(q.k==="s"){ if(v)el.dataset.lock="1";else delete el.dataset.lock } else el._lock&&el._lock(v) };
   const setStatus=s=>{status=s;el.classList.remove("ok","wrong","shown");if(s==="ok")el.classList.add("ok");if(s==="wrong")el.classList.add("wrong");if(s==="shown")el.classList.add("shown");onChange()};
@@ -982,7 +1037,7 @@ function buildQuestion(q,num,onChange){
     const ok=q.a.some(a=>norm(a)===norm(v));
     fb.hidden=false;
     if(ok){
-      fb.innerHTML=`<div class="res ok">✓ Chính xác!</div>${answerHtml()}<div class="why"><b>Giải thích:</b> ${q.e}</div>`;
+      fb.innerHTML=`<div class="res ok">✓ Chính xác!</div>${answerHtml()}<div class="why"><b>Giải thích:</b> ${pin(q.e)}</div>`;
       lock(true);bC.disabled=true;setStatus("ok");
     } else {
       const msg=q.k==="t"?"Chưa khớp với đáp án mẫu. Bạn có thể đã viết đúng theo cách khác. Hãy thử lại hoặc bấm “Xem đáp án” để so sánh.":"✗ Chưa đúng, hãy thử lại hoặc bấm “Xem đáp án”.";
@@ -992,7 +1047,7 @@ function buildQuestion(q,num,onChange){
   }
   function show(){
     fb.hidden=false;
-    fb.innerHTML=`<div class="res sh">Đáp án</div>${answerHtml()}<div class="why"><b>Giải thích:</b> ${q.e}</div>`;
+    fb.innerHTML=`<div class="res sh">Đáp án</div>${answerHtml()}<div class="why"><b>Giải thích:</b> ${pin(q.e)}</div>`;
     lock(true);bC.disabled=true;setStatus("shown");
   }
   function reset(){
@@ -1048,7 +1103,7 @@ function buildTopic(t,idx){
   // Luyen cong
   const total=t.parts.reduce((a,p)=>a+p.g.reduce((b,g)=>b+g.q.length,0),0); topicState[t.id]={correct:0,total};
   const subtabs=mk("div","subtabs");
-  const holders=[];
+  const holders=[];pLu.append(makeOpts());
   const updateTopic=()=>{
     let c=0;holders.forEach(h=>c+=h.correct());
     topicState[t.id].correct=c;updateHome();
@@ -1152,6 +1207,7 @@ document.addEventListener("click",e=>{
 window.addEventListener("popstate",()=>route(location.hash));
 window.addEventListener("hashchange",()=>route(location.hash));
 let startHash="";try{startHash=location.hash}catch(err){}
+applyOpts();
 route(startHash);
 </script>
 </body>
