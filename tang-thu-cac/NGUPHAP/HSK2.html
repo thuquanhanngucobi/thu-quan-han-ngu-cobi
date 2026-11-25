@@ -712,6 +712,169 @@ const UNITS = [
    why:'Mẫu: A 是 + phạm vi (越南) + 最 + TT (大) + 的 + 城市.'},
   {t:'tr', vi:'Trong lớp tôi, anh ấy học giỏi nhất.', tpl:['{在|}我们班{里|中|}他学{习|得}最好','他是我们班学{习|得}最好的{人|}'], show:'在我们班,他学习最好。',
    why:'Phạm vi (在我们班) + chủ ngữ (他) + 学习 + 最好. 最 đứng trước tính từ 好.'}
+ ]},
+{ id:12, zh:'V + 完 / 懂 / 到 / 见…', title:'Bổ ngữ kết quả (结果补语)', desc:'Đứng ngay sau động từ, nói rõ kết quả: làm xong, nghe hiểu, nhìn thấy, viết sai…',
+ html: () => `
+ <div class="stack">
+  <div class="card">
+    <h3>Cấu trúc và các bổ ngữ hay gặp</h3>
+    <p style="margin:0">Bổ ngữ kết quả (động từ hoặc tính từ ngắn) đứng <b>ngay sau động từ</b>, cho biết <b>hành động đạt kết quả gì</b>.</p>
+    ${fm(['Động từ','+','!Bổ ngữ kết quả','+','(了)'])}
+    ${ex('我听<b class="yb">懂</b>了。','Wǒ tīng dǒng le.','Tôi nghe hiểu rồi.')}
+    <div class="tw"><table class="gt">
+      <thead><tr><th>Bổ ngữ</th><th>Nghĩa</th><th>Ví dụ</th></tr></thead>
+      <tbody>
+        <tr><td class="zh">完 <span class="py">wán</span></td><td>xong, hết</td><td><span class="zh">做完作业</span><span class="py"><br>zuòwán zuòyè</span><small>làm xong bài tập</small></td></tr>
+        <tr><td class="zh">好 <span class="py">hǎo</span></td><td>xong và ổn thỏa</td><td><span class="zh">准备好</span><span class="py"><br>zhǔnbèi hǎo</span><small>chuẩn bị xong</small></td></tr>
+        <tr><td class="zh">到 <span class="py">dào</span></td><td>đạt được</td><td><span class="zh">找到手机</span><span class="py"><br>zhǎodào shǒujī</span><small>tìm thấy điện thoại</small></td></tr>
+        <tr><td class="zh">见 <span class="py">jiàn</span></td><td>thấy, nghe thấy (chỉ đi với 看 / 听)</td><td><span class="zh">看见、听见</span><span class="py"><br>kànjiàn, tīngjiàn</span><small>nhìn thấy, nghe thấy</small></td></tr>
+        <tr><td class="zh">懂 <span class="py">dǒng</span></td><td>hiểu</td><td><span class="zh">听懂、看懂</span><span class="py"><br>tīngdǒng, kàndǒng</span><small>nghe hiểu, đọc hiểu</small></td></tr>
+        <tr><td class="zh">错 <span class="py">cuò</span></td><td>sai, nhầm</td><td><span class="zh">写错、说错</span><span class="py"><br>xiěcuò, shuōcuò</span><small>viết sai, nói sai</small></td></tr>
+        <tr><td class="zh">干净 <span class="py">gānjìng</span></td><td>sạch</td><td><span class="zh">洗干净</span><span class="py"><br>xǐ gānjìng</span><small>giặt / rửa sạch</small></td></tr>
+        <tr><td class="zh">清楚 <span class="py">qīngchu</span></td><td>rõ</td><td><span class="zh">看清楚</span><span class="py"><br>kàn qīngchu</span><small>nhìn rõ</small></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>Tân ngữ, phủ định, câu hỏi</h3>
+    ${fm(['Động từ','+','Bổ ngữ','+','Tân ngữ','+','(了)'])}
+    ${ex('我做完作业了。','Wǒ zuòwán zuòyè le.','Tôi làm xong bài tập rồi.')}
+    ${ex('我找到了手机。','Wǒ zhǎodào le shǒujī.','Tôi tìm thấy điện thoại rồi.')}
+    <p style="margin:12px 0 0"><b>Phủ định:</b> dùng <b class="zh">没(有)</b> đặt trước động từ, bỏ 了 phía sau.</p>
+    ${fm(['!没(有)','+','Động từ','+','Bổ ngữ'])}
+    ${ex('我没听懂。','Wǒ méi tīngdǒng.','Tôi chưa nghe hiểu.')}
+    ${ex('他还没做完作业。','Tā hái méi zuòwán zuòyè.','Anh ấy vẫn chưa làm xong bài tập.')}
+    <p style="margin:12px 0 0"><b>Câu hỏi:</b> thêm 吗 hoặc 没有 ở cuối câu.</p>
+    ${ex('你听懂了吗?','Nǐ tīngdǒng le ma?','Bạn nghe hiểu chưa?')}
+    ${ex('作业做完了没有?','Zuòyè zuòwán le méiyǒu?','Bài tập làm xong chưa?')}
+    ${note('<b>Chú ý:</b> 了 đứng <b>sau bổ ngữ</b>, không chen vào giữa động từ và bổ ngữ. Chỉ dùng <b class="zh">不</b> khi nói giả thiết: <span class="zh">你不做完作业,不能玩儿。</span>')}
+  </div>
+
+  <div class="card">
+    <h3>Phân biệt với bổ ngữ trạng thái (得)</h3>
+    <div class="tw"><table class="cmp">
+      <thead><tr><th></th><th>Bổ ngữ kết quả</th><th>Bổ ngữ trạng thái</th></tr></thead>
+      <tbody>
+        <tr><td><b>Công thức</b></td><td class="zh">V + 好 / 完 / 懂…</td><td class="zh">V + 得 + TT</td></tr>
+        <tr><td><b>Ý nghĩa</b></td><td>Kết quả của hành động (xong chưa, hiểu chưa)</td><td>Đánh giá hành động diễn ra tốt, xấu, nhanh, chậm</td></tr>
+        <tr><td><b>Ví dụ</b></td><td><span class="zh">他写好了。</span><small>Anh ấy viết xong rồi.</small></td><td><span class="zh">他写得好。</span><small>Anh ấy viết đẹp.</small></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>Lỗi thường gặp</h3>
+    ${no('我不听懂。','Dùng 不 để phủ định kết quả.')}
+    ${yes('我没听懂。','Wǒ méi tīngdǒng.','Phủ định bổ ngữ kết quả dùng 没.')}
+    ${no('我做作业完了。','Bổ ngữ không đứng ngay sau động từ.')}
+    ${yes('我做完作业了。','Wǒ zuòwán zuòyè le.','Động từ + bổ ngữ + tân ngữ.')}
+    ${no('我吃了完饭。','Chen 了 vào giữa động từ và bổ ngữ.')}
+    ${yes('我吃完饭了。','Wǒ chīwán fàn le.','了 đứng sau bổ ngữ.')}
+  </div>
+ </div>`,
+ qs:[
+  {t:'mc', q:'老师说得太快,我没听 ___。<br><span class="muted" style="font-size:.9rem">(tôi nghe không hiểu)</span>', o:['懂','完','好','错'],
+   why:'听懂 = nghe hiểu. 懂 là bổ ngữ kết quả chỉ việc hiểu.'},
+  {t:'mc', q:'你的作业做 ___ 了吗?<br><span class="muted" style="font-size:.9rem">(Bạn làm xong bài tập chưa?)</span>', o:['完','懂','见','干净'],
+   why:'做完 = làm xong. 完 chỉ hành động đã xong.'},
+  {t:'mc', q:'我在商店看 ___ 了一个朋友。<br><span class="muted" style="font-size:.9rem">(Tôi nhìn thấy một người bạn)</span>', o:['见','懂','完','错'],
+   why:'看见 = nhìn thấy. 见 chỉ đi sau 看 hoặc 听.'},
+  {t:'mc', q:'我找 ___ 手机了,原来在包里。<br><span class="muted" style="font-size:.9rem">(Tôi tìm thấy điện thoại rồi)</span>', o:['到','完','懂','错'],
+   why:'找到 = tìm thấy (đạt được mục đích tìm kiếm).'},
+  {t:'mc', q:'这个字你写 ___ 了,少了一点。<br><span class="muted" style="font-size:.9rem">(Chữ này bạn viết sai rồi)</span>', o:['错','好','完','到'],
+   why:'写错 = viết sai. 错 là bổ ngữ kết quả chỉ sự sai, nhầm.'},
+  {t:'mc', q:'Chọn câu <b>đúng</b>: "Tôi chưa nghe hiểu."', o:['我没听懂。','我不听懂。','我没听懂了。','我听没懂。'],
+   why:'Phủ định bổ ngữ kết quả: 没 + động từ + bổ ngữ, không thêm 了.'},
+  {t:'mc', q:'Chọn câu <b>SAI</b>:', o:['我做作业完了。','我做完作业了。','我没做完作业。','你做完了吗?'],
+   why:'Bổ ngữ phải đứng ngay sau động từ. Sửa: 我做完作业了。'},
+  {t:'mc', q:'"他写好了。" có nghĩa là gì?', o:['Anh ấy viết xong rồi.','Anh ấy viết rất đẹp.','Anh ấy không viết được.','Anh ấy sẽ viết đẹp.'],
+   why:'V + 好 + 了 là bổ ngữ kết quả: viết xong. "Viết đẹp" là 写得好.'},
+  {t:'sort', vi:'Tôi làm xong bài tập rồi.', tokens:['我','做','完','作业','了'], ok:['我做完作业了','我做完了作业'], show:'我做完作业了。',
+   why:'Chủ ngữ + động từ + bổ ngữ + tân ngữ + 了.'},
+  {t:'sort', vi:'Tôi chưa nghe hiểu câu này.', tokens:['我','没','听','懂','这句话'], ok:['我没听懂这句话','这句话我没听懂'], show:'我没听懂这句话。',
+   why:'没 + động từ + bổ ngữ, tân ngữ đứng sau bổ ngữ.'},
+  {t:'tr', vi:'Tôi tìm thấy điện thoại rồi.', tpl:['我找到手机了','我找到了手机','手机我找到了'], show:'我找到手机了。(hoặc 我找到了手机。)',
+   why:'找 + 到 (bổ ngữ kết quả) + tân ngữ, thêm 了 sau bổ ngữ hoặc cuối câu.'}
+ ]},
+
+{ id:13, zh:'V + 来 / 去 / 进 / 出…', title:'Bổ ngữ xu hướng đơn giản (简单趋向补语)', desc:'Nói hướng di chuyển của hành động: 来, 去 và 上, 下, 进, 出, 回, 过, 起.',
+ html: () => `
+ <div class="stack">
+  <div class="card">
+    <h3>Cấu trúc và chín bổ ngữ</h3>
+    <p style="margin:0">Bổ ngữ xu hướng đứng sau động từ, cho biết <b>hướng di chuyển</b>. "Đơn giản" nghĩa là chỉ có một chữ.</p>
+    ${fm(['Động từ','+','!来 / 去 / 上 / 下 / 进 / 出 / 回 / 过 / 起'])}
+    <div class="tw"><table class="gt">
+      <thead><tr><th>Bổ ngữ</th><th>Hướng</th><th>Ví dụ</th></tr></thead>
+      <tbody>
+        <tr><td class="zh">来 <span class="py">lái</span></td><td>về phía người nói</td><td><span class="zh">他带来了一把伞。</span><span class="py"><br>Tā dàilái le yì bǎ sǎn.</span><small>Anh ấy mang đến một cái ô.</small></td></tr>
+        <tr><td class="zh">去 <span class="py">qù</span></td><td>xa người nói</td><td><span class="zh">她给妈妈寄去一封信。</span><span class="py"><br>Tā gěi māma jìqù yì fēng xìn.</span><small>Cô ấy gửi cho mẹ một bức thư.</small></td></tr>
+        <tr><td class="zh">上 <span class="py">shàng</span></td><td>lên</td><td><span class="zh">他爬上山。</span><span class="py"><br>Tā pá shàng shān.</span><small>Anh ấy leo lên núi.</small></td></tr>
+        <tr><td class="zh">下 <span class="py">xià</span></td><td>xuống</td><td><span class="zh">请你坐下。</span><span class="py"><br>Qǐng nǐ zuòxià.</span><small>Mời bạn ngồi xuống.</small></td></tr>
+        <tr><td class="zh">进 <span class="py">jìn</span></td><td>vào</td><td><span class="zh">他走进教室。</span><span class="py"><br>Tā zǒujìn jiàoshì.</span><small>Anh ấy bước vào lớp.</small></td></tr>
+        <tr><td class="zh">出 <span class="py">chū</span></td><td>ra</td><td><span class="zh">她拿出一本书。</span><span class="py"><br>Tā náchū yì běn shū.</span><small>Cô ấy lấy ra một quyển sách.</small></td></tr>
+        <tr><td class="zh">回 <span class="py">huí</span></td><td>về</td><td><span class="zh">孩子跑回家了。</span><span class="py"><br>Háizi pǎohuí jiā le.</span><small>Đứa bé chạy về nhà rồi.</small></td></tr>
+        <tr><td class="zh">过 <span class="py">guò</span></td><td>qua</td><td><span class="zh">我们走过那座桥。</span><span class="py"><br>Wǒmen zǒuguò nà zuò qiáo.</span><small>Chúng tôi đi qua cây cầu đó.</small></td></tr>
+        <tr><td class="zh">起 <span class="py">qǐ</span></td><td>lên (từ thấp lên cao)</td><td><span class="zh">他拿起笔。</span><span class="py"><br>Tā náqǐ bǐ.</span><small>Anh ấy cầm bút lên.</small></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>来 hay 去: tính theo vị trí người nói</h3>
+    <p style="margin:0">Hướng <b>lại gần</b> người nói dùng <b class="zh">来</b>, hướng <b>ra xa</b> dùng <b class="zh">去</b>. 来 / 去 cũng ghép sau 上, 下, 进, 出, 回, 过, 起: <span class="zh">进来、进去、回来、回去、出来、出去、上来、上去</span>…</p>
+    ${ex('请<b class="yb">进来</b>。','Qǐng jìnlái.','Mời vào. (người nói đang ở bên trong)')}
+    ${ex('我<b class="yb">进去</b>看看。','Wǒ jìnqù kànkan.','Tôi vào xem thử. (người nói đang ở bên ngoài)')}
+    ${ex('他还没<b class="yb">回来</b>。','Tā hái méi huílái.','Anh ấy vẫn chưa về.')}
+    ${note('<b>Nhớ:</b> 起 chỉ ghép với 来 (<span class="zh">起来</span>), không có <span class="zh">起去</span>.')}
+  </div>
+
+  <div class="card">
+    <h3>Tân ngữ, phủ định, câu hỏi</h3>
+    <p style="margin:0"><b>Tân ngữ nơi chốn</b> đứng <b>giữa</b> động từ và 来 / 去:</p>
+    ${fm(['Động từ','+','Nơi chốn','+','!来 / 去'])}
+    ${ex('他回家去了。','Tā huí jiā qù le.','Anh ấy về nhà rồi.')}
+    ${ex('老师进教室来了。','Lǎoshī jìn jiàoshì lái le.','Cô giáo vào lớp rồi.')}
+    <p style="margin:12px 0 0"><b>Tân ngữ là vật</b> đặt sau hoặc trước 来 / 去 đều được:</p>
+    ${ex('他带来了一把伞。','Tā dàilái le yì bǎ sǎn.','Anh ấy mang đến một cái ô.')}
+    ${ex('他带了一把伞来。','Tā dài le yì bǎ sǎn lái.','Anh ấy mang một cái ô đến.')}
+    <p style="margin:12px 0 0"><b>Phủ định</b> dùng <b class="zh">没(有)</b>, bỏ 了. <b>Câu hỏi</b> thêm 吗.</p>
+    ${ex('他没回来。','Tā méi huílái.','Anh ấy chưa về.')}
+    ${ex('他回来了吗?','Tā huílái le ma?','Anh ấy về chưa?')}
+  </div>
+
+  <div class="card">
+    <h3>Lỗi thường gặp</h3>
+    ${no('他回来家了。','Đặt nơi chốn sau 来.')}
+    ${yes('他回家来了。','Tā huí jiā lái le.','Nơi chốn đứng giữa động từ và 来 / 去.')}
+    ${no('他没回来了。','Phủ định mà còn thêm 了.')}
+    ${yes('他没回来。','Tā méi huílái.','Phủ định dùng 没, không thêm 了.')}
+    ${no('他带了来一把伞。','Chen 了 vào giữa động từ và bổ ngữ.')}
+    ${yes('他带来了一把伞。','Tā dàilái le yì bǎ sǎn.','了 đứng sau bổ ngữ.')}
+  </div>
+ </div>`,
+ qs:[
+  {t:'mc', q:'请进 ___ ,外面太冷了。<br><span class="muted" style="font-size:.9rem">(người nói đang ở trong phòng)</span>', o:['来','去'],
+   why:'Người nói ở bên trong, hướng di chuyển lại gần người nói nên dùng 来.'},
+  {t:'mc', q:'他不在这儿,他出 ___ 了。<br><span class="muted" style="font-size:.9rem">(Anh ấy ra ngoài rồi)</span>', o:['去','来'],
+   why:'Anh ấy đi ra xa chỗ người nói nên dùng 去.'},
+  {t:'mc', q:'他从书包里拿 ___ 一本书。<br><span class="muted" style="font-size:.9rem">(Anh ấy lấy ra một quyển sách)</span>', o:['出','进','回','过'],
+   why:'拿出 = lấy ra. 出 chỉ hướng từ trong ra ngoài.'},
+  {t:'mc', q:'孩子们跑 ___ 教室,开始上课了。<br><span class="muted" style="font-size:.9rem">(Bọn trẻ chạy vào lớp)</span>', o:['进','出','回','起'],
+   why:'跑进 = chạy vào. 进 chỉ hướng từ ngoài vào trong.'},
+  {t:'mc', q:'Chọn câu <b>đúng</b>: "Anh ấy về nhà rồi." (người nói ở xa nhà)', o:['他回家去了。','他回去家了。','他回家了去。','他去回家了。'],
+   why:'Nơi chốn đứng giữa động từ và 去: 回 + 家 + 去.'},
+  {t:'mc', q:'Chọn câu <b>SAI</b>:', o:['他没回来了。','他没回来。','他还没进来。','他回来了吗?'],
+   why:'Phủ định dùng 没 thì không thêm 了. Sửa: 他没回来。'},
+  {t:'mc', q:'Tổ hợp nào <b>không</b> tồn tại?', o:['起去','起来','上去','回来'],
+   why:'起 chỉ ghép với 来, không có 起去.'},
+  {t:'sort', vi:'Anh ấy lấy ra một quyển sách.', tokens:['他','拿','出','一本','书'], ok:['他拿出一本书'], show:'他拿出一本书。',
+   why:'Động từ (拿) + bổ ngữ xu hướng (出) + tân ngữ.'},
+  {t:'tr', vi:'Anh ấy vẫn chưa về.', tpl:['他还没回来','他没回来','他还没回来呢'], show:'他还没回来。',
+   why:'没 + 回来; phủ định không thêm 了.'},
+  {t:'tr', vi:'Bọn trẻ chạy vào lớp học.', tpl:['孩子们跑进教室','孩子们跑进教室了','孩子们跑进了教室','孩子们跑进教室里'], show:'孩子们跑进教室。',
+   why:'跑 + 进 + nơi chốn (教室). Với 进 / 出 / 回, nơi chốn đứng ngay sau bổ ngữ.'}
  ]}
 ];
 
@@ -769,7 +932,9 @@ const TOPICS = [
   { id:2, zh:'比较句', title:'Câu so sánh', desc:'比, 没有, 一样 / 像, 最: năm cấu trúc, mỗi cấu trúc có kiến thức và bài tập riêng.', units:[1,2,3,4,5],
     kw:'bi bijiao meiyou yiyang xiang zui so sanh hon kem bang nhat' },
   { id:3, zh:'的 · 地 · 得', title:'Ba trợ từ 的 · 地 · 得 (de)', desc:'Cùng đọc "de" nhưng khác chữ, khác vị trí: trước danh từ, trước động từ, sau động từ.', units:[11],
-    kw:'de de de tro tu dinh ngu trang ngu bo ngu' }
+    kw:'de de de tro tu dinh ngu trang ngu bo ngu' },
+  { id:4, zh:'补语', title:'Bổ ngữ: kết quả và xu hướng', desc:'结果补语 và 简单趋向补语: hai cấu trúc, mỗi cấu trúc có kiến thức và bài tập riêng.', units:[12,13],
+    kw:'bu yu jieguo qushi quxiang bo ngu ket qua xu huong wan dong dao jian lai qu shang xia jin chu hui guo qi' }
 ];
 const unitsOf = t => t.units.map(id=>UNITS.find(u=>u.id===id));
 const sn = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/g,'d').toLowerCase();
