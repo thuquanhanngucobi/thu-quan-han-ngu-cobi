@@ -7,17 +7,15 @@
 <style>
 
 :root{
-  --paper:#F0E1B6; --card:#FAF1D6; --ink:#2B2314; --muted:#6B5A38; --line:#D6BE86;
-  --accent:#1F3566; --accent-soft:#E6DCB0; --on-accent:#FFF8E6;
-  --gold:#8A5A00; --gold-soft:#F3DFA2;
-  --ok:#2E6B3F; --ok-soft:#DDE7BC; --bad:#8A4300; --bad-soft:#F6D9A6; --blue:#33508F;
+  --paper:#F7EDCB; --card:#FDF7E1; --ink:#2B2314; --muted:#6B5A38; --line:#D9C48E;
+  --accent:#1F3566; --accent-soft:#F0E4B8; --on-accent:#FFF8E6;
+  --gold:#8A5A00; --gold-soft:#F6E7B0;
+  --ok:#2E6B3F; --ok-soft:#E3EBC4; --bad:#8A4300; --bad-soft:#F8E0B0; --blue:#33508F;
   --shadow:0 1px 2px rgba(80,55,10,.08),0 6px 18px rgba(80,55,10,.08);
   --zh:"Noto Serif SC","Songti SC","SimSun","Source Han Serif SC",serif;
   --vi:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --disp:"Source Serif 4","Noto Serif SC",Georgia,"Times New Roman",serif;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#1F1912;--card:#2B2318;--ink:#F1E7CD;--muted:#BBA980;--line:#4C3F27;--accent:#E8C66F;--accent-soft:#3B2F18;--on-accent:#1F1912;--gold:#DCA64A;--gold-soft:#3D3015;--ok:#A3D395;--ok-soft:#26361F;--bad:#FFB66E;--bad-soft:#40301A;--blue:#A5BDEE;--shadow:none;color-scheme:dark}}
-:root[data-theme="dark"]{--paper:#1F1912;--card:#2B2318;--ink:#F1E7CD;--muted:#BBA980;--line:#4C3F27;--accent:#E8C66F;--accent-soft:#3B2F18;--on-accent:#1F1912;--gold:#DCA64A;--gold-soft:#3D3015;--ok:#A3D395;--ok-soft:#26361F;--bad:#FFB66E;--bad-soft:#40301A;--blue:#A5BDEE;--shadow:none;color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:96px}
 body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--vi);-webkit-text-size-adjust:100%}
@@ -211,10 +209,49 @@ h3{font-weight:600}
 .utitle{font-size:1.18rem;font-weight:600;line-height:1.3}
 .result .score{font-family:var(--disp)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ===== Giấy cổ & trang trí cổ trang ===== */
+:root{--seal:#A32F22;--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .4 0 0 0 0 .15 0 0 0 .1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+ --meander:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12'%3E%3Cpath d='M0 11H20V1H4V8H14V4' fill='none' stroke='%238A5A00' stroke-width='1.2' opacity='.6'/%3E%3C/svg%3E")}
+body{background-image:radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.5),transparent 60%),radial-gradient(ellipse at 50% 100%,rgba(150,100,30,.14),transparent 55%),var(--grain);background-repeat:no-repeat,no-repeat,repeat}
+body::after{content:"";position:fixed;inset:6px;border:3px double var(--line);pointer-events:none;z-index:25}
+.card,.q-card,.unit{box-shadow:var(--shadow),inset 0 0 0 3px var(--card),inset 0 0 0 4px var(--line)}
+.q-card.right{box-shadow:inset 0 0 0 3px var(--ok-soft),inset 0 0 0 4px var(--ok)}
+.q-card.wrong{box-shadow:inset 0 0 0 3px var(--bad-soft),inset 0 0 0 4px var(--bad)}
+.num{background:var(--seal);color:#FFF3DC;border-radius:6px;font-family:var(--zh);box-shadow:inset 0 0 0 2px var(--seal),inset 0 0 0 3px rgba(255,240,220,.55)}
+.unit.on .tick{background:var(--seal);border-color:var(--seal)}
+.uhead{border-bottom:4px double var(--ink)}
+.stamp{position:absolute;right:20px;top:26px;writing-mode:vertical-rl;background:var(--seal);color:#FFF3DC;font-family:var(--zh);font-weight:700;font-size:1.5rem;line-height:1.2;padding:8px 6px;border-radius:4px;transform:rotate(3deg);box-shadow:inset 0 0 0 2px var(--seal),inset 0 0 0 3px rgba(255,240,220,.6);letter-spacing:.1em}
+
+footer::before{content:"❖  ❖  ❖";display:block;color:var(--gold);letter-spacing:.5em;margin-bottom:8px}
+.ac{border:1px solid var(--line);background:var(--card);border-radius:14px;box-shadow:inset 0 0 0 3px var(--card),inset 0 0 0 4px var(--line)}
+.ac>summary{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;list-style:none;font-weight:700;font-family:var(--disp);font-size:1.1rem}
+.ac>summary::-webkit-details-marker{display:none}
+.ac>summary::after{content:"▾";margin-left:auto;color:var(--gold);transition:transform .2s}
+.ac[open]>summary::after{transform:rotate(180deg)}
+.ac .num{width:34px;height:34px;font-size:1.05rem}
+.ac>.acb{padding:4px 12px 16px}
+.lanterns{position:absolute;top:0;right:92px;display:flex;gap:6px;align-items:flex-start;pointer-events:none}
+.lantern{width:46px;height:auto;transform-origin:50% 0;animation:sway 4s ease-in-out infinite}
+.lantern.s{width:36px;margin-top:-6px;animation-delay:-1.8s}
+@keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@media(prefers-reduced-motion:reduce){.lantern{animation:none}}
+@media(max-width:560px){.stamp{display:none}.lanterns{right:10px}.hero .wrap{padding-right:104px}}
+.xpy{display:none;color:var(--blue);font-size:.82rem;font-weight:400;line-height:1.3}
+body.xpy-on .xpy{display:block}
+.lcbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px}
+.dtype{font-family:var(--disp);font-size:1.05rem;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px dashed var(--line)}
+.posline{font-size:1.45rem;line-height:2.6}
+.slot{display:inline-block;width:34px;height:34px;vertical-align:middle;margin:0 3px;border:2px dashed var(--gold);border-radius:8px;background:transparent;cursor:pointer;font-family:var(--zh);font-size:1.25rem;font-weight:700;color:var(--seal)}
+.slot.on{border-style:solid;background:var(--gold-soft)}
+.slot:disabled{cursor:default}
+.tok .xpy{font-size:.7rem}
 </style>
 <header class="hero" id="hero">
   <div class="ghost zh" aria-hidden="true">语</div>
   <div class="wrap">
+    <div class="stamp" aria-hidden="true">汉语</div>
+    <div class="lanterns"><svg class="lantern" viewBox="0 0 60 132" aria-hidden="true"><line x1="30" y1="0" x2="30" y2="20" stroke="#6B4A1A" stroke-width="2"/><rect x="19" y="18" width="22" height="7" rx="2" fill="#C9962B"/><ellipse cx="30" cy="56" rx="26" ry="31" fill="#C0392B"/><ellipse cx="30" cy="56" rx="14" ry="31" fill="none" stroke="#7A1E15" stroke-width="1.5" opacity=".55"/><line x1="30" y1="25" x2="30" y2="87" stroke="#7A1E15" stroke-width="1.5" opacity=".55"/><text x="30" y="65" text-anchor="middle" font-size="22" fill="#F3D27A" font-family="serif">福</text><rect x="19" y="85" width="22" height="7" rx="2" fill="#C9962B"/><line x1="30" y1="92" x2="30" y2="118" stroke="#C0392B" stroke-width="2"/><path d="M24 116h12l-2 14h-8z" fill="#C0392B"/></svg><svg class="lantern s" viewBox="0 0 60 132" aria-hidden="true"><line x1="30" y1="0" x2="30" y2="20" stroke="#6B4A1A" stroke-width="2"/><rect x="19" y="18" width="22" height="7" rx="2" fill="#C9962B"/><ellipse cx="30" cy="56" rx="26" ry="31" fill="#C0392B"/><ellipse cx="30" cy="56" rx="14" ry="31" fill="none" stroke="#7A1E15" stroke-width="1.5" opacity=".55"/><line x1="30" y1="25" x2="30" y2="87" stroke="#7A1E15" stroke-width="1.5" opacity=".55"/><text x="30" y="65" text-anchor="middle" font-size="22" fill="#F3D27A" font-family="serif">福</text><rect x="19" y="85" width="22" height="7" rx="2" fill="#C9962B"/><line x1="30" y1="92" x2="30" y2="118" stroke="#C0392B" stroke-width="2"/><path d="M24 116h12l-2 14h-8z" fill="#C0392B"/></svg></div>
     <div class="seal">Thư quán Hán ngữ Cobi</div>
     <h1>Mê Trận Ngữ Pháp</h1>
     <p class="lead">Chọn một chủ điểm để xem Bí Kíp (kiến thức) và làm Luyện Công (bài tập).</p>
@@ -774,60 +811,51 @@ const UNITS = [
   </div>
  </div>`,
  qs:[
-  {t:'mc', q:'老师说得太快,我没听 ___。<br><span class="muted" style="font-size:.9rem">(tôi nghe không hiểu)</span>', o:['懂','完','好','错'],
-   why:'听懂 = nghe hiểu. 懂 là bổ ngữ kết quả chỉ việc hiểu.'},
-  {t:'mc', q:'你的作业做 ___ 了吗?<br><span class="muted" style="font-size:.9rem">(Bạn làm xong bài tập chưa?)</span>', o:['完','懂','见','干净'],
-   why:'做完 = làm xong. 完 chỉ hành động đã xong.'},
-  {t:'mc', q:'我在商店看 ___ 了一个朋友。<br><span class="muted" style="font-size:.9rem">(Tôi nhìn thấy một người bạn)</span>', o:['见','懂','完','错'],
-   why:'看见 = nhìn thấy. 见 chỉ đi sau 看 hoặc 听.'},
-  {t:'mc', q:'我找 ___ 手机了,原来在包里。<br><span class="muted" style="font-size:.9rem">(Tôi tìm thấy điện thoại rồi)</span>', o:['到','完','懂','错'],
-   why:'找到 = tìm thấy (đạt được mục đích tìm kiếm).'},
-  {t:'mc', q:'这个字你写 ___ 了,少了一点。<br><span class="muted" style="font-size:.9rem">(Chữ này bạn viết sai rồi)</span>', o:['错','好','完','到'],
-   why:'写错 = viết sai. 错 là bổ ngữ kết quả chỉ sự sai, nhầm.'},
-  {t:'mc', q:'Chọn câu <b>đúng</b>: "Tôi chưa nghe hiểu."', o:['我没听懂。','我不听懂。','我没听懂了。','我听没懂。'],
-   why:'Phủ định bổ ngữ kết quả: 没 + động từ + bổ ngữ, không thêm 了.'},
-  {t:'mc', q:'Chọn câu <b>SAI</b>:', o:['我做作业完了。','我做完作业了。','我没做完作业。','你做完了吗?'],
-   why:'Bổ ngữ phải đứng ngay sau động từ. Sửa: 我做完作业了。'},
-  {t:'mc', q:'"他写好了。" có nghĩa là gì?', o:['Anh ấy viết xong rồi.','Anh ấy viết rất đẹp.','Anh ấy không viết được.','Anh ấy sẽ viết đẹp.'],
-   why:'V + 好 + 了 là bổ ngữ kết quả: viết xong. "Viết đẹp" là 写得好.'},
-  {t:'sort', vi:'Tôi làm xong bài tập rồi.', tokens:['我','做','完','作业','了'], ok:['我做完作业了','我做完了作业'], show:'我做完作业了。',
-   why:'Chủ ngữ + động từ + bổ ngữ + tân ngữ + 了.'},
-  {t:'sort', vi:'Tôi chưa nghe hiểu câu này.', tokens:['我','没','听','懂','这句话'], ok:['我没听懂这句话','这句话我没听懂'], show:'我没听懂这句话。',
-   why:'没 + động từ + bổ ngữ, tân ngữ đứng sau bổ ngữ.'},
-  {t:'tr', vi:'Tôi tìm thấy điện thoại rồi.', tpl:['我找到手机了','我找到了手机','手机我找到了'], show:'我找到手机了。(hoặc 我找到了手机。)',
-   why:'找 + 到 (bổ ngữ kết quả) + tân ngữ, thêm 了 sau bổ ngữ hoặc cuối câu.'}
- ]},
+  {t:'mc', q:'老师说得太快,我没听 ___ 。', o:['懂','错','好','干净'], why:'听懂 = nghe hiểu. 懂 là bổ ngữ kết quả chỉ việc hiểu.'},
+  {t:'mc', q:'你的作业做 ___ 了吗?', o:['完','懂','见','干净'], why:'做完 = làm xong. 完 chỉ hành động đã xong.'},
+  {t:'mc', q:'我在商店看 ___ 了一个朋友。', o:['见','懂','完','好'], why:'看见 = nhìn thấy. 见 chỉ đi sau 看 hoặc 听.'},
+  {t:'mc', q:'我找 ___ 手机了,原来在包里。', o:['到','完','懂','错'], why:'找到 = tìm thấy (đạt được mục đích tìm kiếm).'},
+  {t:'mc', q:'这个字你写 ___ 了,少了一点。', o:['错','好','完','到'], why:'写错 = viết sai. 错 chỉ sự sai, nhầm.'},
+  {t:'mc', q:'哪句话是对的?', o:['我没听懂。','我不听懂。','我没听懂了。','我听没懂。'], why:'Phủ định bổ ngữ kết quả: 没 + động từ + bổ ngữ, không thêm 了.'},
+  {t:'mc', q:'Chọn câu SAI:', o:['我做作业完了。','我做完作业了。','我没做完作业。','你做完了吗?'], why:'Bổ ngữ phải đứng ngay sau động từ. Sửa: 我做完作业了。'},
+  {t:'mc', q:'“他写好了。”的意思是?', o:['他写完了。','他写得很好。','他不会写。','他想写。'], why:'V + 好 + 了 là bổ ngữ kết quả: viết xong. "Viết đẹp" là 写得好.'},
+  {t:'sort', tokens:['我','做','完','作业','了'], ok:['我做完作业了','我做完了作业'], show:'我做完作业了。', why:'Chủ ngữ + động từ + bổ ngữ + tân ngữ + 了.'},
+  {t:'sort', tokens:['我','没','听','懂','这句话'], ok:['我没听懂这句话','这句话我没听懂'], show:'我没听懂这句话。', why:'没 + động từ + bổ ngữ, tân ngữ đứng sau bổ ngữ.'},
+  {t:'sort', tokens:['他','看','完','那本书','了'], ok:['他看完那本书了','他看完了那本书'], show:'他看完那本书了。', why:'Động từ + bổ ngữ 完 + tân ngữ + 了.'},
+  {t:'sort', tokens:['我','没','找到','手机'], ok:['我没找到手机'], show:'我没找到手机。', why:'没 + động từ + bổ ngữ + tân ngữ, không có 了.'},
+  {t:'sort', tokens:['你','听','懂','了','吗'], ok:['你听懂了吗'], show:'你听懂了吗?', why:'Câu hỏi: động từ + bổ ngữ + 了 + 吗.'},
+  {t:'tr', vi:'Tôi tìm thấy điện thoại rồi.', tpl:['我找到手机了','我找到了手机','手机我找到了'], show:'我找到手机了。(hoặc 我找到了手机。)', why:'找 + 到 (bổ ngữ kết quả) + tân ngữ, thêm 了 sau bổ ngữ hoặc cuối câu.'},
+  {t:'tr', vi:'Bạn làm xong bài tập chưa?', tpl:['你做完作业了吗','你作业做完了吗','你做完作业了没有','你作业做完了没有'], show:'你做完作业了吗?', why:'Động từ + 完 + tân ngữ + 了吗.'},
+  {t:'tr', vi:'Tôi không nhìn thấy anh ấy.', tpl:['我没看见他','我没看到他'], show:'我没看见他。(hoặc 我没看到他。)', why:'Phủ định bổ ngữ kết quả dùng 没: 没 + 看见.'}
+ ]}
+,
 
-{ id:13, zh:'V + 来 / 去 / 进 / 出…', title:'Bổ ngữ xu hướng đơn giản (简单趋向补语)', desc:'Nói hướng di chuyển của hành động: 来, 去 và 上, 下, 进, 出, 回, 过, 起.',
+{ id:13, zh:'V + 来 / 去', title:'Bổ ngữ xu hướng đơn giản (简单趋向补语)', desc:'Động từ + 来 / 去: nói hành động đi về phía người nói hay xa người nói.',
  html: () => `
  <div class="stack">
   <div class="card">
-    <h3>Cấu trúc và chín bổ ngữ</h3>
-    <p style="margin:0">Bổ ngữ xu hướng đứng sau động từ, cho biết <b>hướng di chuyển</b>. "Đơn giản" nghĩa là chỉ có một chữ.</p>
-    ${fm(['Động từ','+','!来 / 去 / 上 / 下 / 进 / 出 / 回 / 过 / 起'])}
+    <h3>Cấu trúc: động từ + 来 / 去</h3>
+    <p style="margin:0">Bổ ngữ xu hướng đứng sau động từ, cho biết hướng di chuyển <b>tính theo vị trí người nói</b>.</p>
+    ${fm(['Động từ','+','!来 / 去'])}
     <div class="tw"><table class="gt">
       <thead><tr><th>Bổ ngữ</th><th>Hướng</th><th>Ví dụ</th></tr></thead>
       <tbody>
-        <tr><td class="zh">来 <span class="py">lái</span></td><td>về phía người nói</td><td><span class="zh">他带来了一把伞。</span><span class="py"><br>Tā dàilái le yì bǎ sǎn.</span><small>Anh ấy mang đến một cái ô.</small></td></tr>
-        <tr><td class="zh">去 <span class="py">qù</span></td><td>xa người nói</td><td><span class="zh">她给妈妈寄去一封信。</span><span class="py"><br>Tā gěi māma jìqù yì fēng xìn.</span><small>Cô ấy gửi cho mẹ một bức thư.</small></td></tr>
-        <tr><td class="zh">上 <span class="py">shàng</span></td><td>lên</td><td><span class="zh">他爬上山。</span><span class="py"><br>Tā pá shàng shān.</span><small>Anh ấy leo lên núi.</small></td></tr>
-        <tr><td class="zh">下 <span class="py">xià</span></td><td>xuống</td><td><span class="zh">请你坐下。</span><span class="py"><br>Qǐng nǐ zuòxià.</span><small>Mời bạn ngồi xuống.</small></td></tr>
-        <tr><td class="zh">进 <span class="py">jìn</span></td><td>vào</td><td><span class="zh">他走进教室。</span><span class="py"><br>Tā zǒujìn jiàoshì.</span><small>Anh ấy bước vào lớp.</small></td></tr>
-        <tr><td class="zh">出 <span class="py">chū</span></td><td>ra</td><td><span class="zh">她拿出一本书。</span><span class="py"><br>Tā náchū yì běn shū.</span><small>Cô ấy lấy ra một quyển sách.</small></td></tr>
-        <tr><td class="zh">回 <span class="py">huí</span></td><td>về</td><td><span class="zh">孩子跑回家了。</span><span class="py"><br>Háizi pǎohuí jiā le.</span><small>Đứa bé chạy về nhà rồi.</small></td></tr>
-        <tr><td class="zh">过 <span class="py">guò</span></td><td>qua</td><td><span class="zh">我们走过那座桥。</span><span class="py"><br>Wǒmen zǒuguò nà zuò qiáo.</span><small>Chúng tôi đi qua cây cầu đó.</small></td></tr>
-        <tr><td class="zh">起 <span class="py">qǐ</span></td><td>lên (từ thấp lên cao)</td><td><span class="zh">他拿起笔。</span><span class="py"><br>Tā náqǐ bǐ.</span><small>Anh ấy cầm bút lên.</small></td></tr>
+        <tr><td class="zh">来 <span class="py">lái</span></td><td>lại gần người nói</td><td><span class="zh">他带来了一把伞。</span><span class="py"><br>Tā dàilái le yì bǎ sǎn.</span><small>Anh ấy mang đến một cái ô.</small></td></tr>
+        <tr><td class="zh">去 <span class="py">qù</span></td><td>ra xa người nói</td><td><span class="zh">她给妈妈寄去一封信。</span><span class="py"><br>Tā gěi māma jìqù yì fēng xìn.</span><small>Cô ấy gửi cho mẹ một bức thư.</small></td></tr>
       </tbody>
     </table></div>
+    ${ex('这是我给你带<b class="yb">来</b>的礼物。','Zhè shì wǒ gěi nǐ dàilái de lǐwù.','Đây là quà tôi mang đến cho bạn.')}
+    ${ex('这儿没有水了,你去给我买<b class="yb">来</b>一瓶吧。','Zhèr méiyǒu shuǐ le, nǐ qù gěi wǒ mǎilái yì píng ba.','Ở đây hết nước rồi, bạn đi mua cho tôi một chai mang về nhé.')}
   </div>
 
   <div class="card">
-    <h3>来 hay 去: tính theo vị trí người nói</h3>
-    <p style="margin:0">Hướng <b>lại gần</b> người nói dùng <b class="zh">来</b>, hướng <b>ra xa</b> dùng <b class="zh">去</b>. 来 / 去 cũng ghép sau 上, 下, 进, 出, 回, 过, 起: <span class="zh">进来、进去、回来、回去、出来、出去、上来、上去</span>…</p>
+    <h3>来 / 去 sau động từ chỉ hướng</h3>
+    <p style="margin:0">Các động từ <span class="zh">进、出、回、上、下、过</span> kết hợp với 来 / 去 rất thường gặp. Cùng một việc, tùy người nói đứng đâu mà dùng 来 hoặc 去.</p>
     ${ex('请<b class="yb">进来</b>。','Qǐng jìnlái.','Mời vào. (người nói đang ở bên trong)')}
     ${ex('我<b class="yb">进去</b>看看。','Wǒ jìnqù kànkan.','Tôi vào xem thử. (người nói đang ở bên ngoài)')}
     ${ex('他还没<b class="yb">回来</b>。','Tā hái méi huílái.','Anh ấy vẫn chưa về.')}
-    ${note('<b>Nhớ:</b> 起 chỉ ghép với 来 (<span class="zh">起来</span>), không có <span class="zh">起去</span>.')}
+    ${ex('老师<b class="yb">出去</b>了。','Lǎoshī chūqù le.','Cô giáo đi ra ngoài rồi.')}
+    ${note('<b>Cụm hay gặp:</b> <span class="zh">进来 / 进去 · 出来 / 出去 · 回来 / 回去 · 上来 / 上去 · 下来 / 下去 · 过来 / 过去</span>')}
   </div>
 
   <div class="card">
@@ -836,10 +864,10 @@ const UNITS = [
     ${fm(['Động từ','+','Nơi chốn','+','!来 / 去'])}
     ${ex('他回家去了。','Tā huí jiā qù le.','Anh ấy về nhà rồi.')}
     ${ex('老师进教室来了。','Lǎoshī jìn jiàoshì lái le.','Cô giáo vào lớp rồi.')}
-    <p style="margin:12px 0 0"><b>Tân ngữ là vật</b> đặt sau hoặc trước 来 / 去 đều được:</p>
+    <p style="margin:12px 0 0"><b>Tân ngữ là vật</b> đứng sau hoặc trước 来 / 去 đều được:</p>
     ${ex('他带来了一把伞。','Tā dàilái le yì bǎ sǎn.','Anh ấy mang đến một cái ô.')}
     ${ex('他带了一把伞来。','Tā dài le yì bǎ sǎn lái.','Anh ấy mang một cái ô đến.')}
-    <p style="margin:12px 0 0"><b>Phủ định</b> dùng <b class="zh">没(有)</b>, bỏ 了. <b>Câu hỏi</b> thêm 吗.</p>
+    <p style="margin:12px 0 0"><b>Phủ định</b> dùng <b class="zh">没(有)</b> và bỏ 了. <b>Câu hỏi</b> thêm 吗.</p>
     ${ex('他没回来。','Tā méi huílái.','Anh ấy chưa về.')}
     ${ex('他回来了吗?','Tā huílái le ma?','Anh ấy về chưa?')}
   </div>
@@ -855,73 +883,285 @@ const UNITS = [
   </div>
  </div>`,
  qs:[
-  {t:'mc', q:'请进 ___ ,外面太冷了。<br><span class="muted" style="font-size:.9rem">(người nói đang ở trong phòng)</span>', o:['来','去'],
-   why:'Người nói ở bên trong, hướng di chuyển lại gần người nói nên dùng 来.'},
-  {t:'mc', q:'他不在这儿,他出 ___ 了。<br><span class="muted" style="font-size:.9rem">(Anh ấy ra ngoài rồi)</span>', o:['去','来'],
-   why:'Anh ấy đi ra xa chỗ người nói nên dùng 去.'},
-  {t:'mc', q:'他从书包里拿 ___ 一本书。<br><span class="muted" style="font-size:.9rem">(Anh ấy lấy ra một quyển sách)</span>', o:['出','进','回','过'],
-   why:'拿出 = lấy ra. 出 chỉ hướng từ trong ra ngoài.'},
-  {t:'mc', q:'孩子们跑 ___ 教室,开始上课了。<br><span class="muted" style="font-size:.9rem">(Bọn trẻ chạy vào lớp)</span>', o:['进','出','回','起'],
-   why:'跑进 = chạy vào. 进 chỉ hướng từ ngoài vào trong.'},
-  {t:'mc', q:'Chọn câu <b>đúng</b>: "Anh ấy về nhà rồi." (người nói ở xa nhà)', o:['他回家去了。','他回去家了。','他回家了去。','他去回家了。'],
-   why:'Nơi chốn đứng giữa động từ và 去: 回 + 家 + 去.'},
-  {t:'mc', q:'Chọn câu <b>SAI</b>:', o:['他没回来了。','他没回来。','他还没进来。','他回来了吗?'],
-   why:'Phủ định dùng 没 thì không thêm 了. Sửa: 他没回来。'},
-  {t:'mc', q:'Tổ hợp nào <b>không</b> tồn tại?', o:['起去','起来','上去','回来'],
-   why:'起 chỉ ghép với 来, không có 起去.'},
-  {t:'sort', vi:'Anh ấy lấy ra một quyển sách.', tokens:['他','拿','出','一本','书'], ok:['他拿出一本书'], show:'他拿出一本书。',
-   why:'Động từ (拿) + bổ ngữ xu hướng (出) + tân ngữ.'},
-  {t:'tr', vi:'Anh ấy vẫn chưa về.', tpl:['他还没回来','他没回来','他还没回来呢'], show:'他还没回来。',
-   why:'没 + 回来; phủ định không thêm 了.'},
-  {t:'tr', vi:'Bọn trẻ chạy vào lớp học.', tpl:['孩子们跑进教室','孩子们跑进教室了','孩子们跑进了教室','孩子们跑进教室里'], show:'孩子们跑进教室。',
-   why:'跑 + 进 + nơi chốn (教室). Với 进 / 出 / 回, nơi chốn đứng ngay sau bổ ngữ.'}
+  {t:'mc', q:'请进 ___ ,外面太冷了。', o:['来','去'], why:'Người nói ở trong phòng (ngoài trời lạnh), hướng lại gần người nói nên dùng 来.'},
+  {t:'mc', q:'他不在这儿,他出 ___ 了。', o:['去','来'], why:'Anh ấy đi ra xa chỗ người nói nên dùng 去.'},
+  {t:'mc', q:'弟弟在楼上,我在楼下。我说:“你快下 ___ 吧!”', o:['来','去'], why:'Người nói ở dưới, em đi xuống phía người nói nên dùng 来.'},
+  {t:'mc', q:'这是我给你带 ___ 的礼物。', o:['来','去'], why:'Mang quà đến chỗ người nghe (người nói đang ở đó) nên dùng 来.'},
+  {t:'mc', q:'我想给妈妈寄 ___ 一封信。', o:['去','来'], why:'Thư đi xa khỏi người nói nên dùng 去.'},
+  {t:'mc', q:'这儿没有水了,你去给我买 ___ 一瓶吧。', o:['来','去'], why:'Mua mang về chỗ người nói nên dùng 来.'},
+  {t:'mc', q:'哪句话是对的?', o:['他回家去了。','他回去家了。','他回家了去。','他去回家了。'], why:'Nơi chốn đứng giữa động từ và 去: 回 + 家 + 去.'},
+  {t:'mc', q:'Chọn câu SAI:', o:['他没回来了。','他没回来。','他还没进来。','他回来了吗?'], why:'Phủ định dùng 没 thì không thêm 了. Sửa: 他没回来。'},
+  {t:'mc', q:'Chọn câu SAI:', o:['老师进来教室了。','老师进教室来了。','他回家去了。','她上楼来了。'], why:'Nơi chốn phải đứng giữa động từ và 来 / 去. Sửa: 老师进教室来了。'},
+  {t:'sort', tokens:['他','带来','一把','伞'], ok:['他带来一把伞'], show:'他带来一把伞。', why:'Động từ + 来 + tân ngữ.'},
+  {t:'sort', tokens:['她','上','楼','去','了'], ok:['她上楼去了'], show:'她上楼去了。', why:'Nơi chốn (楼) đứng giữa 上 và 去.'},
+  {t:'sort', tokens:['请','你','进','来'], ok:['请你进来'], show:'请你进来。', why:'请 + chủ ngữ + động từ + 来.'},
+  {t:'tr', vi:'Anh ấy vẫn chưa về.', tpl:['他还没回来','他没回来','他还没回来呢'], show:'他还没回来。', why:'没 + 回来; phủ định không thêm 了.'},
+  {t:'tr', vi:'Mời bạn vào. (người nói ở bên trong)', tpl:['请进来','请你进来'], show:'请进来。', why:'Người nói ở trong nên dùng 进来.'}
  ]}
+,
+
+{ id:14, zh:'了', title:'Trợ từ 了', desc:'Bí Kíp chia thành 4 mục: bấm vào mục để mở, bấm lần nữa để thu lại. Luyện Công cũng chia 4 mục tương ứng.',
+ html:()=>{
+  const fold=(n,t,b)=>`<details class="ac"><summary><span class="num">${n}</span><span class="act">${t}</span></summary><div class="acb">${b}</div></details>`;
+  const s1=`<div class="stack">
+   <div class="card">
+    <p style="margin:0"><b class="zh">了</b> báo cho người nghe biết một sự việc <b>đã diễn ra</b>. Vị trí của 了 quyết định ý nghĩa:</p>
+    <div class="tw"><table class="gt">
+      <thead><tr><th>Vị trí của 了</th><th>Ý nghĩa</th><th>Ví dụ</th></tr></thead>
+      <tbody>
+        <tr><td>Cuối câu</td><td>Tình huống mới, sự thay đổi</td><td><span class="zh">天冷了。</span><small>Trời lạnh rồi.</small></td></tr>
+        <tr><td>Ngay sau động từ</td><td>Hành động đã hoàn thành</td><td><span class="zh">我买了三本书。</span><small>Tôi đã mua ba quyển sách.</small></td></tr>
+        <tr><td>Sau động từ và cuối câu</td><td>Kéo dài từ quá khứ đến hiện tại</td><td><span class="zh">我学了两年汉语了。</span><small>Tôi học tiếng Trung hai năm rồi.</small></td></tr>
+      </tbody>
+    </table></div>
+   </div>
+   <div class="card">
+    <h3>① 了 đứng cuối câu: tình huống mới, sự thay đổi</h3>
+    <p style="margin:0">Trước đây khác, bây giờ đã đổi. Dịch là "rồi".</p>
+    ${fm(['Câu','+','!了'])}
+    ${ex('天冷<b class="yb">了</b>。','Tiān lěng le.','Trời lạnh rồi. (trước đó chưa lạnh)')}
+    ${ex('现在九点<b class="yb">了</b>。','Xiànzài jiǔ diǎn le.','Bây giờ chín giờ rồi.')}
+    ${ex('他二十岁<b class="yb">了</b>。','Tā èrshí suì le.','Anh ấy hai mươi tuổi rồi.')}
+    ${ex('我会说汉语<b class="yb">了</b>。','Wǒ huì shuō Hànyǔ le.','Bây giờ tôi biết nói tiếng Trung rồi.')}
+   </div>
+   <div class="card">
+    <h3>② 了 đứng ngay sau động từ: hành động đã hoàn thành</h3>
+    ${fm(['Chủ ngữ','+','Động từ','+','!了','+','Số lượng / định ngữ','+','Tân ngữ'])}
+    ${ex('我买<b class="yb">了</b>三本书。','Wǒ mǎi le sān běn shū.','Tôi đã mua ba quyển sách.')}
+    ${ex('他喝<b class="yb">了</b>两杯茶。','Tā hē le liǎng bēi chá.','Anh ấy đã uống hai tách trà.')}
+    ${ex('昨天我看<b class="yb">了</b>一部电影。','Zuótiān wǒ kàn le yí bù diànyǐng.','Hôm qua tôi đã xem một bộ phim.')}
+    ${note('<b>Tân ngữ không có số lượng</b> thì không kết thúc câu ngay sau tân ngữ. Thêm 了 cuối câu: <span class="zh">我吃饭了。</span> Hoặc nói tiếp vế sau: <span class="zh">我吃了饭就去学校。</span>')}
+    <div class="tw"><table class="cmp">
+      <thead><tr><th></th><th>了 sau động từ</th><th>了 cuối câu</th></tr></thead>
+      <tbody>
+        <tr><td><b>Ý nghĩa</b></td><td>Hành động đã xong</td><td>Tình huống mới, thay đổi</td></tr>
+        <tr><td><b>Ví dụ</b></td><td><span class="zh">我买了三本书。</span><small>Tôi đã mua ba quyển sách.</small></td><td><span class="zh">我买书了。</span><small>Tôi mua sách rồi.</small></td></tr>
+      </tbody>
+    </table></div>
+    ${no('昨天我很忙了。','Tả trạng thái quá khứ mà thêm 了.')}
+    ${yes('昨天我很忙。','Zuótiān wǒ hěn máng.','了 chỉ hành động đã xong, không phải dấu hiệu thì quá khứ.')}
+   </div>
+   <div class="card">
+    <h3>③ 了 kết hợp: kéo dài từ quá khứ đến hiện tại</h3>
+    <p style="margin:0">Dùng 了 sau động từ và thêm 了 cuối câu: hành động <b>bắt đầu từ quá khứ, kéo dài đến bây giờ</b> và có thể còn tiếp tục.</p>
+    ${fm(['Chủ ngữ','+','Động từ','+','!了','+','Thời lượng','+','Tân ngữ','+','!了'])}
+    ${ex('我学<b class="yb">了</b>两年汉语<b class="yb">了</b>。','Wǒ xué le liǎng nián Hànyǔ le.','Tôi học tiếng Trung hai năm rồi. (vẫn đang học)')}
+    ${ex('他在这儿住<b class="yb">了</b>三年<b class="yb">了</b>。','Tā zài zhèr zhù le sān nián le.','Anh ấy ở đây ba năm rồi. (vẫn đang ở)')}
+    ${ex('我学了两年汉语了,还想继续学。','Wǒ xué le liǎng nián Hànyǔ le, hái xiǎng jìxù xué.','Tôi học hai năm rồi, còn muốn học tiếp. (có thể kéo dài sang tương lai)')}
+    <div class="tw"><table class="cmp">
+      <thead><tr><th></th><th>V 了 + thời lượng</th><th>V 了 + thời lượng + 了</th></tr></thead>
+      <tbody>
+        <tr><td><b>Ý nghĩa</b></td><td>Hành động đã kết thúc</td><td>Vẫn còn tiếp diễn</td></tr>
+        <tr><td><b>Ví dụ</b></td><td><span class="zh">我等了你一个小时。</span><small>Tôi đã đợi bạn một tiếng (xong rồi).</small></td><td><span class="zh">我等了你一个小时了。</span><small>Tôi đợi bạn một tiếng rồi (vẫn đang đợi).</small></td></tr>
+      </tbody>
+    </table></div>
+    ${no('我学汉语了两年了。','Thời lượng đặt sai chỗ.')}
+    ${yes('我学了两年汉语了。','Wǒ xué le liǎng nián Hànyǔ le.','Thời lượng đứng sau 了, trước tân ngữ.')}
+   </div>
+  </div>`;
+  const s2=`<div class="stack"><div class="card">
+    <h3>没(有): bỏ 了</h3>
+    ${fm(['!没(有)','+','Động từ'])}
+    ${ex('我<b class="yb">没</b>买书。','Wǒ méi mǎi shū.','Tôi không mua sách. / Tôi chưa mua sách.')}
+    ${ex('昨天他<b class="yb">没</b>来。','Zuótiān tā méi lái.','Hôm qua anh ấy không đến.')}
+    ${ex('我还<b class="yb">没</b>吃饭<b class="yb">呢</b>。','Wǒ hái méi chīfàn ne.','Tôi vẫn chưa ăn cơm.')}
+    ${note('<b>Nhớ:</b> câu đã có 没(有) thì <b>không</b> thêm 了.')}
+    <h3 style="margin-top:14px">不…了: không … nữa</h3>
+    ${fm(['!不','+','Động từ','+','!了'])}
+    ${ex('我<b class="yb">不</b>去<b class="yb">了</b>。','Wǒ bú qù le.','Tôi không đi nữa. (đổi ý)')}
+    ${ex('我<b class="yb">不</b>想吃<b class="yb">了</b>。','Wǒ bù xiǎng chī le.','Tôi không muốn ăn nữa.')}
+    ${no('我没买了书。','Vừa có 没 vừa có 了.')}
+    ${yes('我没买书。','Wǒ méi mǎi shū.','没 thì bỏ 了.')}
+  </div></div>`;
+  const s3=`<div class="stack"><div class="card">
+    <div class="tw"><table class="gt">
+      <thead><tr><th>Cách hỏi</th><th>Ví dụ</th></tr></thead>
+      <tbody>
+        <tr><td><b>…了吗?</b></td><td><span class="zh">你吃饭了吗?</span><span class="py"><br>Nǐ chīfàn le ma?</span><small>Bạn ăn cơm chưa?</small></td></tr>
+        <tr><td><b>…了没有?</b></td><td><span class="zh">你吃饭了没有?</span><span class="py"><br>Nǐ chīfàn le méiyǒu?</span><small>Bạn ăn cơm chưa?</small></td></tr>
+        <tr><td><b>Từ để hỏi + 了</b></td><td><span class="zh">你昨天去哪儿了?</span><span class="py"><br>Nǐ zuótiān qù nǎr le?</span><small>Hôm qua bạn đi đâu?</small>
+          <span class="zh">你买了什么?</span><span class="py"><br>Nǐ mǎi le shénme?</span><small>Bạn đã mua gì?</small></td></tr>
+      </tbody>
+    </table></div>
+    ${ex('A:你吃了吗? B:吃了。 / 还没吃呢。','A: Nǐ chī le ma? B: Chī le. / Hái méi chī ne.','A: Bạn ăn chưa? B: Ăn rồi. / Vẫn chưa ăn.')}
+  </div></div>`;
+  const s4=`<div class="stack"><div class="card">
+    <div class="tw"><table class="gt">
+      <thead><tr><th>Cấu trúc</th><th>Ý nghĩa</th><th>Ví dụ</th></tr></thead>
+      <tbody>
+        <tr><td class="zh">快 / 要 / 快要 / 就要 + … + 了</td><td>Sắp xảy ra</td><td><span class="zh">快下雨了。</span><span class="py"><br>Kuài xià yǔ le.</span><small>Sắp mưa rồi.</small>
+          <span class="zh">火车要到了。</span><span class="py"><br>Huǒchē yào dào le.</span><small>Tàu sắp đến rồi.</small>
+          <span class="zh">考试就要开始了。</span><span class="py"><br>Kǎoshì jiù yào kāishǐ le.</span><small>Sắp thi rồi.</small></td></tr>
+        <tr><td class="zh">太 + TT + 了</td><td>Quá …</td><td><span class="zh">这件衣服太贵了。</span><span class="py"><br>Zhè jiàn yīfu tài guì le.</span><small>Cái áo này đắt quá.</small></td></tr>
+        <tr><td class="zh">别 + động từ + 了</td><td>Đừng … nữa</td><td><span class="zh">别哭了。</span><span class="py"><br>Bié kū le.</span><small>Đừng khóc nữa.</small></td></tr>
+        <tr><td class="zh">V + 了 … 就 + V</td><td>Làm xong A thì làm B ngay</td><td><span class="zh">我吃了饭就去学校。</span><span class="py"><br>Wǒ chī le fàn jiù qù xuéxiào.</span><small>Ăn cơm xong tôi đi học ngay.</small></td></tr>
+      </tbody>
+    </table></div>
+    ${no('快下了雨。','Đặt 了 sau động từ trong mẫu "sắp…".')}
+    ${yes('快下雨了。','Kuài xià yǔ le.','Mẫu 快 / 要 … 了 dùng 了 cuối câu.')}
+  </div></div>`;
+  return '<div class="stack">'+fold(1,'了 diễn tả sự việc đã diễn ra',s1)+fold(2,'Câu phủ định với trợ từ 了',s2)+fold(3,'Câu hỏi với trợ từ 了',s3)+fold(4,'Các cấu trúc 了 khác',s4)+'</div>';
+ },
+ secs:[
+  {title:'了 diễn tả sự việc đã diễn ra', qs:[
+   {t:'pos', parts:['天','冷'], a:1, why:'了 cuối câu báo tình huống mới: trời đã trở lạnh.'},
+   {t:'pos', parts:['他','二十','岁'], a:2, why:'了 cuối câu báo tuổi đã đến mức đó.'},
+   {t:'pos', parts:['昨天我','买','三本书'], a:1, why:'Hành động đã hoàn thành, tân ngữ có số lượng: 了 đứng ngay sau động từ.'},
+   {t:'pos', parts:['他','喝','两杯茶'], a:1, why:'Hành động đã hoàn thành, tân ngữ có số lượng: 了 đứng ngay sau động từ.'},
+   {t:'pos', parts:['我学了','两年','汉语'], a:2, why:'Hành động kéo dài đến bây giờ: thêm 了 ở cuối câu (了 sau động từ + 了 cuối câu).'},
+   {t:'mc', q:'哪句话是对的?', o:['昨天我看了一部电影。','昨天我看电影了一部。','昨天我看一部了电影。','昨天我了看一部电影。'], why:'Chủ ngữ + động từ + 了 + số lượng + tân ngữ.'},
+   {t:'mc', q:'Chọn câu SAI:', o:['昨天我很忙了。','昨天我去了商店。','他买了一本书。','我吃了两个苹果。'], why:'Trạng thái trong quá khứ không dùng 了. Sửa: 昨天我很忙。'},
+   {t:'mc', q:'哪句话说明他现在还在学汉语?', o:['他学了两年汉语了。','他学了两年汉语。','他去年学汉语。','他学过汉语。'], why:'V 了 + thời lượng + 了: hành động còn tiếp diễn đến bây giờ.'},
+   {t:'mc', q:'哪句话说明现在还在等?', o:['我等了你一个小时了。','我等了你一个小时。','我昨天等了你。','我没等你。'], why:'Có thêm 了 cuối câu thì việc đợi vẫn tiếp diễn.'},
+   {t:'sort', tokens:['我','学','了','两年','汉语','了'], ok:['我学了两年汉语了'], show:'我学了两年汉语了。', why:'Động từ + 了 + thời lượng + tân ngữ + 了.'},
+   {t:'sort', tokens:['他','喝','了','两杯','咖啡'], ok:['他喝了两杯咖啡'], show:'他喝了两杯咖啡。', why:'喝 + 了 + 两杯 + 咖啡.'},
+   {t:'sort', tokens:['现在','九点','了'], ok:['现在九点了'], show:'现在九点了。', why:'了 đứng cuối câu.'},
+   {t:'tr', vi:'Hôm qua tôi đã mua ba quyển sách.', tpl:['昨天我买了三本书','我昨天买了三本书'], show:'昨天我买了三本书。', why:'买 + 了 + 三本书.'},
+   {t:'tr', vi:'Tôi học tiếng Trung hai năm rồi. (vẫn đang học)', tpl:['我学了两年汉语了'], show:'我学了两年汉语了。', why:'Hai chữ 了: kéo dài đến hiện tại.'}
+  ]},
+  {title:'Câu phủ định với trợ từ 了', qs:[
+   {t:'pos', parts:['我','不','去'], a:2, why:'不…了: không … nữa. 了 đứng cuối câu.'},
+   {t:'pos', parts:['我不','想吃'], a:1, why:'不…了: không … nữa. 了 đứng cuối câu.'},
+   {t:'pos', parts:['他','不','来'], a:2, why:'不…了: không … nữa. 了 đứng cuối câu.'},
+   {t:'mc', q:'哪句话是对的?', o:['昨天我没去学校。','昨天我没去学校了。','昨天我没了去学校。','昨天我不去了学校。'], why:'Phủ định việc đã xảy ra dùng 没, bỏ 了.'},
+   {t:'mc', q:'哪句话的意思是“不打算去了”?', o:['我不去了。','我没去。','我没去了。','我不去。'], why:'不…了 nghĩa là "không … nữa", báo thay đổi quyết định.'},
+   {t:'mc', q:'Chọn câu SAI:', o:['我没买了书。','我没买书。','我不想去了。','你买了没有?'], why:'Có 没 thì không dùng 了. Sửa: 我没买书。'},
+   {t:'mc', q:'朋友问:“你吃了吗?”你还没吃,怎么回答?', o:['还没吃呢。','没吃了。','吃了。','不吃了。'], why:'Chưa làm: 还没 + động từ + 呢, không thêm 了.'},
+   {t:'sort', tokens:['我','没','买','书'], ok:['我没买书'], show:'我没买书。', why:'没 + động từ, không có 了.'},
+   {t:'sort', tokens:['他','还','没','吃饭','呢'], ok:['他还没吃饭呢'], show:'他还没吃饭呢。', why:'还没 + động từ + 呢: vẫn chưa.'},
+   {t:'tr', vi:'Tôi không muốn ăn nữa.', tpl:['我不想吃了','我不吃了'], show:'我不想吃了。(hoặc 我不吃了。)', why:'不 … 了 nghĩa là "không … nữa".'},
+   {t:'tr', vi:'Hôm qua anh ấy không đến.', tpl:['昨天他没来','他昨天没来'], show:'昨天他没来。', why:'Việc đã xảy ra mà không làm: 没 + động từ, bỏ 了.'}
+  ]},
+  {title:'Câu hỏi với trợ từ 了', qs:[
+   {t:'pos', parts:['你','吃饭','吗'], a:1, end:'?', why:'Câu hỏi: … + 了 + 吗.'},
+   {t:'pos', parts:['他','回来','没有'], a:1, end:'?', why:'Câu hỏi: … + 了 + 没有.'},
+   {t:'mc', q:'哪句话是对的?', o:['你吃饭了吗?','你吃了饭吗不?','你吃饭吗了?','你了吃饭吗?'], why:'Câu hỏi: … + 了 + 吗.'},
+   {t:'mc', q:'哪句话是对的?', o:['你昨天去哪儿了?','你昨天去哪儿吗?','你昨天了去哪儿?','你昨天去哪儿了吗?'], why:'Từ để hỏi + 了, không thêm 吗.'},
+   {t:'mc', q:'A:你听懂了吗? B:(còn chưa hiểu)', o:['还没听懂。','不听懂。','没听懂了。','听懂不了。'], why:'Chưa làm: 还没 + động từ.'},
+   {t:'mc', q:'Chọn câu SAI:', o:['你买了什么没有?','你买了什么?','你吃了吗?','他回来了没有?'], why:'Đã có từ để hỏi 什么 thì không thêm 没有.'},
+   {t:'sort', tokens:['你','吃','饭','了','吗'], ok:['你吃饭了吗','你吃了饭吗'], show:'你吃饭了吗?', why:'Động từ + tân ngữ + 了 + 吗.'},
+   {t:'sort', tokens:['你','昨天','去','哪儿','了'], ok:['你昨天去哪儿了','昨天你去哪儿了','你昨天去了哪儿','昨天你去了哪儿'], show:'你昨天去哪儿了?', why:'Từ để hỏi + 了.'},
+   {t:'tr', vi:'Bạn ăn cơm chưa?', tpl:['你吃{饭|}了{吗|没有}'], show:'你吃饭了吗?(hoặc 你吃饭了没有?)', why:'… 了吗 hoặc … 了没有.'},
+   {t:'tr', vi:'Hôm qua bạn đã mua gì?', tpl:['你昨天买了什么','昨天你买了什么','你昨天买什么了','昨天你买什么了'], show:'你昨天买了什么?', why:'Động từ + 了 + từ để hỏi, hoặc từ để hỏi + 了.'}
+  ]},
+  {title:'Các cấu trúc 了 khác', qs:[
+   {t:'pos', parts:['快','下雨'], a:1, why:'快 / 要 … 了: sắp xảy ra.'},
+   {t:'pos', parts:['这件衣服','太','贵'], a:2, why:'太 + tính từ + 了: quá …'},
+   {t:'pos', parts:['别','哭'], a:1, why:'别 + động từ + 了: đừng … nữa.'},
+   {t:'pos', parts:['考试','就要','开始'], a:2, why:'就要 … 了: sắp xảy ra.'},
+   {t:'mc', q:'哪句话是对的?', o:['快下雨了。','快下了雨。','快了下雨。','快下雨吗。'], why:'Mẫu 快 / 要 … 了 dùng 了 cuối câu.'},
+   {t:'mc', q:'Chọn câu SAI:', o:['这件衣服了太贵。','这件衣服太贵了。','别哭了。','火车要到了。'], why:'太 + tính từ + 了. Sửa: 这件衣服太贵了。'},
+   {t:'mc', q:'哪句话表示“马上就要发生”?', o:['火车要到了。','火车到了。','火车没到。','火车到过。'], why:'要 … 了 diễn tả sắp xảy ra; 火车到了 là đã đến.'},
+   {t:'sort', tokens:['这件','衣服','太','贵','了'], ok:['这件衣服太贵了'], show:'这件衣服太贵了。', why:'太 + tính từ + 了.'},
+   {t:'sort', tokens:['你','别','哭','了'], ok:['你别哭了'], show:'你别哭了。', why:'别 + động từ + 了.'},
+   {t:'tr', vi:'Sắp mưa rồi.', tpl:['快下雨了','要下雨了','快要下雨了'], show:'快下雨了。(hoặc 要下雨了。)', why:'快 / 要 + động từ + 了.'},
+   {t:'tr', vi:'Cái áo này đắt quá.', tpl:['这件衣服太贵了'], show:'这件衣服太贵了。', why:'太 + tính từ + 了.'}
+  ]}
+ ]}
+
 ];
 
 /* ---------- chuẩn hoá & mở rộng đáp án ---------- */
 const DIG='零一二三四五六七八九';
 const norm = s => String(s).replace(/幺/g,'一').replace(/[0-9]/g,d=>DIG[+d]).replace(/[^一-鿿A-Za-z]/g,'').toLowerCase();
 function expand(t){const m=t.match(/\{([^{}]*)\}/);if(!m)return[t];const o=[];m[1].split('|').forEach(x=>expand(t.slice(0,m.index)+x+t.slice(m.index+m[0].length)).forEach(y=>o.push(y)));return o;}
-UNITS.forEach(u=>u.qs.forEach(q=>{ if(q.t==='tr') q.set=new Set(q.tpl.flatMap(expand).map(norm)); if(q.t==='sort') q.set=new Set(q.ok.map(norm)); }));
+/* ---------- bài tập chỉ dùng chữ Hán (câu dịch vẫn cần tiếng Việt làm đề) ---------- */
+const FIXQ={3:{1:{q:'哥哥二十岁,我十八岁。哪句话是对的?'}},5:{1:{q:'“他比谁都高。”的意思是?',o:['他最高。','他最矮。','他比我矮。','他不高。']}}};
+const SORTOK={10:{8:['我比他高一点儿']},1:{3:['河内比北京冷']},2:{3:['那件衣服比这件贵一百块']},3:{3:['哥哥没有弟弟那么高']},4:{3:['你的手机跟我的一样']}};
+UNITS.forEach(u=>{ (u.secs?u.secs.flatMap(s=>s.qs):u.qs).forEach((q,i)=>{
+  const f=(FIXQ[u.id]||{})[i]; if(f) Object.assign(q,f);
+  if(q.t==='mc') q.q=q.q.replace(/<br><span class="muted"[^>]*>[\s\S]*?<\/span>/g,'').replace(/Chọn câu <b>đúng<\/b>:.*$/,'哪句话是对的?');
+  if(q.t==='sort'){ q.vi=''; const x=(SORTOK[u.id]||{})[i]; if(x) q.ok=q.ok.concat(x); }
+  if(q.t==='pos'){ q.full=a=>q.parts.slice(0,a+1).join('')+'了'+q.parts.slice(a+1).join('')+(q.end||'。'); q.alts=[q.a].concat(q.alt||[]); q.show=q.full(q.a); }
+});});
+/* gom bài tập thành nhóm: mỗi nhóm xếp theo dạng (đặt 了, chọn đáp án, sắp xếp, dịch) */
+const TYPE_ORDER={pos:0,mc:1,sort:2,tr:3}, GROUPS={};
+UNITS.forEach(u=>{
+  u.groups=(u.secs||[{title:u.title,qs:u.qs}]).map((g,k)=>({gid:u.secs?u.id*10+k+1:u.id,title:g.title,
+    qs:g.qs.map((q,j)=>({q,j})).sort((a,b)=>(TYPE_ORDER[a.q.t]-TYPE_ORDER[b.q.t])||(a.j-b.j)).map(x=>x.q)}));
+  u.groups.forEach(g=>GROUPS[g.gid]=g);
+  u.qs=u.groups.flatMap(g=>g.qs);
+  u.qs.forEach(q=>{ if(q.t==='tr') q.set=new Set(q.tpl.flatMap(expand).map(norm)); if(q.t==='sort') q.set=new Set(q.ok.map(norm)); });
+});
 const shuffle=a=>{const r=a.map((t,i)=>({t,i}));for(let k=0;k<20;k++){for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}if(r.map(x=>x.t).join('|')!==a.join('|'))break;}return r;};
 const isZh = s => !/[A-Za-zÀ-ỹ]{3,}/.test(s);
 
 /* ---------- DANH SÁCH MỤC (xổ ra / thu lại) ---------- */
-const sortState={}, locked={};
+const sortState={}, posState={}, locked={};
 const uidOf = id => +id.slice(1).split('_')[0];
 const acc = $('#acc');
 
-function qHtml(u,q,i){
-  const id=`q${u.id}_${i}`, n=`${u.id}.${i+1}`;
+/* pinyin cho bài tập (mặc định ẩn, học viên bấm nút để bật) */
+const PYD={};
+('这zhè 件jiàn 衣yī 服fu 贵guì 我wǒ 不bù 想xiǎng 买mǎi 有yǒu 点diǎn 一yī 请qǐng 你nǐ 说shuō 得de 慢màn 今jīn 天tiān 累lèi 早zǎo 休xiū 息xi 他tā 比bǐ 高gāo 水shuǐ 果guǒ 个gè 菜cài 也yě 辣là 放fàng 心xīn 吃chī 吧ba 房fáng 间jiān 小xiǎo 舒shū 好hǎo 手shǒu 机jī 很hěn 的de 地de 兴xìng 通tōng 过guò 了le 她tā 唱chàng 歌gē 是shì 本běn 意yì 思si 书shū 孩hái 子zi 们men 开kāi 玩wán 汉hàn 语yǔ 流liú 利lì 认rèn 真zhēn 听tīng 昨zuó 来lái 那nà 人rén 老lǎo 师shī 跑pǎo 快kuài 学xué 习xí 热rè 出chū 去qù 更gèng 非fēi 常cháng 太tài 漂piào 亮liang 大dà 冷lěng 北běi 京jīng 河hé 内nèi 多duō 岁suì 两liǎng 二èr 双shuāng 俩liǎ 百bǎi 块kuài 没méi 哥gē 么me 弟dì 跟gēn 样yàng 爸bà 像xiàng 花huā 和hé 班bān 最zuì 谁shéi 都dōu 朋péng 友you 胡hú 志zhì 明míng 市shì 越yuè 南nán 城chéng 在zài 懂dǒng 错cuò 干gān 净jìng 作zuò 业yè 做zuò 吗ma 完wán 见jiàn 商shāng 店diàn 看kàn 找zhǎo 原yuán 包bāo 里lǐ 到dào 字zì 写xiě 少shǎo 哪nǎ 句jù 话huà 对duì 会huì 进jìn 外wài 面mian 楼lóu 上shàng 下xià 给gěi 带dài 礼lǐ 物wù 妈mā 寄jì 封fēng 信xìn 瓶píng 回huí 家jiā 还hái 教jiào 室shì 把bǎ 伞sǎn 十shí 三sān 喝hē 杯bēi 茶chá 年nián 部bù 电diàn 影yǐng 忙máng 苹píng 现xiàn 等děng 时shí 咖kā 啡fēi 九jiǔ 校xiào 打dǎ 算suàn 问wèn 怎zěn 答dá 呢ne 饭fàn 什shén 雨yǔ 别bié 哭kū 考kǎo 试shì 就jiù 要yào 始shǐ 火huǒ 车chē 表biǎo 示shì 马mǎ 发fā 生shēng 八bā 矮ǎi 白bái').split(' ').forEach(t=>{PYD[t[0]]=t.slice(1);});
+const toneOf=p=>{const m=p.match(/[āēīōūǖáéíóúǘǎěǐǒǔǚàèìòùǜ]/);return !m?0:'āēīōūǖ'.includes(m[0])?1:'áéíóúǘ'.includes(m[0])?2:'ǎěǐǒǔǚ'.includes(m[0])?3:4;};
+function py(s){
+  const o=[], PM={'。':'.',',':',','?':'?','!':'!','“':'"','”':'"'};
+  for(const c of String(s)){
+    if(c==='儿'&&o.length){o[o.length-1].p+='r';continue;}
+    if(c==='_'){ if(o.length&&o[o.length-1].h==='_') o[o.length-1].p+='_'; else o.push({h:'_',p:'_'}); continue; }
+    if(PYD[c]) o.push({h:c,p:PYD[c]});
+    else if(!/\s/.test(c)){ const m=PM[c]||c; if(o.length) o[o.length-1].p+=m; else o.push({h:'',p:m}); }
+  }
+  o.forEach((x,i)=>{ const t=o[i+1]?toneOf(o[i+1].p):0;
+    if(x.h==='不'&&t===4) x.p='bú';
+    if(x.h==='一'&&t) x.p=t===4?'yí':'yì'; });
+  return o.map(x=>x.p).join(' ');
+}
+const xp = s => { const p=py(s); return p?`<span class="xpy">${esc(p)}</span>`:''; };
+const plain = s => String(s).replace(/<[^>]+>/g,'').replace(/___/g,' ___ ');
+const DTYPE={pos:'Đặt 了 vào vị trí đúng',mc:'Chọn đáp án đúng',sort:'Sắp xếp thành câu',tr:'Dịch sang tiếng Trung'};
+
+function qHtml(g,q,i){
+  const id=`q${g.gid}_${i}`, n=i+1;
+  if(q.t==='pos'){
+    posState[id]=null; const end=q.end||'。';
+    return `<div class="q-card" id="${id}"><div class="qtext"><span class="qn">${n}</span><span class="muted">Chạm vào ô trống để đặt 了 vào vị trí đúng</span></div>
+      <div class="posline zh">${q.parts.map((p,k)=>`<span>${esc(p)}</span><button type="button" class="slot" data-pos="${id}" data-s="${k}" aria-label="Vị trí ${k+1}"></button>`).join('')}<span>${esc(end)}</span></div>
+      <div>${xp(q.parts.join('')+end)}</div><div class="fb" hidden></div></div>`;
+  }
   if(q.t==='mc'){
     q._opts = shuffle(q.o);   // o[0] là đáp án đúng
-    return `<div class="q-card" id="${id}"><div class="qtext"><span class="qn">${n}</span>${q.q}</div>
-      <div class="opts" role="radiogroup">${q._opts.map((o,k)=>`<label class="opt"><input type="radio" name="${id}" value="${o.i}"><span class="lt">${'ABCD'[k]}</span><span class="${isZh(o.t)?'zh':''}">${esc(o.t)}</span></label>`).join('')}</div>
+    const pl=plain(q.q);
+    return `<div class="q-card" id="${id}"><div class="qtext"><span class="qn">${n}</span>${q.q}${isZh(pl)?'<br>'+xp(pl):''}</div>
+      <div class="opts" role="radiogroup">${q._opts.map((o,k)=>`<label class="opt"><input type="radio" name="${id}" value="${o.i}"><span class="lt">${'ABCD'[k]}</span><span><span class="${isZh(o.t)?'zh':''}">${esc(o.t)}</span>${isZh(o.t)?xp(o.t):''}</span></label>`).join('')}</div>
       <div class="fb" hidden></div></div>`;
   }
   if(q.t==='sort'){
     sortState[id]={order:shuffle(q.tokens),picked:[]};
-    return `<div class="q-card" id="${id}"><div class="qtext"><span class="qn">${n}</span>Sắp xếp thành câu đúng<span class="typ">sắp xếp</span><br><span class="muted">${esc(q.vi)}</span></div>
+    return `<div class="q-card" id="${id}"><div class="qtext"><span class="qn">${n}</span><span class="muted">Chạm vào các từ theo thứ tự đúng</span></div>
       <div class="answer-line" id="al_${id}"></div><div id="bl_${id}" style="display:flex;flex-wrap:wrap;gap:8px"></div>
       <button class="minibtn" type="button" data-clear="${id}">Xoá làm lại câu này</button><div class="fb" hidden></div></div>`;
   }
-  return `<div class="q-card" id="${id}"><div class="qtext"><span class="qn">${n}</span>Dịch sang tiếng Trung<span class="typ">dịch câu</span><br><b>${esc(q.vi)}</b></div>
+  return `<div class="q-card" id="${id}"><div class="qtext"><span class="qn">${n}</span><b>${esc(q.vi)}</b></div>
     <input class="tr zh" id="t_${id}" type="text" lang="zh-CN" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Gõ câu tiếng Trung…" aria-label="Bản dịch câu ${n}">
     <div class="fb" hidden></div></div>`;
 }
 function drawSort(id){
   const st=sortState[id], lk=locked[uidOf(id)];
-  $('#al_'+id).innerHTML=st.picked.map(k=>`<button type="button" class="tok" data-id="${id}" data-k="${k}" ${lk?'disabled':''}>${esc(st.order[k].t)}</button>`).join('');
-  $('#bl_'+id).innerHTML=st.order.map((o,k)=>`<button type="button" class="tok ${st.picked.includes(k)?'used':''}" data-id="${id}" data-add="${k}" ${lk||st.picked.includes(k)?'disabled':''}>${esc(o.t)}</button>`).join('');
+  $('#al_'+id).innerHTML=st.picked.map(k=>`<button type="button" class="tok" data-id="${id}" data-k="${k}" ${lk?'disabled':''}>${esc(st.order[k].t)}${xp(st.order[k].t)}</button>`).join('');
+  $('#bl_'+id).innerHTML=st.order.map((o,k)=>`<button type="button" class="tok ${st.picked.includes(k)?'used':''}" data-id="${id}" data-add="${k}" ${lk||st.picked.includes(k)?'disabled':''}>${esc(o.t)}${xp(o.t)}</button>`).join('');
+}
+function drawPos(id){
+  const lk=locked[uidOf(id)], p=posState[id];
+  document.querySelectorAll(`[data-pos="${id}"]`).forEach(b=>{ const on=+b.dataset.s===p; b.classList.toggle('on',on); b.textContent=on?'了':''; b.disabled=!!lk; });
+}
+function groupInner(g){
+  locked[g.gid]=false;
+  const types=new Set(g.qs.map(q=>q.t)), pyOn=document.body.classList.contains('xpy-on'); let last='', d=0;
+  const body=g.qs.map((q,i)=>{ let h=''; if(types.size>1&&q.t!==last){ d++; last=q.t; h=`<h4 class="dtype">Dạng ${d} · ${DTYPE[q.t]}</h4>`; } return h+qHtml(g,q,i); }).join('');
+  return `<div class="lcbar"><p class="lead" style="margin:0">${g.qs.length} câu, mỗi câu 1 điểm. Làm xong bấm <b>Nộp bài</b> để xem điểm và đáp án.</p>
+      <button class="chip xpyToggle" type="button" aria-pressed="${pyOn}">Pinyin bài tập: ${pyOn?'Bật':'Tắt'}</button></div>
+    ${body}
+    <div class="submit-bar"><button class="btn" type="button" data-submit="${g.gid}">Nộp bài</button><button class="btn ghost" type="button" data-reset="${g.gid}" hidden>Làm lại</button></div>
+    <div class="result" id="res${g.gid}" role="status" aria-live="polite"></div>`;
 }
 function luyenHtml(u){
-  locked[u.id]=false;
-  return `<p class="lead">Bài tập mục ${u.id}: <b>${u.qs.length} điểm</b> (mỗi câu 1 điểm). Làm xong bấm <b>Nộp bài</b> để xem điểm, đáp án đúng và giải thích cho những câu sai.</p>
-    ${u.qs.map((q,i)=>qHtml(u,q,i)).join('')}
-    <div class="submit-bar"><button class="btn" type="button" data-submit="${u.id}">Nộp bài</button><button class="btn ghost" type="button" data-reset="${u.id}" hidden>Làm lại</button></div>
-    <div class="result" id="res${u.id}" role="status" aria-live="polite"></div>`;
+  if(u.groups.length===1) return `<div id="grp${u.groups[0].gid}">${groupInner(u.groups[0])}</div>`;
+  return `<div class="stack">${u.groups.map((g,k)=>`<details class="ac"><summary><span class="num">${k+1}</span><span class="act">${esc(g.title)}</span></summary><div class="acb"><div id="grp${g.gid}">${groupInner(g)}</div></div></details>`).join('')}</div>`;
 }
-function drawUnitSorts(u){ u.qs.forEach((q,i)=>{ if(q.t==='sort') drawSort(`q${u.id}_${i}`); }); }
+function drawGroup(g){ g.qs.forEach((q,i)=>{ const id=`q${g.gid}_${i}`; if(q.t==='sort') drawSort(id); if(q.t==='pos') drawPos(id); }); }
+function drawUnitSorts(u){ u.groups.forEach(drawGroup); }
 
 /* ---------- DANH SÁCH CHỦ ĐỀ ----------
    Thêm ngữ pháp mới: viết unit mới trong UNITS (id duy nhất), rồi thêm một dòng vào TOPICS.
@@ -933,8 +1173,12 @@ const TOPICS = [
     kw:'bi bijiao meiyou yiyang xiang zui so sanh hon kem bang nhat' },
   { id:3, zh:'的 · 地 · 得', title:'Ba trợ từ 的 · 地 · 得 (de)', desc:'Cùng đọc "de" nhưng khác chữ, khác vị trí: trước danh từ, trước động từ, sau động từ.', units:[11],
     kw:'de de de tro tu dinh ngu trang ngu bo ngu' },
-  { id:4, zh:'补语', title:'Bổ ngữ: kết quả và xu hướng', desc:'结果补语 và 简单趋向补语: hai cấu trúc, mỗi cấu trúc có kiến thức và bài tập riêng.', units:[12,13],
-    kw:'bu yu jieguo qushi quxiang bo ngu ket qua xu huong wan dong dao jian lai qu shang xia jin chu hui guo qi' }
+  { id:4, zh:'结果补语', title:'Bổ ngữ kết quả', desc:'V + 完 / 懂 / 到 / 见…: nói rõ kết quả của hành động.', units:[12],
+    kw:'bu yu jieguo ket qua bo ngu wan dong dao jian cuo gan jing qing chu' },
+  { id:5, zh:'V + 来 / 去', title:'Bổ ngữ xu hướng đơn giản', desc:'V + 来 / 去: hành động đi về phía người nói hay xa người nói.', units:[13],
+    kw:'bu yu qushi quxiang xu huong bo ngu lai qu shang xia jin chu hui guo qi' },
+  { id:6, zh:'了', title:'Trợ từ 了', desc:'Bốn mục: 了 diễn tả sự việc đã diễn ra, phủ định, câu hỏi, các cấu trúc khác. Bí Kíp và Luyện Công đều chia mục thu / mở.', units:[14],
+    kw:'le liao tro tu da hoan thanh thay doi tinh huong moi phu dinh cau hoi roi' }
 ];
 const unitsOf = t => t.units.map(id=>UNITS.find(u=>u.id===id));
 const sn = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/g,'d').toLowerCase();
@@ -1034,6 +1278,10 @@ document.addEventListener('click', e=>{
     $('#kb'+u).hidden=!kb; $('#lc'+u).hidden=kb;
     return;
   }
+  const sl=e.target.closest('[data-pos]');
+  if(sl){const id=sl.dataset.pos; if(locked[uidOf(id)])return; const k=+sl.dataset.s; posState[id]=posState[id]===k?null:k; drawPos(id); return;}
+  const xt=e.target.closest('.xpyToggle');
+  if(xt){const on=!document.body.classList.contains('xpy-on'); document.body.classList.toggle('xpy-on',on); document.querySelectorAll('.xpyToggle').forEach(x=>{x.setAttribute('aria-pressed',String(on)); x.textContent='Pinyin bài tập: '+(on?'Bật':'Tắt');}); return;}
   // sắp xếp câu
   const add=e.target.closest('[data-add]'), rem=e.target.closest('.answer-line .tok'), clr=e.target.closest('[data-clear]');
   if(add){const id=add.dataset.id; if(locked[uidOf(id)])return; sortState[id].picked.push(+add.dataset.add); drawSort(id); return;}
@@ -1056,12 +1304,16 @@ function feedback(card,ok,yoursHtml,showHtml,why){
     <div class="why"><b>Giải thích:</b> ${esc(why)}</div>`;
 }
 const zhSpan = s => `<span class="${isZh(s)?'zh':''}">${esc(s)}</span>`;
-function submitUnit(uid){
-  const u=UNITS.find(x=>x.id===uid); locked[uid]=true;
+function submitUnit(gid){
+  const g=GROUPS[gid]; locked[gid]=true;
   let s=0, blanks=0; const wrong=[];
-  u.qs.forEach((q,i)=>{
-    const id=`q${uid}_${i}`, card=$('#'+id); let ok=false;
-    if(q.t==='mc'){
+  g.qs.forEach((q,i)=>{
+    const id=`q${gid}_${i}`, card=$('#'+id); let ok=false;
+    if(q.t==='pos'){
+      const p=posState[id]; if(p===null) blanks++;
+      ok=p!==null&&q.alts.includes(p); drawPos(id);
+      feedback(card,ok,p===null?'':`<span class="zh">${esc(q.full(p))}</span>`,`<span class="zh"><b>${esc(q.show)}</b></span>`,q.why);
+    } else if(q.t==='mc'){
       const chosen=card.querySelector('input:checked');
       card.querySelectorAll('input').forEach(x=>x.disabled=true);
       if(!chosen) blanks++;
@@ -1079,25 +1331,25 @@ function submitUnit(uid){
       ok=q.set.has(norm(yours));
       feedback(card,ok,yours?`<span class="zh">${esc(yours)}</span>`:'',`<span class="zh"><b>${esc(q.show)}</b></span>`,q.why);
     }
-    if(ok) s++; else wrong.push([`${uid}.${i+1}`,id]);
+    if(ok) s++; else wrong.push([`${i+1}`,id]);
   });
-  const max=u.qs.length;
-  const msg= s===max?'Tuyệt đối! Bạn nắm chắc mục này rồi': s>=max*0.8?'Rất tốt! Xem lại câu sai bên dưới nhé.': s>=max*0.5?'Khá ổn, đọc lại Bí Kíp rồi làm lại để lên điểm nhé.':'Cần ôn thêm. Đọc lại Bí Kíp rồi thử lại nhé, cố lên!';
-  const r=$('#res'+uid);
+  const max=g.qs.length;
+  const msg= s===max?'Tuyệt đối! Bạn nắm chắc phần này rồi': s>=max*0.8?'Rất tốt! Xem lại câu sai bên dưới nhé.': s>=max*0.5?'Khá ổn, đọc lại Bí Kíp rồi làm lại để lên điểm nhé.':'Cần ôn thêm. Đọc lại Bí Kíp rồi thử lại nhé, cố lên!';
+  const r=$('#res'+gid);
   r.innerHTML=`
-    <div class="muted2">Mục ${uid}</div>
+    <div class="muted2">${esc(g.title)}</div>
     <div class="score">${s}<small> / ${max}</small></div><div class="msg">${msg}</div>
     ${blanks?`<div class="wrongs">Còn ${blanks} câu chưa làm (tính 0 điểm).</div>`:''}
     ${wrong.length?`<div class="wrongs">Câu cần xem lại: ${wrong.map(w=>`<a href="#" data-jump="${w[1]}">${w[0]}</a>`).join(' · ')}</div>`:''}`;
   r.classList.add('show');
-  const pane=$('#lc'+uid);
+  const pane=$('#grp'+gid);
   pane.querySelector('[data-submit]').hidden=true; pane.querySelector('[data-reset]').hidden=false;
   r.scrollIntoView({behavior:'smooth',block:'center'});
 }
-function resetUnit(uid){
-  const u=UNITS.find(x=>x.id===uid);
-  $('#lc'+uid).innerHTML=luyenHtml(u); drawUnitSorts(u);
-  $('#lc'+uid).scrollIntoView({behavior:'smooth',block:'start'});
+function resetUnit(gid){
+  const g=GROUPS[gid], el=$('#grp'+gid);
+  el.innerHTML=groupInner(g); drawGroup(g);
+  el.scrollIntoView({behavior:'smooth',block:'start'});
 }
 </script>
 
