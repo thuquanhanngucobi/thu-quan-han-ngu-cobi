@@ -10,7 +10,7 @@
 /* ---------------------------------------------------------------------
    PHẦN 1. LINK API (duy nhất)
    --------------------------------------------------------------------- */
-const COBI_API_URL = 'https://script.google.com/macros/s/AKfycby1TyfXxZVmt2aoSIwOaNXxrrSmOXIHv-CVAU-B_9Xiv-Dxt4LyW2Yd1DSaJIOg4pfUIw/exec';
+const COBI_API_URL = 'https://script.google.com/macros/s/AKfycbw-xYbFvFDy0jkAtvw-v_d2sy_OmCwoeU8wyFh3T7zmnxzranUaaP-e8f3ysBIJ4wNKLw/exec';
 
 async function cobiFetchData(action) {
   const url = COBI_API_URL + '?action=' + encodeURIComponent(action) + '&t=' + Date.now();
