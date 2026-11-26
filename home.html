@@ -303,7 +303,9 @@
         window.parent.cobiOpen(btn.dataset.key, btn.dataset.id);
       }
     });
-
+  </script>
+  <script>
+    function hx(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
     /* ====== PHẦN THÔNG TIN THƯ QUÁN (đọc từ site-data.js) ====== */
     const SITE = (typeof COBI_SITE !== 'undefined') ? COBI_SITE : {};
     const C = SITE.contact || {};
@@ -328,25 +330,25 @@
     $('p-courses').innerHTML = courses.length
       ? '<div class="courses">' + courses.map((c, i) => `
           <button class="course" data-i="${i}" type="button">
-            <span class="hz">${esc(c.hanzi || '书')}</span>
-            <b>${esc(c.name)}</b>
-            <span class="lv">${esc(c.level || '')}</span>
-            <span class="pr">${esc(c.price || 'Liên hệ')}</span>
+            <span class="hz">${hx(c.hanzi || '书')}</span>
+            <b>${hx(c.name)}</b>
+            <span class="lv">${hx(c.level || '')}</span>
+            <span class="pr">${hx(c.price || 'Liên hệ')}</span>
           </button>`).join('') + '</div><div class="hint">Bấm vào từng khối để xem chi tiết</div>'
       : '<div class="empty">Thông tin khóa học đang được cập nhật.</div>';
 
     // Thư Chủ
     const T = SITE.teacher || {};
-    const photoStyle = T.photo ? ` style="background-image:url('${esc(T.photo)}')"` : '';
+    const photoStyle = T.photo ? ` style="background-image:url('${hx(T.photo)}')"` : '';
     $('p-teacher').innerHTML = `
       <div class="teacher">
         <div class="t-photo"${photoStyle}>${T.photo ? '' : '师'}</div>
         <div class="t-body">
-          <h3>${esc(T.title || 'Thư Chủ')}</h3>
-          <div class="t-quote">“${esc(T.quote || '')}”</div>
-          <ul class="t-list">${(T.highlights || []).map(h => `<li><span>${esc(h[0])}</span><span>${esc(h[1])}</span></li>`).join('')}</ul>
+          <h3>${hx(T.title || 'Thư Chủ')}</h3>
+          <div class="t-quote">“${hx(T.quote || '')}”</div>
+          <ul class="t-list">${(T.highlights || []).map(t => `<li><span>${hx(t[0])}</span><span>${hx(t[1])}</span></li>`).join('')}</ul>
           ${(T.more && T.more.length) ? `<button class="linkbtn" id="t-toggle" type="button">Xem thêm hành trình</button>
-          <div class="t-more" id="t-more" hidden><ul>${T.more.map(m => `<li>${esc(m)}</li>`).join('')}</ul></div>` : ''}
+          <div class="t-more" id="t-more" hidden><ul>${T.more.map(m => `<li>${hx(m)}</li>`).join('')}</ul></div>` : ''}
         </div>
       </div>`;
     const tt = $('t-toggle');
@@ -357,19 +359,19 @@
     $('p-fb').innerHTML = fbs.length
       ? '<div class="fb-grid">' + fbs.map(f => `
           <div class="fb ${f.img ? '' : 'textonly'}">
-            ${f.img ? `<img src="${esc(f.img)}" alt="Phản hồi học viên" loading="lazy" data-big="${esc(f.img)}">` : ''}
-            ${(f.text || f.name) ? `<div class="tx">${esc(f.text || '')}${f.name ? `<i>${esc(f.name)}</i>` : ''}</div>` : ''}
+            ${f.img ? `<img src="${hx(f.img)}" alt="Phản hồi học viên" loading="lazy" data-big="${hx(f.img)}">` : ''}
+            ${(f.text || f.name) ? `<div class="tx">${hx(f.text || '')}${f.name ? `<i>${hx(f.name)}</i>` : ''}</div>` : ''}
           </div>`).join('') + '</div>'
       : '<div class="empty">Phản hồi của học viên sẽ xuất hiện ở đây.<br>Bạn đã học ở Thư Quán? Nhắn Thư Chủ để chia sẻ cảm nhận nhé.</div>';
 
     // Liên hệ
-    const link = (href, label) => `<a href="${esc(href)}" target="_blank" rel="noopener">${label}</a>`;
+    const link = (href, label) => `<a href="${hx(href)}" target="_blank" rel="noopener">${label}</a>`;
     $('contact').innerHTML = [
-      C.phone ? `<a href="tel:${esc(String(C.phone).replace(/\s/g, ''))}">📞 ${esc(C.phone)}</a>` : '',
+      C.phone ? `<a href="tel:${hx(String(C.phone).replace(/\s/g, ''))}">📞 ${hx(C.phone)}</a>` : '',
       C.zalo ? link(C.zalo, '💬 Zalo') : '',
       C.facebook ? link(C.facebook, '📘 Facebook') : '',
       C.youtube ? link(C.youtube, '▶ YouTube') : '',
-      C.address ? `<span>📍 ${esc(C.address)}</span>` : ''
+      C.address ? `<span>📍 ${hx(C.address)}</span>` : ''
     ].filter(Boolean).join('');
 
     // Chuyển tab
@@ -394,15 +396,15 @@
       const contactHref = C.zalo || C.facebook || ('tel:' + String(C.phone || '').replace(/\s/g, ''));
       ov.className = 'ov';
       ov.innerHTML = `<div class="card"><button class="x" aria-label="Đóng">×</button>
-        <h3>${esc(c.name)}</h3><div class="lv2">${esc(c.level || '')} · ${esc(c.lessons || '')}</div>
-        <dl>${(c.details || []).map(d => `<div><dt>${esc(d[0])}</dt><dd>${esc(d[1])}</dd></div>`).join('')}</dl>
-        <a class="btn pri" href="${esc(contactHref)}" target="_blank" rel="noopener">Đăng ký / Hỏi Thư Chủ</a></div>`;
+        <h3>${hx(c.name)}</h3><div class="lv2">${hx(c.level || '')} · ${hx(c.lessons || '')}</div>
+        <dl>${(c.details || []).map(d => `<div><dt>${hx(d[0])}</dt><dd>${hx(d[1])}</dd></div>`).join('')}</dl>
+        <a class="btn pri" href="${hx(contactHref)}" target="_blank" rel="noopener">Đăng ký / Hỏi Thư Chủ</a></div>`;
       ov.hidden = false;
     });
     $('p-fb').addEventListener('click', (e) => {
       const im = e.target.closest('img[data-big]'); if (!im) return;
       ov.className = 'ov img';
-      ov.innerHTML = '<img src="' + esc(im.dataset.big) + '" alt="Phản hồi học viên">';
+      ov.innerHTML = '<img src="' + hx(im.dataset.big) + '" alt="Phản hồi học viên">';
       ov.hidden = false;
     });
   </script>

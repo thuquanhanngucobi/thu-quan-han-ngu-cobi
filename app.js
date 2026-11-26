@@ -71,12 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLogin(); });
   document.getElementById('lm-logout').onclick = () => { A.logout(); closeLogin(); };
 
-  // Tự chèn dấu gạch giữa mã cho dễ nhìn: ABCD-EFGH
-  codeInput.addEventListener('input', () => {
-    const raw = codeInput.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8);
-    codeInput.value = raw.length > 4 ? raw.slice(0, 4) + '-' + raw.slice(4) : raw;
-  });
-
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     msg.textContent = '';

@@ -50,8 +50,8 @@
 
     /* Đăng nhập bằng mã. Thành công: lưu mã + tên. Thất bại: ném lỗi có chữ tiếng Việt. */
     login: async (raw) => {
-      const code = String(raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
-      if (code.length < 6) throw new Error('Mã chưa đủ ký tự. Hãy nhập đúng mã Thư Chủ đã gửi.');
+      const code = String(raw || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/gi, 'd').toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (code.length < 3) throw new Error('Hãy nhập mã Thư Chủ đã gửi cho bạn.');
       const r = await ask(code);
       set(K.code, code); set(K.name, r.name || 'Học viên');
       emit();
