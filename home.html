@@ -151,7 +151,9 @@
     }
 
     /* ===== GIỚI THIỆU NGẮN + NÚT ===== */
-    .hero-intro { max-width: 640px; margin: 14px auto 0; font-size: clamp(14px,1.6vw,16.5px); line-height: 1.6; color: var(--brown-dark); }
+    .hero-intro { max-width: 720px; margin: 12px auto 0; font-size: clamp(13.5px,1.5vw,15.5px); line-height: 1.65; color: var(--brown-dark); }
+    .hero-intro p { margin-top: 5px; }
+    .hero-intro p.w-first { margin: 0 0 6px; font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 700; font-size: clamp(19px,2.3vw,24px); color: var(--blue-deep); }
     .hero-hello { margin-top: 8px; font-size: 14px; color: var(--blue-water); font-weight: 600; }
     .hero-cta { margin-top: 16px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
     .btn { cursor: pointer; font: inherit; font-size: 14.5px; font-weight: 700; padding: 10px 22px; border-radius: 30px; text-decoration: none; border: 1px solid var(--gold-earth); transition: .18s; display: inline-block; }
@@ -230,13 +232,11 @@
   <div class="wrap">
     <header class="hero">
       <h1>Thư Quán Hán Ngữ <span class="cobi">CoBi</span></h1>
-      <div class="hero-sub">Tàng thư · Du lạc · Khảo thí</div>
-      <div class="hero-slogan">一朝入书馆，一生伴汉语</div>
-      <p class="hero-intro" id="intro"></p>
+      <div class="hero-sub" id="slogan">Một ngày nhập Thư Quán, Trọn đời hành Hán Ngữ</div>
+      <div class="hero-intro" id="intro"></div>
       <div class="hero-hello" id="hello"></div>
       <div class="hero-cta">
         <button class="btn pri" id="go-courses" type="button">Xem các khóa học</button>
-        <button class="btn sec" id="go-contact" type="button">Liên hệ Thư Chủ</button>
       </div>
     </header>
 
@@ -312,7 +312,9 @@
     const $ = (id) => document.getElementById(id);
     const toParent = (fn) => { try { if (window.parent !== window && typeof window.parent[fn] === 'function') window.parent[fn](); } catch (e) {} };
 
-    $('intro').textContent = SITE.intro || '';
+    if (SITE.slogan) $('slogan').textContent = SITE.slogan;
+    const W = SITE.welcome || [];
+    $('intro').innerHTML = W.map((t, i) => '<p' + (i === 0 ? ' class="w-first"' : '') + '>' + hx(t) + '</p>').join('');
     if (window.COBI_AUTH && COBI_AUTH.isLoggedIn()) $('hello').textContent = 'Chào ' + COBI_AUTH.name() + ', chúc bạn học vui!';
 
     // Dấu "học viên" trên các mục chưa mở cho khách
@@ -382,7 +384,6 @@
     });
     const showTab = (k) => document.querySelector('.tab[data-t="' + k + '"]').click();
     $('go-courses').onclick = () => { showTab('courses'); $('about').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
-    $('go-contact').onclick = () => $('contact').scrollIntoView({ behavior: 'smooth', block: 'end' });
 
     // Cửa sổ chi tiết khóa / ảnh phóng to
     const ov = $('ov');

@@ -24,8 +24,17 @@ const COBI_ACCESS = {
    --------------------------------------------------------------------- */
 const COBI_SITE = {
 
-  /* Dòng giới thiệu ngay dưới tên Thư Quán (để khách biết đây là nơi dạy tiếng Trung) */
-  intro: 'Thư Quán dạy tiếng Trung cùng Thư Chủ: lớp nhóm theo cấp độ HSK và kèm riêng 1:1, học tại Đà Nẵng hoặc online.',
+  /* Slogan ngay dưới tên Thư Quán */
+  slogan: 'Một ngày nhập Thư Quán, Trọn đời hành Hán Ngữ',
+
+  /* Lời chào ở đầu trang. Mỗi dòng trong [ ] là một đoạn. Dòng đầu tiên được in to hơn. */
+  welcome: [
+    'Hoan nghênh Lữ Khách dừng chân Thư Quán.',
+    'Bước qua cánh cửa CoBi Thư Quán, đặt chân vào chốn giang hồ chữ nghĩa.',
+    'Ở đây không có gươm đao, chỉ có bút mực; không tranh bá đồ vương, chỉ một lòng truy cầu tri thức.',
+    'Con đường Hán Ngữ vốn chẳng dễ dàng, nhưng từng trang sách, từng âm ngữ sẽ mở ra một cảnh giới mới, cho ai đủ kiên tâm theo đuổi.',
+    'Lữ khách đã sẵn sàng nhập môn, bắt đầu hành trình tu luyện Hán ngữ, xin mời chọn cảnh giới phù hợp.'
+  ],
 
   /* Liên hệ. Để '' nếu chưa có, mục đó sẽ tự ẩn. */
   contact: {
