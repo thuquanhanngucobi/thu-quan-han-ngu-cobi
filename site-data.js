@@ -48,7 +48,7 @@ const COBI_SITE = {
     {
       name: 'Khối Tân Sinh', hanzi: '新', level: '0 → HSK2',
       short: 'Nhập môn từ con số 0',
-      price: '1.999.000đ',
+      price: '2.199.000đ',
       lessons: '25–32 buổi · 2 buổi/tuần (3–4 tháng)',
       details: [
         ['Giáo trình', 'Msutong Sơ cấp (2 quyển nhập môn), 20 bài'],
