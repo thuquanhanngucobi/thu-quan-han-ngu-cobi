@@ -30,9 +30,7 @@ const COBI_SITE = {
   /* Lời chào ở đầu trang. Mỗi dòng trong [ ] là một đoạn. Dòng đầu tiên được in to hơn. */
   welcome: [
     'Hoan nghênh Lữ Khách dừng chân Thư Quán.',
-    'Bước qua cánh cửa CoBi Thư Quán, đặt chân vào chốn giang hồ chữ nghĩa.',
-    'Ở đây không có gươm đao, chỉ có bút mực; không tranh bá đồ vương, chỉ một lòng truy cầu tri thức.',
-    'Con đường Hán Ngữ vốn chẳng dễ dàng, nhưng từng trang sách, từng âm ngữ sẽ mở ra một cảnh giới mới, cho ai đủ kiên tâm theo đuổi.',
+    'Bước qua cánh cửa CoBi Thư Quán, đặt chân vào chốn giang hồ chữ nghĩa. Ở đây không có gươm đao, chỉ có bút mực; không tranh bá đồ vương, chỉ một lòng truy cầu tri thức. Con đường Hán Ngữ vốn chẳng dễ dàng, nhưng từng trang sách, từng âm ngữ sẽ mở ra một cảnh giới mới, cho ai đủ kiên tâm theo đuổi.',
     'Lữ khách đã sẵn sàng nhập môn, bắt đầu hành trình tu luyện Hán ngữ, xin mời chọn cảnh giới phù hợp.'
   ],
 
@@ -48,7 +46,7 @@ const COBI_SITE = {
   /* KHÓA HỌC: mỗi khóa là một khối. Sửa / thêm / xóa tùy ý. */
   courses: [
     {
-      name: 'Khối Tân Sinh', hanzi: '新', level: 'Sơ cấp → HSK2',
+      name: 'Khối Tân Sinh', hanzi: '新', level: '0 → HSK2',
       short: 'Nhập môn từ con số 0',
       price: '1.999.000đ',
       lessons: '25–32 buổi · 2 buổi/tuần (3–4 tháng)',
@@ -75,11 +73,11 @@ const COBI_SITE = {
     {
       name: 'Khối Học Sĩ', hanzi: '士', level: 'Đầu vào HSK2 → HSK3',
       short: 'Tiến lên HSK3',
-      price: '2.799.000đ',
+      price: '2.899.000đ',
       lessons: '35–40 buổi · 2 buổi/tuần (4,5–5 tháng)',
       details: [
         ['Giáo trình', 'HSK Chuẩn 3.0'],
-        ['Học phí', '2.799.000đ/khóa'],
+        ['Học phí', '2.899.000đ/khóa'],
         ['Đóng theo tháng', '699.000đ/tháng (8 buổi), không kèm quà tặng'],
         ['Quà tặng', 'Giáo trình, vở tập viết, sổ tay bộ thủ, tài liệu (khi đóng trọn khóa)']
       ]
@@ -90,7 +88,7 @@ const COBI_SITE = {
       price: '4.499.000đ',
       lessons: '40–50 buổi · tuần 2 buổi',
       details: [
-        ['Giáo trình', 'Hết 2 quyển giáo trình chuẩn 3.0, kèm sách bài tập, luyện HSKK và đề thi'],
+        ['Giáo trình', 'HSK4 3.0'],
         ['Mục tiêu', 'Nắm hơn 3000 từ vựng, đọc hiểu văn bản dài'],
         ['Học phí', '4.499.000đ/khóa'],
         ['Đóng theo tháng', '799.000đ/tháng (8 buổi), không ưu đãi'],
