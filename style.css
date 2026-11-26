@@ -216,3 +216,57 @@ iframe { width: 100%; height: 100%; display: block; border: none; background: tr
 }
 .sub-item.has-submenu > .menu-title:hover { color: var(--blue-water); background: rgba(255,255,255,0.7); }
 .sub-menu .sub-menu { margin: 2px 0 6px 12px; }
+
+/* ============ ĐĂNG NHẬP HỌC VIÊN ============ */
+.topbar-user { flex-shrink: 0; margin-left: 10px; }
+.user-btn {
+  display: flex; align-items: center; gap: 7px; cursor: pointer; font: inherit; font-size: 14px; font-weight: 600;
+  padding: 8px 14px; border-radius: 30px; color: var(--blue-water);
+  background: rgba(255,255,255,0.75); border: 1px solid var(--gold-soft); transition: 0.2s;
+  max-width: 190px;
+}
+.user-btn:hover { border-color: var(--gold-earth); background: #fff; }
+.user-btn.on { color: #fff; background: linear-gradient(180deg, #2c5282, var(--blue-deep)); border-color: var(--gold-soft); }
+.user-btn .u-txt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Dấu khóa trên mục dành cho học viên (chỉ hiện khi chưa đăng nhập) */
+.is-locked > .menu-title > span:first-child::after { content: " 🔒"; font-size: 0.8em; opacity: 0.8; }
+.sub-item.is-locked:not(.has-submenu)::after { content: " 🔒"; font-size: 0.8em; opacity: 0.8; }
+
+.modal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 18px;
+  background: rgba(22, 48, 79, 0.45); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+.modal[hidden] { display: none; }
+.modal-card { position: relative; width: 100%; max-width: 400px; text-align: center; padding: 30px 26px 22px; border-radius: 16px;
+  background: var(--paper-solid); border: 1px solid var(--gold-earth);
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.55), 0 24px 50px rgba(22,48,79,0.35); }
+.modal-x { position: absolute; top: 8px; right: 12px; border: 0; background: none; font-size: 28px; line-height: 1; cursor: pointer; color: var(--brown-dark); }
+.lm-seal { width: 58px; height: 58px; margin: 0 auto 10px; border-radius: 50%; display: grid; place-items: center;
+  font-family: "Ma Shan Zheng", cursive; font-size: 28px; color: #fff;
+  background: radial-gradient(circle at 30% 25%, #2c5282, var(--blue-deep)); border: 2px solid var(--gold-soft); }
+.modal-card h2 { font-size: 20px; color: var(--blue-deep); margin-bottom: 8px; }
+.lm-note, .lm-hello { font-size: 14px; line-height: 1.55; color: var(--brown-dark); }
+.lm-hello { font-size: 16px; margin-bottom: 6px; }
+.lm-input { width: 100%; margin-top: 14px; padding: 13px; text-align: center; font: 700 22px/1 "Noto Serif", Georgia, serif; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--blue-deep); background: #fff; border: 1.5px solid var(--gold-soft); border-radius: 12px; outline: none; }
+.lm-input:focus { border-color: var(--blue-water); box-shadow: 0 0 0 3px rgba(30,58,95,0.15); }
+.lm-msg { min-height: 20px; margin-top: 10px; font-size: 13.5px; line-height: 1.45; color: #8a4b12; }
+.lm-btn { width: 100%; margin-top: 6px; padding: 13px; border: 0; border-radius: 30px; cursor: pointer; font: inherit; font-weight: 700; font-size: 15px;
+  color: #fff; background: linear-gradient(180deg, #2c5282, var(--blue-deep)); }
+.lm-btn:disabled { opacity: 0.6; cursor: wait; }
+.lm-btn.alt { margin-top: 14px; background: #fff; color: var(--blue-deep); border: 1px solid var(--gold-earth); }
+.lm-foot { margin-top: 14px; font-size: 12.5px; color: #7a6a58; }
+
+@media (max-width: 850px) {
+  .topbar { position: relative; }
+  .topbar-user { position: absolute; top: 10px; right: 12px; margin: 0; }
+  .user-btn { padding: 7px 11px; font-size: 13px; }
+  .user-btn:not(.on) .u-txt { display: none; }
+  .user-btn.on { max-width: 150px; }
+  .has-sidebar .brand-text strong { max-width: 38vw; }
+}
+@media (max-width: 420px) {
+  .user-btn.on .u-ico { display: none; }
+  .user-btn.on { max-width: 110px; }
+}
+.footer-info a { color: var(--blue-water); text-decoration: none; font-weight: 600; }
+.footer-info a:hover { text-decoration: underline; }

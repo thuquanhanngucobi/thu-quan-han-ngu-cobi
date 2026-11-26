@@ -22,6 +22,76 @@ document.addEventListener('DOMContentLoaded', () => {
     seal.innerHTML = '<img src="' + IMG.logo + '" alt="CoBi">';
   }
 
+  /* ---- Đăng nhập học viên ---- */
+  const A = window.COBI_AUTH;
+  const userBtn = document.getElementById('user-btn');
+  const userTxt = document.getElementById('user-txt');
+  const modal = document.getElementById('login-modal');
+  const form = document.getElementById('lm-form');
+  const outBox = document.getElementById('lm-out');
+  const codeInput = document.getElementById('lm-code');
+  const msg = document.getElementById('lm-msg');
+  const goBtn = document.getElementById('lm-go');
+  const lmTitle = document.getElementById('lm-title');
+
+  let current = { type: 'home', entry: null };   // đang xem gì, để mở lại khi đăng nhập xong
+
+  (function fillContact() {
+    const c = (typeof COBI_SITE !== 'undefined' && COBI_SITE.contact) || {};
+    const bits = [];
+    if (c.zalo) bits.push('<a href="' + c.zalo + '" target="_blank" rel="noopener">Zalo</a>');
+    if (c.facebook) bits.push('<a href="' + c.facebook + '" target="_blank" rel="noopener">Facebook</a>');
+    if (c.phone) bits.push('số ' + c.phone);
+    if (bits.length) document.getElementById('lm-contact').innerHTML = bits.join(' · ');
+  })();
+
+  function paintUser() {
+    const on = A.isLoggedIn();
+    userBtn.classList.toggle('on', on);
+    userTxt.textContent = on ? A.name() : 'Đăng nhập';
+    userBtn.setAttribute('aria-label', on ? 'Tài khoản học viên' : 'Đăng nhập học viên');
+  }
+
+  function openLogin(note) {
+    const on = A.isLoggedIn();
+    outBox.hidden = !on;
+    form.hidden = on;
+    lmTitle.textContent = on ? 'Tài khoản học viên' : 'Cửa dành cho học viên';
+    document.getElementById('lm-name').textContent = A.name();
+    msg.textContent = note || '';
+    modal.hidden = false;
+    if (!on) setTimeout(() => codeInput.focus(), 50);
+  }
+  function closeLogin() { modal.hidden = true; }
+  window.cobiLogin = () => openLogin();
+
+  userBtn.onclick = () => openLogin();
+  document.getElementById('lm-close').onclick = closeLogin;
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeLogin(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLogin(); });
+  document.getElementById('lm-logout').onclick = () => { A.logout(); closeLogin(); };
+
+  // Tự chèn dấu gạch giữa mã cho dễ nhìn: ABCD-EFGH
+  codeInput.addEventListener('input', () => {
+    const raw = codeInput.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8);
+    codeInput.value = raw.length > 4 ? raw.slice(0, 4) + '-' + raw.slice(4) : raw;
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.textContent = '';
+    goBtn.disabled = true; goBtn.textContent = 'Đang kiểm tra…';
+    try {
+      await A.login(codeInput.value);
+      codeInput.value = '';
+      closeLogin();
+    } catch (err) {
+      msg.textContent = err.message;
+    } finally {
+      goBtn.disabled = false; goBtn.textContent = 'Vào Thư Quán';
+    }
+  });
+
   /* ---- Menu trượt (điện thoại) ---- */
   function openSidebar()  { sidebar.classList.add('open');    backdrop.classList.add('show'); }
   function closeSidebar() { sidebar.classList.remove('open'); backdrop.classList.remove('show'); }
@@ -35,7 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
     shell.classList.remove('has-sidebar');
     shell.classList.add('is-home');
     closeSidebar();
-    iframe.src = 'home.html';
+    current = { type: 'home', entry: null };
+    iframe.src = 'home.html?v=5';
   }
 
   function clearActive() {
@@ -61,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
     moduleList.innerHTML = '';
 
     const refs = {};   // id -> mục menu
+    const allEntries = [];   // mọi mục (kể cả khi trùng id) để gắn dấu khóa
 
     function openEntry(entry) {
       if (!entry) return;
@@ -74,15 +146,20 @@ document.addEventListener('DOMContentLoaded', () => {
       entry.el.classList.add('active-item');
       // xổ tất cả các nhóm cha
       for (let p = entry.parent; p; p = p.parent) setExpanded(p, true);
-      iframe.src = entry.path;
+      current = { type: 'entry', entry: entry };
+      iframe.src = A.can(entry.id)
+        ? entry.path
+        : 'lock.html?v=5&name=' + encodeURIComponent(entry.title || '');
       if (isMobile()) closeSidebar();
     }
 
     // Tạo một mục (đệ quy). depth 0 = cấp ngoài cùng.
     function buildItem(item, parent, depth) {
       const li = document.createElement('li');
-      const entry = { el: li, path: item.path, parent: parent };
+      const entry = { id: item.id, title: String(item.name || '').replace(/^\d+\.\s*/, ''), el: li, path: item.path, parent: parent };
       refs[item.id] = entry;
+      allEntries.push(entry);
+      li._entry = entry;
 
       if (item.subModules) {
         li.className = (depth === 0 ? 'module-item' : 'sub-item') + ' has-submenu';
@@ -97,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         item.subModules.forEach(sub => {
           const childLi = buildItem(sub, entry, depth + 1);
-          entry.children.push(refs[sub.id]);
+          entry.children.push(childLi._entry);
           ul.appendChild(childLi);
         });
 
@@ -123,9 +200,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     data.modules.forEach(mod => moduleList.appendChild(buildItem(mod, null, 0)));
 
-    // Mở mục được chỉ định (từ thẻ trang chủ) hoặc mục đầu tiên
-    const first = data.modules[0];
-    openEntry((targetId && refs[targetId]) || refs[first.id]);
+    lockEntries = allEntries;
+    updateLocks();
+
+    // Mở mục được chỉ định (từ thẻ trang chủ) hoặc mục đầu tiên mà người xem được phép vào
+    const topEntries = data.modules.map(m => refs[m.id]);
+    const firstOpen = topEntries.find(e => !isLocked(e)) || topEntries[0];
+    openEntry((targetId && refs[targetId]) || firstOpen);
+  }
+
+  /* Hiện dấu khóa trên mục chưa được phép vào (nhóm bị khóa khi mọi mục con đều khóa) */
+  let lockEntries = [];
+  function isLocked(e) { return e.children ? e.children.every(isLocked) : !A.can(e.id); }
+  function updateLocks() {
+    lockEntries.forEach(e => e.el.classList.toggle('is-locked', isLocked(e)));
   }
 
   /* Trang chủ gọi hàm này khi bấm vào một mục trên thẻ */
@@ -144,5 +232,22 @@ document.addEventListener('DOMContentLoaded', () => {
   backdrop.onclick = closeSidebar;
   window.addEventListener('resize', () => { if (!isMobile()) closeSidebar(); });
 
+  /* Khi trạng thái đăng nhập đổi: cập nhật nút, dấu khóa và trang đang xem */
+  A.onChange(() => {
+    paintUser();
+    updateLocks();
+    if (current.type === 'home') { iframe.src = 'home.html?v=5'; }
+    else if (current.entry) {
+      const en = current.entry;
+      iframe.src = A.can(en.id) ? en.path : 'lock.html?v=5&name=' + encodeURIComponent(en.title || '');
+    }
+    if (!A.isLoggedIn() && A.lastMessage) { openLogin(A.lastMessage); A.lastMessage = ''; }
+  });
+
+  // Trang con báo "cần đăng nhập"
+  window.addEventListener('message', (e) => { if (e.data === 'cobi-need-login') openLogin(); });
+
+  paintUser();
   goHome();
+  A.verify();     // kiểm tra lại mã đã lưu với máy chủ (mất mạng thì vẫn giữ đăng nhập)
 });

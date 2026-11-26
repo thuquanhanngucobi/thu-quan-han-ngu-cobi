@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dành cho học viên</title>
+<style>
+  :root{--ink:#2b2622;--brown:#4a3525;--gold:#b38b4d;--blue:#1e3a5f;--deep:#16304f;--line:#e2d6bd}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:transparent}
+  body{font-family:"Noto Serif",Georgia,serif;color:var(--ink);display:grid;place-items:center;padding:20px}
+  .box{max-width:460px;width:100%;text-align:center;padding:34px 26px;border-radius:16px;
+    background:rgba(252,249,241,.94);border:1px solid var(--gold);
+    box-shadow:0 0 0 4px rgba(255,255,255,.55),0 18px 40px rgba(30,58,95,.2)}
+  .seal{width:64px;height:64px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;font-size:28px;
+    color:#fff;background:radial-gradient(circle at 30% 25%,#2c5282,var(--deep));border:2px solid #d9c28f}
+  h1{font-size:21px;color:var(--deep);margin-bottom:8px}
+  p{font-size:14.5px;line-height:1.6;color:var(--brown)}
+  .btn{display:block;width:100%;margin-top:18px;padding:13px;border-radius:30px;border:0;cursor:pointer;font:inherit;font-weight:700;
+    color:#fff;background:linear-gradient(180deg,#2c5282,var(--deep))}
+  .btn.alt{margin-top:10px;background:#fff;color:var(--deep);border:1px solid var(--gold)}
+  .btn:hover{filter:brightness(1.08)}
+</style></head>
+<body>
+  <div class="box">
+    <div class="seal">🔒</div>
+    <h1 id="t">Khu vực dành cho học viên</h1>
+    <p>Phần này chỉ mở cho học viên của Thư Quán. Hãy đăng nhập bằng mã Thư Chủ đã gửi cho bạn.<br>Lần sau máy này sẽ tự vào, không cần nhập lại.</p>
+    <button class="btn" id="login">Nhập mã học viên</button>
+    <button class="btn alt" id="free">Học thử ở Biển Từ Mênh Mông (miễn phí)</button>
+  </div>
+<script>
+  const q = new URLSearchParams(location.search);
+  if (q.get('name')) document.getElementById('t').textContent = q.get('name') + ' · dành cho học viên';
+  const P = window.parent;
+  document.getElementById('login').onclick = () => P && P.cobiLogin && P.cobiLogin();
+  document.getElementById('free').onclick = () => P && P.cobiOpen && P.cobiOpen('tang-thu-cac', 'ttc-v1');
+</script>
+</body></html>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#1e3a5f">
   <title>Thư Quán Hán Ngữ CoBi</title>
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
   <div class="bg-blur"></div>
@@ -31,6 +31,11 @@
         <button class="nav-btn" data-target="du-lac-hien">Du Lạc Trang Viên</button>
         <button class="nav-btn" data-target="khao-thi-duong">Khảo Thí Đường</button>
       </nav>
+      <div class="topbar-user">
+        <button class="user-btn" id="user-btn" type="button" aria-label="Đăng nhập học viên">
+          <span class="u-ico">👤</span><span class="u-txt" id="user-txt">Đăng nhập</span>
+        </button>
+      </div>
     </header>
 
     <!-- 2. KHU VỰC CHÍNH -->
@@ -41,7 +46,7 @@
       </aside>
 
       <main class="content-area">
-        <iframe id="content-frame" src="home.html?v=4" title="Nội dung"></iframe>
+        <iframe id="content-frame" src="home.html?v=5" title="Nội dung"></iframe>
       </main>
     </div>
 
@@ -50,7 +55,7 @@
       <div class="footer-info">
         <span>📍 <b>Địa chỉ:</b> K814 H83B/37 Trần Cao Vân, Thanh Khê, Đà Nẵng</span>
         <span>📞 <b>Liên hệ:</b> 0905 655 413</span>
-        <span>🌐 <b>Website:</b> hanngucobi.wordpress.com</span>
+        <span>🌐 <b>Facebook:</b> <a href="https://www.facebook.com/han.ngu.cobi" target="_blank" rel="noopener">Hán Ngữ CoBi</a></span>
       </div>
       <div class="footer-copyright">
         © Một ngày nhập Thư Quán - Trọn đời hành Hán Ngữ.
@@ -59,7 +64,31 @@
 
   </div>
 
+  <!-- HỘP ĐĂNG NHẬP HỌC VIÊN -->
+  <div class="modal" id="login-modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="lm-title">
+      <button class="modal-x" id="lm-close" aria-label="Đóng">×</button>
+      <div class="lm-seal">学</div>
+      <h2 id="lm-title">Cửa dành cho học viên</h2>
+      <div id="lm-out" hidden>
+        <p class="lm-hello">Xin chào, <b id="lm-name"></b>!</p>
+        <p class="lm-note">Máy này đã được gắn với mã của bạn nên lần sau sẽ tự vào.</p>
+        <button class="lm-btn alt" id="lm-logout" type="button">Đăng xuất</button>
+      </div>
+      <form id="lm-form" autocomplete="off">
+        <p class="lm-note">Nhập mã học viên Thư Chủ đã gửi cho bạn. Mỗi mã chỉ dùng được trên <b>một thiết bị</b>.</p>
+        <input id="lm-code" class="lm-input" type="text" inputmode="text" autocapitalize="characters"
+               spellcheck="false" maxlength="12" placeholder="XXXX-XXXX" aria-label="Mã học viên">
+        <div class="lm-msg" id="lm-msg" role="alert"></div>
+        <button class="lm-btn" id="lm-go" type="submit">Vào Thư Quán</button>
+        <p class="lm-foot">Chưa có mã? Nhắn Thư Chủ qua <span id="lm-contact">số điện thoại / Facebook</span>.</p>
+      </form>
+    </div>
+  </div>
+
   <script src="config.js?v=4"></script>
-  <script src="app.js?v=4"></script>
+  <script src="site-data.js?v=5"></script>
+  <script src="auth.js?v=5"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>
