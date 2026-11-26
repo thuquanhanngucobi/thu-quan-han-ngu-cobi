@@ -3,15 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Bài tập ngữ pháp tiếng Trung</title>
+<title>Mê Trận Ngự Pháp HSK3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#faf6ef;--card:#fff;--ink:#2a2622;--muted:#6f675e;--line:#e6dccd;--accent:#1f3a5f;--ai:#fff;--soft:#e3eaf4;--ok:#2e7d4f;--oks:#e1f2e7;--bad:#9a6700;--bads:#fbf0d3;
+:root{--bg:#faf6ef;--card:rgba(255,255,255,.86);--ink:#2a2622;--muted:#6f675e;--line:#e6dccd;--accent:#1f3a5f;--ai:#fff;--soft:#e3eaf4;--ok:#2e7d4f;--oks:#e1f2e7;--bad:#9a6700;--bads:#fbf0d3;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171513;--card:#211e1b;--ink:#f1ebe3;--muted:#a89f94;--line:#3a352f;--accent:#8fb4e8;--ai:#0e1a2b;--soft:#1f2c40;--ok:#6cc58c;--oks:#1f3326;--bad:#e8b84a;--bads:#3a3015}}
-:root[data-theme="dark"]{--bg:#171513;--card:#211e1b;--ink:#f1ebe3;--muted:#a89f94;--line:#3a352f;--accent:#8fb4e8;--ai:#0e1a2b;--soft:#1f2c40;--ok:#6cc58c;--oks:#1f3326;--bad:#e8b84a;--bads:#3a3015}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171513;--card:rgba(33,30,27,.88);--ink:#f1ebe3;--muted:#a89f94;--line:#3a352f;--accent:#8fb4e8;--ai:#0e1a2b;--soft:#1f2c40;--ok:#6cc58c;--oks:#1f3326;--bad:#e8b84a;--bads:#3a3015}}
+:root[data-theme="dark"]{--bg:#171513;--card:rgba(33,30,27,.88);--ink:#f1ebe3;--muted:#a89f94;--line:#3a352f;--accent:#8fb4e8;--ai:#0e1a2b;--soft:#1f2c40;--ok:#6cc58c;--oks:#1f3326;--bad:#e8b84a;--bads:#3a3015}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif}
+html{background:var(--bg)}body{margin:0;background:transparent;color:var(--ink);font:16px/1.6 "Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif}
 main{max-width:760px;margin:0 auto;padding:24px 16px 64px}
 h1{font-size:1.5rem;margin:6px 0}
 .sub{color:var(--muted);margin:0 0 14px}
@@ -57,9 +59,44 @@ input[type=text]{width:100%;padding:8px 10px}
 .tok[draggable=true]{cursor:grab}.fb summary{cursor:pointer;color:var(--ok)}
 .tabs{display:flex;gap:8px;margin:12px 0 8px}.tab{flex:1;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;font-weight:600;cursor:pointer}.tab.on{background:var(--accent);color:var(--ai);border-color:var(--accent)}.exm{padding:8px 0;border-bottom:1px solid var(--line)}[hidden]{display:none!important}
 .rc{background:none;border:0;padding:0;margin:8px 0}.rg{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:8px}.rg summary{padding:12px 14px;cursor:pointer;font-weight:600;color:var(--accent)}.rb{padding:0 14px 12px}
+:root{--sk1:#f6eed7;--sk2:#e9ddc0;--m1:#b9c6c3;--m2:#93a7aa;--m3:#62798a;--mist:#fffaf0;--moon:#f6dd93;--ink2:#3a4a55;--bn1:rgba(255,250,232,.92);--bn2:rgba(244,228,180,.86);--bnb:#d9c690}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sk1:#111a28;--sk2:#1b2536;--m1:#27384d;--m2:#1d2c40;--m3:#131e2e;--mist:#2b3b54;--moon:#c9b36a;--ink2:#0a111b;--bn1:rgba(26,34,48,.92);--bn2:rgba(20,28,42,.9);--bnb:#5b5230}}
+:root[data-theme="dark"]{--sk1:#111a28;--sk2:#1b2536;--m1:#27384d;--m2:#1d2c40;--m3:#131e2e;--mist:#2b3b54;--moon:#c9b36a;--ink2:#0a111b;--bn1:rgba(26,34,48,.92);--bn2:rgba(20,28,42,.9);--bnb:#5b5230}
+main{position:relative;z-index:1}
+.set,.card,.rg,.tab,.res{box-shadow:0 2px 10px rgba(70,55,20,.08)}
+#scene{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.mist{animation:drift 45s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translateX(-40px)}to{transform:translateX(40px)}}
+.bn{position:relative;overflow:hidden;border:1px solid var(--bnb);border-radius:18px;padding:26px 24px 22px;margin:0 0 18px;background:linear-gradient(135deg,var(--bn1),var(--bn2));outline:1px solid var(--bnb);outline-offset:-6px;box-shadow:0 4px 18px rgba(70,55,20,.12)}
+.bn-t{position:relative;z-index:2;padding-right:150px}
+.eyebrow{font-size:.78rem;letter-spacing:.14em;font-weight:700;color:var(--muted)}
+.bn-h{font-family:"Playfair Display","Noto Serif","Songti SC",Georgia,serif;font-weight:800;font-size:clamp(1.9rem,6.2vw,3rem);line-height:1.1;margin:6px 0 8px;color:var(--ink)}
+.bn-s{margin:0;color:var(--muted);max-width:30em}
+.wm{position:absolute;right:130px;bottom:-60px;font-size:230px;line-height:1;color:var(--accent);opacity:.07;font-family:"Noto Serif SC","Songti SC",serif;pointer-events:none}
+.lts{position:absolute;top:0;right:96px;width:100px;height:130px;pointer-events:none;transform-origin:top right}
+.lt{position:absolute;top:-6px;transform-origin:50% 0;animation:sway 3.8s ease-in-out infinite alternate}
+.lt.a{left:0;width:46px}.lt.b{left:58px;width:40px;top:8px;animation-duration:4.6s;animation-delay:-1.4s}
+.lt svg{display:block;width:100%;height:auto}
+@keyframes sway{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
+.seal{position:absolute;right:20px;top:34px;width:56px;height:56px;border-radius:6px;background:#1f3a5f;color:#e8c768;border:2px solid #e8c768;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:700;font-size:20px;line-height:1.05;transform:rotate(3deg);box-shadow:0 2px 6px rgba(0,0,0,.25);font-family:serif}
+@media(max-width:520px){.bn-t{padding-right:104px}.lts{right:58px;transform:scale(.8)}.seal{right:10px;width:46px;height:46px;font-size:17px}.wm{font-size:170px;right:60px}}
+.bn.sm{padding:14px 18px;cursor:pointer}.bn.sm .bn-h{font-size:clamp(1.25rem,4.5vw,1.6rem);margin:2px 0}.bn.sm .wm,.bn.sm .seal{display:none}.bn.sm .lts{transform:scale(.55)}.bn.sm .bn-t{padding-right:90px}
+@media(prefers-reduced-motion:reduce){.lt,.mist{animation:none}}
 </style>
 </head>
 <body>
+<svg id="scene" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--sk1)"/><stop offset="1" style="stop-color:var(--sk2)"/></linearGradient><radialGradient id="lg"><stop offset="0" stop-color="#ffe08a"/><stop offset=".7" stop-color="#e0a526"/><stop offset="1" stop-color="#b9770e"/></radialGradient><radialGradient id="lb"><stop offset="0" stop-color="#4a79b8"/><stop offset=".7" stop-color="#1f3a5f"/><stop offset="1" stop-color="#14274a"/></radialGradient><filter id="bl"><feGaussianBlur stdDeviation="14"/></filter></defs>
+<rect width="1200" height="800" fill="url(#sky)"/><circle cx="880" cy="190" r="72" style="fill:var(--moon)" opacity=".55"/>
+<path d="M0 470L90 400L170 450L270 360L380 440L470 390L590 460L700 380L820 450L930 370L1050 440L1200 390V800H0Z" style="fill:var(--m1)" opacity=".55"/>
+<g class="mist"><ellipse cx="300" cy="470" rx="380" ry="26" style="fill:var(--mist)" opacity=".7" filter="url(#bl)"/><ellipse cx="900" cy="530" rx="400" ry="30" style="fill:var(--mist)" opacity=".7" filter="url(#bl)"/></g>
+<path d="M0 560L110 470L210 540L330 430L450 530L560 480L680 560L800 460L930 540L1060 470L1200 550V800H0Z" style="fill:var(--m2)" opacity=".6"/>
+<g transform="translate(330 432)" style="fill:var(--ink2)" opacity=".5"><rect x="-40" y="0" width="80" height="8"/><rect x="-22" y="-18" width="44" height="18"/><path d="M-34 -18 Q-30 -24 -24 -26 L24 -26 Q30 -24 34 -18Z"/><rect x="-17" y="-44" width="34" height="18"/><path d="M-29 -44 Q-25 -50 -19 -52 L19 -52 Q25 -50 29 -44Z"/><rect x="-12" y="-70" width="24" height="18"/><path d="M-24 -70 Q-20 -76 -14 -78 L14 -78 Q20 -76 24 -70Z"/><rect x="-7" y="-96" width="14" height="18"/><path d="M-19 -96 Q-15 -102 -9 -104 L9 -104 Q15 -102 19 -96Z"/><rect x="-2" y="-122" width="4" height="18"/><path d="M-14 -122 Q-10 -128 -4 -130 L4 -130 Q10 -128 14 -122Z"/><rect x="-1.5" y="-150" width="3" height="22"/></g>
+<path d="M0 700C150 620 260 650 400 690C560 730 700 640 860 660C1000 675 1100 640 1200 660V800H0Z" style="fill:var(--m3)" opacity=".55"/>
+<rect y="725" width="1200" height="75" style="fill:var(--m2)" opacity=".25"/>
+<g transform="translate(740 742)" style="fill:var(--ink2)" opacity=".55"><path d="M0 0Q35 14 70 0Z"/><rect x="34" y="-26" width="2" height="26"/><path d="M36 -26L58 -6H36Z"/></g>
+<g fill="none" stroke-linecap="round" style="stroke:var(--ink2)" opacity=".4"><path d="M1200 90C1100 110 1040 150 980 230" stroke-width="5"/><path d="M1130 112C1100 80 1070 70 1040 74" stroke-width="3"/><path d="M1040 160C1010 140 980 138 950 148" stroke-width="3"/></g>
+<g style="fill:var(--ink2)" opacity=".38"><ellipse cx="1040" cy="72" rx="42" ry="13" transform="rotate(-8 1040 72)"/><ellipse cx="950" cy="148" rx="40" ry="12" transform="rotate(10 950 148)"/><ellipse cx="985" cy="228" rx="38" ry="12" transform="rotate(-12 985 228)"/><ellipse cx="1110" cy="104" rx="44" ry="13"/></g>
+<g fill="none" stroke-linecap="round" style="stroke:var(--ink2)" opacity=".45"><path d="M520 150q10-10 20 0q10-10 20 0"/><path d="M580 190q8-8 16 0q8-8 16 0"/><path d="M470 210q7-7 14 0q7-7 14 0"/></g></svg>
 <main id="app"></main>
 <script>
 /* ===== KHO DỮ LIỆU: thêm bài mới = thêm 1 khối vào SETS ===== */
@@ -356,6 +393,58 @@ return{id:"hsk3-jie",level:"HSK3",name:"借 (jiè): mượn / cho mượn",title
   T("Anh ấy cho tôi mượn xe đạp.",X(["他把自行车","他把那辆自行车","他把他的自行车","他把自己的自行车","他把单车","他把那辆单车"],["借给我了","借给了我","借给我"]).concat(X(["他借给我","他借给了我"],["一辆自行车","自行车","一辆单车","单车","他的自行车","他的单车"])),"他把自行车借给我了。 / 他借给我一辆自行车。","Cho mượn: 借给 + người, hoặc 把 + vật + 借给 + người."),
   T("Tôi mượn của thư viện ba cuốn sách.",X(["我向图书馆","我跟图书馆","我从图书馆"],["借了三本书","借了三本","借三本书"]),"我向图书馆借了三本书。","Mượn của cơ quan, tổ chức thường dùng 向."),
   T("Mượn tiền thì phải trả.",X(["借钱","借了钱","借钱的话","借了钱就","借钱就","向别人借钱","向别人借钱就","跟别人借钱","跟别人借钱就","借别人的钱","借别人的钱就"],["要还","得还","必须还","应该还","要还钱","得还钱","必须还钱","应该还钱","必须要还","需要还"]),"借钱要还。","Mượn rồi phải 还 (trả): 有借有还.")]}
+ ]}})(),
+(()=>{const X=(a,b)=>a.flatMap(x=>b.map(y=>x+y));
+const R=(src,pre,acc,e)=>({type:"rewrite",hint:"Viết lại bằng câu chữ 被, điền phần còn thiếu sau dấu →.",parts:[{src,pre,accept:acc}],exp:e});
+const T=(vi,acc,show,e)=>({type:"trans",hint:"Dịch sang tiếng Trung bằng câu chữ 被.",parts:[{vi,accept:acc,show}],exp:e});
+const F=(wrong,acc,show,e)=>({type:"fix",hint:"Tìm lỗi và viết lại thành câu chữ 被 đúng.",wrong,accept:acc,show,exp:e});
+return{id:"hsk3-bei",level:"HSK3",name:"Câu chữ 被 (被字句)",title:"HSK 3 – Câu chữ 被",sub:"Cấu trúc: đối tượng chịu tác động + 被 + (người làm) + V + thành phần khác. Làm hết 30 câu rồi bấm “Nộp bài”.",
+ tags:["被字句","bị / được","叫 / 让"],
+ recap:[
+  {t:"1. Điểm cốt lõi",open:true,ps:["Câu chữ 被 (câu bị động) nhấn mạnh chủ ngữ là đối tượng chịu tác động của hành động: bị / được."],head:["Cấu trúc","Ví dụ"],rows:[["Chịu tác động + 被 + V + thành phần khác","我的自行车被偷了。 (Xe đạp của tôi bị trộm mất rồi.)"],["Chịu tác động + 被 + người làm + V + thành phần khác","杯子被他打破了。 (Cái cốc bị anh ấy làm vỡ.)"]],notes:["Người làm hành động đứng sau 被 có thể lược bỏ (我的自行车被偷了)."]},
+  {t:"2. Sau động từ phải có thành phần khác",ps:["Động từ không đứng một mình: sau V cần 了, bổ ngữ kết quả, bổ ngữ xu hướng, 在 / 给 / 成…"],head:["Thành phần","Ví dụ"],rows:[["V + 了","他被老师批评了。"],["V + bổ ngữ kết quả","杯子被他打破了。"],["V + bổ ngữ xu hướng","书被同学借走了。"],["V + 在 + nơi chốn","作业被我忘在家里了。"],["V + 成 + …","这封信被翻译成了中文。"]],notes:["Không nói 我的自行车被偷 (thiếu thành phần). Nói: 我的自行车被偷了 / 被偷走了."]},
+  {t:"3. Vị trí của phủ định, trợ động từ, trạng từ",head:["Cấu trúc","Ví dụ"],rows:[["S + 没(有) + 被 + (người) + V…","我的手机没被偷。"],["S + 能/会/应该 + 被 + (người) + V…","这件事不能被别人知道。"],["S + 已经/常常 + 被 + (người) + V…","他已经被老师批评了。"]],notes:["Phủ định, trợ động từ và trạng từ đứng TRƯỚC 被, không đứng sau (không nói 被没, 被已经)."]},
+  {t:"4. Khẩu ngữ: 叫 / 让 thay cho 被",ps:["Trong khẩu ngữ có thể dùng 叫 hoặc 让 thay 被."],ex:[["杯子让他打破了。","Cái cốc bị anh ấy làm vỡ rồi."],["书叫同学借走了。","Sách bị bạn mượn đi rồi."]],notes:["Sau 叫 / 让 bắt buộc phải có người làm hành động (không nói 杯子让打破了). Với 被 thì có thể lược."]},
+  {t:"5. 被 và 把",ps:["Cùng một sự việc, nhìn từ hai góc độ: 把 nhấn mạnh người làm; 被 nhấn mạnh đối tượng chịu tác động."],head:["Câu chữ 把","Câu chữ 被"],rows:[["他把杯子打破了。","杯子被他打破了。"],["妈妈把衣服洗干净了。","衣服被妈妈洗干净了。"],["风把门吹开了。","门被风吹开了。"]]},
+  {t:"6. Sắc thái: bị hay được?",ps:["被 thường dùng cho việc không mong muốn (bị trộm, bị phê bình), nhưng cũng dùng cho việc tốt (được khen, được chọn)."],ex:[["他被老师表扬了。","Anh ấy được thầy khen."],["他被大家选为班长了。","Anh ấy được mọi người bầu làm lớp trưởng."]]},
+  {t:"7. Lỗi hay gặp",notes:["Thiếu thành phần sau động từ: ✗ 钱包被小偷偷 → ✓ 钱包被小偷偷走了.","Phủ định / trạng từ đặt sai chỗ: ✗ 我被没老师批评 → ✓ 我没被老师批评; ✗ 他被老师已经批评了 → ✓ 他已经被老师批评了.","Người làm đặt sai vị trí: ✗ 杯子被打破他了 → ✓ 杯子被他打破了.","Không dùng với động từ không gây tác động lên chủ ngữ như 是、有、在、像、去、来."]},
+  {t:"8. Mẹo nhớ nhanh",notes:["Chủ ngữ chịu tác động → 被; người làm đứng ngay sau 被 (có thể lược).","Sau động từ phải có thành phần khác (了, bổ ngữ…).","Phủ định, 能, 已经… đứng trước 被."]}
+ ],
+ sections:[
+ {title:"一、排序",sub:"Sắp xếp thành câu chữ 被",items:[
+  _B(["我的","自行车","被","偷","了"],["我的自行车被偷了"],"Chịu tác động + 被 + V + 了: 我的自行车被偷了."),
+  _B(["杯子","被","他","打破","了"],["杯子被他打破了"],"Người làm đứng sau 被: 杯子被他打破了."),
+  _B(["书","被","同学","借走","了"],["书被同学借走了"],"V + bổ ngữ xu hướng: 书被同学借走了."),
+  _B(["他","被","老师","批评","了"],["他被老师批评了","老师被他批评了"],"他被老师批评了: anh ấy bị thầy phê bình."),
+  _B(["我","没","被","老师","发现"],["我没被老师发现"],"Phủ định 没 đứng trước 被: 我没被老师发现."),
+  _B(["这件事","不能","被","别人","知道"],["这件事不能被别人知道"],"Trợ động từ 不能 đứng trước 被: 这件事不能被别人知道."),
+  _B(["他","已经","被","大家","选为","班长","了"],["他已经被大家选为班长了"],"Trạng từ 已经 đứng trước 被: 他已经被大家选为班长了."),
+  _B(["作业","被","我","忘","在","家里","了"],["作业被我忘在家里了"],"V + 在 + nơi chốn: 作业被我忘在家里了.")]},
+ {title:"二、改写句子",sub:"Viết lại câu chữ 把 / câu thường thành câu chữ 被",items:[
+  R("他把杯子打破了。","杯子被",["他打破了"],"把 → 被: 他把杯子打破了 = 杯子被他打破了."),
+  R("妈妈把衣服洗干净了。","衣服被",["妈妈洗干净了"],"衣服被妈妈洗干净了."),
+  R("小偷把我的钱包偷走了。","我的钱包被",["小偷偷走了"],"我的钱包被小偷偷走了."),
+  R("哥哥把我的自行车骑走了。","我的自行车被",["哥哥骑走了"],"我的自行车被哥哥骑走了."),
+  R("老师批评了他。","他被",["老师批评了"],"Chuyển tân ngữ lên làm chủ ngữ: 他被老师批评了."),
+  R("同学借走了那本书。","那本书被",["同学借走了"],"那本书被同学借走了."),
+  R("大家选他当班长了。","他被",["大家选为班长了","大家选为班长"],"他被大家选为班长了."),
+  R("风把门吹开了。","门被",["风吹开了"],"门被风吹开了.")]},
+ {title:"三、翻译",sub:"Dịch Việt – Trung bằng câu chữ 被",items:[
+  T("Xe đạp của tôi bị trộm mất rồi.",X(["我的自行车","我的单车"],["被偷了","被偷走了","被小偷偷了","被小偷偷走了","被人偷了","被人偷走了"]),"我的自行车被偷了。","Chịu tác động + 被 + V + 了."),
+  T("Cái cốc bị anh ấy làm vỡ rồi.",X(["杯子","那个杯子","这个杯子"],["被他打破了","被他摔破了","被他打碎了","被他摔碎了"]),"杯子被他打破了。","Người làm đứng sau 被, động từ có bổ ngữ kết quả 破."),
+  T("Hôm nay tôi bị thầy giáo phê bình.",X(["我今天","今天我"],["被老师批评了","被老师批评","被老师批评了一顿"]),"我今天被老师批评了。","Trạng từ thời gian 今天 đứng trước 被."),
+  T("Quyển sách này đã bị bạn tôi mượn đi rồi.",X(["这本书已经被我朋友","这本书已经被我的朋友","这本书已经被朋友","这本书被我朋友","这本书被我的朋友","这本书被朋友"],["借走了","借去了"]),"这本书已经被我朋友借走了。","V + bổ ngữ xu hướng 走; 已经 đứng trước 被."),
+  T("Anh ấy không bị thầy phát hiện.",X(["他没被老师","他没有被老师"],["发现","看见","看到"]),"他没被老师发现。","Phủ định 没 đứng trước 被."),
+  T("Chuyện này không thể bị người khác biết.",X(["这件事","这件事情"],["不能被别人知道","不能被人知道","不能被其他人知道","不可以被别人知道","不可以被人知道","不要被别人知道","不要被人知道"]),"这件事不能被别人知道。","Trợ động từ 不能 đứng trước 被.")]},
+ {title:"四、找出并修改错误",sub:"Tìm lỗi sai, viết lại câu chữ 被 đúng",items:[
+  F("我的自行车被偷。",["我的自行车被偷了","我的自行车被偷走了","我的自行车被小偷偷走了","我的自行车被人偷了"],"我的自行车被偷了。","Sau động từ cần có thành phần khác (了 hoặc bổ ngữ)."),
+  F("我被没老师批评。",["我没被老师批评","我没有被老师批评"],"我没被老师批评。","Từ phủ định 没 phải đứng trước 被."),
+  F("他被老师已经批评了。",["他已经被老师批评了"],"他已经被老师批评了。","Trạng từ 已经 phải đứng trước 被."),
+  F("杯子被打破他了。",["杯子被他打破了"],"杯子被他打破了。","Người làm đứng ngay sau 被, trước động từ."),
+  F("这件事被不能别人知道。",["这件事不能被别人知道","这件事不能被人知道"],"这件事不能被别人知道。","Trợ động từ 不能 phải đứng trước 被."),
+  F("书让借走了。",["书被借走了","书被同学借走了","书让同学借走了","书叫同学借走了","书被人借走了","书让人借走了"],"书被借走了。 / 书让同学借走了。","Sau 叫 / 让 phải có người làm hành động; dùng 被 thì có thể lược."),
+  F("钱包被小偷偷。",["钱包被小偷偷走了","钱包被小偷偷了"],"钱包被小偷偷走了。","Sau động từ cần 了 hoặc bổ ngữ (偷走了)."),
+  F("他被老师去办公室叫。",["他被老师叫到办公室去了","他被老师叫去办公室了","他被老师叫去办公室","他被老师叫到办公室了"],"他被老师叫到办公室去了。","Động từ 叫 đi với bổ ngữ xu hướng; không đặt 去办公室 trước động từ.")]}
  ]}})()
 ];
 /* ===== BỘ MÁY LÀM BÀI (dùng chung, không cần sửa khi thêm bài) ===== */
@@ -408,13 +497,17 @@ const recapEl=r=>{const bx=h('div',{class:'rc'});
   h('div',{class:'rb'},...(g.ps||[]).map(x=>h('p',{style:'margin:4px 0 8px'},x)),
    g.rows?h('div',{style:'overflow-x:auto'},h('table',null,g.head?h('tr',null,...g.head.map(c=>h('th',{style:'text-align:left;padding:6px 8px'},c))):null,...g.rows.map(x=>h('tr',null,...x.map((c,i)=>h('td',i?{class:'zh'}:null,c)))))):null,
    ...(g.ex||[]).map(x=>h('div',{class:'exm'},h('div',{style:'font-size:1.15rem'},x[0]),h('div',{class:'note'},x[1]))),
-   ...(g.notes||[]).map(n=>h('p',{class:'note'},'• '+n))))));return bx};
-function levelsView(){app.innerHTML='';app.append(h('h1',null,'Bài tập ngữ pháp tiếng Trung'),h('p',{class:'sub'},'Chọn cấp độ để xem danh sách bài tập.'),
+   ...(g.notes||[]).map(n=>h('p',{class:'note'},'• '+n))))));return bx};const LA='<svg viewBox="0 0 60 116" aria-hidden="true"><path d="M30 0V18" stroke="#8a6d1f" stroke-width="1.6"/><rect x="20" y="16" width="20" height="7" rx="2" fill="#1f3a5f"/><ellipse cx="30" cy="46" rx="25" ry="26" fill="url(#lg)" stroke="#b9770e"/><path d="M30 21C15 33 15 59 30 71M30 21C45 33 45 59 30 71M30 21V71" stroke="#b9770e" fill="none" opacity=".55"/><rect x="20" y="69" width="20" height="7" rx="2" fill="#1f3a5f"/><path d="M30 76V96M26 96L24 110M30 96V114M34 96L36 110" stroke="#1f3a5f" stroke-width="1.4" fill="none"/><text x="30" y="54" text-anchor="middle" font-size="20" font-weight="700" fill="#1f3a5f" font-family="serif">福</text></svg>';
+const LB=LA.replace('url(#lg)','url(#lb)').replace('stroke="#b9770e"/>','stroke="#d9b24a"/>').replace(/fill="#1f3a5f"/g,'fill="#c9a227"').replace('stroke="#1f3a5f"','stroke="#c9a227"').replace('<text x="30" y="54" text-anchor="middle" font-size="20" font-weight="700" fill="#c9a227"','<text x="30" y="54" text-anchor="middle" font-size="20" font-weight="700" fill="#f1d27a"');
+function banner(sm){const b=h('div',{class:'bn'+(sm?' sm':'')});
+ b.innerHTML='<div class="bn-t"><div class="eyebrow">THƯ QUÁN HÁN NGỮ COBI</div><div class="bn-h">Mê Trận Ngự Pháp HSK3</div>'+(sm?'':'<p class="bn-s">Chọn một chủ điểm để xem Bí Kíp (kiến thức) và làm Luyện Công (bài tập).</p>')+'</div><div class="wm">语</div><div class="lts"><div class="lt a">'+LA+'</div><div class="lt b">'+LB+'</div></div><div class="seal">汉<br>语</div>';
+ if(sm)b.onclick=()=>go('');return b}
+function levelsView(){app.innerHTML='';app.append(banner(),h('p',{class:'sub'},'Chọn cấp độ để xem danh sách bài tập.'),
  ...levels.map(l=>h('button',{class:'set',onclick:()=>go('lv-'+l.toLowerCase())},h('b',null,l),h('div',{class:'meta'},SETS.filter(s=>s.level===l).length+' bài tập'))))}
 function listView(l){app.innerHTML='';const ls=h('div'),kw=h('input',{type:'search',placeholder:'Tìm bài tập…'});
  const d=()=>{ls.textContent='';const k=kw.value.toLowerCase(),a=SETS.filter(s=>s.level===l&&s.name.toLowerCase().includes(k));
   if(!a.length)ls.append(h('p',{class:'note'},'Không tìm thấy bài tập.'));a.forEach(s=>ls.append(h('button',{class:'set',onclick:()=>go(s.id)},h('b',null,s.name))))};
- kw.oninput=d;d();app.append(h('button',{class:'back',onclick:()=>go('')},'← Cấp độ'),h('h1',null,l+' – Bài tập'),h('p',{class:'sub'},'Bấm vào tên bài tập để làm.'),kw,ls)}
+ kw.oninput=d;d();app.append(banner(true),h('button',{class:'back',onclick:()=>go('')},'← Cấp độ'),h('h1',null,l+' – Bài tập'),h('p',{class:'sub'},'Bấm vào tên bài tập để làm.'),kw,ls)}
 function quizView(s){app.innerHTML='';const qs=[],res=h('div'),box=h('div');
  const init=()=>{box.textContent='';res.textContent='';qs.length=0;let n=0;
   s.sections.forEach((sec,si)=>{box.append(h('h2',{class:'st'},sec.title,sec.sub?h('small',null,sec.sub):null));
@@ -424,7 +517,7 @@ function quizView(s){app.innerHTML='';const qs=[],res=h('div'),box=h('div');
   const sc=Math.round(t*10)/10,p=sc/qs.length;res.textContent='';res.append(h('div',{class:'res'},h('div',{class:'big'},sc+' / '+qs.length),h('div',null,p>=.9?'Xuất sắc!':p>=.7?'Khá tốt, ôn thêm các câu sai nhé.':p>=.5?'Cần ôn thêm.':'Hãy xem lại bài rồi làm lại nhé.'),h('div',{class:'note',style:'margin-top:6px'},wr.length?'Câu cần xem lại: '+wr.join(', ')+'. Xem giải thích ở từng câu phía trên.':'Bạn làm đúng hết!')));res.scrollIntoView({behavior:'smooth',block:'center'})};
  init();
  const prac=h('div',null,box,h('div',{class:'acts'},h('button',{class:'btn',onclick:grade},'Nộp bài'),h('button',{class:'btn g',onclick:()=>{init();scrollTo(0,0)}},'Làm lại')),res);
- const head=[h('button',{class:'back',onclick:()=>go('lv-'+s.level.toLowerCase())},'← '+s.level+' – Bài tập'),h('h1',null,s.title),h('p',{class:'sub'},s.sub),s.tags?h('div',{class:'tags'},...s.tags.map(t=>h('span',{class:'tag'},t))):null];
+ const head=[banner(true),h('button',{class:'back',onclick:()=>go('lv-'+s.level.toLowerCase())},'← '+s.level+' – Bài tập'),h('h1',null,s.title),h('p',{class:'sub'},s.sub),s.tags?h('div',{class:'tags'},...s.tags.map(t=>h('span',{class:'tag'},t))):null];
  if(!s.recap){app.append(...head,prac);return}
  const kn=recapEl(s.recap),tb=h('div',{class:'tabs'});
  const show=k=>{kn.hidden=k!==0;prac.hidden=k!==1;[...tb.children].forEach((b,i)=>b.classList.toggle('on',i===k));scrollTo(0,0)};
