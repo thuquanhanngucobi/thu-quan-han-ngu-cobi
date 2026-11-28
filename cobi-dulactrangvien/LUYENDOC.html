@@ -1,0 +1,853 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Luyện đọc Hán ngữ</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap">
+<style>
+/* Layout: một cột hẹp, danh sách phẳng trong một khung; thanh điều khiển cố định ở đáy khi đọc.
+   Tông: xanh navy đậm, bạc làm nền và đường kẻ, nâu cho pinyin, vàng cho câu đang đọc và dấu đã đọc. */
+:root {
+  --bg: #EEF0F3;
+  --surface: #FFFFFF;
+  --fg: #14213D;
+  --muted: #5A6578;
+  --line: #CFD5DE;
+  --accent: #1B2F5B;
+  --accent-fg: #FFFFFF;
+  --accent-soft: #E1E7F2;
+  --py: #7A4E24;
+  --gold: #B8860B;
+  --hl: #F8E7A8;
+  --font-ui: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-han: "Noto Serif SC", "Songti SC", "Source Han Serif SC", "SimSun", serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B1324; --surface: #132039; --fg: #E8ECF4; --muted: #9DA9C0; --line: #263659;
+    --accent: #E0B64A; --accent-fg: #1A1405; --accent-soft: #1D2C4D; --py: #D8A56B; --gold: #E0B64A; --hl: #4A3C12;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B1324; --surface: #132039; --fg: #E8ECF4; --muted: #9DA9C0; --line: #263659;
+  --accent: #E0B64A; --accent-fg: #1A1405; --accent-soft: #1D2C4D; --py: #D8A56B; --gold: #E0B64A; --hl: #4A3C12;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--font-ui); font-size: 16px; line-height: 1.55;
+  padding-block: 20px 32px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.app { max-width: 720px; margin: 0 auto; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button { font-family: inherit; }
+
+.eyebrow { font-family: var(--font-han); font-size: 15px; color: var(--py); letter-spacing: .12em; margin: 0 0 6px; }
+h1 { font-size: clamp(26px, 6vw, 34px); line-height: 1.2; margin: 0 0 8px; font-weight: 700; text-wrap: balance; }
+.lede { color: var(--muted); margin: 0 0 22px; max-width: 60ch; }
+.back { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 14px; font-weight: 500; padding: 6px 0; margin-bottom: 10px; }
+.back:hover { color: var(--fg); }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+
+.level { display: grid; grid-template-columns: 72px minmax(0,1fr) auto; align-items: center; gap: 12px; padding: 16px; border-top: 1px solid var(--line); }
+.level:first-child { border-top: 0; }
+a.level:hover { background: var(--accent-soft); }
+.lv-han { font-family: var(--font-han); font-size: 28px; font-weight: 700; color: var(--py); }
+.lv-txt b { display: block; font-size: 18px; }
+.lv-txt small { color: var(--muted); font-size: 14px; }
+.level.off { opacity: .62; }
+.level.off .lv-han { color: var(--muted); }
+.soon { font-size: 12px; font-weight: 600; letter-spacing: .04em; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; }
+
+.progress { color: var(--muted); font-size: 14px; margin: 0 0 12px; font-variant-numeric: tabular-nums; }
+.lesson { display: grid; grid-template-columns: 32px minmax(0,1fr) auto; align-items: center; gap: 12px; padding: 14px 16px; border-top: 1px solid var(--line); }
+.lesson:first-child { border-top: 0; }
+.lesson:hover { background: var(--accent-soft); }
+.lesson .n { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+.lesson .t-han { font-family: var(--font-han); font-size: 22px; font-weight: 700; line-height: 1.3; display: block; }
+.lesson .t-vi { color: var(--muted); font-size: 14px; display: block; }
+.lesson .meta { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; white-space: nowrap; }
+.tick { width: 20px; height: 20px; color: var(--gold); }
+.grp-h { padding: 8px 16px; background: var(--accent-soft); color: var(--py); font-size: 13px; font-weight: 700; letter-spacing: .04em; border-top: 1px solid var(--line); }
+.grp-h:first-child { border-top: 0; }
+.panel { border-top: 3px solid var(--gold); }
+
+.reader-head { margin-bottom: 14px; }
+.reader-head .t-han { font-family: var(--font-han); font-size: clamp(28px, 7vw, 38px); font-weight: 700; line-height: 1.25; margin: 0; }
+.reader-head .t-vi { color: var(--muted); margin: 2px 0 0; }
+.hint { color: var(--muted); font-size: 14px; margin: 10px 0 0; max-width: 62ch; }
+.opts { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin: 14px 0 14px; font-size: 14px; }
+.opts .grp { display: flex; align-items: center; gap: 8px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); }
+.seg button { border: 0; background: transparent; color: var(--fg); padding: 6px 12px; font-size: 14px; cursor: pointer; min-height: 34px; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--py); font-weight: 600; }
+.chk { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.chk input { width: 18px; height: 18px; accent-color: var(--accent); }
+.notice { background: var(--hl); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; font-size: 14px; margin: 0 0 14px; }
+
+.row { display: grid; grid-template-columns: 26px minmax(0,1fr) auto; gap: 10px; padding: 14px; border-top: 1px solid var(--line); cursor: pointer; }
+.row:first-child { border-top: 0; }
+.row .idx { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; padding-top: 24px; }
+.row .txt { min-width: 0; }
+.row .who { font-family: var(--font-han); font-size: 14px; font-weight: 700; color: var(--py); letter-spacing: .06em; }
+.row .py { display: none; color: var(--py); font-size: 15px; line-height: 1.4; margin: 2px 0 2px; overflow-wrap: anywhere; }
+.row .han { font-family: var(--font-han); font-weight: 500; font-size: clamp(23px, 6vw, 29px); line-height: 1.6; letter-spacing: .02em; overflow-wrap: anywhere; }
+.row .vi { display: none; color: var(--muted); font-size: 15px; margin-top: 2px; }
+.reader.show-py .py, .row.py-on .py { display: block; }
+.reader.show-vi .vi, .row.vi-on .vi { display: block; }
+.row.cur { background: var(--hl); }
+.chips { display: flex; flex-direction: column; gap: 6px; padding-top: 4px; }
+.chip { min-width: 34px; height: 28px; padding: 0 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--muted); font-size: 12px; font-weight: 600; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--py); }
+.chip:disabled { cursor: default; opacity: .8; }
+.done-wrap { margin-top: 16px; }
+.reader { padding-bottom: 104px; }
+
+.bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: var(--surface); border-top: 1px solid var(--line);
+  padding-top: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.bar-in { max-width: 720px; margin: 0 auto; display: flex; gap: 8px; }
+.btn { min-height: 48px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); font-size: 15px; font-weight: 600; padding: 0 16px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--py); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); flex: 1; }
+.btn.plain { min-height: 40px; font-weight: 500; font-size: 14px; }
+
+/* Công cụ đánh dấu thời gian */
+.tool-audio { width: 100%; margin: 12px 0; }
+.tool-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.mark-row { display: grid; grid-template-columns: 26px minmax(0,1fr) auto; gap: 10px; align-items: center; padding: 10px 14px; border-top: 1px solid var(--line); }
+.mark-row:first-child { border-top: 0; }
+.mark-row.next { background: var(--hl); }
+.mark-row .han { font-family: var(--font-han); font-size: 18px; line-height: 1.5; overflow-wrap: anywhere; }
+.mark-row .tm { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 14px; min-width: 56px; text-align: right; }
+.mark-row .idx { color: var(--muted); font-size: 13px; }
+.out { width: 100%; min-height: 160px; margin-top: 8px; padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--fg); font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; line-height: 1.5; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+
+<div class="app" id="view"></div>
+
+<!--
+  ============================================================
+  DỮ LIỆU BÀI KHÓA — thêm bài mới ở đây (xếp theo thứ tự Quyển, Bài, Bài khóa)
+  Cách viết:
+    === Tiêu đề Hán tự | Tiêu đề tiếng Việt | audio (để trống) | Quyển 2 - Bài 4 - Bài khóa 1
+    Người nói | Hán tự | Pinyin | Nghĩa tiếng Việt | mốc thời gian bắt đầu câu (có thể bỏ trống)
+  Mỗi câu một dòng. Dòng bắt đầu bằng # là ghi chú, bị bỏ qua.
+  Mốc thời gian viết dạng 0:12.5 hoặc 12.5 (giây). Nếu có audio mà chưa có mốc,
+  trang vẫn phát nguyên bài; có đủ mốc thì trang tô sáng và cho nghe từng câu.
+  ============================================================
+-->
+<script type="text/plain" id="lesson-data">
+=== 听音乐 | Nghe nhạc | | Quyển 2 - Bài 1 - Bài khóa 1
+海伦 | 田中，你在做什么？ | Tiánzhōng, nǐ zài zuò shénme? | Tanaka, bạn đang làm gì thế?
+田中 | 我在听音乐。 | Wǒ zài tīng yīnyuè. | Tôi đang nghe nhạc.
+海伦 | 听什么音乐？ | Tīng shénme yīnyuè? | Nghe nhạc gì vậy?
+田中 | 我在听中国音乐，很好听！ | Wǒ zài tīng Zhōngguó yīnyuè, hěn hǎotīng! | Tôi đang nghe nhạc Trung Quốc, rất hay!
+海伦 | 你喜欢一边看书，一边听音乐？ | Nǐ xǐhuan yìbiān kàn shū, yìbiān tīng yīnyuè? | Bạn thích vừa đọc sách vừa nghe nhạc à?
+田中 | 对，你喜欢听音乐吗？ | Duì, nǐ xǐhuan tīng yīnyuè ma? | Đúng, bạn có thích nghe nhạc không?
+海伦 | 很喜欢，我常常一边走路，一边听音乐。 | Hěn xǐhuan, wǒ chángcháng yìbiān zǒulù, yìbiān tīng yīnyuè. | Rất thích, tôi thường vừa đi bộ vừa nghe nhạc.
+田中 | 你喜欢唱歌吗？ | Nǐ xǐhuan chànggē ma? | Bạn có thích hát không?
+海伦 | 我不喜欢唱歌，我只喜欢听歌。你呢？ | Wǒ bù xǐhuan chànggē, wǒ zhǐ xǐhuan tīng gē. Nǐ ne? | Tôi không thích hát, tôi chỉ thích nghe hát. Còn bạn?
+田中 | 我很喜欢唱歌，我喜欢唱英文歌。 | Wǒ hěn xǐhuan chànggē, wǒ xǐhuan chàng Yīngwén gē. | Tôi rất thích hát, tôi thích hát tiếng Anh.
+海伦 | 太好了，我很喜欢听英文歌。你唱一个，好吗？ | Tài hǎo le, wǒ hěn xǐhuan tīng Yīngwén gē. Nǐ chàng yí ge, hǎo ma? | Tuyệt quá, tôi rất thích nghe nhạc tiếng Anh. Bạn hát một bài nhé?
+田中 | 不行，不行，下次吧！ | Bù xíng, bù xíng, xiàcì ba! | Không được, không được, lần sau nhé!
+
+=== 爱好 | Sở thích | | Quyển 2 - Bài 1 - Bài khóa 2
+欧文 | 卡玛拉，你平时喜欢做什么？ | Kǎmǎlā, nǐ píngshí xǐhuan zuò shénme? | Kamala, bình thường bạn thích làm gì?
+卡玛拉 | 我喜欢打球，还喜欢看电影和电视。你呢？ | Wǒ xǐhuan dǎ qiú, hái xǐhuan kàn diànyǐng hé diànshì. Nǐ ne? | Tôi thích chơi bóng, còn thích xem phim và xem ti vi. Còn bạn?
+欧文 | 我也喜欢看电影，我还喜欢看书和跳舞。 | Wǒ yě xǐhuan kàn diànyǐng, wǒ hái xǐhuan kàn shū hé tiàowǔ. | Tôi cũng thích xem phim, tôi còn thích đọc sách và nhảy.
+卡玛拉 | 你喜欢跳什么舞？ | Nǐ xǐhuan tiào shénme wǔ? | Bạn thích nhảy điệu gì?
+欧文 | 我喜欢跳街舞。你喜欢跳舞吗？ | Wǒ xǐhuan tiào jiēwǔ. Nǐ xǐhuan tiàowǔ ma? | Tôi thích nhảy hip-hop. Bạn có thích nhảy không?
+卡玛拉 | 不喜欢，我只喜欢看别人跳舞。 | Bù xǐhuan, wǒ zhǐ xǐhuan kàn biérén tiàowǔ. | Không thích, tôi chỉ thích xem người khác nhảy.
+欧文 | 你喜欢打球吗？ | Nǐ xǐhuan dǎ qiú ma? | Bạn có thích chơi bóng không?
+卡玛拉 | 我喜欢打篮球。你喜欢吗？ | Wǒ xǐhuan dǎ lánqiú. Nǐ xǐhuan ma? | Tôi thích chơi bóng rổ. Bạn có thích không?
+欧文 | 我不喜欢打球，我只喜欢看球。 | Wǒ bù xǐhuan dǎ qiú, wǒ zhǐ xǐhuan kàn qiú. | Tôi không thích chơi bóng, tôi chỉ thích xem bóng.
+卡玛拉 | 我也喜欢看球，我很喜欢看NBA。 | Wǒ yě xǐhuan kàn qiú, wǒ hěn xǐhuan kàn NBA. | Tôi cũng thích xem bóng, tôi rất thích xem NBA.
+欧文 | 我也是，下个周末我们一起看吧！ | Wǒ yě shì, xià ge zhōumò wǒmen yìqǐ kàn ba! | Tôi cũng vậy, cuối tuần sau chúng ta cùng xem nhé!
+
+=== 几点上课 | Mấy giờ vào học | | Quyển 2 - Bài 2 - Bài khóa 1
+海伦 | 欧文，现在几点？ | Ōuwén, xiànzài jǐ diǎn? | Owen, bây giờ mấy giờ rồi?
+欧文 | 八点一刻。你今天几点上课？ | Bā diǎn yí kè. Nǐ jīntiān jǐ diǎn shàngkè? | Tám giờ mười lăm. Hôm nay mấy giờ bạn vào học?
+海伦 | 九点。你呢？ | Jiǔ diǎn. Nǐ ne? | Chín giờ. Còn bạn?
+欧文 | 我今天九点五十五（分）上课。 | Wǒ jīntiān jiǔ diǎn wǔshíwǔ (fēn) shàngkè. | Hôm nay tôi vào học lúc chín giờ năm mươi lăm (phút).
+海伦 | 你几点下课？ | Nǐ jǐ diǎn xiàkè? | Mấy giờ bạn tan học?
+欧文 | 十二点半。你呢？ | Shí'èr diǎn bàn. Nǐ ne? | Mười hai rưỡi. Còn bạn?
+海伦 | 我也是。 | Wǒ yě shì. | Tôi cũng vậy.
+欧文 | 中午我们一起吃饭吧。 | Zhōngwǔ wǒmen yìqǐ chīfàn ba. | Buổi trưa chúng ta cùng đi ăn nhé.
+海伦 | 好！我们吃什么？ | Hǎo! Wǒmen chī shénme? | Được! Chúng ta ăn gì?
+欧文 | 吃中国菜或者韩国菜吧。 | Chī Zhōngguó cài huòzhě Hánguó cài ba. | Ăn món Trung Quốc hoặc món Hàn Quốc nhé.
+海伦 | 好，中午十二点半在学校门口见！ | Hǎo, zhōngwǔ shí'èr diǎn bàn zài xuéxiào ménkǒu jiàn! | Được, trưa 12 rưỡi gặp ở cổng trường!
+欧文 | 十二点半见！ | Shí'èr diǎn bàn jiàn! | 12 rưỡi gặp nhé!
+
+=== 几点起床 | Mấy giờ thức dậy | | Quyển 2 - Bài 2 - Bài khóa 2
+海伦 | 欧文，你平时几点起床？ | Ōuwén, nǐ píngshí jǐ diǎn qǐchuáng? | Owen, bình thường mấy giờ bạn thức dậy?
+欧文 | 有时候七点左右，有时候八点左右。你呢？ | Yǒu shíhou qī diǎn zuǒyòu, yǒu shíhou bā diǎn zuǒyòu. Nǐ ne? | Có lúc khoảng bảy giờ, có lúc khoảng tám giờ. Còn bạn?
+海伦 | 我每天六点一刻起床。 | Wǒ měitiān liù diǎn yí kè qǐchuáng. | Mỗi ngày tôi dậy lúc sáu giờ mười lăm.
+欧文 | 这么早！你平时几点睡觉？ | Zhème zǎo! Nǐ píngshí jǐ diǎn shuìjiào? | Sớm thế! Bình thường mấy giờ bạn đi ngủ?
+海伦 | 九点或者十点左右睡。 | Jiǔ diǎn huòzhě shí diǎn zuǒyòu shuì. | Khoảng chín hoặc mười giờ thì ngủ.
+欧文 | 怎么这么早？ | Zěnme zhème zǎo? | Sao sớm vậy?
+海伦 | 因为我喜欢早睡早起。你呢？ | Yīnwèi wǒ xǐhuan zǎo shuì zǎo qǐ. Nǐ ne? | Vì tôi thích ngủ sớm dậy sớm. Còn bạn?
+欧文 | 我平时十二点左右睡觉。 | Wǒ píngshí shí'èr diǎn zuǒyòu shuìjiào. | Bình thường tôi ngủ khoảng mười hai giờ.
+海伦 | 怎么这么晚？ | Zěnme zhème wǎn? | Sao muộn vậy?
+欧文 | 因为我每天都有很多事。 | Yīnwèi wǒ měitiān dōu yǒu hěn duō shì. | Vì mỗi ngày tôi đều có rất nhiều việc.
+
+=== 电话号码 | Số điện thoại | | Quyển 2 - Bài 3 - Bài khóa 1
+田中 | 美京，我明天可以给你打电话吗？ | Měijīng, wǒ míngtiān kěyǐ gěi nǐ dǎ diànhuà ma? | Mỹ Kinh, ngày mai tôi gọi điện cho bạn được không?
+美京 | 可以。 | Kěyǐ. | Được.
+田中 | 可是我没有你的电话号码，你的手机号是多少？ | Kěshì wǒ méiyǒu nǐ de diànhuà hàomǎ, nǐ de shǒujī hào shì duōshao? | Nhưng tôi không có số điện thoại của bạn, số di động của bạn là bao nhiêu?
+美京 | 我的手机号是136-1847-2834。 | Wǒ de shǒujī hào shì yāo sān liù, yāo bā sì qī, èr bā sān sì. | Số di động của tôi là 136-1847-2834.
+田中 | 等一下，可以借一下你的笔吗？我写一下。 | Děng yíxià, kěyǐ jiè yíxià nǐ de bǐ ma? Wǒ xiě yíxià. | Đợi chút, cho tôi mượn bút của bạn được không? Tôi ghi lại.
+美京 | 可以。 | Kěyǐ. | Được.
+田中 | 谢谢。 | Xièxie. | Cảm ơn.
+美京 | 我的手机号是136-1847-2834。 | Wǒ de shǒujī hào shì yāo sān liù, yāo bā sì qī, èr bā sān sì. | Số di động của tôi là 136-1847-2834.
+田中 | 你慢一点儿。 | Nǐ màn yìdiǎnr. | Bạn nói chậm một chút.
+美京 | 136-1847-2834。 | Yāo sān liù, yāo bā sì qī, èr bā sān sì. | 136-1847-2834.
+田中 | 好，我明天给你打电话。 | Hǎo, wǒ míngtiān gěi nǐ dǎ diànhuà. | Được, ngày mai tôi sẽ gọi điện cho bạn.
+
+=== 借东西 | Mượn đồ | | Quyển 2 - Bài 3 - Bài khóa 2
+海伦 | 田中，可以用一下你的电脑吗？ | Tiánzhōng, kěyǐ yòng yíxià nǐ de diànnǎo ma? | Tanaka, tôi dùng máy tính của bạn một chút được không?
+田中 | 可以，你用吧。 | Kěyǐ, nǐ yòng ba. | Được, bạn dùng đi.
+海伦 | 谢谢！我用一下，很快就好。 | Xièxie! Wǒ yòng yíxià, hěn kuài jiù hǎo. | Cảm ơn! Tôi dùng một chút, sẽ xong ngay.
+田中 | 没关系，我现在不用。对了，可不可以借一下你的手机？我的手机没电了。 | Méi guānxi, wǒ xiànzài bú yòng. Duì le, kě bu kěyǐ jiè yíxià nǐ de shǒujī? Wǒ de shǒujī méi diàn le. | Không sao, bây giờ tôi không dùng. À đúng rồi, cho tôi mượn điện thoại của bạn một chút được không? Điện thoại tôi hết pin rồi.
+海伦 | 没关系，给。 | Méi guānxi, gěi. | Không sao, đây.
+田中 | 谢谢。我想给黄老师打个电话。 | Xièxie. Wǒ xiǎng gěi Huáng lǎoshī dǎ ge diànhuà. | Cảm ơn. Tôi muốn gọi điện cho thầy/cô Hoàng.
+海伦 | 你有黄老师的电话号码吗？ | Nǐ yǒu Huáng lǎoshī de diànhuà hàomǎ ma? | Bạn có số điện thoại của thầy/cô Hoàng không?
+田中 | 我没有，你有吗？ | Wǒ méiyǒu, nǐ yǒu ma? | Tôi không có, bạn có không?
+海伦 | 有，我找一下。……在这儿，你打吧。 | Yǒu, wǒ zhǎo yíxià. …… Zài zhèr, nǐ dǎ ba. | Có, để tôi tìm. …… Đây rồi, bạn gọi đi.
+田中 | 谢谢！ | Xièxie! | Cảm ơn!
+
+=== 买衬衫 | Mua áo sơ mi | | Quyển 2 - Bài 4 - Bài khóa 1
+营业员 | 先生，您想买什么衣服？ | Xiānsheng, nín xiǎng mǎi shénme yīfu? | Thưa ông, ông muốn mua quần áo gì ạ?
+田中 | 我想买一件衬衫。 | Wǒ xiǎng mǎi yí jiàn chènshān. | Tôi muốn mua một chiếc áo sơ mi.
+营业员 | 好的，我们有黑色的，红色的和蓝色的，您可以都试一下。 | Hǎo de, wǒmen yǒu hēisè de, hóngsè de hé lánsè de, nín kěyǐ dōu shì yíxià. | Vâng, chúng tôi có màu đen, màu đỏ và màu xanh dương, ông có thể thử hết.
+田中 | 我想试一下黑色的和红色的。 | Wǒ xiǎng shì yíxià hēisè de hé hóngsè de. | Tôi muốn thử cái màu đen và cái màu đỏ.
+营业员 | 好的，您穿什么号的？ | Hǎo de, nín chuān shénme hào de? | Vâng, ông mặc size nào ạ?
+田中 | 我穿大号的。 | Wǒ chuān dà hào de. | Tôi mặc size lớn.
+营业员 | 给您。 | Gěi nín. | Của ông đây.
+田中 | 谢谢。 | Xièxie. | Cảm ơn.
+营业员 | 怎么样？您觉得哪件合适？ | Zěnmeyàng? Nín juéde nǎ jiàn héshì? | Thế nào ạ? Ông thấy chiếc nào vừa?
+田中 | 我觉得都不太合适。谢谢。 | Wǒ juéde dōu bú tài héshì. Xièxie. | Tôi thấy đều không vừa lắm. Cảm ơn.
+营业员 | 不客气！ | Bú kèqi! | Không có gì ạ!
+
+=== 买鞋 | Mua giày | | Quyển 2 - Bài 4 - Bài khóa 2
+美京 | 请问，这双鞋有没有蓝色的？ | Qǐngwèn, zhè shuāng xié yǒu méiyǒu lánsè de? | Xin hỏi, đôi giày này có màu xanh dương không?
+营业员 | 没有蓝的，只有黑的。 | Méiyǒu lán de, zhǐyǒu hēi de. | Không có màu xanh, chỉ có màu đen.
+美京 | 我可以试一下黑的吗？ | Wǒ kěyǐ shì yíxià hēi de ma? | Tôi thử đôi màu đen được không?
+营业员 | 可以。您穿多大号的？ | Kěyǐ. Nín chuān duō dà hào de? | Được. Bạn đi cỡ bao nhiêu?
+美京 | 我穿38号的。 | Wǒ chuān sānshíbā hào de. | Tôi đi cỡ 38.
+营业员 | 好的，请等一下。……给您。 | Hǎo de, qǐng děng yíxià. …… Gěi nín. | Vâng, xin đợi một chút. …… Đây ạ.
+美京 | 谢谢。……这双鞋大小很合适，颜色也不错。多少钱？ | Xièxie. …… Zhè shuāng xié dàxiǎo hěn héshì, yánsè yě búcuò. Duōshao qián? | Cảm ơn. …… Đôi giày này cỡ rất vừa, màu cũng đẹp. Bao nhiêu tiền?
+营业员 | 450块。 | Sì bǎi wǔshí kuài. | 450 tệ.
+美京 | 太贵了，可以便宜一点儿吗？ | Tài guì le, kěyǐ piányi yìdiǎnr ma? | Đắt quá, có thể rẻ hơn một chút không?
+营业员 | 可以，400块怎么样？ | Kěyǐ, sì bǎi kuài zěnmeyàng? | Được, 400 tệ thế nào?
+美京 | 再便宜一点儿吧！350怎么样？ | Zài piányi yìdiǎnr ba! Sān bǎi wǔshí kuài zěnmeyàng? | Rẻ thêm một chút đi! 350 thế nào?
+营业员 | 行。您还想买什么？ | Xíng. Nín hái xiǎng mǎi shénme? | Được. Bạn còn muốn mua gì nữa?
+
+=== 约时间 | Hẹn thời gian | | Quyển 2 - Bài 5 - Bài khóa 1
+卡玛拉 | 喂，你好！是高小明吗？ | Wéi, nǐ hǎo! Shì Gāo Xiǎomíng ma? | A lô, xin chào! Có phải Cao Tiểu Minh không?
+高小明 | 我是，您哪位？ | Wǒ shì, nín nǎ wèi? | Tôi đây, bạn là ai vậy?
+卡玛拉 | 我是卡玛拉。 | Wǒ shì Kǎmǎlā. | Tôi là Kamala.
+高小明 | 卡玛拉，你好！ | Kǎmǎlā, nǐ hǎo! | Kamala, xin chào!
+卡玛拉 | 小明，这个周末你忙不忙？ | Xiǎomíng, zhège zhōumò nǐ máng bu máng? | Tiểu Minh, cuối tuần này bạn có bận không?
+高小明 | 有点儿忙。什么事？ | Yǒudiǎnr máng. Shénme shì? | Hơi bận. Có việc gì vậy?
+卡玛拉 | 我下个星期有HSK考试，不知道怎么准备。你可以帮我吗？ | Wǒ xià ge xīngqī yǒu HSK kǎoshì, bù zhīdào zěnme zhǔnbèi. Nǐ kěyǐ bāng wǒ ma? | Tuần sau tôi có kỳ thi HSK, không biết chuẩn bị thế nào. Bạn có thể giúp tôi không?
+高小明 | 没问题。 | Méi wèntí. | Không vấn đề gì.
+卡玛拉 | 太好了。你周末什么时候有空儿？ | Tài hǎo le. Nǐ zhōumò shénme shíhou yǒu kòngr? | Tuyệt quá. Cuối tuần khi nào bạn rảnh?
+高小明 | 我想一下，星期五晚上我要跟朋友一起吃饭，星期六上午我要跟朋友打篮球，星期天要参加篮球比赛，我只有星期六下午有空儿。 | Wǒ xiǎng yíxià, xīngqīwǔ wǎnshang wǒ yào gēn péngyou yìqǐ chīfàn, xīngqīliù shàngwǔ wǒ yào gēn péngyou dǎ lánqiú, xīngqītiān yào cānjiā lánqiú bǐsài, wǒ zhǐyǒu xīngqīliù xiàwǔ yǒu kòngr. | Để tôi nghĩ đã, tối thứ Sáu tôi phải ăn cơm cùng bạn bè, sáng thứ Bảy tôi phải chơi bóng rổ với bạn, Chủ nhật phải tham gia giải đấu bóng rổ, chỉ có chiều thứ Bảy là tôi rảnh.
+卡玛拉 | 那我们星期六下午三点在图书馆见吧！ | Nà wǒmen xīngqīliù xiàwǔ sān diǎn zài túshūguǎn jiàn ba! | Vậy chúng ta gặp nhau ở thư viện lúc 3 giờ chiều thứ Bảy nhé!
+高小明 | 好！星期六下午见！ | Hǎo! Xīngqīliù xiàwǔ jiàn! | Được! Chiều thứ Bảy gặp nhé!
+
+=== 约咖啡 | Hẹn đi cà phê | | Quyển 2 - Bài 5 - Bài khóa 2
+卡玛拉 | 喂，是小明吗？ | Wéi, shì Xiǎomíng ma? | A lô, có phải Tiểu Minh không?
+高小明 | 我是，是卡玛拉吗？ | Wǒ shì, shì Kǎmǎlā ma? | Tôi đây, có phải Kamala không?
+卡玛拉 | 是，你好！ | Shì, nǐ hǎo! | Đúng, xin chào!
+高小明 | 你好！你的HSK考试怎么样？难不难？ | Nǐ hǎo! Nǐ de HSK kǎoshì zěnmeyàng? Nán bu nán? | Chào bạn! Kỳ thi HSK của bạn thế nào? Có khó không?
+卡玛拉 | 不太难。谢谢你帮我。 | Bú tài nán. Xièxie nǐ bāng wǒ. | Không khó lắm. Cảm ơn bạn đã giúp tôi.
+高小明 | 不客气！ | Bú kèqi! | Đừng khách sáo!
+卡玛拉 | 你明天晚上有空儿吗？我们一起喝咖啡。 | Nǐ míngtiān wǎnshang yǒu kòngr ma? Wǒmen yìqǐ hē kāfēi. | Tối mai bạn có rảnh không? Chúng ta cùng đi uống cà phê.
+高小明 | 明天晚上不行，我要跟朋友去超市。 | Míngtiān wǎnshang bù xíng, wǒ yào gēn péngyou qù chāoshì. | Tối mai không được, tôi phải đi siêu thị với bạn.
+卡玛拉 | 那星期六怎么样？ | Nà xīngqīliù zěnmeyàng? | Vậy thứ Bảy thì sao?
+高小明 | 星期六也不行，我要跟朋友一起旅行。 | Xīngqīliù yě bù xíng, wǒ yào gēn péngyou yìqǐ lǚxíng. | Thứ Bảy cũng không được, tôi phải đi du lịch cùng bạn bè.
+卡玛拉 | 那下次吧！我下个星期再给你打电话！ | Nà xiàcì ba! Wǒ xià ge xīngqī zài gěi nǐ dǎ diànhuà! | Vậy lần sau nhé! Tuần sau tôi sẽ gọi điện cho bạn lại!
+高小明 | 可以，不好意思！ | Kěyǐ, bù hǎoyìsi! | Được, xin lỗi nhé!
+
+=== 上个周末 | Cuối tuần trước | | Quyển 2 - Bài 6 - Bài khóa 1
+海伦 | 田中，上个周末你做什么了？ | Tiánzhōng, shàng ge zhōumò nǐ zuò shénme le? | Tanaka, cuối tuần trước bạn đã làm gì?
+田中 | 我买了一些东西。 | Wǒ mǎi le yìxiē dōngxi. | Tôi đã mua một ít đồ.
+海伦 | 你买了什么？ | Nǐ mǎi le shénme? | Bạn đã mua gì?
+田中 | 我买了几件衣服和一双鞋，还买了一些吃的。海伦，你呢？ | Wǒ mǎi le jǐ jiàn yīfu hé yì shuāng xié, hái mǎi le yìxiē chī de. Hǎilún, nǐ ne? | Tôi đã mua mấy bộ quần áo và một đôi giày, còn mua một ít đồ ăn. Helen, còn bạn?
+海伦 | 我参观博物馆了。 | Wǒ cānguān bówùguǎn le. | Tôi đã đi tham quan bảo tàng.
+田中 | 哪个博物馆？ | Nǎ ge bówùguǎn? | Bảo tàng nào?
+海伦 | 人民公园附近的博物馆。 | Rénmín Gōngyuán fùjìn de bówùguǎn. | Bảo tàng gần Công viên Nhân Dân.
+田中 | 怎么样？ | Zěnmeyàng? | Thế nào?
+海伦 | 那个博物馆非常大，也非常漂亮，门票也不贵。 | Nàge bówùguǎn fēicháng dà, yě fēicháng piàoliang, ménpiào yě bú guì. | Bảo tàng đó rất lớn, cũng rất đẹp, vé vào cửa cũng không đắt.
+田中 | 下个周末我也去！ | Xià ge zhōumò wǒ yě qù! | Cuối tuần sau tôi cũng đi!
+
+=== 去公园 | Đi công viên | | Quyển 2 - Bài 6 - Bài khóa 2
+高小明 | 卡玛拉，你看上去有点儿累，周末做什么了？ | Kǎmǎlā, nǐ kàn shàngqù yǒudiǎnr lèi, zhōumò zuò shénme le? | Kamala, trông bạn hơi mệt, cuối tuần đã làm gì vậy?
+卡玛拉 | 我跟朋友去人民公园了。 | Wǒ gēn péngyou qù Rénmín Gōngyuán le. | Tôi đã đi Công viên Nhân Dân với bạn.
+高小明 | 怎么样？人民公园好玩儿吗？ | Zěnmeyàng? Rénmín Gōngyuán hǎowánr ma? | Thế nào? Công viên Nhân Dân có vui không?
+卡玛拉 | 很好玩儿。那儿风景很美，空气非常好，人很多。 | Hěn hǎowánr. Nàr fēngjǐng hěn měi, kōngqì fēicháng hǎo, rén hěn duō. | Rất vui. Phong cảnh ở đó rất đẹp, không khí rất tốt, người rất đông.
+高小明 | 你拍照片了吗？ | Nǐ pāi zhàopiàn le ma? | Bạn có chụp ảnh không?
+卡玛拉 | 拍了，拍了很多照片。 | Pāi le, pāi le hěn duō zhàopiàn. | Có, chụp rất nhiều ảnh.
+高小明 | 可以给我看一下吗？ | Kěyǐ gěi wǒ kàn yíxià ma? | Cho tôi xem một chút được không?
+卡玛拉 | 可以，在我的电脑里，明天给你看。你周末做什么了？ | Kěyǐ, zài wǒ de diànnǎo lǐ, míngtiān gěi nǐ kàn. Nǐ zhōumò zuò shénme le? | Được, ở trong máy tính của tôi, mai cho bạn xem. Cuối tuần bạn đã làm gì?
+高小明 | 我去书店了，买了几本英文书。 | Wǒ qù shūdiàn le, mǎi le jǐ běn Yīngwén shū. | Tôi đã đến hiệu sách, mua mấy cuốn sách tiếng Anh.
+卡玛拉 | 你真爱看书！ | Nǐ zhēn ài kàn shū! | Bạn thật thích đọc sách!
+
+=== 骑自行车 | Đi xe đạp | | Quyển 2 - Bài 7 - Bài khóa 1
+欧文 | 卡玛拉，听说你周末去公园玩儿了？ | Kǎmǎlā, tīngshuō nǐ zhōumò qù gōngyuán wánr le? | Kamala, nghe nói cuối tuần bạn đi công viên chơi?
+卡玛拉 | 是啊，是谁告诉你的？ | Shì a, shì shéi gàosu nǐ de? | Đúng vậy, ai nói cho bạn thế?
+欧文 | 我有你的微信，你忘了？ | Wǒ yǒu nǐ de Wēixìn, nǐ wàng le? | Tôi có WeChat của bạn, bạn quên rồi à?
+卡玛拉 | 哈哈，我忘了。 | Hāhā, wǒ wàng le. | Haha, tôi quên mất.
+欧文 | 你是跟谁一起去的？一个人？ | Nǐ shì gēn shéi yìqǐ qù de? Yí ge rén? | Bạn đi cùng ai? Một mình à?
+卡玛拉 | 当然不是，一个人去公园没意思，我是跟中国朋友一起去的。 | Dāngrán bú shì, yí ge rén qù gōngyuán méi yìsi, wǒ shì gēn Zhōngguó péngyou yìqǐ qù de. | Dĩ nhiên không, một mình đi công viên chẳng thú vị, tôi đi cùng bạn người Trung Quốc.
+欧文 | 你们是怎么去的？ | Nǐmen shì zěnme qù de? | Các bạn đi bằng cách nào?
+卡玛拉 | 我们是骑自行车去的。 | Wǒmen shì qí zìxíngchē qù de. | Chúng tôi đi bằng xe đạp.
+欧文 | 骑自行车？骑了多长时间？很累吗？ | Qí zìxíngchē? Qí le duō cháng shíjiān? Hěn lèi ma? | Đi xe đạp ư? Đạp mất bao lâu? Có mệt không?
+卡玛拉 | 不累，骑了一个小时左右。 | Bú lèi, qí le yí ge xiǎoshí zuǒyòu. | Không mệt, đạp khoảng một tiếng.
+欧文 | 你们真行！ | Nǐmen zhēn xíng! | Các bạn giỏi thật!
+
+=== 那张照片 | Tấm ảnh ấy | | Quyển 2 - Bài 7 - Bài khóa 2
+欧文 | 海伦，这张照片真好看！是你拍的吗？ | Hǎilún, zhè zhāng zhàopiàn zhēn hǎokàn! Shì nǐ pāi de ma? | Helen, tấm ảnh này đẹp thật! Bạn chụp à?
+海伦 | 不是我拍的，是我男朋友拍的。我也觉得这张照片很漂亮。 | Bú shì wǒ pāi de, shì wǒ nánpéngyou pāi de. Wǒ yě juéde zhè zhāng zhàopiàn hěn piàoliang. | Không phải tôi chụp, là bạn trai tôi chụp. Tôi cũng thấy tấm ảnh này rất đẹp.
+欧文 | 是什么时候拍的？最近吗？ | Shì shénme shíhou pāi de? Zuìjìn ma? | Chụp lúc nào vậy? Gần đây à?
+海伦 | 不是最近，是去年拍的。 | Bú shì zuìjìn, shì qùnián pāi de. | Không phải gần đây, là năm ngoái chụp.
+欧文 | 是在法国拍的吗？ | Shì zài Fǎguó pāi de ma? | Chụp ở Pháp phải không?
+海伦 | 对，是去年我们在法国拍的。欧文，你是怎么知道的？ | Duì, shì qùnián wǒmen zài Fǎguó pāi de. Ōuwén, nǐ shì zěnme zhīdào de? | Đúng, năm ngoái chúng tôi chụp ở Pháp. Owen, sao bạn biết vậy?
+欧文 | 是你自己说的啊！ | Shì nǐ zìjǐ shuō de a! | Là chính bạn nói mà!
+海伦 | 我什么时候说的？ | Wǒ shénme shíhou shuō de? | Tôi nói lúc nào?
+欧文 | 哈哈，上次汉语课的时候说的。 | Hāhā, shàngcì Hànyǔ kè de shíhou shuō de. | Haha, lúc học tiếng Trung lần trước bạn nói.
+海伦 | 不好意思，我真忘了。 | Bù hǎoyìsi, wǒ zhēn wàng le. | Xin lỗi, tôi thật sự quên rồi.
+
+=== 会做菜 | Biết nấu ăn | | Quyển 2 - Bài 8 - Bài khóa 1
+田中 | 美京，今天你去哪儿吃晚饭？ | Měijīng, jīntiān nǐ qù nǎr chī wǎnfàn? | Mỹ Kinh, hôm nay bạn đi đâu ăn tối?
+美京 | 我想回家吃晚饭。 | Wǒ xiǎng huí jiā chī wǎnfàn. | Tôi muốn về nhà ăn tối.
+田中 | 你会做菜吗？ | Nǐ huì zuòcài ma? | Bạn biết nấu ăn không?
+美京 | 会，我会做韩国菜和中国菜。你呢？ | Huì, wǒ huì zuò Hánguó cài hé Zhōngguó cài. Nǐ ne? | Biết, tôi biết nấu món Hàn và món Trung. Còn bạn?
+田中 | 你真行！我不会做菜，我只会吃。 | Nǐ zhēn xíng! Wǒ bú huì zuòcài, wǒ zhǐ huì chī. | Bạn giỏi thật! Tôi không biết nấu ăn, tôi chỉ biết ăn.
+美京 | 那你晚上来我家吃吧，我今天做韩国菜。 | Nà nǐ wǎnshang lái wǒ jiā chī ba, wǒ jīntiān zuò Hánguó cài. | Vậy tối nay bạn đến nhà tôi ăn đi, hôm nay tôi nấu món Hàn.
+田中 | 太好了！对了，我会做水果沙拉。晚上我做一个吧！ | Tài hǎo le! Duì le, wǒ huì zuò shuǐguǒ shālā. Wǎnshang wǒ zuò yí ge ba! | Tuyệt quá! À đúng rồi, tôi biết làm salad trái cây. Tối nay tôi làm một món nhé!
+美京 | 田中，你会喝酒吗？ | Tiánzhōng, nǐ huì hē jiǔ ma? | Tanaka, bạn có uống được rượu không?
+田中 | 会喝一点儿。你呢？ | Huì hē yìdiǎnr. Nǐ ne? | Uống được một chút. Còn bạn?
+美京 | 我很喜欢喝红酒，我还会做红酒。上个月我做了两瓶红酒。 | Wǒ hěn xǐhuan hē hóngjiǔ, wǒ hái huì zuò hóngjiǔ. Shàng ge yuè wǒ zuò le liǎng píng hóngjiǔ. | Tôi rất thích uống rượu vang đỏ, tôi còn biết làm rượu vang. Tháng trước tôi đã làm hai chai.
+田中 | 是吗？你真行！ | Shì ma? Nǐ zhēn xíng! | Thế à? Bạn giỏi thật!
+美京 | 哪里哪里！今天晚上尝一下吧！ | Nǎlǐ nǎlǐ! Jīntiān wǎnshang cháng yíxià ba! | Đâu có đâu có! Tối nay nếm thử nhé!
+田中 | 好的！ | Hǎo de! | Được!
+
+=== 会说外语 | Biết ngoại ngữ | | Quyển 2 - Bài 8 - Bài khóa 2
+卡玛拉 | 田中，听美京说你很喜欢吃韩国菜？ | Tiánzhōng, tīng Měijīng shuō nǐ hěn xǐhuan chī Hánguó cài? | Tanaka, nghe Mỹ Kinh nói bạn rất thích ăn món Hàn?
+田中 | 对，昨天美京做了韩国菜，请我吃了。 | Duì, zuótiān Měijīng zuò le Hánguó cài, qǐng wǒ chī le. | Đúng, hôm qua Mỹ Kinh nấu món Hàn, mời tôi ăn.
+卡玛拉 | 是吗？美京会做菜？ | Shì ma? Měijīng huì zuòcài? | Thế à? Mỹ Kinh biết nấu ăn sao?
+田中 | 对，除了做菜以外，她还会做红酒。真的很好喝！ | Duì, chúle zuòcài yǐwài, tā hái huì zuò hóngjiǔ. Zhēnde hěn hǎohē! | Đúng, ngoài nấu ăn ra, cô ấy còn biết làm rượu vang. Thật sự rất ngon!
+卡玛拉 | 是吗？我觉得美京非常聪明，听说她会说很多外语，除了汉语以外，她还会说英语和日语。 | Shì ma? Wǒ juéde Měijīng fēicháng cōngming, tīngshuō tā huì shuō hěn duō wàiyǔ, chúle Hànyǔ yǐwài, tā hái huì shuō Yīngyǔ hé Rìyǔ. | Thế à? Tôi thấy Mỹ Kinh rất thông minh, nghe nói cô ấy biết nói nhiều ngoại ngữ, ngoài tiếng Trung ra còn biết nói tiếng Anh và tiếng Nhật.
+田中 | 真的吗？卡玛拉，你也很聪明啊，除了英语以外，你还会说汉语和法语。 | Zhēnde ma? Kǎmǎlā, nǐ yě hěn cōngming a, chúle Yīngyǔ yǐwài, nǐ hái huì shuō Hànyǔ hé Fǎyǔ. | Thật sao? Kamala, bạn cũng rất thông minh, ngoài tiếng Anh ra bạn còn biết nói tiếng Trung và tiếng Pháp.
+卡玛拉 | 哪里哪里！你的汉语非常好！ | Nǎlǐ nǎlǐ! Nǐ de Hànyǔ fēicháng hǎo! | Đâu có đâu có! Tiếng Trung của bạn rất giỏi!
+田中 | 我只会说一点儿汉语。 | Wǒ zhǐ huì shuō yìdiǎnr Hànyǔ. | Tôi chỉ biết nói một chút tiếng Trung.
+卡玛拉 | 我也只会说一点儿汉语。 | Wǒ yě zhǐ huì shuō yìdiǎnr Hànyǔ. | Tôi cũng chỉ biết nói một chút tiếng Trung.
+
+=== 看熊猫 | Xem gấu trúc | | Quyển 2 - Bài 9 - Bài khóa 1
+王文丽 | 欧文，这个周末你打算去哪儿？ | Ōuwén, zhège zhōumò nǐ dǎsuàn qù nǎr? | Owen, cuối tuần này bạn định đi đâu?
+欧文 | 我觉得好玩儿的地方都已经去过了，文丽，你有什么建议？ | Wǒ juéde hǎowánr de dìfang dōu yǐjīng qù guo le, Wénlì, nǐ yǒu shénme jiànyì? | Tôi thấy những nơi vui đều đã đi qua rồi, Wenli, bạn có gợi ý gì không?
+王文丽 | 我想一下……你见过熊猫吗？ | Wǒ xiǎng yíxià…… nǐ jiàn guo xióngmāo ma? | Để tôi nghĩ…… bạn đã từng thấy gấu trúc chưa?
+欧文 | 熊猫？我还没见过真的熊猫，可是我看过电影《功夫熊猫》。哪儿有熊猫？ | Xióngmāo? Wǒ hái méi jiàn guo zhēn de xióngmāo, kěshì wǒ kàn guo diànyǐng 《Gōngfu Xióngmāo》. Nǎr yǒu xióngmāo? | Gấu trúc ư? Tôi chưa thấy gấu trúc thật, nhưng tôi đã xem phim 《Kung Fu Panda》. Ở đâu có gấu trúc?
+王文丽 | 郊区的动物园里就有。 | Jiāoqū de dòngwùyuán lǐ jiù yǒu. | Trong sở thú ở ngoại ô có đấy.
+欧文 | 真的？你去过那儿吗？ | Zhēn de? Nǐ qù guo nàr ma? | Thật sao? Bạn đã từng đến đó chưa?
+王文丽 | 去过，那儿的熊猫可爱极了！你对动物感兴趣的话，可以去动物园。 | Qù guo, nàr de xióngmāo kě'ài jí le! Nǐ duì dòngwù gǎn xìngqù dehuà, kěyǐ qù dòngwùyuán. | Đã đi rồi, gấu trúc ở đó đáng yêu cực kỳ! Nếu bạn hứng thú với động vật thì có thể đi sở thú.
+欧文 | 当然感兴趣，那我去动物园吧。你可以跟我一起去吗？一个人去没意思。 | Dāngrán gǎn xìngqù, nà wǒ qù dòngwùyuán ba. Nǐ kěyǐ gēn wǒ yìqǐ qù ma? Yí ge rén qù méi yìsi. | Dĩ nhiên là hứng thú, vậy tôi đi sở thú. Bạn có thể đi cùng tôi không? Đi một mình chẳng thú vị.
+王文丽 | 不好意思，我周末没空，我要…… | Bù hǎoyìsi, wǒ zhōumò méi kòng, wǒ yào…… | Xin lỗi, cuối tuần tôi không rảnh, tôi phải……
+欧文 | 我知道，你要跟男朋友约会吧？ | Wǒ zhīdào, nǐ yào gēn nánpéngyou yuēhuì ba? | Tôi biết, bạn phải đi hẹn hò với bạn trai đúng không?
+
+=== 吃烤鸭 | Ăn vịt quay | | Quyển 2 - Bài 9 - Bài khóa 2
+欧文 | 海伦，你去过郊区的动物园吗？ | Hǎilún, nǐ qù guo jiāoqū de dòngwùyuán ma? | Helen, bạn đã từng đến sở thú ở ngoại ô chưa?
+海伦 | 没去过，我对动物不太感兴趣。 | Méi qù guo, wǒ duì dòngwù bú tài gǎn xìngqù. | Chưa đi, tôi không hứng thú lắm với động vật.
+欧文 | 真遗憾！我周末想去动物园，打算请你一起去？ | Zhēn yíhàn! Wǒ zhōumò xiǎng qù dòngwùyuán, dǎsuàn qǐng nǐ yìqǐ qù? | Tiếc thật! Cuối tuần tôi muốn đi sở thú, định mời bạn cùng đi?
+海伦 | 我对博物馆很感兴趣，周末想去市中心的博物馆。欧文，你去过吗？ | Wǒ duì bówùguǎn hěn gǎn xìngqù, zhōumò xiǎng qù shìzhōngxīn de bówùguǎn. Ōuwén, nǐ qù guo ma? | Tôi rất hứng thú với bảo tàng, cuối tuần muốn đi bảo tàng ở trung tâm thành phố. Owen, bạn đã từng đi chưa?
+欧文 | 当然去过，我很喜欢参观博物馆。 | Dāngrán qù guo, wǒ hěn xǐhuan cānguān bówùguǎn. | Dĩ nhiên đã đi, tôi rất thích tham quan bảo tàng.
+海伦 | 那这个星期六跟我再去一次，好吗？ | Nà zhège xīngqīliù gēn wǒ zài qù yí cì, hǎo ma? | Vậy thứ Bảy này đi cùng tôi một lần nữa, được không?
+欧文 | 好吧。你怎么感谢我？ | Hǎo ba. Nǐ zěnme gǎnxiè wǒ? | Được thôi. Bạn cảm ơn tôi thế nào?
+海伦 | 星期六晚上我请你吃烤鸭吧，你吃没吃过烤鸭？ | Xīngqīliù wǎnshang wǒ qǐng nǐ chī kǎoyā ba, nǐ chī méi chī guo kǎoyā? | Tối thứ Bảy tôi mời bạn ăn vịt quay nhé, bạn đã từng ăn vịt quay chưa?
+欧文 | 没吃过，听说很好吃？ | Méi chī guo, tīngshuō hěn hǎochī? | Chưa ăn, nghe nói rất ngon?
+海伦 | 当然，味道好极了。 | Dāngrán, wèidào hǎo jí le. | Dĩ nhiên, hương vị ngon cực kỳ.
+欧文 | 我的肚子已经饿了，现在就去吃吧！ | Wǒ de dùzi yǐjīng è le, xiànzài jiù qù chī ba! | Bụng tôi đã đói rồi, đi ăn ngay bây giờ thôi!
+
+=== 去老师家 | Đến nhà thầy cô | | Quyển 2 - Bài 10 - Bài khóa 1
+黄老师 | 谁啊？ | Shéi a? | Ai đấy?
+田中 | 是我，田中。 | Shì wǒ, Tiánzhōng. | Là em, Tanaka.
+黄老师 | 田中，你好！欢迎！请进！ | Tiánzhōng, nǐ hǎo! Huānyíng! Qǐng jìn! | Tanaka, chào em! Hoan nghênh! Mời vào!
+田中 | 黄老师，您家真大，真漂亮！ | Huáng lǎoshī, nín jiā zhēn dà, zhēn piàoliang! | Thưa thầy/cô Hoàng, nhà thầy/cô rộng và đẹp quá!
+黄老师 | 谢谢！请坐！ | Xièxie! Qǐng zuò! | Cảm ơn! Mời ngồi!
+田中 | 黄老师，今天您一个人在家？ | Huáng lǎoshī, jīntiān nín yí ge rén zài jiā? | Thưa thầy/cô, hôm nay thầy/cô ở nhà một mình ạ?
+黄老师 | 对，我爱人和孩子都出去了，爱人有工作，孩子中午有约会。 | Duì, wǒ àiren hé háizi dōu chūqù le, àiren yǒu gōngzuò, háizi zhōngwǔ yǒu yuēhuì. | Ừ, vợ/chồng và các con tôi đều ra ngoài rồi, vợ/chồng có việc, con trưa nay có hẹn.
+田中 | 您有几个孩子？ | Nín yǒu jǐ ge háizi? | Thầy/cô có mấy người con ạ?
+黄老师 | 两个，一个女儿，一个儿子，都工作了。你喝茶还是咖啡？ | Liǎng ge, yí ge nǚ'ér, yí ge érzi, dōu gōngzuò le. Nǐ hē chá háishi kāfēi? | Hai đứa, một con gái, một con trai, đều đi làm rồi. Em uống trà hay cà phê?
+田中 | 给您添麻烦了。我喝咖啡吧。 | Gěi nín tiān máfan le. Wǒ hē kāfēi ba. | Làm phiền thầy/cô quá. Em uống cà phê ạ.
+黄老师 | 别客气，不麻烦。 | Bié kèqi, bù máfan. | Đừng khách sáo, không phiền đâu.
+
+=== 在老师家吃饭 | Ăn cơm ở nhà thầy cô | | Quyển 2 - Bài 10 - Bài khóa 2
+黄老师 | 肚子饿了没有？我们吃饭吧！ | Dùzi è le méiyǒu? Wǒmen chīfàn ba! | Bụng đói chưa? Chúng ta ăn cơm thôi!
+田中 | 做了这么多菜，您辛苦了！ | Zuò le zhème duō cài, nín xīnkǔ le! | Nấu nhiều món thế này, thầy/cô vất vả rồi!
+黄老师 | 不多，不多！尝一下好吃不好吃！ | Bù duō, bù duō! Cháng yíxià hǎochī bù hǎochī! | Không nhiều đâu! Nếm thử xem ngon không!
+田中 | 好的。这是麻婆豆腐吧，好吃极了！ | Hǎo de. Zhè shì mápó dòufu ba, hǎochī jí le! | Vâng. Đây là đậu phụ Ma Bà phải không, ngon cực kỳ!
+黄老师 | 很辣吧？田中，你怕不怕辣？ | Hěn là ba? Tiánzhōng, nǐ pà bu pà là? | Cay lắm phải không? Tanaka, em có sợ cay không?
+田中 | 不怕！这个菜叫什么？味道又酸又甜。 | Bú pà! Zhège cài jiào shénme? Wèidào yòu suān yòu tián. | Không sợ ạ! Món này tên là gì? Vị vừa chua vừa ngọt.
+黄老师 | 这是糖醋鱼。 | Zhè shì tángcùyú. | Đây là cá sốt chua ngọt.
+田中 | 太好吃了。黄老师，您真会做菜！ | Tài hǎochī le. Huáng lǎoshī, nín zhēn huì zuòcài! | Ngon quá. Thầy/cô Hoàng nấu ăn giỏi thật!
+黄老师 | 哪里哪里！喜欢的话，多吃一点儿！ | Nǎlǐ nǎlǐ! Xǐhuan dehuà, duō chī yìdiǎnr! | Đâu có đâu có! Thích thì ăn nhiều một chút!
+田中 | 谢谢。 | Xièxie. | Cảm ơn ạ.
+田中 | 今天给您添麻烦了！ | Jīntiān gěi nín tiān máfan le! | Hôm nay làm phiền thầy/cô quá!
+黄老师 | 哪里，欢迎再来。 | Nǎlǐ, huānyíng zài lái. | Không có gì, hoan nghênh em lại đến.
+</script>
+
+<script>
+(function () {
+  var KEY = 'luyen-doc-han-ngu-done-v2';
+
+  /* ---------- Đọc dữ liệu bài ---------- */
+  function parseTime(s) {
+    s = (s || '').trim();
+    if (!s) return null;
+    var m = /^(\d+):(\d+(?:\.\d+)?)$/.exec(s);
+    var v = m ? parseInt(m[1], 10) * 60 + parseFloat(m[2]) : parseFloat(s);
+    return isFinite(v) ? v : null;
+  }
+  function fmtTime(t) {
+    var m = Math.floor(t / 60), s = (t - m * 60).toFixed(1);
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+  function parseLessons(text) {
+    var out = [], cur = null;
+    text.split(/\r?\n/).forEach(function (line) {
+      line = line.trim();
+      if (!line || line.charAt(0) === '#') return;
+      var p = line.split('|').map(function (x) { return x.trim(); });
+      if (line.indexOf('===') === 0) {
+        cur = { han: p[0].replace(/^=+\s*/, ''), vi: p[1] || '', audio: p[2] || '', label: p[3] || '', s: [] };
+        var lm = /Quy[ểe]n\s*(\d+)\s*-\s*B[àa]i\s*(\d+)\s*-\s*B[àa]i kh[óo]a\s*(\d+)/i.exec(cur.label);
+        cur.group = lm ? 'Quyển ' + lm[1] + ' · Bài ' + lm[2] : '';
+        cur.kh = lm ? 'Bài khóa ' + lm[3] : '';
+        out.push(cur);
+      } else if (cur && p.length >= 4) {
+        cur.s.push({ who: p[0], han: p[1], py: p[2], vi: p[3], t: parseTime(p[4]) });
+      }
+    });
+    out.forEach(function (l) {
+      l.timed = !!l.audio && l.s.length > 0 && l.s.every(function (x) { return x.t !== null; });
+    });
+    return out;
+  }
+  var LESSONS = parseLessons(document.getElementById('lesson-data').textContent);
+
+  /* ---------- Biểu tượng và thông báo ---------- */
+  var ICON_PLAY = '<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M6 3.5v13l11-6.5z"/></svg>';
+  var ICON_PAUSE = '<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 3.5h3.5v13H5zM11.5 3.5H15v13h-3.5z"/></svg>';
+  var ICON_TICK = '<svg class="tick" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Đã đọc"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.3l2.4 2.4 4.6-5"/></svg>';
+  var ICON_BACK = '<svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 4.5L7 10l5.5 5.5"/></svg>';
+  var ICON_NEXT = '<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4.5L13 10l-5.5 5.5"/></svg>';
+  var NO_TTS = 'Trình duyệt này chưa hỗ trợ đọc tự động. Hãy mở trang bằng Chrome, Edge hoặc Safari.';
+  var NO_VOICE = 'Máy chưa có giọng đọc tiếng Trung hoặc giọng chưa phát được. Hãy cài giọng Chinese (zh-CN) trong phần Cài đặt ngôn ngữ hoặc Trợ năng của thiết bị, rồi thử lại.';
+  var NO_AUDIO = 'Không phát được file audio của bài này. Trang tạm dùng giọng đọc tự động.';
+
+  var view = document.getElementById('view');
+  var synth = window.speechSynthesis || null;
+  var voice = null;
+  var done = {};
+  try { (JSON.parse(localStorage.getItem(KEY) || '[]') || []).forEach(function (k) { done[k] = true; }); } catch (e) {}
+  function saveDone() { try { localStorage.setItem(KEY, JSON.stringify(Object.keys(done))); } catch (e) {} }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  function pickVoice() {
+    if (!synth) return;
+    var vs = synth.getVoices() || [];
+    voice = vs.filter(function (v) { return /^zh[-_]CN/i.test(v.lang); })[0] ||
+            vs.filter(function (v) { return /^zh/i.test(v.lang); })[0] || null;
+  }
+  pickVoice();
+  if (synth && synth.addEventListener) synth.addEventListener('voiceschanged', pickVoice);
+
+  /* ---------- Trạng thái đọc ---------- */
+  var run = 0, playing = false, timer = null, poll = null;
+  var lesson = null, lessonId = 0, cursor = -1, finished = false;
+  var au = null, audioBad = false;
+  var rate = 0.85, shadow = true, gPy = false, gVi = false;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function $(sel) { return view.querySelector(sel); }
+  function $$(sel) { return Array.prototype.slice.call(view.querySelectorAll(sel)); }
+  function countDone() { return LESSONS.filter(function (l) { return done[l.han]; }).length; }
+  function mode() {
+    if (lesson && lesson.audio && !audioBad) return lesson.timed ? 'seg' : 'whole';
+    return 'tts';
+  }
+
+  function showNotice(msg) {
+    var n = $('#notice');
+    if (!n) return;
+    n.textContent = msg;
+    n.hidden = false;
+  }
+
+  function updateUI() {
+    var b = $('[data-act="play"]');
+    if (!b) return;
+    var m = mode();
+    var label = playing ? 'Tạm dừng' : m === 'whole' ? 'Nghe cả bài' : finished ? 'Nghe lại' : cursor >= 0 ? 'Nghe tiếp' : 'Nghe tự động';
+    b.innerHTML = (playing ? ICON_PAUSE : ICON_PLAY) + '<span>' + label + '</span>';
+    b.setAttribute('aria-label', playing ? 'Tạm dừng' : label);
+  }
+
+  function setCurrent(i) {
+    $$('.row.cur').forEach(function (r) { r.classList.remove('cur'); });
+    var row = $('.row[data-i="' + i + '"]');
+    if (!row) return;
+    row.classList.add('cur');
+    try { row.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' }); } catch (e) {}
+  }
+
+  function stopAll() {
+    run++;
+    playing = false;
+    clearTimeout(timer);
+    clearInterval(poll);
+    try { if (au) au.pause(); } catch (e) {}
+    try { if (synth) synth.cancel(); } catch (e) {}
+    updateUI();
+  }
+
+  /* Giọng đọc tự động (dự phòng khi chưa có audio) */
+  function sayTTS(text, my, onEnd) {
+    if (!synth || typeof SpeechSynthesisUtterance === 'undefined') { showNotice(NO_TTS); stopAll(); return; }
+    try { synth.cancel(); } catch (e) {}
+    var u = new SpeechSynthesisUtterance(text.replace(/[…]+|\.{2,}/g, ' ').replace(/\d+(?:-\d+)+/g, function (m) { return m.replace(/\d/g, function (d) { return d + ' '; }).replace(/-/g, '，'); }));
+    u.lang = 'zh-CN';
+    if (voice) u.voice = voice;
+    u.rate = rate;
+    var t0 = 0;
+    var wd = setTimeout(function () { if (my === run) { showNotice(NO_VOICE); stopAll(); } }, 5000);
+    u.onstart = function () { t0 = Date.now(); clearTimeout(wd); };
+    u.onend = function () { clearTimeout(wd); if (my !== run) return; onEnd(t0 ? Date.now() - t0 : 0); };
+    u.onerror = function (ev) {
+      clearTimeout(wd);
+      if (my !== run) return;
+      if (ev && (ev.error === 'canceled' || ev.error === 'interrupted')) return;
+      showNotice(NO_VOICE);
+      stopAll();
+    };
+    setTimeout(function () { if (my === run) { try { synth.speak(u); } catch (e) { showNotice(NO_VOICE); stopAll(); } } }, 80);
+  }
+
+  /* Audio thật: phát đoạn của câu i trong file nguyên bài */
+  function getAudio() {
+    if (!au) {
+      au = new Audio();
+      au.preload = 'auto';
+      au.addEventListener('error', function () {
+        if (!lesson || !lesson.audio || audioBad) return;
+        audioBad = true;
+        var was = playing;
+        stopAll();
+        showNotice(NO_AUDIO);
+        updateUI();
+      });
+    }
+    if (au.getAttribute('data-src') !== lesson.audio) {
+      au.setAttribute('data-src', lesson.audio);
+      au.src = lesson.audio;
+    }
+    return au;
+  }
+  function playSeg(i, my, onEnd) {
+    var a = getAudio();
+    var start = lesson.s[i].t;
+    var next = i < lesson.s.length - 1 ? lesson.s[i + 1].t : null;
+    function go() {
+      if (my !== run) return;
+      try { a.currentTime = start; } catch (e) {}
+      var p = a.play();
+      if (p && p.catch) p.catch(function () { if (my === run) { audioBad = true; stopAll(); showNotice(NO_AUDIO); updateUI(); } });
+      clearInterval(poll);
+      poll = setInterval(function () {
+        if (my !== run) { clearInterval(poll); return; }
+        var end = next === null ? (a.duration || 1e9) : next;
+        if (a.ended || a.currentTime >= end - 0.04) {
+          clearInterval(poll);
+          a.pause();
+          onEnd(Math.max(0, Math.min(a.currentTime, end) - start) * 1000);
+        }
+      }, 40);
+    }
+    if (a.readyState >= 1) go();
+    else {
+      var f = function () { a.removeEventListener('loadedmetadata', f); go(); };
+      a.addEventListener('loadedmetadata', f);
+      a.load();
+    }
+  }
+  function speak(i, my, onEnd) {
+    if (mode() === 'seg') playSeg(i, my, onEnd);
+    else sayTTS(lesson.s[i].han, my, onEnd);
+  }
+
+  function finish() {
+    run++;
+    playing = false;
+    finished = true;
+    cursor = -1;
+    $$('.row.cur').forEach(function (r) { r.classList.remove('cur'); });
+    done[lesson.han] = true;
+    saveDone();
+    syncDoneBtn();
+    updateUI();
+  }
+
+  function step(my) {
+    if (my !== run || !playing) return;
+    setCurrent(cursor);
+    speak(cursor, my, function (dur) {
+      var gap = shadow ? Math.max(1200, dur + 700) : 450;
+      timer = setTimeout(function () {
+        if (my !== run || !playing) return;
+        if (cursor < lesson.s.length - 1) { cursor++; step(my); } else { finish(); }
+      }, gap);
+    });
+  }
+
+  function togglePlay() {
+    if (playing) { stopAll(); return; }
+    var n = $('#notice'); if (n) n.hidden = true;
+    stopAll();
+    playing = true;
+    finished = false;
+    if (mode() === 'whole') {
+      var a = getAudio(), my = run;
+      a.onended = function () { if (my === run) { playing = false; finished = true; done[lesson.han] = true; saveDone(); syncDoneBtn(); updateUI(); } };
+      var p = a.play();
+      if (p && p.catch) p.catch(function () { if (my === run) { audioBad = true; stopAll(); showNotice(NO_AUDIO); updateUI(); } });
+      updateUI();
+      return;
+    }
+    if (cursor < 0) cursor = 0;
+    var my2 = run;
+    updateUI();
+    step(my2);
+  }
+
+  function speakOne(i) {
+    stopAll();
+    finished = false;
+    cursor = i;
+    setCurrent(i);
+    updateUI();
+    var n = $('#notice'); if (n) n.hidden = true;
+    var my = run;
+    if (mode() === 'seg') playSeg(i, my, function () {});
+    else sayTTS(lesson.s[i].han, my, function () {});
+  }
+
+  function syncChips() {
+    $$('.row').forEach(function (row) {
+      [['py', gPy], ['vi', gVi]].forEach(function (p) {
+        var chip = row.querySelector('.chip[data-k="' + p[0] + '"]');
+        if (!chip) return;
+        var local = row.classList.contains(p[0] + '-on');
+        chip.disabled = p[1];
+        chip.setAttribute('aria-pressed', (p[1] || local) ? 'true' : 'false');
+      });
+    });
+  }
+  function syncDoneBtn() {
+    var b = $('[data-act="done"]');
+    if (!b) return;
+    var d = !!done[lesson.han];
+    b.setAttribute('aria-pressed', d ? 'true' : 'false');
+    b.textContent = d ? 'Đã đọc xong (bấm để bỏ đánh dấu)' : 'Đánh dấu đã đọc';
+  }
+
+  /* ---------- Các màn hình ---------- */
+  function renderHome() {
+    view.innerHTML =
+      '<header><p class="eyebrow" lang="zh-Hans">汉语阅读</p>' +
+      '<h1>Luyện đọc Hán ngữ</h1>' +
+      '<p class="lede">Đọc thẳng Hán tự và nghe theo từng câu. Pinyin và nghĩa tiếng Việt chỉ mở ra khi bạn cần kiểm tra lại.</p></header>' +
+      '<div class="panel">' +
+      '<a class="level" href="#so-cap"><span class="lv-han" lang="zh-Hans">初级</span><span class="lv-txt"><b>Sơ cấp</b><small>HSK 2 → 3 · ' + LESSONS.length + ' bài khóa · Quyển 2</small></span>' + ICON_NEXT + '</a>' +
+      '<div class="level off" aria-disabled="true"><span class="lv-han" lang="zh-Hans">中级</span><span class="lv-txt"><b>Trung cấp</b><small>HSK 3 → 4</small></span><span class="soon">Sắp có</span></div>' +
+      '<div class="level off" aria-disabled="true"><span class="lv-han" lang="zh-Hans">高级</span><span class="lv-txt"><b>Cao cấp</b><small>HSK 4 trở lên</small></span><span class="soon">Sắp có</span></div>' +
+      '</div>';
+  }
+
+  function renderLevel() {
+    var lastG = null;
+    var items = LESSONS.map(function (l, i) {
+      var head = '';
+      if (l.group && l.group !== lastG) { head = '<div class="grp-h">' + esc(l.group) + '</div>'; lastG = l.group; }
+      return head + '<a class="lesson" href="#bai-' + (i + 1) + '"><span class="n">' + (i + 1) + '</span>' +
+        '<span><span class="t-han" lang="zh-Hans">' + esc(l.han) + '</span><span class="t-vi">' + esc((l.kh ? l.kh + ' · ' : '') + l.vi) + '</span></span>' +
+        '<span class="meta">' + l.s.length + ' câu' + (done[l.han] ? ICON_TICK : '') + '</span></a>';
+    }).join('');
+    view.innerHTML =
+      '<a class="back" href="#">' + ICON_BACK + 'Các cấp độ</a>' +
+      '<header><p class="eyebrow" lang="zh-Hans">初级</p><h1>Sơ cấp</h1>' +
+      '<p class="lede">Chọn một bài, đọc Hán tự trước rồi mới mở pinyin hoặc nghĩa để đối chiếu.</p></header>' +
+      '<p class="progress">Đã đọc ' + countDone() + '/' + LESSONS.length + ' bài</p>' +
+      '<div class="panel">' + items + '</div>';
+  }
+
+  function renderReader(l, id) {
+    lesson = l; lessonId = id; cursor = -1; finished = false; gPy = false; gVi = false; audioBad = false;
+    var hint = l.timed ? 'Chạm vào một câu để nghe lại đúng câu đó.' :
+      l.audio ? 'Nút Nghe cả bài phát audio từ đầu đến cuối. Chạm vào một câu để nghe bằng giọng đọc tự động.' :
+      'Chạm vào một câu để nghe riêng câu đó.';
+    var rows = l.s.map(function (s, i) {
+      return '<div class="row" data-i="' + i + '"><span class="idx">' + (i + 1) + '</span>' +
+        '<div class="txt"><div class="who" lang="zh-Hans">' + esc(s.who) + '</div><div class="py">' + esc(s.py) + '</div>' +
+        '<div class="han" lang="zh-Hans" role="button" tabindex="0" aria-label="Nghe câu ' + (i + 1) + '">' + esc(s.han) + '</div>' +
+        '<div class="vi">' + esc(s.vi) + '</div></div>' +
+        '<div class="chips"><button class="chip" data-k="py" aria-pressed="false" aria-label="Xem pinyin câu ' + (i + 1) + '">Py</button>' +
+        '<button class="chip" data-k="vi" aria-pressed="false" aria-label="Xem nghĩa tiếng Việt câu ' + (i + 1) + '">TV</button></div></div>';
+    }).join('');
+    function rb(label, v) { return '<button data-act="rate" data-rate="' + v + '" aria-pressed="' + (rate === v) + '">' + label + '</button>'; }
+    var showRate = !l.audio;
+    view.innerHTML =
+      '<div class="reader" id="reader">' +
+      '<a class="back" href="#so-cap">' + ICON_BACK + 'Sơ cấp</a>' +
+      '<div class="reader-head"><p class="eyebrow">' + esc(l.label) + '</p><h1 class="t-han" lang="zh-Hans">' + esc(l.han) + '</h1><p class="t-vi">' + esc(l.vi) + '</p>' +
+      '<p class="hint">' + hint + ' Nút Py và TV bên phải mỗi câu chỉ mở pinyin hoặc nghĩa cho câu đó.</p></div>' +
+      '<div class="opts">' + (showRate ? '<div class="grp"><span>Tốc độ</span><span class="seg">' + rb('Chậm', 0.7) + rb('Vừa', 0.85) + rb('Thường', 1) + '</span></div>' : '') +
+      (l.audio && !l.timed ? '' : '<label class="chk"><input type="checkbox" id="shadow"' + (shadow ? ' checked' : '') + '>Chừa nhịp để nhẩm theo</label>') + '</div>' +
+      '<p class="notice" id="notice" role="status" hidden></p>' +
+      '<div class="panel">' + rows + '</div>' +
+      '<div class="done-wrap"><button class="btn plain" data-act="done" aria-pressed="false">Đánh dấu đã đọc</button></div>' +
+      '</div>' +
+      '<div class="bar"><div class="bar-in">' +
+      '<button class="btn primary" data-act="play"></button>' +
+      '<button class="btn" data-act="vi" aria-pressed="false" aria-label="Hiện nghĩa tiếng Việt cho cả bài">TV</button>' +
+      '<button class="btn" data-act="py" aria-pressed="false" aria-label="Hiện pinyin cho cả bài">Pinyin</button>' +
+      '</div></div>';
+    updateUI();
+    syncDoneBtn();
+    if (!l.audio && !synth) showNotice(NO_TTS);
+  }
+
+  /* ---------- Công cụ đánh dấu thời gian cho giáo viên ---------- */
+  var marks = [];
+  function renderTimer(l, id) {
+    lesson = l; lessonId = id;
+    if (!l.audio) {
+      view.innerHTML = '<a class="back" href="#bai-' + id + '">' + ICON_BACK + 'Về bài đọc</a><h1>Đánh dấu thời gian</h1>' +
+        '<p class="lede">Bài này chưa có file audio. Điền đường dẫn audio ở dòng === của bài trong phần dữ liệu rồi mở lại trang này.</p>';
+      return;
+    }
+    marks = l.s.map(function (x) { return x.t; });
+    view.innerHTML =
+      '<a class="back" href="#bai-' + id + '">' + ICON_BACK + 'Về bài đọc</a>' +
+      '<header><p class="eyebrow" lang="zh-Hans">' + esc(l.han) + '</p><h1>Đánh dấu thời gian</h1>' +
+      '<p class="lede">Bấm phát audio. Đúng lúc mỗi câu bắt đầu, bấm “Đánh dấu câu tiếp theo”. Làm xong, sao chép đoạn văn bản ở cuối trang và gửi lại để dán vào phần dữ liệu.</p></header>' +
+      '<audio id="tAudio" class="tool-audio" controls preload="auto" src="' + esc(l.audio) + '"></audio>' +
+      '<div class="tool-actions"><button class="btn primary" data-act="mark">Đánh dấu câu tiếp theo</button>' +
+      '<button class="btn" data-act="unmark">Lùi một câu</button><button class="btn" data-act="reset">Làm lại</button></div>' +
+      '<div class="panel" id="markList"></div>' +
+      '<p class="hint">Kết quả để dán vào dữ liệu:</p><textarea class="out" id="out" readonly></textarea>' +
+      '<div class="tool-actions" style="margin-top:8px"><button class="btn" data-act="copyout">Sao chép</button></div>';
+    drawMarks();
+  }
+  function drawMarks() {
+    var next = marks.indexOf(null);
+    $('#markList').innerHTML = lesson.s.map(function (s, i) {
+      return '<div class="mark-row' + (i === next ? ' next' : '') + '"><span class="idx">' + (i + 1) + '</span>' +
+        '<span class="han" lang="zh-Hans">' + esc(s.who) + '：' + esc(s.han) + '</span>' +
+        '<span class="tm">' + (marks[i] === null ? '—' : fmtTime(marks[i])) + '</span></div>';
+    }).join('');
+    var mb = $('[data-act="mark"]');
+    mb.disabled = next === -1;
+    mb.textContent = next === -1 ? 'Đã đánh dấu đủ ' + marks.length + ' câu' : 'Đánh dấu câu ' + (next + 1);
+    var lines = ['=== ' + lesson.han + ' | ' + lesson.vi + ' | ' + lesson.audio];
+    lesson.s.forEach(function (s, i) {
+      lines.push([s.who, s.han, s.py, s.vi, marks[i] === null ? '' : fmtTime(marks[i])].join(' | '));
+    });
+    $('#out').value = lines.join('\n');
+  }
+
+  function route() {
+    stopAll();
+    var h = (location.hash || '').replace('#', '');
+    var m = /^bai-(\d+)$/.exec(h), t = /^danh-dau-(\d+)$/.exec(h);
+    if (h === 'so-cap') renderLevel();
+    else if (m && LESSONS[+m[1] - 1]) renderReader(LESSONS[+m[1] - 1], +m[1]);
+    else if (t && LESSONS[+t[1] - 1]) renderTimer(LESSONS[+t[1] - 1], +t[1]);
+    else renderHome();
+    window.scrollTo(0, 0);
+  }
+
+  /* ---------- Sự kiện ---------- */
+  view.addEventListener('click', function (e) {
+    var act = e.target.closest('[data-act]');
+    if (act) {
+      var a = act.getAttribute('data-act');
+      if (a === 'play') togglePlay();
+      else if (a === 'py' || a === 'vi') {
+        var on = a === 'py' ? (gPy = !gPy) : (gVi = !gVi);
+        $('#reader').classList.toggle('show-' + a, on);
+        if (!on) $$('.row').forEach(function (r) { r.classList.remove(a + '-on'); });
+        act.setAttribute('aria-pressed', on ? 'true' : 'false');
+        syncChips();
+      } else if (a === 'rate') {
+        rate = parseFloat(act.getAttribute('data-rate'));
+        $$('[data-act="rate"]').forEach(function (b) { b.setAttribute('aria-pressed', b === act ? 'true' : 'false'); });
+      } else if (a === 'done') {
+        if (done[lesson.han]) delete done[lesson.han]; else done[lesson.han] = true;
+        saveDone();
+        syncDoneBtn();
+      } else if (a === 'mark') {
+        var ta = document.getElementById('tAudio'), nx = marks.indexOf(null);
+        if (ta && nx !== -1) { marks[nx] = Math.round(ta.currentTime * 10) / 10; drawMarks(); }
+      } else if (a === 'unmark') {
+        var last = -1;
+        marks.forEach(function (v, i) { if (v !== null) last = i; });
+        if (last !== -1) { marks[last] = null; drawMarks(); }
+      } else if (a === 'reset') {
+        marks = lesson.s.map(function () { return null; });
+        drawMarks();
+      } else if (a === 'copyout') {
+        var o = document.getElementById('out');
+        var ok = false;
+        try { if (navigator.clipboard) navigator.clipboard.writeText(o.value).catch(function () { o.select(); }); ok = true; } catch (er) {}
+        if (!ok) o.select();
+        act.textContent = 'Đã sao chép';
+        setTimeout(function () { act.textContent = 'Sao chép'; }, 1500);
+      }
+      return;
+    }
+    var chip = e.target.closest('.chip');
+    if (chip) {
+      if (chip.disabled) return;
+      chip.closest('.row').classList.toggle(chip.getAttribute('data-k') + '-on');
+      syncChips();
+      return;
+    }
+    var r = e.target.closest('.row');
+    if (r) speakOne(+r.getAttribute('data-i'));
+  });
+  view.addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('han')) {
+      e.preventDefault();
+      speakOne(+e.target.closest('.row').getAttribute('data-i'));
+    }
+  });
+  view.addEventListener('change', function (e) {
+    if (e.target && e.target.id === 'shadow') shadow = e.target.checked;
+  });
+  window.addEventListener('hashchange', function () { route(); au = null; });
+  window.addEventListener('pagehide', function () { try { if (synth) synth.cancel(); } catch (e) {} try { if (au) au.pause(); } catch (e) {} });
+  route();
+})();
+</script>
+
+</body></html>
