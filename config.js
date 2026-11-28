@@ -92,10 +92,10 @@ const COBI_DATA = {
         id: "dlh-dts", name: "Độc Tu Thất", desc: "Bài tập · Game cá nhân · Tự luyện", icon: "独",
         subModules: [
           {
-            id: "dlh-bt", name: "1. Bài tập",
+            id: "dlh-bt", name: "Lạc Tĩnh Hiên",
             subModules: [
-              { id: "dlh-bt-1", name: "HSK3", path: "./cobi-dulactrangvien/baitap/HSK3.html" },
-               { id: "dlh-bt-2", name: "Ôn Tập Test 1", path: "./cobi-dulactrangvien/baitap/test1.html" }
+              { id: "dlh-bt-1", name: "Luyện Âm Tĩnh Thất", path: "./cobi-dulactrangvien/LUYENDOC.html" },
+               { id: "dlh-bt-2", name: "Luyện Bút Tĩnh Thất", path: "./cobi-dulactrangvien/LUYENVIET.html" }
               // Thêm dạng bài tập mới ở đây, ví dụ:
               // { id: "dlh-bt-2", name: "Tên dạng bài", path: "./cobi-dulactrangvien/baitap/xxx.html" },
             ]
